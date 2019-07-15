@@ -1,10 +1,17 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<fstream>
+#include<sstream>
+#include<vector>
 #include<X11/Xlib.h>
+#include<string>
+#define GLEW_STATIC
+#include<GL/glew.h>
 #include<GL/glx.h>
 #include<GL/glu.h>
 
-struct platformState {
+
+struct PlatformState {
 Display                 *dpy;
 Window                  root;
 XVisualInfo             *vi;
@@ -16,14 +23,15 @@ XWindowAttributes       gwa;
 XEvent                  xev;
 };
 
-GLint att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
 
-void DrawAQuad();
+void Draw(GLuint ShaderProgramID);
+GLuint LoadShaders(const char *vertex_file_path, const char *fragment_file_path);
 
 int main (int argc, char* argv[]){
 
     //Initialize platform state variables
-    platformState ps;
+    PlatformState ps;
+    GLint att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
 
     ps.dpy = XOpenDisplay(NULL);
 
@@ -53,7 +61,7 @@ int main (int argc, char* argv[]){
     ps.swa.event_mask = ExposureMask | KeyPressMask;
 
     //Create a window on top of the desktop
-    ps.win = XCreateWindow( ps.dpy, ps.root, 0, 0, 600, 600, 0, 
+    ps.win = XCreateWindow( ps.dpy, ps.root, 0, 0, 1280, 720, 0, 
                             ps.vi->depth, InputOutput, ps.vi->visual,
                             CWColormap | CWEventMask, &ps.swa);
     
@@ -69,6 +77,21 @@ int main (int argc, char* argv[]){
     //Enable openGL
     glEnable(GL_DEPTH_TEST);
 
+    //Enable higher glsl versions
+    glewExperimental = GL_TRUE;
+
+    //Enable GLEW
+    GLenum err = glewInit();
+    if (err != GLEW_OK){
+        printf("\nGLEW could not init! Program will now end!\n");
+        return 1;
+    }
+    printf("GLEW Enabled on version : %s\n", glewGetString(GLEW_VERSION));
+    printf("GL Functions grabbed on version : %s\n", glGetString(GL_VERSION));
+    //Load shaders before entering loop
+    GLuint programID = LoadShaders("common/SimpleVertexShader.glsl", "common/SimpleFragShader.glsl");
+
+
     //Start the running loop
     bool running = true;
     while(running){
@@ -79,7 +102,7 @@ int main (int argc, char* argv[]){
         if(ps.xev.type == Expose){
             XGetWindowAttributes(ps.dpy, ps.win, &ps.gwa);
             glViewport(0, 0, ps.gwa.width, ps.gwa.height);
-            DrawAQuad();
+            Draw(programID);
             glXSwapBuffers(ps.dpy, ps.win);
         }
 
@@ -97,23 +120,133 @@ int main (int argc, char* argv[]){
     return 0;
 }
 
-void DrawAQuad() {
- glClearColor(1.0, 1.0, 1.0, 1.0);
- glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+GLuint LoadShaders(const char *vertex_file_path, const char *fragment_file_path){
+    
+    //Create the shaders
+    GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+    GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
- glMatrixMode(GL_PROJECTION);
- glLoadIdentity();
- glOrtho(-1., 1., -1., 1., 1., 20.);
+    //Grab vertex shader info from file
+    std::string VertexShaderCode;
+    std::ifstream VertexShaderStream(vertex_file_path, std::ifstream::in);
+    if(VertexShaderStream.is_open()){
+        std::stringstream sstr;
+        sstr << VertexShaderStream.rdbuf();
+        VertexShaderCode = sstr.str();
+        VertexShaderStream.close();
+    } else {
+        printf("Could not open vertex shader file. Are you in the right dir?\n");
+        getchar();
+        return 0;
+    }
 
- glMatrixMode(GL_MODELVIEW);
- glLoadIdentity();
- gluLookAt(0., 0., 10., 0., 0., 0., 0., 1., 0.);
+    //Grab fragment shader info from file
+    std::string FragmentShaderCode;
+    std::ifstream FragmentShaderStream(fragment_file_path, std::ifstream::in);
+    if(FragmentShaderStream.is_open()){
+        std::stringstream sstr;
+        sstr << FragmentShaderStream.rdbuf();
+        FragmentShaderCode = sstr.str();
+        FragmentShaderStream.close();
+    } else {
+        printf("Could not open fragment shader file. Are you in the right dir?\n");
+        getchar();
+        return 0;
+    }
 
- glBegin(GL_QUADS);
-  glColor3f(1., 0., 0.); glVertex3f(-.75, -.75, 0.);
-  glColor3f(0., 1., 0.); glVertex3f( .75, -.75, 0.);
-  glColor3f(0., 0., 1.); glVertex3f( .75,  .75, 0.);
-  glColor3f(1., 1., 0.); glVertex3f(-.75,  .75, 0.);
- glEnd();
+    GLint Result = GL_FALSE;
+    int InfoLogLength;
+
+    //Compile vertex shader
+    printf("Compiling shader : %s\n", vertex_file_path);
+    char const * VertexShaderPointer = VertexShaderCode.c_str();
+    glShaderSource(VertexShaderID, 1, &VertexShaderPointer, NULL);
+    glCompileShader(VertexShaderID);
+
+    //Check the Compile
+    glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
+    glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+    if (InfoLogLength > 0){
+        std::vector<char> VertexShaderErrorMessage(InfoLogLength + 1);
+        glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+        printf("%s\n", &VertexShaderErrorMessage[0]);
+    }
+
+    //Compile fragment shader
+    printf("Compiling shader : %s\n", fragment_file_path);
+    char const * FragmentShaderPointer = FragmentShaderCode.c_str();
+    glShaderSource(FragmentShaderID, 1, &FragmentShaderPointer, NULL);
+    glCompileShader(FragmentShaderID);
+
+    //Check the Compile
+    glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
+    glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+    if (InfoLogLength > 0){
+        std::vector<char> FragmentShaderErrorMessage(InfoLogLength + 1);
+        glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+        printf("%s\n", &FragmentShaderErrorMessage[0]);
+    }
+
+    printf("Linking program!\n");
+    GLuint ProgramID = glCreateProgram();
+    glAttachShader(ProgramID, VertexShaderID);
+    glAttachShader(ProgramID, FragmentShaderID);
+    glLinkProgram(ProgramID);
+
+    //Check the program
+    glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
+    glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+    if (InfoLogLength > 0){
+        std::vector<char> ProgramErrorMessage(InfoLogLength + 1);
+        glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+        printf("%s\n", &ProgramErrorMessage[0]);
+    }
+
+    glDetachShader(ProgramID, VertexShaderID);
+    glDetachShader(ProgramID, FragmentShaderID);
+
+    glDeleteShader(VertexShaderID);
+    glDeleteShader(FragmentShaderID);
+
+    return ProgramID;
+}
+
+
+void Draw(GLuint ShaderProgramID) { 
+
+    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glUseProgram(ShaderProgramID);
+
+    //Create Vertex Array Object and bind to it
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    //Verticies of a triangle
+    GLfloat vertices[] = {
+       -1.0f, -1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f,
+        0.0f,  1.0f, 0.0f
+    };
+    
+    //Create vertex buffer object
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    //Bind the vertex buffer object
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    //Turn our vbo into an array buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices),
+                 vertices, GL_DYNAMIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDisableVertexAttribArray(0);
+
 } 
+
 
