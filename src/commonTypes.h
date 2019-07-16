@@ -1,5 +1,5 @@
-#ifndef __TLETC_COMMON__
-#define __TLETC_COMMON__
+#ifndef __TLETC_TYPES__
+#define __TLETC_TYPES__
 
 
 
