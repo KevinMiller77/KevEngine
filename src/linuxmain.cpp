@@ -9,7 +9,7 @@
 #include <GL/glew.h>
 #include <GL/glx.h>
 #include <GL/glu.h>
-#include "logging.h"
+#include "commonTypes.h"
 #include "math.h"
 
 
