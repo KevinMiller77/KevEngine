@@ -20,6 +20,7 @@ namespace tletc {
 		~Mat4();
 
 		static Mat4 Orthographic(float left, float right, float top, float bottom, float near, float far);
+		static Vec4 Transform(Vec4 magnitude);
 
 		const Vec4& operator[](int index) const;
 		Vec4& operator[](int index);
