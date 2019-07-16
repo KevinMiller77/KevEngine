@@ -1,14 +1,16 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<fstream>
-#include<sstream>
-#include<vector>
-#include<X11/Xlib.h>
-#include<string>
-#define GLEW_STATIC
-#include<GL/glew.h>
-#include<GL/glx.h>
-#include<GL/glu.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <X11/Xlib.h>
+#include <string>
+#define  GLEW_STATIC
+#include <GL/glew.h>
+#include <GL/glx.h>
+#include <GL/glu.h>
+#include "logging.h"
+#include "math.h"
 
 
 struct PlatformState {
@@ -24,7 +26,7 @@ XEvent                  xev;
 };
 
 
-void Draw(GLuint ShaderProgramID);
+void Draw(GLuint ShaderProgramID, GLfloat *vertexArray, GLenum mode, int dimensions);
 GLuint LoadShaders(const char *vertex_file_path, const char *fragment_file_path);
 
 int main (int argc, char* argv[]){
@@ -37,7 +39,7 @@ int main (int argc, char* argv[]){
 
     //Ensure ability to open display
     if (ps.dpy == NULL){
-        printf("Cannot connect to X server!\n");
+        LOGE("Cannot connect to X server!\n");
         exit(0);
     } 
     //Find desktop window
@@ -89,8 +91,13 @@ int main (int argc, char* argv[]){
     printf("GLEW Enabled on version : %s\n", glewGetString(GLEW_VERSION));
     printf("GL Functions grabbed on version : %s\n", glGetString(GL_VERSION));
     //Load shaders before entering loop
-    GLuint programID = LoadShaders("common/SimpleVertexShader.glsl", "common/SimpleFragShader.glsl");
+    GLuint programID = LoadShaders("shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
 
+    GLfloat vertices[] {
+        -1.0f, -1.0f, 0.0f,
+         1.0f, -1.0f, 0.0f,
+         0.0f, 1.0f,  0.0f
+    };
 
     //Start the running loop
     bool running = true;
@@ -102,7 +109,7 @@ int main (int argc, char* argv[]){
         if(ps.xev.type == Expose){
             XGetWindowAttributes(ps.dpy, ps.win, &ps.gwa);
             glViewport(0, 0, ps.gwa.width, ps.gwa.height);
-            Draw(programID);
+            Draw(programID, vertices, GL_TRIANGLES, 3);
             glXSwapBuffers(ps.dpy, ps.win);
         }
 
@@ -212,9 +219,9 @@ GLuint LoadShaders(const char *vertex_file_path, const char *fragment_file_path)
 }
 
 
-void Draw(GLuint ShaderProgramID) { 
+void Draw(GLuint ShaderProgramID, GLfloat *vertexArray, GLenum mode, int dimensions) { 
 
-    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+    glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(ShaderProgramID);
 
@@ -222,13 +229,6 @@ void Draw(GLuint ShaderProgramID) {
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
-
-    //Verticies of a triangle
-    GLfloat vertices[] = {
-       -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        0.0f,  1.0f, 0.0f
-    };
     
     //Create vertex buffer object
     GLuint vbo;
@@ -236,15 +236,15 @@ void Draw(GLuint ShaderProgramID) {
     //Bind the vertex buffer object
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     //Turn our vbo into an array buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices),
-                 vertices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexArray),
+                 vertexArray, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
 
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(mode, 0, dimensions);
     glDisableVertexAttribArray(0);
 
 } 
