@@ -26,8 +26,8 @@ XEvent                  xev;
 };
 
 
-void Draw(GLuint ShaderProgramID, GLfloat *vertexArray, GLenum mode, int dimensions);
-GLuint LoadShaders(const char *vertex_file_path, const char *fragment_file_path);
+void render(GLuint ShaderProgramID, GLfloat *vertexArray, GLenum mode, int dimensions);
+GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path);
 
 int main (int argc, char* argv[]){
 
@@ -91,13 +91,29 @@ int main (int argc, char* argv[]){
     printf("GLEW Enabled on version : %s\n", glewGetString(GLEW_VERSION));
     printf("GL Functions grabbed on version : %s\n", glGetString(GL_VERSION));
     //Load shaders before entering loop
-    GLuint programID = LoadShaders("shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
+    GLuint programID = loadShaders("shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
 
     GLfloat vertices[] {
         -1.0f, -1.0f, 0.0f,
          1.0f, -1.0f, 0.0f,
          0.0f, 1.0f,  0.0f
     };
+
+	glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
+
+	//Create Vertex Array Object and bind to it
+	GLuint vao;
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	//Create vertex buffer object
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	//Bind the vertex buffer object
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	//Turn our vbo into an array buffer
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vao),
+	vao, GL_STATIC_DRAW);
 
     //Start the running loop
     bool running = true;
@@ -109,7 +125,7 @@ int main (int argc, char* argv[]){
         if(ps.xev.type == Expose){
             XGetWindowAttributes(ps.dpy, ps.win, &ps.gwa);
             glViewport(0, 0, ps.gwa.width, ps.gwa.height);
-            Draw(programID, vertices, GL_TRIANGLES, 3);
+            render(programID, vertices, vbo, GL_TRIANGLES, 3);
             glXSwapBuffers(ps.dpy, ps.win);
         }
 
@@ -127,7 +143,7 @@ int main (int argc, char* argv[]){
     return 0;
 }
 
-GLuint LoadShaders(const char *vertex_file_path, const char *fragment_file_path){
+GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path){
     
     //Create the shaders
     GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -219,34 +235,22 @@ GLuint LoadShaders(const char *vertex_file_path, const char *fragment_file_path)
 }
 
 
-void Draw(GLuint ShaderProgramID, GLfloat *vertexArray, GLenum mode, int dimensions) { 
+void render(GLuint ShaderProgramID, GLuint vertexBuffer, GLenum mode, int dimensions) { 
 
-    glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glUseProgram(ShaderProgramID);
+	//Draw background
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //Create Vertex Array Object and bind to it
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    
-    //Create vertex buffer object
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    //Bind the vertex buffer object
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    //Turn our vbo into an array buffer
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexArray),
-                 vertexArray, GL_STATIC_DRAW);
+	//Get VAA ready for draw
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	//Bind to the given shader state
+	glUseProgram(ShaderProgramID);
+	//Draw a triangle
+	glDrawArrays(mode, 0, dimensions);
 
-
-    glDrawArrays(mode, 0, dimensions);
-    glDisableVertexAttribArray(0);
-
+	glDisableVertexAttribArray(0);
 } 
 
 

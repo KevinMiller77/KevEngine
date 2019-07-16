@@ -18,5 +18,6 @@ echo Compiling:
 echo -------
 cl %COMPILE_FLAGS% %INCLUDE_PATH% %WARNS_DISABLE% %DEFINES% ..\src\win32main.cpp /link %LIBRARY_PATH% %LIBRARIES%
 echo.
+pause
 popd
 

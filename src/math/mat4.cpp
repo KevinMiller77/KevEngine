@@ -32,6 +32,20 @@ namespace tletc {
 		return result;
 	}
 
+	Vec4 Mat4::Transform(Vec4 magnitude) 
+	{
+		Vec4 result;
+
+		//Transformation math
+		for (int x = 0; i < 4; i++) {
+			for (y = 0; i < 4; i++) {
+				result[x] += (elements[(y * 4) + x] * magnitude[x]);
+			}
+		}
+
+		return result;
+	}
+
 	void Mat4::add(const Mat4& other)
 	{
 		for (int i = 0; i < 4 * 4; i++) {
