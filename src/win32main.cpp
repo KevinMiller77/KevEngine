@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
@@ -12,6 +12,8 @@
 #include <GL/glew.h>
 #include <GL/wglew.h>
 
+#include "logging.h"
+
 #define WINDOW_CLASS_NAME "TLETCTestWindowClass"
 
 /*
@@ -20,6 +22,59 @@
 */
 
 // TODO(Adin): Switch to CreateWindowEx
+
+int InitalizeConsole() {
+    BOOL success = AllocConsole();
+    if(!success) {
+        DebugBreak();
+        return 1;
+    }
+    
+    // TODO(Adin): If possible get the first method to work it seems
+    //             like it might be a better solution
+#if 0
+    HANDLE sysHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    if(sysHandle == INVALID_HANDLE_VALUE) {
+        int temp = GetLastError();
+        (void) temp;
+        DebugBreak();
+        return 1;
+    }
+    
+    int fd = _open_osfhandle((intptr_t) sysHandle, _O_TEXT);
+    if(fd < 0) {
+        int temp = GetLastError();
+        (void) temp;
+        DebugBreak();
+        return 1;
+    }
+    
+    FILE *stdoutFile = _fdopen(fd, "w");
+    if(stdoutFile == NULL) {
+        char *error = strerror(errno);
+        (void) error;
+        DebugBreak();
+        return 1;
+    }
+    
+    *stdout = *stdoutFile;
+    setvbuf(stdout, NULL, _IONBF, 0);
+    
+    return 0;
+#endif
+    
+    // TODO(Adin): return codes and error handling when error system is implemented
+    
+    FILE *newStdout;
+    FILE *newStdin;
+    FILE *newStderr;
+    
+    freopen_s(&newStdout, "CONOUT$", "w", stdout);
+    freopen_s(&newStdin, "CONIN$", "r", stdin);
+    freopen_s(&newStderr, "CONOUT$", "w", stderr);
+    
+    return 0;
+}
 
 int loadGLExtensions(HINSTANCE hInstance) {
     const char DummyWindowClassName[] = "TLETCDummyWinClass";
@@ -129,11 +184,11 @@ HGLRC createGLContext(HDC windowHDC) {
 }
 
 GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path) {
-
+    
 	//Create the shaders
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
+    
 	//Grab vertex shader info from file
 	std::string VertexShaderCode;
 	std::ifstream VertexShaderStream(vertex_file_path, std::ifstream::in);
@@ -148,7 +203,7 @@ GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
 		getchar();
 		return 0;
 	}
-
+    
 	//Grab fragment shader info from file
 	std::string FragmentShaderCode;
 	std::ifstream FragmentShaderStream(fragment_file_path, std::ifstream::in);
@@ -163,16 +218,16 @@ GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
 		getchar();
 		return 0;
 	}
-
+    
 	GLint Result = GL_FALSE;
 	int InfoLogLength;
-
+    
 	//Compile vertex shader
 	printf("Compiling shader : %s\n", vertex_file_path);
 	char const* VertexShaderPointer = VertexShaderCode.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexShaderPointer, NULL);
 	glCompileShader(VertexShaderID);
-
+    
 	//Check the Compile
 	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
@@ -181,13 +236,13 @@ GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
 		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
 		printf("%s\n", &VertexShaderErrorMessage[0]);
 	}
-
+    
 	//Compile fragment shader
 	printf("Compiling shader : %s\n", fragment_file_path);
 	char const* FragmentShaderPointer = FragmentShaderCode.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentShaderPointer, NULL);
 	glCompileShader(FragmentShaderID);
-
+    
 	//Check the Compile
 	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
@@ -196,13 +251,13 @@ GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
 		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 		printf("%s\n", &FragmentShaderErrorMessage[0]);
 	}
-
+    
 	printf("Linking program!\n");
 	GLuint ProgramID = glCreateProgram();
 	glAttachShader(ProgramID, VertexShaderID);
 	glAttachShader(ProgramID, FragmentShaderID);
 	glLinkProgram(ProgramID);
-
+    
 	//Check the program
 	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
 	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
@@ -211,13 +266,13 @@ GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
 		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		printf("%s\n", &ProgramErrorMessage[0]);
 	}
-
+    
 	glDetachShader(ProgramID, VertexShaderID);
 	glDetachShader(ProgramID, FragmentShaderID);
-
+    
 	glDeleteShader(VertexShaderID);
 	glDeleteShader(FragmentShaderID);
-
+    
 	return ProgramID;
 }
 
@@ -230,7 +285,7 @@ void render(HDC windowHDC, GLuint ShaderProgramID,  GLuint vertexBuffer, GLenum 
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
+    
 	//Bind to the given shader state
 	glUseProgram(ShaderProgramID);
 	//Draw a triangle
@@ -265,7 +320,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     (void) lpCmdLine;
     (void) nShowCmd;
     
-    const int timerForBreakpoint = WM_TIMER;
+    InitalizeConsole();
     
     WNDCLASS wc = {};
     wc.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
@@ -285,52 +340,39 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     wglMakeCurrent(windowHDC, glContext);
     
-    // Cast to make compiler happy
-    const GLubyte *glVersionString = glGetString(GL_VERSION);
-    MessageBox(NULL, (const char *) glVersionString, "OpenGL Version", MB_OK);
+    // TODO(Adin): Investigate why this needs "%s"
+    LOG(DBG, "%s\n", glGetString(GL_VERSION));
     
     ShowWindow(window, SW_SHOW);
     
     // #BADA55
     glClearColor(0.729f, 0.854f, 0.333f, 1.0f);
-	GLuint programID = loadShaders("shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
-
-	GLfloat vertices[]{
-		-1.0f, -1.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,
-		 0.0f, 1.0f,  0.0f
-	};
-
-	//Create Vertex Array Object and bind to it
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	//Create vertex buffer object
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-	//Bind the vertex buffer object
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	//Turn our vbo into an array buffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices),
-		vertices, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
+    GLuint programID = loadShaders("shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
     
-	tletc::Mat4 matrix = { {1, 2, 3, 4},
-					{5, 6, 7, 8},
-					{9, 10, 11, 12},
-					{13, 14, 15, 16} };
-
-	tletc::Vec4 transf = { 1, 2, 3, 4 };
-
-	tletc::Vec4 = matrix.Transform(transf);
-
-	LOG_INF
-
+    GLfloat vertices[]{
+		-1.0f, -1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f,
+        0.0f, 1.0f,  0.0f
+    };
+    
+    //Create Vertex Array Object and bind to it
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    
+    //Create vertex buffer object
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    //Bind the vertex buffer object
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    //Turn our vbo into an array buffer
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices),
+                 vertices, GL_STATIC_DRAW);
+    
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    
     // Main loop
     MSG message = {};
     BOOL running = TRUE;
@@ -346,7 +388,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         }
         
 		
-
+        
         // Sample render function to show where to put rendering code
         render(windowHDC, programID, vbo, GL_TRIANGLES, 3);
     }

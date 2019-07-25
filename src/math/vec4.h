@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string.h>
-#include <logging.h>
+#include "logging.h"
 
 namespace tletc {
     //4 Float vector
@@ -12,11 +12,11 @@ namespace tletc {
             float elements[4];
             struct {float x; float y; float z; float w;};
         };
-
+        
         Vec4();
         Vec4(float x, float y, float z, float w);
         ~Vec4();
-
+        
         const float& operator[](int index) const;
         float& operator[](int index);
         
@@ -24,14 +24,14 @@ namespace tletc {
         void operator-=(const Vec4& other);
         void operator*=(const Vec4& other);
         void operator/=(const Vec4& other);
-
+        
         friend std::ostream& operator<<(std::ostream& stream, Vec4& vector);
-
+        
         friend Vec4 operator+(Vec4 left, Vec4 right);
         friend Vec4 operator-(Vec4 left, Vec4 right);
         friend Vec4 operator*(Vec4 left, Vec4 right);
         friend Vec4 operator/(Vec4 left, Vec4 right);
-
+        
         private:
         void add(const Vec4& other);
         void subtract(const Vec4& other);
