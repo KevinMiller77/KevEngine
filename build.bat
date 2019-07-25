@@ -4,7 +4,7 @@ IF NOT "%Platform%"=="x86" call scripts\setup_cl.bat x86
 
 setlocal
 set COMPILE_FLAGS=/nologo /diagnostics:caret /Zi /W4 /WX /EHsc
-set WARNS_DISABLE=
+set WARNS_DISABLE= /wd4201
 set DEFINES=/DGLEW_BUILD=GLEW_STATIC
 set INCLUDE_PATH=/I..\include
 set LIBRARY_PATH=/libpath:..\lib
@@ -18,6 +18,5 @@ echo Compiling:
 echo -------
 cl %COMPILE_FLAGS% %INCLUDE_PATH% %WARNS_DISABLE% %DEFINES% ..\src\win32main.cpp /link %LIBRARY_PATH% %LIBRARIES%
 echo.
-pause
 popd
 
