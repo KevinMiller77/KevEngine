@@ -9,11 +9,12 @@ struct GLMeshInfo {
     GLuint vao;
     GLuint programID;
     GLenum drawMode;
+    GLuint rotAngleLoc; // TODO(Adin): make uniform storage more generic
 };
 
 GLMeshInfo GLRenderInit(char *vertexShaderLocation, char *fragmentShaderLocation);
 // NOTE(Adin): It's up to the platform layer to swap buffers becasue that
 // varies between platforms
-void GLRender(GLMeshInfo meshInfo);
+void GLRenderMesh(GLMeshInfo meshInfo);
 
 #endif
