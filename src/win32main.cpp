@@ -1,8 +1,5 @@
-#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <fstream>
-#include <sstream>
 #include <vector>
 #include "math/math.h"
 
@@ -22,6 +19,8 @@
 */
 
 // TODO(Adin): Switch to CreateWindowEx
+
+typedef unsigned char byte;
 
 int InitalizeConsole() {
     BOOL success = AllocConsole();
@@ -76,7 +75,56 @@ int InitalizeConsole() {
     return 0;
 }
 
-int loadGLExtensions(HINSTANCE hInstance) {
+struct FileContents {
+    unsigned int length;
+    byte *data;
+};
+
+// TODO(Adin): Platform specific file system
+FileContents ReadFileContents(const char *filePath) {
+    FileContents result = {0};
+    
+    FILE *file = fopen(filePath, "rb");
+    if(file) {
+        fseek(file, 0, SEEK_END);
+        result.length = ftell(file);
+        fseek(file, 0, SEEK_SET);
+        if(result.length) {
+            result.data = (byte *) malloc(result.length);
+            if(result.data) {
+                fread(result.data, 1, result.length, file);
+            }
+            else {
+                // result.data = malloc(length) failed
+                result.length = 0;
+            }
+        }
+    }
+    
+    if(file) {
+        fclose(file);
+    }
+    
+    return result;
+}
+
+void DestroyFileContents(FileContents fileContents) {
+    if(fileContents.length && fileContents.data) {
+        free(fileContents.data);
+    }
+}
+
+void DestroyFileContentsPtr(FileContents *fileContents) {
+    if(fileContents) {
+        if(fileContents->length && fileContents->data) {
+            free(fileContents->data);
+        }
+        
+        free(fileContents);
+    }
+}
+
+int LoadGLExtensions(HINSTANCE hInstance) {
     const char DummyWindowClassName[] = "TLETCDummyWinClass";
     
     WNDCLASS dummyWindowClass = {};
@@ -183,48 +231,35 @@ HGLRC createGLContext(HDC windowHDC) {
     return result;
 }
 
-GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path) {
+GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path) {
     
 	//Create the shaders
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
     
 	//Grab vertex shader info from file
-	std::string VertexShaderCode;
-	std::ifstream VertexShaderStream(vertex_file_path, std::ifstream::in);
-	if (VertexShaderStream.is_open()) {
-		std::stringstream sstr;
-		sstr << VertexShaderStream.rdbuf();
-		VertexShaderCode = sstr.str();
-		VertexShaderStream.close();
-	}
-	else {
-		printf("Could not open vertex shader file. Are you in the right dir?\n");
-		getchar();
-		return 0;
+	FileContents vertexShader = ReadFileContents(vertex_file_path);
+	if(!vertexShader.length) {
+        LOG(ERR, "Could not open vertex shader file. Are you in the right dir?\n");
+        DestroyFileContents(vertexShader);
+        return 0;
 	}
     
 	//Grab fragment shader info from file
-	std::string FragmentShaderCode;
-	std::ifstream FragmentShaderStream(fragment_file_path, std::ifstream::in);
-	if (FragmentShaderStream.is_open()) {
-		std::stringstream sstr;
-		sstr << FragmentShaderStream.rdbuf();
-		FragmentShaderCode = sstr.str();
-		FragmentShaderStream.close();
-	}
-	else {
-		printf("Could not open fragment shader file. Are you in the right dir?\n");
-		getchar();
-		return 0;
+    FileContents fragmentShader = ReadFileContents(fragment_file_path);
+	if(!fragmentShader.length) {
+        LOG(ERR, "Could not open fragment shader file. Are you in the right dir?\n");
+        DestroyFileContents(vertexShader);
+        DestroyFileContents(fragmentShader);
+        return 0;
 	}
     
 	GLint Result = GL_FALSE;
 	int InfoLogLength;
     
 	//Compile vertex shader
-	printf("Compiling shader : %s\n", vertex_file_path);
-	char const* VertexShaderPointer = VertexShaderCode.c_str();
+	LOG(INF, "Compiling shader: \"%s\"\n", vertex_file_path);
+	const char *VertexShaderPointer = (const char *)vertexShader.data;
 	glShaderSource(VertexShaderID, 1, &VertexShaderPointer, NULL);
 	glCompileShader(VertexShaderID);
     
@@ -232,14 +267,14 @@ GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
 	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if (InfoLogLength > 0) {
-		std::vector<char> VertexShaderErrorMessage(InfoLogLength + 1);
-		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-		printf("%s\n", &VertexShaderErrorMessage[0]);
+        std::vector<char> VertexShaderErrorMessage(InfoLogLength + 1);
+        glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+        LOG(ERR, "%s\n", &VertexShaderErrorMessage[0]);
 	}
     
 	//Compile fragment shader
-	printf("Compiling shader : %s\n", fragment_file_path);
-	char const* FragmentShaderPointer = FragmentShaderCode.c_str();
+	LOG(INF, "Compiling shader: \"%s\"\n", fragment_file_path);
+	const char *FragmentShaderPointer = (const char *)fragmentShader.data;
 	glShaderSource(FragmentShaderID, 1, &FragmentShaderPointer, NULL);
 	glCompileShader(FragmentShaderID);
     
@@ -247,12 +282,16 @@ GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
 	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
 	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if (InfoLogLength > 0) {
-		std::vector<char> FragmentShaderErrorMessage(InfoLogLength + 1);
-		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-		printf("%s\n", &FragmentShaderErrorMessage[0]);
+        std::vector<char> FragmentShaderErrorMessage(InfoLogLength + 1);
+        glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+        LOG(ERR, "%s\n", &FragmentShaderErrorMessage[0]);
 	}
     
-	printf("Linking program!\n");
+    //Cleanup file memory
+    DestroyFileContents(vertexShader);
+    DestroyFileContents(fragmentShader);
+    
+	LOG(INF, "Linking program!\n");
 	GLuint ProgramID = glCreateProgram();
 	glAttachShader(ProgramID, VertexShaderID);
 	glAttachShader(ProgramID, FragmentShaderID);
@@ -262,9 +301,9 @@ GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
 	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
 	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if (InfoLogLength > 0) {
-		std::vector<char> ProgramErrorMessage(InfoLogLength + 1);
-		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
-		printf("%s\n", &ProgramErrorMessage[0]);
+        std::vector<char> ProgramErrorMessage(InfoLogLength + 1);
+        glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+        LOG(ERR, "%s\n", &ProgramErrorMessage[0]);
 	}
     
 	glDetachShader(ProgramID, VertexShaderID);
@@ -276,22 +315,23 @@ GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
 	return ProgramID;
 }
 
-void render(HDC windowHDC, GLuint ShaderProgramID,  GLuint vertexBuffer, GLenum mode, int dimensions) {
-	
-	//Draw background
+void render(HDC windowHDC, GLuint ShaderProgramID,  GLuint vertexArrayObject, GLenum mode, int numVertices) {
+	//Begin frame
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	//Get VAA ready for draw
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glBindVertexArray(vertexArrayObject);
     
 	//Bind to the given shader state
 	glUseProgram(ShaderProgramID);
 	//Draw a triangle
-	glDrawArrays(mode, 0, dimensions);
-	
-	glDisableVertexAttribArray(0);
+	glDrawArrays(mode, 0, numVertices);
+	//Unuse program
+    glUseProgram(ShaderProgramID);
+    
+    glBindVertexArray(0);
+    
+    //End frame and display
     SwapBuffers(windowHDC);
 }
 
@@ -331,7 +371,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     RegisterClass(&wc);
     
     // GLEW is initalized in here
-    loadGLExtensions(hInstance);
+    LoadGLExtensions(hInstance);
     
     HWND window = CreateWindow(WINDOW_CLASS_NAME, "TLETC Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
     HDC windowHDC = GetDC(window);
@@ -347,10 +387,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     // #BADA55
     glClearColor(0.729f, 0.854f, 0.333f, 1.0f);
-    GLuint programID = loadShaders("shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
+    GLuint programID = LoadShaders("shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
     
     GLfloat vertices[]{
-		-1.0f, -1.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
         0.0f, 1.0f,  0.0f
     };
@@ -371,7 +411,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
     
     // Main loop
     MSG message = {};
@@ -387,10 +431,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             DispatchMessage(&message);
         }
         
-		
-        
         // Sample render function to show where to put rendering code
-        render(windowHDC, programID, vbo, GL_TRIANGLES, 3);
+        render(windowHDC, programID, vao, GL_TRIANGLES, 3);
     }
     
     // These are probably unnecessary because the window is already destroyed
