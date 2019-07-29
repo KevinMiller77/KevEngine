@@ -1,7 +1,8 @@
 #ifndef __TLETC_TYPES__
 #define __TLETC_TYPES__
 
-
+#define local static
+#define global static
 
 //Common type defs
 typedef char                i8_t;
@@ -16,7 +17,6 @@ typedef float               f32_t;
 typedef double              f64_t;
 typedef long double         f96_t;
 
-
-
+typedef unsigned char byte;
 
 #endif
