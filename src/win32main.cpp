@@ -228,7 +228,10 @@ HGLRC CreateGLContext(HDC windowHDC) {
 }
 
 void Win32Render(HDC windowHDC, GLMeshInfo meshInfo) {
-    GLRender(meshInfo);
+    //Begin frame
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+    GLRenderMesh(meshInfo);
     
     //End frame and display
     SwapBuffers(windowHDC);

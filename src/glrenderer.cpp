@@ -2,6 +2,9 @@
 
 #include <vector>
 
+#include <math.h>
+#include <time.h>
+
 #include "commonTypes.h"
 #include "logging.h"
 #include "fileio.h"
@@ -81,6 +84,8 @@ local GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_
         LOG(ERR, "%s\n", &ProgramErrorMessage[0]);
 	}
     
+    glValidateProgram(ProgramID);
+    
 	glDetachShader(ProgramID, VertexShaderID);
 	glDetachShader(ProgramID, FragmentShaderID);
     
@@ -98,6 +103,8 @@ GLMeshInfo GLRenderInit(char *vertexShaderLocation, char *fragmentShaderLocation
     
     GLuint programID = CreateGLProgram(vertexShaderLocation, fragmentShaderLocation);
     result.programID = programID;
+    
+    result.rotAngleLoc = glGetUniformLocation(programID, "rotAngle");
     
 #if 0
     GLfloat vertices[] = {
@@ -176,19 +183,23 @@ GLMeshInfo GLRenderInit(char *vertexShaderLocation, char *fragmentShaderLocation
     return result;
 }
 
-void GLRender(GLMeshInfo meshInfo) {
-    //Begin frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+void GLRenderMesh(GLMeshInfo meshInfo) {
 	//Get VAA ready for draw
     glBindVertexArray(meshInfo.vao);
     //Bind to the given program
 	glUseProgram(meshInfo.programID);
-	
-    //Draw the mesh
-	glDrawElements(meshInfo.drawMode, meshInfo.numElements, GL_UNSIGNED_SHORT, (void *)0);
     
-	//Unbind objects
+    float angle = ((float) (clock() % 360)) * 0.1f;
+    glUniform1f(meshInfo.rotAngleLoc, angle);
+    
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    
+    //Draw the mesh
+    glDrawElements(meshInfo.drawMode, meshInfo.numElements, GL_UNSIGNED_SHORT, (void *)0);
+    
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    
+    //Unbind objects
     glUseProgram(0);
     glBindVertexArray(0);
 }
