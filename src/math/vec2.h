@@ -1,44 +1,35 @@
 #ifndef __TLETC_Vec2__
 #define __TLETC_Vec2__
 
-#include <iostream>
-#include <string.h>
-#include "logging.h"
-
-namespace tletc {
-    //3 Float vector
-    struct Vec2{
-        union{
-            float elements[2];
-            struct {float x; float y;};
-        };
-        
-        Vec2();
-        Vec2(float x, float y);
-        ~Vec2();
-        
-        const float& operator[](int index) const;
-        float& operator[](int index);
-        
-        void operator+=(const Vec2& other);
-        void operator-=(const Vec2& other);
-        void operator*=(const Vec2& other);
-        void operator/=(const Vec2& other);
-        
-        friend std::ostream& operator<<(std::ostream& stream, Vec2& vector);
-        
-        friend Vec2 operator+(Vec2 left, Vec2 right);
-        friend Vec2 operator-(Vec2 left, Vec2 right);
-        friend Vec2 operator*(Vec2 left, Vec2 right);
-        friend Vec2 operator/(Vec2 left, Vec2 right);
-        
-        private:
-        void add(const Vec2& other);
-        void subtract(const Vec2& other);
-        void multiply(const Vec2& other);
-        void divide(const Vec2& other);
+//2 Float vector
+struct Vec2f {
+    union {
+        float elements[2];
+        struct {float x; float y;};
     };
-}
-
+    
+    Vec2f();
+    Vec2f(float x, float y);
+    ~Vec2f();
+    
+    const float& operator[](int index) const;
+    float& operator[](int index);
+    
+    void operator+=(const Vec2f& other);
+    void operator-=(const Vec2f& other);
+    void operator*=(const Vec2f& other);
+    void operator/=(const Vec2f& other);
+    
+    friend Vec2f operator+(Vec2f left, Vec2f right);
+    friend Vec2f operator-(Vec2f left, Vec2f right);
+    friend Vec2f operator*(Vec2f left, Vec2f right);
+    friend Vec2f operator/(Vec2f left, Vec2f right);
+    
+    private:
+    void add(const Vec2f& other);
+    void subtract(const Vec2f& other);
+    void multiply(const Vec2f& other);
+    void divide(const Vec2f& other);
+};
 
 #endif

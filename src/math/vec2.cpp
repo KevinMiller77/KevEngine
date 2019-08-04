@@ -1,102 +1,88 @@
-#include <vec2.h>
+#include "vec2.h"
 
-namespace tletc {
-    Vec2::Vec2(){
-        memset(elements, 0, 2 * sizeof(float));
-    }
+#include <string.h>
+#include <assert.h>
 
-    Vec2::~Vec2(){}
+Vec2f::Vec2f() {
+    memset(elements, 0, 2 * sizeof(float));
+}
 
-    Vec2::Vec2(float x, float y){
-        elements[0] = x;
-        elements[1] = y;
-    }
+Vec2f::~Vec2f() {}
 
-    void Vec2::add(const Vec2& other)
-    {
-        elements[0] += other[0];
-        elements[1] += other[1];
-    }
+Vec2f::Vec2f(float x, float y) {
+    elements[0] = x;
+    elements[1] = y;
+}
 
-    void Vec2::subtract(const Vec2& other)
-    {
-        elements[0] -= other[0];
-        elements[1] -= other[1];
-    }
+void Vec2f::add(const Vec2f& other) {
+    elements[0] += other[0];
+    elements[1] += other[1];
+}
 
-    void Vec2::multiply(const Vec2& other)
-    {
-        elements[0] *= other[0];
-        elements[1] *= other[1];
-    }
+void Vec2f::subtract(const Vec2f& other) {
+    elements[0] -= other[0];
+    elements[1] -= other[1];
+}
 
-    void Vec2::divide(const Vec2& other)
-    {
-        elements[0] /= other[0];
-        elements[1] /= other[1];
-    }
+void Vec2f::multiply(const Vec2f& other) {
+    elements[0] *= other[0];
+    elements[1] *= other[1];
+}
 
-    const float& Vec2::operator[](int index) const 
-    {
-        if (index < 2 && index > 0 ){
-            return elements[index];
-        }
-        LOGE("ACCESS VIOLATION\n");
-    }
+void Vec2f::divide(const Vec2f& other) {
+    elements[0] /= other[0];
+    elements[1] /= other[1];
+}
 
+const float& Vec2f::operator[](int index) const {
+    assert(index >= 0 && index < 2);
     
-    float& Vec2::operator[](int index)
-    {
-        if (index < 2 && index > 0 ){
-            return elements[index];
-        }
-        LOGE("ACCESS VIOLATION\n");
-    }
+    return elements[index];
+}
+
+
+float& Vec2f::operator[](int index) {
+    assert(index >= 0 && index < 2);
     
-    void Vec2::operator+=(const Vec2& other)
-    {
-        add(other);
-    }
+    return elements[index];
+}
 
-    void Vec2::operator-=(const Vec2& other)
-    {
-        subtract(other);
-    }
+void Vec2f::operator+=(const Vec2f& other) {
+    add(other);
+}
 
-    void Vec2::operator*=(const Vec2& other)
-    {
-        multiply(other);
-    }
+void Vec2f::operator-=(const Vec2f& other) {
+    subtract(other);
+}
 
-    void Vec2::operator/=(const Vec2& other) 
-    {
-        divide(other);
-    }
+void Vec2f::operator*=(const Vec2f& other) {
+    multiply(other);
+}
 
-    std::ostream& operator<<(std::ostream& stream, Vec2& vector)
-    {
-        stream << "["   << vector[0] << ", "
-                        << vector[1] << "]\n";
-        return stream;
-    }
+void Vec2f::operator/=(const Vec2f& other) {
+    divide(other);
+}
 
-    Vec2 operator+(Vec2 left, Vec2 right)
-    {
-        left.add(right);
-    }
+Vec2f operator+(Vec2f left, Vec2f right) {
+    Vec2f result(left);
+    result.add(right);
+    return result;
+}
 
-    Vec2 operator-(Vec2 left, Vec2 right)
-    {
-        left.subtract(right);
-    }
+Vec2f operator-(Vec2f left, Vec2f right) {
+    Vec2f result(left);
+    result.subtract(right);
+    return result;
+}
 
-    Vec2 operator*(Vec2 left, Vec2 right)
-    {
-        left.multiply(right);
-    }
+Vec2f operator*(Vec2f left, Vec2f right) {
+    Vec2f result(left);
+    result.multiply(right);
+    return result;
+}
 
-    Vec2 operator/(Vec2 left, Vec2 right)
-    {
-        left.divide(right);
-    }
+Vec2f operator/(Vec2f left, Vec2f right) {
+    Vec2f result(left);
+    result.divide(right);
+    return result;
 }

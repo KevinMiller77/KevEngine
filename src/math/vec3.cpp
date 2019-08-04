@@ -1,109 +1,93 @@
-#include <vec3.h>
+#include "vec3.h"
 
-namespace tletc {
-    Vec3::Vec3(){
-        memset(elements, 0, 3 * sizeof(float));
-    }
+#include <string.h>
+#include <assert.h>
 
-    Vec3::~Vec3(){}
+Vec3f::Vec3f(){
+    memset(elements, 0, 3 * sizeof(float));
+}
 
-    Vec3::Vec3(float x, float y, float z){
-        elements[0] = x;
-        elements[1] = y;
-        elements[2] = z;
+Vec3f::~Vec3f(){}
 
-    }
-
-    void Vec3::add(const Vec3& other)
-    {
-        elements[0] += other[0];
-        elements[1] += other[1];
-        elements[2] += other[2];
-    }
-
-    void Vec3::subtract(const Vec3& other)
-    {
-        elements[0] -= other[0];
-        elements[1] -= other[1];
-        elements[2] -= other[2];
-    }
-
-    void Vec3::multiply(const Vec3& other)
-    {
-        elements[0] *= other[0];
-        elements[1] *= other[1];
-        elements[2] *= other[2];
-    }
-
-    void Vec3::divide(const Vec3& other)
-    {
-        elements[0] /= other[0];
-        elements[1] /= other[1];
-        elements[2] /= other[2];
-    }
-
-    const float& Vec3::operator[](int index) const 
-    {
-        if (index < 3 && index > 0 ){
-            return elements[index];
-        }
-        LOGE("ACCESS VIOLATION\n");
-    }
-
+Vec3f::Vec3f(float x, float y, float z){
+    elements[0] = x;
+    elements[1] = y;
+    elements[2] = z;
     
-    float& Vec3::operator[](int index)
-    {
-        if (index < 3 && index > 0 ){
-            return elements[index];
-        }
-        LOGE("ACCESS VIOLATION\n");
-    }
+}
+
+void Vec3f::add(const Vec3f& other) {
+    elements[0] += other[0];
+    elements[1] += other[1];
+    elements[2] += other[2];
+}
+
+void Vec3f::subtract(const Vec3f& other) {
+    elements[0] -= other[0];
+    elements[1] -= other[1];
+    elements[2] -= other[2];
+}
+
+void Vec3f::multiply(const Vec3f& other) {
+    elements[0] *= other[0];
+    elements[1] *= other[1];
+    elements[2] *= other[2];
+}
+
+void Vec3f::divide(const Vec3f& other) {
+    elements[0] /= other[0];
+    elements[1] /= other[1];
+    elements[2] /= other[2];
+}
+
+const float& Vec3f::operator[](int index) const {
+    assert(index >= 0 && index < 3);
     
-    void Vec3::operator+=(const Vec3& other)
-    {
-        add(other);
-    }
+    return elements[index];
+}
 
-    void Vec3::operator-=(const Vec3& other)
-    {
-        subtract(other);
-    }
+float& Vec3f::operator[](int index) {
+    assert(index >= 0 && index < 3);
+    
+    return elements[index];
+}
 
-    void Vec3::operator*=(const Vec3& other)
-    {
-        multiply(other);
-    }
+void Vec3f::operator+=(const Vec3f& other) {
+    add(other);
+}
 
-    void Vec3::operator/=(const Vec3& other) 
-    {
-        divide(other);
-    }
+void Vec3f::operator-=(const Vec3f& other) {
+    subtract(other);
+}
 
-    std::ostream& operator<<(std::ostream& stream, Vec3& vector)
-    {
-        stream << "["   << vector[0] << ", "
-                        << vector[1] << ", "
-                        << vector[2] << "]\n";
-        return stream;
-    }
+void Vec3f::operator*=(const Vec3f& other) {
+    multiply(other);
+}
 
-    Vec3 operator+(Vec3 left, Vec3 right)
-    {
-        left.add(right);
-    }
+void Vec3f::operator/=(const Vec3f& other) {
+    divide(other);
+}
 
-    Vec3 operator-(Vec3 left, Vec3 right)
-    {
-        left.subtract(right);
-    }
+Vec3f operator+(Vec3f left, Vec3f right) {
+    Vec3f result(left);
+    result.add(right);
+    return result;
+}
 
-    Vec3 operator*(Vec3 left, Vec3 right)
-    {
-        left.multiply(right);
-    }
+Vec3f operator-(Vec3f left, Vec3f right) {
+    Vec3f result(left);
+    result.subtract(right);
+    return result;
+}
 
-    Vec3 operator/(Vec3 left, Vec3 right)
-    {
-        left.divide(right);
-    }
+Vec3f operator*(Vec3f left, Vec3f right) {
+    Vec3f result(left);
+    result.multiply(right);
+    return result;
+}
+
+Vec3f operator/(Vec3f left, Vec3f right) {
+    Vec3f result(left);
+    result.divide(right);
+    return result;
 }

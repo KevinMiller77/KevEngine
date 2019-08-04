@@ -5,6 +5,10 @@
 //                  4) Debug 5) Verbose 6)Too Much Info
 
 #ifdef DEBUG_LEVEL
+#include <stdio.h>
+#endif
+
+#ifdef DEBUG_LEVEL
 #define LOG(type, ...) LOG_##type(__VA_ARGS__)
 #else
 #define LOG(type, ...)
