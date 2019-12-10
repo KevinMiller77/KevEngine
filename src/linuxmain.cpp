@@ -8,7 +8,6 @@
 #define  GLEW_STATIC
 #include <GL/glew.h>
 #include <GL/glx.h>
-#include <GL/glu.h>
 #include "commonTypes.h"
 #include "math.h"
 
