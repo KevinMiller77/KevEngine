@@ -1,6 +1,16 @@
 #ifndef __TLETC_TYPES__
 #define __TLETC_TYPES__
 
+#include <windows.h>
+#include <wingdi.h>
+
+#include "graphics/GL2DRenderer.h"
+#include "graphics/ShaderProgram.h"
+
+bool OnGameStart();
+void Draw(HDC windowHDC);
+void Update(); 
+
 #define local static
 #define global static
 
@@ -18,5 +28,6 @@ typedef double              f64_t;
 typedef long double         f96_t;
 
 typedef unsigned char byte;
+
 
 #endif

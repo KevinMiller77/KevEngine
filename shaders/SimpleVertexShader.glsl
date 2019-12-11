@@ -1,12 +1,21 @@
-#version 330
+#version 330 core
 
-uniform float rotAngle;
+layout (location = 0) in vec4 position;
+layout (location = 1) in vec4 color;
 
-layout(location = 0) in vec3 vertexPosition_modelspace;
+uniform mat4 pr_matrix;
+uniform mat4 vw_matrix = mat4(1.0);
+uniform mat4 ml_matrix = mat4(1.0);
 
-void main(){
-    gl_Position = vec4(vertexPosition_modelspace, 1) * mat4x4(vec4(cos(rotAngle), 0, sin(rotAngle), 0),
-                                                              vec4(0, 1, 0, 0),
-                                                              vec4(-sin(rotAngle), 0, cos(rotAngle), 0),
-                                                              vec4(0, 0, 0, 1));
+out DATA
+{
+	vec4 position;
+	vec4 color;
+} vs_out;
+
+void main()
+{
+	gl_Position = pr_matrix * vw_matrix * ml_matrix * position;
+	vs_out.position = ml_matrix * position;
+	vs_out.color = color;
 }

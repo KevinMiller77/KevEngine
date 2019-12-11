@@ -1,18 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <time.h>
+
 #include <windows.h>
 #include <wingdi.h>
 
 #include <GL/glew.h>
 #include <GL/wglew.h>
 
-#include "glrenderer.h"
-#include "commonTypes.h"
-#include "logging.h"
-#include "fileio.h"
+#include "utils/Logging.h"
+#include "utils/FileIO.h"
+
+#include "graphics/ShaderProgram.h"
+#include "graphics/GL2DRenderer.h"
+
+#include "CommonTypes.h"
+
 
 #define WINDOW_CLASS_NAME "TLETCTestWindowClass"
+
+#define TICK_RATE 1000;
+#define FRAME_RATE 60;
 
 /*
   OpenGL Reference Wiki:
@@ -20,8 +29,6 @@
 */
 
 // TODO(Adin): Switch to CreateWindowEx
-
-global GLMeshInfo GlobalMeshInfo;
 
 int InitalizeConsole() {
     BOOL success = AllocConsole();
@@ -74,50 +81,6 @@ int InitalizeConsole() {
     freopen_s(&newStderr, "CONOUT$", "w", stderr);
     
     return 0;
-}
-
-// TODO(Adin): WINAPI file system
-FileContents ReadFileContents(const char *filePath) {
-    FileContents result = {0};
-    
-    FILE *file = fopen(filePath, "rb");
-    if(file) {
-        fseek(file, 0, SEEK_END);
-        result.length = ftell(file);
-        fseek(file, 0, SEEK_SET);
-        if(result.length) {
-            result.data = (byte *) malloc(result.length);
-            if(result.data) {
-                fread(result.data, 1, result.length, file);
-            }
-            else {
-                // result.data = malloc(length) failed
-                result.length = 0;
-            }
-        }
-    }
-    
-    if(file) {
-        fclose(file);
-    }
-    
-    return result;
-}
-
-void DestroyFileContents(FileContents fileContents) {
-    if(fileContents.length && fileContents.data) {
-        free(fileContents.data);
-    }
-}
-
-void DestroyFileContentsPtr(FileContents *fileContents) {
-    if(fileContents) {
-        if(fileContents->length && fileContents->data) {
-            free(fileContents->data);
-        }
-        
-        free(fileContents);
-    }
 }
 
 int LoadGLExtensions(HINSTANCE hInstance) {
@@ -227,16 +190,6 @@ HGLRC CreateGLContext(HDC windowHDC) {
     return result;
 }
 
-void Win32Render(HDC windowHDC, GLMeshInfo meshInfo) {
-    //Begin frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-    GLRenderMesh(meshInfo);
-    
-    //End frame and display
-    SwapBuffers(windowHDC);
-}
-
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
     switch(message) {
         case WM_DESTROY: {
@@ -247,11 +200,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
         
         case WM_SIZE: {
             // Also call render function here
-            
             glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
             
             HDC tempHDC = GetDC(hwnd);
-            Win32Render(tempHDC, GlobalMeshInfo);
+            Draw(tempHDC);
             ReleaseDC(hwnd, tempHDC);
             return 0;
         } break;
@@ -276,24 +228,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     // GLEW is initalized in here
     LoadGLExtensions(hInstance);
-    
+
     HWND window = CreateWindow(WINDOW_CLASS_NAME, "TLETC Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
     HDC windowHDC = GetDC(window);
     
     HGLRC glContext = CreateGLContext(windowHDC);
     
     wglMakeCurrent(windowHDC, glContext);
-    
+
     // TODO(Adin): Investigate why this needs "%s"
     LOG(DBG, "%s\n", glGetString(GL_VERSION));
     
-    GlobalMeshInfo = GLRenderInit("shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
-    
+    //Game start actions
+    OnGameStart();
     ShowWindow(window, SW_SHOW);
     
     // Main loop
     MSG message = {};
     BOOL running = TRUE;
+    //clock_t TICK_KEEP;
+    //clock_t FRAME_KEEP;
     while(running) {
         while(PeekMessage(&message, NULL, 0, 0, PM_REMOVE)) {
             if(message.message == WM_QUIT) {
@@ -304,9 +258,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             TranslateMessage(&message);
             DispatchMessage(&message);
         }
-        
-        // Sample render function to show where to put rendering code
-        Win32Render(windowHDC, GlobalMeshInfo);
+        Update();
+        Draw(windowHDC);
     }
     
     // These are probably unnecessary because the window is already destroyed

@@ -1,6 +1,9 @@
 #ifndef __TLETC_MAT4__
 #define __TLETC_MAT4__
 
+#include <math.h>
+#include "vec2.h"
+#include "vec3.h"
 #include "vec4.h"
 
 //4 * 4 float matrix
@@ -14,8 +17,13 @@ struct Mat4f {
     Mat4f(float identity);
     Mat4f(Vec4f row0, Vec4f row1, Vec4f row2, Vec4f row3);
     ~Mat4f();
-    
-    static Mat4f Orthographic(float left, float right, float top, float bottom, float near, float far);
+
+    static Mat4f orthographic(float left, float right, float top, float bottom, float near, float far);
+	static Mat4f perspective(float fov, float aspectRatio, float near, float far);
+
+	static Mat4f translation(const Vec3f& translation);
+	static Mat4f rotation(float angle, const Vec3f& axis);
+	static Mat4f scale(const Vec3f& scale);
     
     const Vec4f& operator[](int index) const;
     Vec4f& operator[](int index);
