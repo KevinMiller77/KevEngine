@@ -11,7 +11,7 @@ set DEFINES=/DGLEW_BUILD=GLEW_STATIC /D_CRT_SECURE_NO_WARNINGS
 set INCLUDE_PATH=/I..\include
 set LIBRARY_PATH=/libpath:..\lib
 set LIBRARIES=user32.lib gdi32.lib opengl32.lib glew32s.lib 
-set TARGETS=..\src\win32main.cpp ..\src\glrenderer.cpp
+set TARGETS=..\src\Win32Main.cpp ..\src\GameLoop.cpp ..\src\utils\FileIO.cpp ..\src\graphics\ShaderProgram.cpp ..\src\graphics\GL2DRenderer.cpp ..\src\math\vec2.cpp ..\src\math\vec3.cpp ..\src\math\vec4.cpp ..\src\math\mat2.cpp ..\src\math\mat4.cpp
 
 if not exist "bin\" mkdir bin
 
