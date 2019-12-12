@@ -11,16 +11,16 @@
 
 #include "../math/math.h"
 
-GLint getShaderUniformLocation(GLint shaderProgramID, const GLchar* name);
+GLuint getShaderUniformLocation(GLuint shaderProgramID, const GLchar* name);
 
-void setShaderUniform1f(GLint shaderProgramID, const GLchar* name, float value);
-void setShaderUniform1i(GLint shaderProgramID, const GLchar* name, int value);
-void setShaderUniform2f(GLint shaderProgramID, const GLchar* name, const Vec2f& vector);
-void setShaderUniform3f(GLint shaderProgramID, const GLchar* name, const Vec3f& vector);
-void setShaderUniform4f(GLint shaderProgramID, const GLchar* name, const Vec4f& vector);
-void setShaderUniformMat4(GLint shaderProgramID, const GLchar* name, const Mat4f& matrix);
+void setShaderUniform1f(GLuint shaderProgramID, const GLchar* name, float value);
+void setShaderUniform1i(GLuint shaderProgramID, const GLchar* name, int value);
+void setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2& vector);
+void setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3& vector);
+void setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4& vector);
+void setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4& matrix);
 
-void enableShaderProgram(GLint shaderProgramID);
+void enableShaderProgram(GLuint shaderProgramID);
 void disableShaderProgram();
 
 GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_file_path);

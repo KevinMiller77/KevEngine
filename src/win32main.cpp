@@ -23,12 +23,30 @@
 #define TICK_RATE 1000;
 #define FRAME_RATE 60;
 
+GL2DRenderer renderer;
+
 /*
   OpenGL Reference Wiki:
   https://www.khronos.org/opengl/wiki/Creating_an_OpenGL_Context_(WGL)
 */
 
 // TODO(Adin): Switch to CreateWindowEx
+
+void GLAPIENTRY
+MessageCallback( GLenum source,
+                 GLenum type,
+                 GLuint id,
+                 GLenum severity,
+                 GLsizei length,
+                 const GLchar* message,
+                 const void* userParam )
+{
+  fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+
+    (void)source; (void)userParam; (void)message; (void)length; (void)id;
+}
 
 int InitalizeConsole() {
     BOOL success = AllocConsole();
@@ -229,7 +247,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // GLEW is initalized in here
     LoadGLExtensions(hInstance);
 
-    HWND window = CreateWindow(WINDOW_CLASS_NAME, "TLETC Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
+    HWND window = CreateWindow(WINDOW_CLASS_NAME, "TLETC Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 960, 540, NULL, NULL, hInstance, NULL);
     HDC windowHDC = GetDC(window);
     
     HGLRC glContext = CreateGLContext(windowHDC);
@@ -239,6 +257,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // TODO(Adin): Investigate why this needs "%s"
     LOG(DBG, "%s\n", glGetString(GL_VERSION));
     
+    glEnable (GL_DEBUG_OUTPUT);
+    glDebugMessageCallback( MessageCallback, 0);
+
     //Game start actions
     OnGameStart();
     ShowWindow(window, SW_SHOW);

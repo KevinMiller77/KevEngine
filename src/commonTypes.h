@@ -7,7 +7,7 @@
 #include "graphics/GL2DRenderer.h"
 #include "graphics/ShaderProgram.h"
 
-bool OnGameStart();
+void OnGameStart();
 void Draw(HDC windowHDC);
 void Update(); 
 

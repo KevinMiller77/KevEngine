@@ -86,42 +86,42 @@ GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_file_p
 	return ProgramID;
 }
 
-GLint getShaderUniformLocation(GLint shaderProgramID, const GLchar* name)
+GLuint getShaderUniformLocation(GLuint shaderProgramID, const GLchar* name)
 {
 	return glGetUniformLocation(shaderProgramID, name);
 }
 
-void setShaderUniform1f(GLint shaderProgramID, const GLchar* name, float value)
+void setShaderUniform1f(GLuint shaderProgramID, const GLchar* name, float value)
 {
 	glUniform1f(getShaderUniformLocation(shaderProgramID, name), value);
 }
 
-void setShaderUniform1i(GLint shaderProgramID, const GLchar* name, int value)
+void setShaderUniform1i(GLuint shaderProgramID, const GLchar* name, int value)
 {
 	glUniform1i(getShaderUniformLocation(shaderProgramID, name), value);
 }
 
-void setShaderUniform2f(GLint shaderProgramID, const GLchar* name, const Vec2f& vector)
+void setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2& vector)
 {
 	glUniform2f(getShaderUniformLocation(shaderProgramID, name), vector.x, vector.y);
 }
 
-void setShaderUniform3f(GLint shaderProgramID, const GLchar* name, const Vec3f& vector)
+void setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3& vector)
 {
 	glUniform3f(getShaderUniformLocation(shaderProgramID, name), vector.x, vector.y, vector.z);
 }
 
-void setShaderUniform4f(GLint shaderProgramID, const GLchar* name, const Vec4f& vector)
+void setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4& vector)
 {
 	glUniform4f(getShaderUniformLocation(shaderProgramID, name), vector.x, vector.y, vector.z, vector.w);
 }
 
-void setShaderUniformMat4(GLint shaderProgramID, const GLchar* name, const Mat4f& matrix)
+void setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4& matrix)
 {
 	glUniformMatrix4fv(getShaderUniformLocation(shaderProgramID, name), 1, GL_FALSE, matrix.elements);
 }
 
-void enableShaderProgram(GLint shaderProgramID)
+void enableShaderProgram(GLuint shaderProgramID)
 {
 	glUseProgram(shaderProgramID);
 }

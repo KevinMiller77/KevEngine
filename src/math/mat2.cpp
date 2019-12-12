@@ -13,7 +13,7 @@ Mat2f::Mat2f(float identity) {
     elements[1 * 2 + 1] = identity;
 }
 
-Mat2f::Mat2f(Vec2f row0, Vec2f row1) {
+Mat2f::Mat2f(Vec2 row0, Vec2 row1) {
     memcpy(rows[0].elements, row0.elements, 2 * sizeof(float));
     memcpy(rows[1].elements, row1.elements, 2 * sizeof(float));
 }
@@ -49,13 +49,13 @@ void Mat2f::multiply(const Mat2f& other) {
     memcpy(elements, result, 2 * 2 * sizeof(float));
 }
 
-const Vec2f& Mat2f::operator[](int index) const {
+const Vec2& Mat2f::operator[](int index) const {
     assert(index >= 0 && index < 2);
     
     return rows[index];
 }
 
-Vec2f& Mat2f::operator[](int index) {
+Vec2& Mat2f::operator[](int index) {
     assert(index >= 0 && index < 2);
     
     return rows[index];
