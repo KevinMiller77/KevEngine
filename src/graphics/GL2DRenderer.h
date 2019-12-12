@@ -9,18 +9,24 @@
 
 #include "../utils/Logging.h"
 #include "../utils/FileIO.h"
+#include "buffers/IndexBuffer.h"
+#include "buffers/VertexArray.h"
+#include "ShaderProgram.h"
+#include "Renderable2D.h"
+#include "GL2DRenderer.h"
 
-struct GLMeshInfo {
-    GLuint numVertices;
-    GLuint numElements;
-    GLuint vao;
-    GLuint programID;
-    GLenum drawMode;
+#include <deque>
+
+class GL2DRenderer 
+{
+private:
+    std::deque<const Renderable2D*> RenderQueue;
+
+public:
+    void submit(const Renderable2D* rederable);
+    void draw();
 };
 
-void Win32Render(HDC windowHDC, GLMeshInfo meshInfo);
-// NOTE(Adin): It's up to the platform layer to swap buffers becasue that
-// varies between platforms
-void GLRenderMesh(GLMeshInfo meshInfo);
+void Win32Render(HDC windowHDC, GL2DRenderer* renderer);
 
 #endif
