@@ -13,17 +13,15 @@
 #include "utils/FileIO.h"
 
 #include "graphics/ShaderProgram.h"
-#include "graphics/GL2DRenderer.h"
 
+#include "math/math.h"
 #include "CommonTypes.h"
-
+#include "TLETC.h"
 
 #define WINDOW_CLASS_NAME "TLETCTestWindowClass"
 
 #define TICK_RATE 1000;
 #define FRAME_RATE 60;
-
-GL2DRenderer renderer;
 
 /*
   OpenGL Reference Wiki:
@@ -31,6 +29,8 @@ GL2DRenderer renderer;
 */
 
 // TODO(Adin): Switch to CreateWindowEx
+
+TLETC* tletc = nullptr;
 
 void GLAPIENTRY
 MessageCallback( GLenum source,
@@ -221,14 +221,19 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
             glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
             
             HDC tempHDC = GetDC(hwnd);
-            Draw(tempHDC);
+            tletc->setScreenSize(Vec2u(LOWORD(lParam), HIWORD(lParam)));
+            tletc->Draw(tempHDC);
             ReleaseDC(hwnd, tempHDC);
             return 0;
         } break;
+
+        default:
+            break;
     }
     
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
     (void) hPrevInstance;
     (void) lpCmdLine;
@@ -249,6 +254,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     HWND window = CreateWindow(WINDOW_CLASS_NAME, "TLETC Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 960, 540, NULL, NULL, hInstance, NULL);
     HDC windowHDC = GetDC(window);
+
+    tletc = new TLETC(Vec2u(960, 540));
     
     HGLRC glContext = CreateGLContext(windowHDC);
     
@@ -261,9 +268,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     glDebugMessageCallback( MessageCallback, 0);
 
     //Game start actions
-    OnGameStart();
+    tletc->OnGameStart();
     ShowWindow(window, SW_SHOW);
-    
+
     // Main loop
     MSG message = {};
     BOOL running = TRUE;
@@ -271,16 +278,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     //clock_t FRAME_KEEP;
     while(running) {
         while(PeekMessage(&message, NULL, 0, 0, PM_REMOVE)) {
-            if(message.message == WM_QUIT) {
-                // Quit when it's quittin time
-                running = false;
+            switch(message.message) {
+
+                case (WM_QUIT):
+                    // Quit when it's quittin time
+                    running = false;
+                    break;
+
+                case (WM_MOUSEMOVE):
+                    tletc->setMousePos(Vec2u(LOWORD(message.lParam), HIWORD(message.lParam)));
+                    break;
+
+                default:
+                    break;
             }
             
             TranslateMessage(&message);
             DispatchMessage(&message);
         }
-        Update();
-        Draw(windowHDC);
+        tletc->Update();
+        tletc->Draw(windowHDC);
     }
     
     // These are probably unnecessary because the window is already destroyed

@@ -11,7 +11,7 @@ set DEFINES=/DGLEW_BUILD=GLEW_STATIC /D_CRT_SECURE_NO_WARNINGS
 set INCLUDE_PATH=/I..\include
 set LIBRARY_PATH=/libpath:..\lib
 set LIBRARIES=glew32s.lib user32.lib gdi32.lib opengl32.lib  
-set TARGETS=..\src\Win32Main.cpp ..\src\GameLoop.cpp ..\src\utils\FileIO.cpp ..\src\graphics\ShaderProgram.cpp ..\src\graphics\GL2DRenderer.cpp ..\src\graphics\Entity2D.cpp ..\src\graphics\Renderable2D.cpp ..\src\graphics\buffers\Buffer.cpp ..\src\graphics\buffers\IndexBuffer.cpp ..\src\graphics\buffers\VertexArray.cpp ..\src\math\vec2.cpp ..\src\math\vec3.cpp ..\src\math\vec4.cpp ..\src\math\mat2.cpp ..\src\math\mat4.cpp
+set TARGETS=..\src\Win32Main.cpp ..\src\TLETC.cpp ..\src\utils\FileIO.cpp ..\src\graphics\ShaderProgram.cpp ..\src\graphics\GL2DRenderer.cpp ..\src\graphics\Entity2D.cpp ..\src\graphics\Renderable2D.cpp ..\src\graphics\buffers\Buffer.cpp ..\src\graphics\buffers\IndexBuffer.cpp ..\src\graphics\buffers\VertexArray.cpp ..\src\math\vec2u.cpp ..\src\math\vec2f.cpp ..\src\math\vec3f.cpp ..\src\math\vec4f.cpp ..\src\math\mat2f.cpp ..\src\math\mat4f.cpp
 
 if not exist "bin\" mkdir bin
 

@@ -88,7 +88,14 @@ GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_file_p
 
 GLuint getShaderUniformLocation(GLuint shaderProgramID, const GLchar* name)
 {
-	return glGetUniformLocation(shaderProgramID, name);
+	GLint oldID;
+	glGetIntegerv(GL_CURRENT_PROGRAM,&oldID);
+
+	glUseProgram(shaderProgramID);
+	GLuint out = glGetUniformLocation(shaderProgramID, name);
+	glUseProgram(oldID);
+	
+	return out;
 }
 
 void setShaderUniform1f(GLuint shaderProgramID, const GLchar* name, float value)
@@ -101,22 +108,22 @@ void setShaderUniform1i(GLuint shaderProgramID, const GLchar* name, int value)
 	glUniform1i(getShaderUniformLocation(shaderProgramID, name), value);
 }
 
-void setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2& vector)
+void setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2f& vector)
 {
 	glUniform2f(getShaderUniformLocation(shaderProgramID, name), vector.x, vector.y);
 }
 
-void setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3& vector)
+void setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3f& vector)
 {
 	glUniform3f(getShaderUniformLocation(shaderProgramID, name), vector.x, vector.y, vector.z);
 }
 
-void setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4& vector)
+void setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4f& vector)
 {
 	glUniform4f(getShaderUniformLocation(shaderProgramID, name), vector.x, vector.y, vector.z, vector.w);
 }
 
-void setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4& matrix)
+void setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4f& matrix)
 {
 	glUniformMatrix4fv(getShaderUniformLocation(shaderProgramID, name), 1, GL_FALSE, matrix.elements);
 }

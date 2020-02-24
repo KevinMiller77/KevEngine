@@ -1,6 +1,6 @@
 #include "Renderable2D.h"
 
-Renderable2D::Renderable2D(const char* ID, Vec3 pos, Vec2 size, Vec4 col, GLuint shaderProg)
+Renderable2D::Renderable2D(const char* ID, Vec3f pos, Vec2f size, Vec4f col, GLuint shaderProg)
 :  ShaderProgramID(shaderProg)
 {
     UniqueID = ID;

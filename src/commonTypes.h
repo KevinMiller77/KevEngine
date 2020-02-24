@@ -1,16 +1,6 @@
 #ifndef __TLETC_TYPES__
 #define __TLETC_TYPES__
 
-#include <windows.h>
-#include <wingdi.h>
-
-#include "graphics/GL2DRenderer.h"
-#include "graphics/ShaderProgram.h"
-
-void OnGameStart();
-void Draw(HDC windowHDC);
-void Update(); 
-
 #define local static
 #define global static
 

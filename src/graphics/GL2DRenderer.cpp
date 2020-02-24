@@ -27,7 +27,7 @@ void GL2DRenderer::draw()
         renderable->getVAO()->bind();
         renderable->getIBO()->bind();
 
-        setShaderUniformMat4(renderable->getShaderID(), "ml_matrix", Mat4::translation(renderable->getPosition()));
+        setShaderUniformMat4(renderable->getShaderID(), "ml_matrix", Mat4f::translation(renderable->getPosition()));
         glDrawElements(GL_TRIANGLES, renderable->getIBO()->getCount(), GL_UNSIGNED_SHORT, nullptr);
 
         renderable->getIBO()->bind();

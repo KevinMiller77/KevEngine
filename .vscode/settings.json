@@ -2,6 +2,8 @@
     "C_Cpp.errorSquiggles": "Enabled",
     "files.associations": {
         "system_error": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "ios": "cpp",
+        "xiosbase": "cpp"
     }
 }

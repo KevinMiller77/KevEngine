@@ -1,13 +1,13 @@
-#include "mat4.h"
+#include "mat4f.h"
 
 #include <string.h>
 #include <assert.h>
 
-Mat4::Mat4() {
+Mat4f::Mat4f() {
     memset(elements, 0, 4 * 4 * sizeof(float));
 }
 
-Mat4::Mat4(float identity) {
+Mat4f::Mat4f(float identity) {
     memset(elements, 0, 4 * 4 * sizeof(float));
     elements[0 * 4 + 0] = identity;
     elements[1 * 4 + 1] = identity;
@@ -15,17 +15,17 @@ Mat4::Mat4(float identity) {
     elements[3 * 4 + 3] = identity;
 }
 
-Mat4::Mat4(Vec4 row0, Vec4 row1, Vec4 row2, Vec4 row3) {
+Mat4f::Mat4f(Vec4f row0, Vec4f row1, Vec4f row2, Vec4f row3) {
     memcpy(rows[0].elements, row0.elements, 4 * sizeof(float));
     memcpy(rows[1].elements, row1.elements, 4 * sizeof(float));
     memcpy(rows[2].elements, row2.elements, 4 * sizeof(float));
     memcpy(rows[3].elements, row3.elements, 4 * sizeof(float));
 }
 
-Mat4::~Mat4() {}
+Mat4f::~Mat4f() {}
 
-Mat4 Mat4::orthographic(float left, float right, float top, float bottom, float near, float far) {
-    Mat4 result(1.0f);
+Mat4f Mat4f::orthographic(float left, float right, float top, float bottom, float near, float far) {
+    Mat4f result(1.0f);
 
 	result.elements[0 + 0 * 4] = 2.0f / (right - left);
 
@@ -40,19 +40,19 @@ Mat4 Mat4::orthographic(float left, float right, float top, float bottom, float 
 	return result;
 }
 
-void Mat4::add(const Mat4& other) {
+void Mat4f::add(const Mat4f& other) {
     for (int i = 0; i < 4 * 4; i++) {
         elements[i] += other.elements[i];
     }
 }
 
-void Mat4::subtract(const Mat4& other) {
+void Mat4f::subtract(const Mat4f& other) {
     for (int i = 0; i < 4 * 4; i++) {
         elements[i] -= other.elements[i];
     }
 }
 
-void Mat4::multiply(const Mat4& other) {
+void Mat4f::multiply(const Mat4f& other) {
     float result[16];
     
     for (int row = 0; row < 4; row++) {
@@ -69,48 +69,48 @@ void Mat4::multiply(const Mat4& other) {
     memcpy(elements, result, 4 * 4 * sizeof(float));
 }
 
-const Vec4& Mat4::operator[](int index) const {
+const Vec4f& Mat4f::operator[](int index) const {
     assert(index >= 0 && index < 4);
     
     return rows[index];
 }
 
-Vec4& Mat4::operator[](int index) {
+Vec4f& Mat4f::operator[](int index) {
     assert(index >= 0 && index < 4);
     
     return rows[index];
 }
 
-void Mat4::operator+=(const Mat4& other) {
+void Mat4f::operator+=(const Mat4f& other) {
     add(other);
 }
 
-void Mat4::operator-=(const Mat4& other) {
+void Mat4f::operator-=(const Mat4f& other) {
     subtract(other);
 }
 
-void Mat4::operator*=(const Mat4& other) {
+void Mat4f::operator*=(const Mat4f& other) {
     multiply(other);
 }
 
-Mat4 operator+(Mat4 left, const Mat4& right) {
+Mat4f operator+(Mat4f left, const Mat4f& right) {
     left.add(right);
     return left;
 }
 
-Mat4 operator-(Mat4 left, const Mat4& right) {
+Mat4f operator-(Mat4f left, const Mat4f& right) {
     left.subtract(right);
     return left;
 }
 
-Mat4 operator*(Mat4 left, const Mat4& right) {
+Mat4f operator*(Mat4f left, const Mat4f& right) {
     left.multiply(right);
     return left;
 }
 
-Mat4 Mat4::perspective(float fov, float aspectRatio, float near, float far)
+Mat4f Mat4f::perspective(float fov, float aspectRatio, float near, float far)
 	{
-		Mat4 result(1.0f);
+		Mat4f result(1.0f);
 
 		float q = (float) (1.0f / tan(0.5f * fov * (3.14123f / 180.0f)));
 		float a = (float) (q / aspectRatio);
@@ -127,9 +127,9 @@ Mat4 Mat4::perspective(float fov, float aspectRatio, float near, float far)
 		return result;
 	}
 
-	Mat4 Mat4::translation(const Vec3& translation)
+	Mat4f Mat4f::translation(const Vec3f& translation)
 	{
-		Mat4 result(1.0f);
+		Mat4f result(1.0f);
 
 		result.elements[0 + 3 * 4] = translation.x;
 		result.elements[1 + 3 * 4] = translation.y;
@@ -138,9 +138,9 @@ Mat4 Mat4::perspective(float fov, float aspectRatio, float near, float far)
 		return result;
 	}
 
-	Mat4 Mat4::rotation(float angle, const Vec3& axis)
+	Mat4f Mat4f::rotation(float angle, const Vec3f& axis)
 	{
-		Mat4 result(1.0f);
+		Mat4f result(1.0f);
 
 		float r = angle * (3.14123f / 180.0f);
 		float c = (float) (cos(r));
@@ -166,9 +166,9 @@ Mat4 Mat4::perspective(float fov, float aspectRatio, float near, float far)
 		return result;
 	}
 
-	Mat4 Mat4::scale(const Vec3& scale)
+	Mat4f Mat4f::scale(const Vec3f& scale)
 	{
-		Mat4 result(1.0f);
+		Mat4f result(1.0f);
 
 		result.elements[0 + 0 * 4] = scale.x;
 		result.elements[1 + 1 * 4] = scale.y;
