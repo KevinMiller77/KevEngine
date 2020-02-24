@@ -13,28 +13,16 @@
 #include "utils/FileIO.h"
 
 #include "graphics/ShaderProgram.h"
-<<<<<<< HEAD
 
 #include "math/math.h"
 #include "CommonTypes.h"
 #include "TLETC.h"
-=======
-#include "graphics/GL2DRenderer.h"
-
-#include "CommonTypes.h"
-
->>>>>>> 9385a6cb1b46d988773c0c175ebbdd2b460a3a3a
 
 #define WINDOW_CLASS_NAME "TLETCTestWindowClass"
 
 #define TICK_RATE 1000;
 #define FRAME_RATE 60;
 
-<<<<<<< HEAD
-=======
-GL2DRenderer renderer;
-
->>>>>>> 9385a6cb1b46d988773c0c175ebbdd2b460a3a3a
 /*
   OpenGL Reference Wiki:
   https://www.khronos.org/opengl/wiki/Creating_an_OpenGL_Context_(WGL)
@@ -42,11 +30,8 @@ GL2DRenderer renderer;
 
 // TODO(Adin): Switch to CreateWindowEx
 
-<<<<<<< HEAD
 TLETC* tletc = nullptr;
 
-=======
->>>>>>> 9385a6cb1b46d988773c0c175ebbdd2b460a3a3a
 void GLAPIENTRY
 MessageCallback( GLenum source,
                  GLenum type,
@@ -236,12 +221,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
             glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
             
             HDC tempHDC = GetDC(hwnd);
-<<<<<<< HEAD
             tletc->setScreenSize(Vec2u(LOWORD(lParam), HIWORD(lParam)));
             tletc->Draw(tempHDC);
-=======
-            Draw(tempHDC);
->>>>>>> 9385a6cb1b46d988773c0c175ebbdd2b460a3a3a
             ReleaseDC(hwnd, tempHDC);
             return 0;
         } break;
@@ -287,15 +268,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     glDebugMessageCallback( MessageCallback, 0);
 
     //Game start actions
-<<<<<<< HEAD
     tletc->OnGameStart();
     ShowWindow(window, SW_SHOW);
 
-=======
-    OnGameStart();
-    ShowWindow(window, SW_SHOW);
-    
->>>>>>> 9385a6cb1b46d988773c0c175ebbdd2b460a3a3a
     // Main loop
     MSG message = {};
     BOOL running = TRUE;
@@ -321,13 +296,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             TranslateMessage(&message);
             DispatchMessage(&message);
         }
-<<<<<<< HEAD
         tletc->Update();
         tletc->Draw(windowHDC);
-=======
-        Update();
-        Draw(windowHDC);
->>>>>>> 9385a6cb1b46d988773c0c175ebbdd2b460a3a3a
     }
     
     // These are probably unnecessary because the window is already destroyed
