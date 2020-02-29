@@ -15,10 +15,10 @@ GLuint getShaderUniformLocation(GLuint shaderProgramID, const GLchar* name);
 
 void setShaderUniform1f(GLuint shaderProgramID, const GLchar* name, float value);
 void setShaderUniform1i(GLuint shaderProgramID, const GLchar* name, int value);
-void setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2& vector);
-void setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3& vector);
-void setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4& vector);
-void setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4& matrix);
+void setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2f& vector);
+void setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3f& vector);
+void setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4f& vector);
+void setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4f& matrix);
 
 void enableShaderProgram(GLuint shaderProgramID);
 void disableShaderProgram();

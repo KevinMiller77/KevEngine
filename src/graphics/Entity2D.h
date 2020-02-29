@@ -8,24 +8,24 @@ class Entity2D
 {
 protected:
     const char* UniqueID;
-    Vec3 Position;
-    Vec2 Size;
-    Vec4 Color;   
+    Vec3f Position;
+    Vec2f Size;
+    Vec4f Color;   
 
 public:
     Entity2D() = default;
-    Entity2D(const char* ID, Vec3 pos, Vec2 size, Vec4 col);
+    Entity2D(const char* ID, Vec3f pos, Vec2f size, Vec4f col);
     virtual ~Entity2D();
     
     inline const char* getID()    const { return UniqueID; }
-    inline const Vec3 getPosition() const { return Position; }
-    inline const Vec2 getSize()     const { return Size; }
-    inline const Vec4 getColor()    const { return Color; };
+    inline const Vec3f getPosition() const { return Position; }
+    inline const Vec2f getSize()     const { return Size; }
+    inline const Vec4f getColor()    const { return Color; };
 
     
-    inline const void setPosition(Vec3 newPosition) { Position = newPosition; }
-    inline const void setSize(Vec2 newSize)         { Size = newSize; }
-    inline const void setColor(Vec4 newColor)       { Color = newColor; };
+    inline const void setPosition(Vec3f newPosition) { Position = newPosition; }
+    inline const void setSize(Vec2f newSize)         { Size = newSize; }
+    inline const void setColor(Vec4f newColor)       { Color = newColor; };
 };
 
 #endif

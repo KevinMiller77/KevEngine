@@ -14,7 +14,7 @@ protected:
 
 public:
     Renderable2D() = default;
-    Renderable2D(const char* ID, Vec3 pos, Vec2 size, Vec4 col, GLuint shaderProg);
+    Renderable2D(const char* ID, Vec3f pos, Vec2f size, Vec4f col, GLuint shaderProg);
     virtual ~Renderable2D();
 
     inline const VertexArray* getVAO() const { return VAO; };
