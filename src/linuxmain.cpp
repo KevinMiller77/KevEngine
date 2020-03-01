@@ -1,3 +1,4 @@
+#if 0
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
@@ -5,7 +6,7 @@
 #include <vector>
 #include <X11/Xlib.h>
 #include <string>
-#define  GLEW_STATIC
+#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GL/glx.h>
 #include "commonTypes.h"
@@ -250,6 +251,5 @@ void render(GLuint ShaderProgramID, GLuint vertexBuffer, GLenum mode, int dimens
 	glDrawArrays(mode, 0, dimensions);
 
 	glDisableVertexAttribArray(0);
-} 
-
-
+}
+#endif

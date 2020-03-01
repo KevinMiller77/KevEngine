@@ -1,13 +1,18 @@
 #include "IndexBuffer.h"
 
-IndexBuffer::IndexBuffer(GLushort* data, GLsizei count)
-    :   Count(count)   
+IndexBuffer::IndexBuffer(GLushort *data, GLsizei count)
+    : Count(count)
 {
 
     glGenBuffers(1, &BufferID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BufferID);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLushort), data, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+IndexBuffer::~IndexBuffer()
+{
+    glDeleteBuffers(1, &BufferID);
 }
 
 void IndexBuffer::bind() const
@@ -19,4 +24,3 @@ void IndexBuffer::unbind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
-

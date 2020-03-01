@@ -11,7 +11,8 @@ private:
     GLuint Count;
 
 public:
-    IndexBuffer::IndexBuffer(GLushort* data, GLsizei count);
+    IndexBuffer(GLushort *data, GLsizei count);
+    ~IndexBuffer();
 
     void bind() const;
     void unbind() const;

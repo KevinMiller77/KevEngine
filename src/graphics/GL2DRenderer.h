@@ -12,21 +12,21 @@
 #include "buffers/IndexBuffer.h"
 #include "buffers/VertexArray.h"
 #include "ShaderProgram.h"
-#include "Renderable2D.h"
+#include "renderables/Renderable2D.h"
 #include "GL2DRenderer.h"
 
 #include <deque>
 
-class GL2DRenderer 
+class GL2DRenderer
 {
 private:
-    std::deque<const Renderable2D*> RenderQueue;
+    std::deque<const Renderable2D *> RenderQueue;
 
 public:
-    void submit(const Renderable2D* rederable);
+    void submit(const Renderable2D *renderable);
     void draw();
 };
 
-void Win32Render(HDC windowHDC, GL2DRenderer* renderer);
+void Win32Render(HDC windowHDC, GL2DRenderer *renderer);
 
 #endif

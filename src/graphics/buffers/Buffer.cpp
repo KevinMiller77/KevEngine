@@ -1,7 +1,7 @@
 #include "Buffer.h"
 
-Buffer::Buffer(GLfloat* data, GLsizei count, GLuint compCount)
-    :   ComponentCount(compCount)
+Buffer::Buffer(GLfloat *data, GLsizei count, GLuint compCount)
+    : ComponentCount(compCount)
 {
 
     glGenBuffers(1, &BufferID);
@@ -10,10 +10,17 @@ Buffer::Buffer(GLfloat* data, GLsizei count, GLuint compCount)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Buffer::bind(){
+Buffer::~Buffer()
+{
+    glDeleteBuffers(1, &BufferID);
+}
+
+void Buffer::bind()
+{
     glBindBuffer(GL_ARRAY_BUFFER, BufferID);
 }
 
-void Buffer::unbind(){
+void Buffer::unbind()
+{
     glBindBuffer(GL_ARRAY_BUFFER, BufferID);
 }

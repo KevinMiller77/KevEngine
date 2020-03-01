@@ -9,6 +9,7 @@ class Buffer {
 
 public:
     Buffer(GLfloat* data, GLsizei count, GLuint compCount);
+    ~Buffer();
 
     void bind();
     void unbind();

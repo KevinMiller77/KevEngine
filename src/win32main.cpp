@@ -30,31 +30,37 @@
 
 // TODO(Adin): Switch to CreateWindowEx
 
-TLETC* tletc = nullptr;
+TLETC *tletc = nullptr;
 
 void GLAPIENTRY
-MessageCallback( GLenum source,
-                 GLenum type,
-                 GLuint id,
-                 GLenum severity,
-                 GLsizei length,
-                 const GLchar* message,
-                 const void* userParam )
+MessageCallback(GLenum source,
+                GLenum type,
+                GLuint id,
+                GLenum severity,
+                GLsizei length,
+                const GLchar *message,
+                const void *userParam)
 {
-  fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n\n",
-           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-            type, severity, message );
+    fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n\n",
+            (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+            type, severity, message);
 
-    (void)source; (void)userParam; (void)message; (void)length; (void)id;
+    (void)source;
+    (void)userParam;
+    (void)message;
+    (void)length;
+    (void)id;
 }
 
-int InitalizeConsole() {
+int InitalizeConsole()
+{
     BOOL success = AllocConsole();
-    if(!success) {
+    if (!success)
+    {
         DebugBreak();
         return 1;
     }
-    
+
     // TODO(Adin): If possible get the first method to work it seems
     //             like it might be a better solution
 #if 0
@@ -87,38 +93,40 @@ int InitalizeConsole() {
     
     return 0;
 #endif
-    
+
     // TODO(Adin): return codes and error handling when error system is implemented
-    
+
     FILE *newStdout;
     FILE *newStdin;
     FILE *newStderr;
-    
+
     freopen_s(&newStdout, "CONOUT$", "w", stdout);
     freopen_s(&newStdin, "CONIN$", "r", stdin);
     freopen_s(&newStderr, "CONOUT$", "w", stderr);
-    
+
     return 0;
 }
 
-int LoadGLExtensions(HINSTANCE hInstance) {
+int LoadGLExtensions(HINSTANCE hInstance)
+{
     const char DummyWindowClassName[] = "TLETCDummyWinClass";
-    
+
     WNDCLASS dummyWindowClass = {};
     dummyWindowClass.style = CS_OWNDC;
     dummyWindowClass.lpfnWndProc = DefWindowProc;
     dummyWindowClass.hInstance = hInstance;
     dummyWindowClass.lpszClassName = DummyWindowClassName;
-    
+
     RegisterClass(&dummyWindowClass);
-    
+
     HWND dummyWindow = CreateWindow(DummyWindowClassName, "Dummy Thicc", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
-    
-    if(dummyWindow == NULL) {
+
+    if (dummyWindow == NULL)
+    {
         printf("Failed to create dummy window!\n");
         return 1;
     }
-    
+
     // Default dummy descriptor values copied from opengl wiki
     PIXELFORMATDESCRIPTOR dummyDescriptor = {};
     dummyDescriptor.nSize = sizeof(PIXELFORMATDESCRIPTOR);
@@ -129,48 +137,51 @@ int LoadGLExtensions(HINSTANCE hInstance) {
     dummyDescriptor.cDepthBits = 24;
     dummyDescriptor.cStencilBits = 8;
     dummyDescriptor.iLayerType = PFD_MAIN_PLANE;
-    
-    HDC dummyDC =  GetDC(dummyWindow);
-    if(dummyDC == NULL) {
+
+    HDC dummyDC = GetDC(dummyWindow);
+    if (dummyDC == NULL)
+    {
         printf("Failed to get dummy window HDC!\n");
         DestroyWindow(dummyWindow);
         return 1;
     }
-    
+
     int dummyPixelFormat = ChoosePixelFormat(dummyDC, &dummyDescriptor);
     SetPixelFormat(dummyDC, dummyPixelFormat, &dummyDescriptor);
-    
+
     HGLRC dummyWGLHandle = wglCreateContext(dummyDC);
     wglMakeCurrent(dummyDC, dummyWGLHandle);
-    
+
     // Don't need this anymore
     ReleaseDC(dummyWindow, dummyDC);
-    
+
     GLenum glewInitResult = glewInit();
-    if(glewInitResult != GLEW_OK) {
+    if (glewInitResult != GLEW_OK)
+    {
         printf("GLEW failed to init: %s\n", glewGetErrorString(glewInitResult));
-        
+
         wglMakeCurrent(NULL, NULL);
         wglDeleteContext(dummyWGLHandle);
-        
+
         DestroyWindow(dummyWindow);
-        
+
         return 1;
     }
-    
+
     wglMakeCurrent(NULL, NULL);
     wglDeleteContext(dummyWGLHandle);
-    
+
     DestroyWindow(dummyWindow);
-    
+
     UnregisterClass(DummyWindowClassName, hInstance);
-    
+
     return 0;
 }
 
-HGLRC CreateGLContext(HDC windowHDC) {
+HGLRC CreateGLContext(HDC windowHDC)
+{
     HGLRC result = NULL;
-    
+
     // Default attributes copied from opengl wiki
     const int pfAttributeList[] = {
         WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
@@ -182,19 +193,19 @@ HGLRC CreateGLContext(HDC windowHDC) {
         WGL_STENCIL_BITS_ARB, 8,
         0 // Null terminator
     };
-    
+
     int pixelFormatIndex = 0;
     UINT numPixelFormats = 0;
-    
+
     // Needed for the set pixel format call but not actually important or used
     PIXELFORMATDESCRIPTOR blankPFD = {};
     blankPFD.nSize = sizeof(PIXELFORMATDESCRIPTOR);
     blankPFD.nVersion = 1;
-    
+
     wglChoosePixelFormatARB(windowHDC, pfAttributeList, NULL, 1, &pixelFormatIndex, &numPixelFormats);
-    
+
     SetPixelFormat(windowHDC, pixelFormatIndex, &blankPFD);
-    
+
     // GL 3.2 debug context
     const int contextAttributeList[] = {
         WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
@@ -202,53 +213,59 @@ HGLRC CreateGLContext(HDC windowHDC) {
         WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_DEBUG_BIT_ARB,
         0 // Null terminator
     };
-    
+
     result = wglCreateContextAttribsARB(windowHDC, NULL, contextAttributeList);
-    
+
     return result;
 }
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    switch(message) {
-        case WM_DESTROY: {
-            PostQuitMessage(0);
-            return 0;
-            
-        } break;
-        
-        case WM_SIZE: {
-            // Also call render function here
-            glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
-            
-            HDC tempHDC = GetDC(hwnd);
-            tletc->setScreenSize(Vec2u(LOWORD(lParam), HIWORD(lParam)));
-            tletc->Draw(tempHDC);
-            ReleaseDC(hwnd, tempHDC);
-            return 0;
-        } break;
-
-        default:
-            break;
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    switch (message)
+    {
+    case WM_DESTROY:
+    {
+        PostQuitMessage(0);
+        return 0;
     }
-    
+    break;
+
+    case WM_SIZE:
+    {
+        // Also call render function here
+        glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
+
+        HDC tempHDC = GetDC(hwnd);
+        tletc->setScreenResolution(Vec2u(LOWORD(lParam), HIWORD(lParam)));
+        tletc->Draw(tempHDC);
+        ReleaseDC(hwnd, tempHDC);
+        return 0;
+    }
+    break;
+
+    default:
+        break;
+    }
+
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
-    (void) hPrevInstance;
-    (void) lpCmdLine;
-    (void) nShowCmd;
-    
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+{
+    (void)hPrevInstance;
+    (void)lpCmdLine;
+    (void)nShowCmd;
+
     InitalizeConsole();
-    
+
     WNDCLASS wc = {};
     wc.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = hInstance;
     wc.lpszClassName = WINDOW_CLASS_NAME;
-    
+
     RegisterClass(&wc);
-    
+
     // GLEW is initalized in here
     LoadGLExtensions(hInstance);
 
@@ -256,16 +273,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     HDC windowHDC = GetDC(window);
 
     tletc = new TLETC(Vec2u(960, 540));
-    
+
     HGLRC glContext = CreateGLContext(windowHDC);
-    
+
     wglMakeCurrent(windowHDC, glContext);
 
     // TODO(Adin): Investigate why this needs "%s"
     LOG(DBG, "%s\n", glGetString(GL_VERSION));
-    
-    glEnable (GL_DEBUG_OUTPUT);
-    glDebugMessageCallback( MessageCallback, 0);
+
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(MessageCallback, 0);
 
     //Game start actions
     tletc->OnGameStart();
@@ -276,35 +293,38 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     BOOL running = TRUE;
     //clock_t TICK_KEEP;
     //clock_t FRAME_KEEP;
-    while(running) {
-        while(PeekMessage(&message, NULL, 0, 0, PM_REMOVE)) {
-            switch(message.message) {
+    while (running)
+    {
+        while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
+        {
+            switch (message.message)
+            {
 
-                case (WM_QUIT):
-                    // Quit when it's quittin time
-                    running = false;
-                    break;
+            case (WM_QUIT):
+                // Quit when it's quittin time
+                running = false;
+                break;
 
-                case (WM_MOUSEMOVE):
-                    tletc->setMousePos(Vec2u(LOWORD(message.lParam), HIWORD(message.lParam)));
-                    break;
+            case (WM_MOUSEMOVE):
+                tletc->setMousePos(Vec2u(LOWORD(message.lParam), HIWORD(message.lParam)));
+                break;
 
-                default:
-                    break;
+            default:
+                break;
             }
-            
+
             TranslateMessage(&message);
             DispatchMessage(&message);
         }
         tletc->Update();
         tletc->Draw(windowHDC);
     }
-    
+
     // These are probably unnecessary because the window is already destroyed
     ReleaseDC(window, windowHDC);
-    
+
     wglMakeCurrent(NULL, NULL);
     wglDeleteContext(glContext);
-    
+
     return 0;
 }
