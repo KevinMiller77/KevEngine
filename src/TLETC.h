@@ -4,7 +4,7 @@
 #include "graphics/renderables/StaticSprite2D.h"
 #include "graphics/renderables/Sprite2D.h"
 #include "graphics/BetterGL2DRenderer.h"
-#include <time.h>
+#include "utils/Timer.h"
 
 class TLETC
 {
@@ -15,11 +15,14 @@ private:
     Vec2u screenResolution;
     Vec2u mousePos;
 
+    uint32_t frameCount;
+    Timer timer;
+
 public:
     TLETC(Vec2u startScreenResolution);
 
     void OnGameStart();
-    void Draw(HDC windowHDC);
+    void Draw();
     void Update();
 
     inline void setScreenResolution(Vec2u in) { screenResolution = in; }

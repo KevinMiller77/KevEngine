@@ -26,10 +26,16 @@ void BetterGL2DRenderer::init()
     //Enable the attributes our renderer will use (vertex, color, texture, etc.)
     glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
     glEnableVertexAttribArray(SHADER_COLOR_INDEX);
+#if USING_TEXTURES
+    glEnableVertexArrayAttrib(SHADER_TEXTURE_INDEX);
+#endif
 
     //Describe our memory map
-    glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)0);
-    glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(3 * sizeof(GLfloat)));
+    glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)offsetof(VertexData, VertexData::vertex));
+    glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::color)));
+#if USING_TEXTURES
+    glVertexAttribPointer(SHADER_TEXTURE_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::texture)));
+#endif
 
     //Unbind VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -60,7 +66,7 @@ void BetterGL2DRenderer::init()
 void BetterGL2DRenderer::begin()
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    VDataBuffer = (VertexData*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+    VDataBuffer = (VertexData *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 }
 
 void BetterGL2DRenderer::submit(const Renderable2D *renderable)
@@ -69,23 +75,35 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
     const Vec2f size = renderable->getSize();
     const Vec4f color = renderable->getColor();
 
-    //LOG_INF("New square, base index : %d\nSize %f, %f\nVertex one: %f, %f\nVertex two: %f, %f\nVertex three: %f, %f\nVertex four: %f, %f\n\n", 
-        //indexCount, size.x, size.y, position.x, position.y, position.x, position.y + size.y, position.x + size.x, position.y + size.y, position.x + size.x, position.y);
+    //LOG_INF("New square, base index : %d\nSize %f, %f\nVertex one: %f, %f\nVertex two: %f, %f\nVertex three: %f, %f\nVertex four: %f, %f\n\n",
+    //indexCount, size.x, size.y, position.x, position.y, position.x, position.y + size.y, position.x + size.x, position.y + size.y, position.x + size.x, position.y);
 
     VDataBuffer->vertex = position;
     VDataBuffer->color = color;
+#if USING_TEXTURES
+    VDataBuffer->texture = Vec2f(1.0f, 1.0f);
+#endif
     VDataBuffer++;
 
     VDataBuffer->vertex = Vec3f(position.x, position.y + size.y, position.z);
     VDataBuffer->color = color;
+#if USING_TEXTURES
+    VDataBuffer->texture = Vec2f(1.0f, 0.0f);
+#endif
     VDataBuffer++;
 
     VDataBuffer->vertex = Vec3f(position.x + size.x, position.y + size.y, position.z);
     VDataBuffer->color = color;
+#if USING_TEXTURES
+    VDataBuffer->texture = Vec2f(0.0f, 0.0f);
+#endif
     VDataBuffer++;
 
     VDataBuffer->vertex = Vec3f(position.x + size.x, position.y, position.z);
     VDataBuffer->color = color;
+#if USING_TEXTURES
+    VDataBuffer->texture = Vec2f(0.0f, 1.0f);
+#endif
     VDataBuffer++;
 
     indexCount += 6;
@@ -100,12 +118,12 @@ void BetterGL2DRenderer::end()
 void BetterGL2DRenderer::draw()
 {
     glBindVertexArray(VAO);
-	IBO->bind();
+    IBO->bind();
 
-	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
+    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
 
-	IBO->unbind();
-	glBindVertexArray(0);
+    IBO->unbind();
+    glBindVertexArray(0);
 
-	indexCount = 0;
+    indexCount = 0;
 }

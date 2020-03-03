@@ -237,8 +237,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
 
         HDC tempHDC = GetDC(hwnd);
         tletc->setScreenResolution(Vec2u(LOWORD(lParam), HIWORD(lParam)));
-        tletc->Draw(tempHDC);
+        tletc->Draw();
         ReleaseDC(hwnd, tempHDC);
+        SwapBuffers(tempHDC);
         return 0;
     }
     break;
@@ -317,7 +318,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             DispatchMessage(&message);
         }
         tletc->Update();
-        tletc->Draw(windowHDC);
+        tletc->Draw();
+        SwapBuffers(windowHDC);
     }
 
     // These are probably unnecessary because the window is already destroyed
