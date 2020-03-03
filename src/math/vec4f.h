@@ -4,8 +4,8 @@
 //4 Float vector
 struct Vec4f {
     union {
-        struct {float x; float y; float z; float w;};
         float elements[4];
+        struct {float x; float y; float z; float w;};
     };
     
     Vec4f();

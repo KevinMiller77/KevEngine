@@ -6,14 +6,18 @@
 class StaticSprite : public Renderable2D
 {
 private:
-    Vec3f pos;
-    Vec2f size;
-
+    VertexArray* VAO;
+    IndexBuffer* IBO;
+    ShaderProgram* shader;
+ 
 public:
-    StaticSprite(char *ID, GLuint shaderProg, float x, float y, float width, float height, Vec4f color, char *texLocation);
+    StaticSprite(float x, float y, float width, float height, Vec4f color, ShaderProgram* inShader);
+    ~StaticSprite() = default;
+    
+    inline const VertexArray *getVAO() const { return VAO; }
+    inline const IndexBuffer *getIBO() const { return IBO; }
 
-    inline const Vec3f getPos() { return pos; }
-    inline const Vec2f getSize() { return size; }
+    inline ShaderProgram* getShader() const { return shader; }
 };
 
 #endif

@@ -1,56 +1,38 @@
 #ifndef __RENDERABLE_2D__
 #define __RENDERABLE_2D__
-#include "Entity2D.h"
+#include "../../math/math.h"
 #include "../buffers/IndexBuffer.h"
 #include "../buffers/VertexArray.h"
 #include "../../utils/Logging.h"
-#include "../../utils/SOIL2/SOIL2.h"
+#include "../ShaderProgram.h"
 
 struct VertexData
 {
     Vec3f vertex;
     Vec4f color;
-    Vec2f tex;
 };
 
-struct Texture
+class Renderable2D
 {
-    const char *imagePath;
-    int *width;
-    int *height;
-    int *nrChannels;
-
-    GLuint *texture;
-    float *verticies;
-};
-
-class Renderable2D : virtual public Entity2D
-{
-private:
-    const char *ID;
-
 protected:
-    VertexArray *VAO;
-    IndexBuffer *IBO;
-
-    GLuint ShaderProgramID;
-    GLuint *texID;
+    Vec3f position;
+    Vec2f size;
+    Vec4f color;
 
 public:
-    Texture *tex;
-    Renderable2D() = default;
-    Renderable2D(const char *in_ID, Vec3f pos, Vec2f size, Vec4f col, GLuint shaderProg);
-    virtual ~Renderable2D();
+    Renderable2D(Vec3f pos, Vec2f size, Vec4f col)
+        :position(pos), size(size), color(color)
+        { }
+    virtual ~Renderable2D() { }
+ 
+    inline const Vec3f& getPosition() const { return position; }
+	inline const Vec2f& getSize() const { return size; }
+	inline const Vec4f& getColor() const { return color; }
 
-    void LoadTexture(const char *inImagePath);
+    inline const void setPosition(Vec3f& newPosition) { position = newPosition; }
+	inline const void setSize(Vec2f& newSize) { size = newSize; }
+	inline const void setColor(Vec4f newColor) { color = newColor; }
 
-    inline const VertexArray *getVAO() const { return VAO; };
-    inline const IndexBuffer *getIBO() const { return IBO; };
-
-    inline const GLuint *getTexturePtr() const { return texID; }
-    inline const GLuint getTextureID() const { return *texID; }
-
-    inline const GLuint getShaderID() const { return ShaderProgramID; }
 };
 
 #endif

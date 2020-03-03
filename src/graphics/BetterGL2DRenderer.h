@@ -4,7 +4,7 @@
 #include "GL2DRenderer.h"
 #include "buffers/VertexArray.h"
 
-#define RENDERER_MAX_SPRITES 10000
+#define RENDERER_MAX_SPRITES 60000
 #define RENDERER_VERTEX_SIZE sizeof(VertexData)
 #define RENDERER_SPRITE_SIZE (RENDERER_VERTEX_SIZE * 4)
 #define RENDERER_BUFFER_SIZE (RENDERER_SPRITE_SIZE * RENDERER_MAX_SPRITES)
@@ -14,22 +14,22 @@
 #define SHADER_COLOR_INDEX 1
 #define SHADER_TEXTURE_INDEX 2
 
-class BetterGL2DRenderer
+class BetterGL2DRenderer : public GL2DRenderer
 {
 private:
     GLuint VAO;
+    GLuint VBO;  
     IndexBuffer *IBO;
     GLsizei indexCount;
-    GLuint VBO;
-
-    std::deque<const Renderable2D *> RenderQueue;
+    VertexData *VDataBuffer;
 
 public:
     BetterGL2DRenderer();
     ~BetterGL2DRenderer();
-    void submit(const Renderable2D *renderable);
-    void flush();
-    void draw();
+    void begin();
+    void submit(const Renderable2D *renderable) override;
+    void end();
+    void draw() override;
 
 private:
     void init();

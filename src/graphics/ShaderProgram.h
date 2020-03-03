@@ -11,18 +11,44 @@
 
 #include "../math/math.h"
 
-GLuint getShaderUniformLocation(GLuint shaderProgramID, const GLchar* name);
+class ShaderProgram {
 
-void setShaderUniform1f(GLuint shaderProgramID, const GLchar* name, float value);
-void setShaderUniform1i(GLuint shaderProgramID, const GLchar* name, int value);
-void setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2f& vector);
-void setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3f& vector);
-void setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4f& vector);
-void setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4f& matrix);
+private:
+    GLuint programID;
 
-void enableShaderProgram(GLuint shaderProgramID);
-void disableShaderProgram();
+public:
+    ShaderProgram() = default;
+    ShaderProgram(const char* vertex_file_path, const char* fragment_file_path);
 
-GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_file_path);
+
+    static GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_file_path);
+
+    //There are two copies of all functions. We will want both static and non-static member functions to deal with shaders.
+    void   setUniform1f(const GLchar* name, float value);
+    void   setUniform1i(const GLchar* name, int value);
+    void   setUniform2f(const GLchar* name, const Vec2f& vector);
+    void   setUniform3f(const GLchar* name, const Vec3f& vector);
+    void   setUniform4f(const GLchar* name, const Vec4f& vector);
+    void   setUniformMat4(const GLchar* name, const Mat4f& matrix);
+
+    GLuint getUniformLocation(const GLchar* name);
+
+    void   enable();
+    void   disable();  
+
+
+    static void   setShaderUniform1f(GLuint shaderProgramID, const GLchar* name, float value);
+    static void   setShaderUniform1i(GLuint shaderProgramID, const GLchar* name, int value);
+    static void   setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2f& vector);
+    static void   setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3f& vector);
+    static void   setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4f& vector);
+    static void   setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4f& matrix);
+
+    static GLuint getShaderUniformLocation(GLuint shaderProgramID, const GLchar* name);
+
+    static void   enableShaderProgram(GLuint shaderProgramID);
+    static void   disableShaderProgram();    
+};
+    
 
 #endif

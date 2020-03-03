@@ -2,13 +2,15 @@
 #define __TLETC__
 
 #include "graphics/renderables/StaticSprite2D.h"
-#include "graphics/GL2DRenderer.h"
+#include "graphics/renderables/Sprite2D.h"
+#include "graphics/BetterGL2DRenderer.h"
+#include <time.h>
 
 class TLETC
 {
 private:
-    Renderable2D *sprites = nullptr;
-    GL2DRenderer *renderer = nullptr;
+    BetterGL2DRenderer *renderer = nullptr;
+    ShaderProgram shader;
 
     Vec2u screenResolution;
     Vec2u mousePos;

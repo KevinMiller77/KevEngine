@@ -1,6 +1,11 @@
 #include "ShaderProgram.h"
 
-GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_file_path) {
+ShaderProgram::ShaderProgram(const char* vertex_file_path, const char* fragment_file_path)
+{
+	programID = CreateGLProgram(vertex_file_path, fragment_file_path);
+}
+
+GLuint ShaderProgram::CreateGLProgram(const char* vertex_file_path, const char* fragment_file_path) {
     
 	//Create the shaders
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -77,8 +82,8 @@ GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_file_p
     
     glValidateProgram(ProgramID);
     
-	glDetachShader(ProgramID, VertexShaderID);
-	glDetachShader(ProgramID, FragmentShaderID);
+	//glDetachShader(ProgramID, VertexShaderID);
+	//glDetachShader(ProgramID, FragmentShaderID);
     
 	glDeleteShader(VertexShaderID);
 	glDeleteShader(FragmentShaderID);
@@ -86,7 +91,7 @@ GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_file_p
 	return ProgramID;
 }
 
-GLuint getShaderUniformLocation(GLuint shaderProgramID, const GLchar* name)
+GLuint ShaderProgram::getShaderUniformLocation(GLuint shaderProgramID, const GLchar* name)
 {
 	GLint oldID;
 	glGetIntegerv(GL_CURRENT_PROGRAM,&oldID);
@@ -98,42 +103,88 @@ GLuint getShaderUniformLocation(GLuint shaderProgramID, const GLchar* name)
 	return out;
 }
 
-void setShaderUniform1f(GLuint shaderProgramID, const GLchar* name, float value)
+
+void   ShaderProgram::setUniform1f(const GLchar* name, float value)
+{
+	setShaderUniform1f(programID, name, value);
+}
+
+void   ShaderProgram::setUniform1i(const GLchar* name, int value)
+{
+	setShaderUniform1i(programID, name, value);
+}
+
+void   ShaderProgram::setUniform2f(const GLchar* name, const Vec2f& vector)
+{
+	setShaderUniform2f(programID, name, vector);
+}
+
+void   ShaderProgram::setUniform3f(const GLchar* name, const Vec3f& vector)
+{
+	setShaderUniform3f(programID, name, vector);
+}
+
+void   ShaderProgram::setUniform4f(const GLchar* name, const Vec4f& vector)
+{
+	setShaderUniform4f(programID, name, vector);
+}
+
+void   ShaderProgram::setUniformMat4(const GLchar* name, const Mat4f& matrix)
+{
+	setShaderUniformMat4(programID, name, matrix);
+}
+
+GLuint ShaderProgram::getUniformLocation(const GLchar* name)
+{
+	return getShaderUniformLocation(programID, name);
+}
+
+void   ShaderProgram::enable()
+{
+	enableShaderProgram(programID);
+}
+
+void   ShaderProgram::disable()
+{
+	disableShaderProgram();
+}
+
+void ShaderProgram::setShaderUniform1f(GLuint shaderProgramID, const GLchar* name, float value)
 {
 	glUniform1f(getShaderUniformLocation(shaderProgramID, name), value);
 }
 
-void setShaderUniform1i(GLuint shaderProgramID, const GLchar* name, int value)
+void ShaderProgram::setShaderUniform1i(GLuint shaderProgramID, const GLchar* name, int value)
 {
 	glUniform1i(getShaderUniformLocation(shaderProgramID, name), value);
 }
 
-void setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2f& vector)
+void ShaderProgram::setShaderUniform2f(GLuint shaderProgramID, const GLchar* name, const Vec2f& vector)
 {
 	glUniform2f(getShaderUniformLocation(shaderProgramID, name), vector.x, vector.y);
 }
 
-void setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3f& vector)
+void ShaderProgram::setShaderUniform3f(GLuint shaderProgramID, const GLchar* name, const Vec3f& vector)
 {
 	glUniform3f(getShaderUniformLocation(shaderProgramID, name), vector.x, vector.y, vector.z);
 }
 
-void setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4f& vector)
+void ShaderProgram::setShaderUniform4f(GLuint shaderProgramID, const GLchar* name, const Vec4f& vector)
 {
 	glUniform4f(getShaderUniformLocation(shaderProgramID, name), vector.x, vector.y, vector.z, vector.w);
 }
 
-void setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4f& matrix)
+void ShaderProgram::setShaderUniformMat4(GLuint shaderProgramID, const GLchar* name, const Mat4f& matrix)
 {
 	glUniformMatrix4fv(getShaderUniformLocation(shaderProgramID, name), 1, GL_FALSE, matrix.elements);
 }
 
-void enableShaderProgram(GLuint shaderProgramID)
+void ShaderProgram::enableShaderProgram(GLuint shaderProgramID)
 {
 	glUseProgram(shaderProgramID);
 }
 
-void disableShaderProgram()
+void ShaderProgram::disableShaderProgram()
 {
 	glUseProgram(0);
 }

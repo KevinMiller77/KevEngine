@@ -6,47 +6,65 @@ TLETC::TLETC(Vec2u startScreenResolution)
     mousePos = Vec2u(0, 0);
 }
 
+std::vector<Renderable2D*> sprites;
+
 //Call that happens every time the game starts
 void TLETC::OnGameStart()
 {
     // #BADA55
-    glClearColor(0.729f, 0.854f, 0.333f, 1.0f);
-
-    renderer = new GL2DRenderer();
+    //glClearColor(0.0f, 0.5f, 0.333f, 1.0f);
 
     Mat4f ortho = Mat4f::orthographic(0.0f, 16.0f, 0.0f, 9.0f, -1.0f, 1.0f);
 
-    GLuint programID = CreateGLProgram("../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
-    enableShaderProgram(programID);
-    setShaderUniformMat4(programID, "pr_matrix", ortho);
-    setShaderUniformMat4(programID, "ml_matrix", Mat4f::translation(Vec3f(0, 0, 0)));
+    shader = ShaderProgram("../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
+    shader.enable();
+	shader.setUniformMat4("pr_matrix", ortho);
 
-    setShaderUniform2f(programID, "light_pos", Vec2f(4.0f, 1.5f));
-    setShaderUniform4f(programID, "colour", Vec4f(0.0f, 0.0f, 0.0f, 1.0f));
+	srand(time(NULL));
 
-    sprites = new StaticSprite("Item1", programID, 2.0f, 2.0f, 1.0f, 2.0f, Vec4f(0.5f, 0.0f, 5.0f, 1.0f), "../textures/container.jpg");
-    //sprites = new Renderable2D("Item1", Vec3f(2.0f, 2.0f, 0.0f), Vec2f(2.0f, 2.0f), Vec4f(0.5f, 0.0f, 5.0f, 1.0f), programID);
+    GLuint num_sprite = 0;
+	for (float y = 0.0f; y < 9.0f; y += 0.05f)
+	{
+		for (float x = 0.0; x < 16.0f; x += 0.05f)
+		{
+			sprites.push_back(new Renderable2D(Vec3f(x, y, 0), Vec2f(0.04f, 0.04f), Vec4f(1.0f, 1.0f, 1.0f, 1.0f)));
+            sprites[num_sprite]->setColor(Vec4f(rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, 1.0f));
+            num_sprite++;
+		}
+	}
 
-    renderer->submit(sprites);
+    renderer = new BetterGL2DRenderer();
+
+	shader.setUniform2f("light_pos", Vec2f(4.0f, 1.5f));
+	shader.setUniform4f("colour", Vec4f(0.0f, 0.3f, 0.8f, 1.0f));
+
 }
 
 //Code that is called directly before each frame is drawn
 void TLETC::Draw(HDC windowHDC)
 {
-    LOG_INF("Drawing frame.\n");
-    // Sample render function to show where to put rendering code
-    Win32Render(windowHDC, renderer);
-    LOG_INF("Frame drawn.\n");
+    //End frame and display
+    renderer->draw();
+    SwapBuffers(windowHDC);
 }
 
 void TLETC::Update()
 {
-    /*
+    //Begin frame
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     float newX = 16.0f * ((float)mousePos.x / screenResolution.x);
     float newY = 9.0f * ((float)mousePos.y / screenResolution.y);
 
-    Vec3f newPos = Vec3f(newX - (sprites->getSize().x / 2), newY - (sprites->getSize().y / 2), 0.0f);
-    sprites->setPosition(newPos);
-    */
-    renderer->submit(sprites);
+    shader.setUniform2f("light_pos", Vec2f(newX, newY));
+
+	renderer->begin();
+
+	for (int i = 0; i < sprites.size(); i++)
+	{
+        sprites[i]->setColor(sprites[i]->getColor());
+		renderer->submit(sprites[i]);
+	}
+    
+	renderer->end();
 }

@@ -1,21 +1,9 @@
+#if 0
+#ifndef __GL_2D_RENDERER__
+#define __GL_2D_RENDERER__
 #include "GL2DRenderer.h"
 
-#define USING_WINDOWS
-
-#ifdef USING_WINDOWS
-void Win32Render(HDC windowHDC, GL2DRenderer *renderer)
-{
-    //Begin frame
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    LOG_INF("Inner frame draw.\n");
-    renderer->draw();
-
-    //End frame and display
-    SwapBuffers(windowHDC);
-}
-#endif
-
+//This code is disabled due to the implementation of Renderable2D being changed
 void GL2DRenderer::submit(const Renderable2D *renderable)
 {
     RenderQueue.push_back(renderable);
@@ -48,3 +36,6 @@ void GL2DRenderer::draw()
         RenderQueue.pop_front();
     }
 }
+
+#endif
+#endif
