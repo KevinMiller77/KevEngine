@@ -1,9 +1,10 @@
 #ifndef __BETTER_GL_2D_RENDERER__
 #define __BETTER_GL_2D_RENDERER__
 
-#include "GL2DRenderer.h"
-#include "buffers/VertexArray.h"
 #include <cstddef>
+#include "buffers/VertexArray.h"
+#include "GL2DRenderer.h"
+#include "renderables/Sprite2D.h"
 
 #define USING_TEXTURES 1
 

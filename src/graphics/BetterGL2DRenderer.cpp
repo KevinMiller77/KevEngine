@@ -30,7 +30,7 @@ void BetterGL2DRenderer::init()
 
     //Describe our memory map
     glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)offsetof(VertexData, VertexData::vertex));
-    glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::color)));
+    glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::color)));
     glVertexAttribPointer(SHADER_TEXTURE_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::texture)));
 
     //Unbind VBO
@@ -71,26 +71,30 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
     const Vec2f size = renderable->getSize();
     const Vec4f color = renderable->getColor();
 
-    //LOG_INF("New square, base index : %d\nSize %f, %f\nVertex one: %f, %f\nVertex two: %f, %f\nVertex three: %f, %f\nVertex four: %f, %f\n\n",
-    //indexCount, size.x, size.y, position.x, position.y, position.x, position.y + size.y, position.x + size.x, position.y + size.y, position.x + size.x, position.y);
+    int r = color.x * 255.0f;
+    int g = color.y * 255.0f;
+    int b = color.z * 255.0f;
+    int a = color.w * 255.0f;
 
-    VDataBuffer->vertex = position;
-    VDataBuffer->color = color;
+    unsigned int c = a << 24 | b << 16 | g << 8 | r;
+
+    VDataBuffer->vertex = *curTransformationBack * position;
+    VDataBuffer->color = c;
     VDataBuffer->texture = Vec2f(1.0f, 1.0f);
     VDataBuffer++;
 
-    VDataBuffer->vertex = Vec3f(position.x, position.y + size.y, position.z);
-    VDataBuffer->color = color;
+    VDataBuffer->vertex = *curTransformationBack * Vec3f(position.x, position.y + size.y, position.z);
+    VDataBuffer->color = c;
     VDataBuffer->texture = Vec2f(1.0f, 0.0f);
     VDataBuffer++;
 
-    VDataBuffer->vertex = Vec3f(position.x + size.x, position.y + size.y, position.z);
-    VDataBuffer->color = color;
+    VDataBuffer->vertex = *curTransformationBack * Vec3f(position.x + size.x, position.y + size.y, position.z);
+    VDataBuffer->color = c;
     VDataBuffer->texture = Vec2f(0.0f, 0.0f);
     VDataBuffer++;
 
-    VDataBuffer->vertex = Vec3f(position.x + size.x, position.y, position.z);
-    VDataBuffer->color = color;
+    VDataBuffer->vertex = *curTransformationBack * Vec3f(position.x + size.x, position.y, position.z);
+    VDataBuffer->color = c;
     VDataBuffer->texture = Vec2f(0.0f, 1.0f);
     VDataBuffer++;
 

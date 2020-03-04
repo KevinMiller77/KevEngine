@@ -1,16 +1,20 @@
 #ifndef __RENDERABLE_2D__
 #define __RENDERABLE_2D__
+
 #include "../../math/math.h"
 #include "../buffers/IndexBuffer.h"
 #include "../buffers/VertexArray.h"
+
+#include "../GL2DRenderer.h"
+
 #include "../../utils/Logging.h"
 #include "../ShaderProgram.h"
 
 struct VertexData
 {
     Vec3f vertex;
-    Vec4f color;
     Vec2f texture;
+    unsigned int color;
 };
 
 class Renderable2D
@@ -20,12 +24,18 @@ protected:
     Vec2f size;
     Vec4f color;
 
+    Renderable2D() = default;
 public:
     Renderable2D(Vec3f pos, Vec2f size, Vec4f col)
         : position(pos), size(size), color(col)
     {
     }
     virtual ~Renderable2D() {}
+
+    virtual void submit(GL2DRenderer* renderer) const
+    {
+        renderer->submit(this);
+    }
 
     inline virtual const Vec3f &getPosition() const { return position; }
     inline virtual const Vec2f &getSize() const { return size; }

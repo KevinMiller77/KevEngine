@@ -2,13 +2,13 @@
 #define __TLETC_LAYER__
 
 #include "../BetterGL2DRenderer.h"
-#include "../renderables/Renderable2D.h"
 #include "../TextureProgram.h"
 
 class Layer
 {
 protected:
     Layer(GL2DRenderer *renderer, ShaderProgram *shader, Mat4f projMatrix);
+    ~Layer();
 
     GL2DRenderer *Renderer;
     std::vector<Renderable2D *> renderables;
@@ -18,8 +18,6 @@ protected:
 
 public:
     Texture *texture;
-
-    ~Layer();
 
     virtual void add(Renderable2D *renderable);
     virtual void render();

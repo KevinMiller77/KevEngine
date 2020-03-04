@@ -1,4 +1,5 @@
 #include "mat4f.h"
+#include "../utils/Logging.h"
 
 #include <string.h>
 #include <assert.h>
@@ -81,6 +82,25 @@ void Mat4f::multiply(const Mat4f &other)
 	memcpy(elements, result, 4 * 4 * sizeof(float));
 }
 
+Vec4f Mat4f::multiply(const Vec4f &other)
+{
+	return Vec4f(
+		rows[0].x * other.x + rows[1].x * other.y + rows[2].x * other.z + rows[3].x * other.w,
+		rows[0].y * other.x + rows[1].y * other.y + rows[2].y * other.z + rows[3].y * other.w,
+		rows[0].z * other.x + rows[1].z * other.y + rows[2].z * other.z + rows[3].z * other.w,
+		rows[0].w * other.x + rows[1].w * other.y + rows[2].w * other.z + rows[3].w * other.w
+	);
+}
+
+Vec3f Mat4f::multiply(const Vec3f &other)
+{
+	return Vec3f(
+		rows[0].x * other.x + rows[1].x * other.y + rows[2].x * other.z + rows[3].x,
+		rows[0].y * other.x + rows[1].y * other.y + rows[2].y * other.z + rows[3].y,
+		rows[0].z * other.x + rows[1].z * other.y + rows[2].z * other.z + rows[3].z
+	);
+}
+
 const Vec4f &Mat4f::operator[](int index) const
 {
 	assert(index >= 0 && index < 4);
@@ -126,6 +146,17 @@ Mat4f operator*(Mat4f left, const Mat4f &right)
 {
 	left.multiply(right);
 	return left;
+}
+
+Vec4f operator*(Mat4f left, const Vec4f &right)
+{
+	return left.multiply(right);
+}
+
+Vec3f operator*(Mat4f left, const Vec3f &right)
+{
+	Vec3f out =  left.multiply(right);
+	return out;
 }
 
 Mat4f Mat4f::perspective(float fov, float aspectRatio, float near, float far)

@@ -1,7 +1,9 @@
-#if 0
 #ifndef __GL_2D_RENDERER__
 #define __GL_2D_RENDERER__
+
 #include "GL2DRenderer.h"
+
+#if 0
 
 //This code is disabled due to the implementation of Renderable2D being changed
 void GL2DRenderer::submit(const Renderable2D *renderable)

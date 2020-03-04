@@ -9,11 +9,6 @@
 #include <GL/glew.h>
 #include <GL/wglew.h>
 
-#include "utils/Logging.h"
-#include "utils/FileIO.h"
-
-#include "graphics/ShaderProgram.h"
-
 #include "math/math.h"
 #include "CommonTypes.h"
 #include "TLETC.h"
