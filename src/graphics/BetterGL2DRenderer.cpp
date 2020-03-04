@@ -27,11 +27,13 @@ void BetterGL2DRenderer::init()
     glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
     glEnableVertexAttribArray(SHADER_COLOR_INDEX);
     glEnableVertexAttribArray(SHADER_TEXTURE_INDEX);
+    glEnableVertexAttribArray(SHADER_TEXTURE_ID_INDEX);
 
     //Describe our memory map
     glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)offsetof(VertexData, VertexData::vertex));
     glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::color)));
     glVertexAttribPointer(SHADER_TEXTURE_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::texture)));
+    glVertexAttribPointer(SHADER_TEXTURE_ID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::texID))); 
 
     //Unbind VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -70,32 +72,68 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
     const Vec3f position = renderable->getPosition();
     const Vec2f size = renderable->getSize();
     const Vec4f color = renderable->getColor();
+    const GLuint texID = renderable->getTextureID();
 
-    int r = color.x * 255.0f;
-    int g = color.y * 255.0f;
-    int b = color.z * 255.0f;
-    int a = color.w * 255.0f;
+    unsigned int c = 0;
+    float ts = 0.0f;
+    if (texID > 0)
+    {
+        bool found = false;
+        for (int i = 0; i < TextureSlots.size(); i++)
+        {
+            if (TextureSlots[i] == texID)
+            {
+                ts = (float)(i + 1);
+                found = true;
+                break;           
+            }
+        }
 
-    unsigned int c = a << 24 | b << 16 | g << 8 | r;
+        if (!found)
+        {
+            if (TextureSlots.size() >= MAX_TEXTURE_SLOTS)
+            {
+                end();
+                draw();
+                begin();
+            }
+            TextureSlots.push_back(texID);
+            ts = (float)(TextureSlots.size());
+        }
+    }
+    else
+    {
+        int r = color.x * 255.0f;
+        int g = color.y * 255.0f;
+        int b = color.z * 255.0f;
+        int a = color.w * 255.0f;
+
+        c = a << 24 | b << 16 | g << 8 | r;
+    }
+
 
     VDataBuffer->vertex = *curTransformationBack * position;
     VDataBuffer->color = c;
     VDataBuffer->texture = Vec2f(1.0f, 1.0f);
+    VDataBuffer->texID = ts;
     VDataBuffer++;
 
     VDataBuffer->vertex = *curTransformationBack * Vec3f(position.x, position.y + size.y, position.z);
     VDataBuffer->color = c;
     VDataBuffer->texture = Vec2f(1.0f, 0.0f);
+    VDataBuffer->texID = ts;
     VDataBuffer++;
 
     VDataBuffer->vertex = *curTransformationBack * Vec3f(position.x + size.x, position.y + size.y, position.z);
     VDataBuffer->color = c;
     VDataBuffer->texture = Vec2f(0.0f, 0.0f);
+    VDataBuffer->texID = ts;
     VDataBuffer++;
 
     VDataBuffer->vertex = *curTransformationBack * Vec3f(position.x + size.x, position.y, position.z);
     VDataBuffer->color = c;
     VDataBuffer->texture = Vec2f(0.0f, 1.0f);
+    VDataBuffer->texID = ts;
     VDataBuffer++;
 
     indexCount += 6;
@@ -109,6 +147,12 @@ void BetterGL2DRenderer::end()
 
 void BetterGL2DRenderer::draw()
 {
+    for (int tex = 0; tex < TextureSlots.size(); tex++)
+    {
+        glActiveTexture(GL_TEXTURE0 + tex);
+        glBindTexture(GL_TEXTURE_2D, TextureSlots[tex]);
+    }
+
     glBindVertexArray(VAO);
     IBO->bind();
 

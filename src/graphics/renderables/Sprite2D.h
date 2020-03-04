@@ -8,6 +8,8 @@ class Sprite : public Renderable2D
 private:
 public:
     Sprite(float x, float y, float width, float height, const Vec4f color);
+    Sprite(float x, float y, float width, float height, Texture* inTexture);
+
 };
 
 #endif

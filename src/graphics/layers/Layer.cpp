@@ -3,9 +3,10 @@
 Layer::Layer(GL2DRenderer *renderer, ShaderProgram *shader, Mat4f projMatrix)
     : Renderer(renderer), Shader(shader), projectionMatrix(projMatrix)
 {
+    texture = new Texture();
     Shader->enable();
     Shader->setUniformMat4("pr_matrix", projectionMatrix);
-    Shader->setUniform2f("light_pos", Vec2f(4.0f, 1.5f));
+    Shader->disable();
 }
 
 Layer::~Layer()
@@ -26,18 +27,14 @@ void Layer::add(Renderable2D *renderable)
 
 void Layer::render()
 {
+    Shader->enable();
     Renderer->begin();
 
-    for (const Renderable2D *renderable : renderables)
+    for (Renderable2D *renderable : renderables)
     {
         renderable->submit(Renderer);
-        
     }
 
-    Renderer->end();
-    
-    Shader->enable();
-    texture->bind();
+    Renderer->end();   
     Renderer->draw();
-    texture->unbind();
 }

@@ -22,6 +22,7 @@ public:
     virtual void add(Renderable2D *renderable);
     virtual void render();
     virtual inline ShaderProgram *getShader() { return Shader; }
+    virtual void genTexture(const char* path) { texture = new Texture(path); }
 };
 
 #endif

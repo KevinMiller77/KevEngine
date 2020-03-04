@@ -13,31 +13,34 @@ void TLETC::OnGameStart()
 
     //glClearColor(0.0f, 0.33f, 0.67f, 1.0f);
 
-    ShaderProgram *shader = new ShaderProgram("../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
-    ShaderProgram *shader2 = new ShaderProgram("../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
+    GLint texIDs[] = {
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+    };
+
+    
+    ShaderProgram* shader = new ShaderProgram("../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
+    ShaderProgram* shader2 = new ShaderProgram("../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
+    shader->enable();
+    shader->setUniform1iv("textures", texIDs, 10);
+    shader2->enable();
+    shader2->setUniform1iv("textures", texIDs, 10);
 
     layers.push_back(new TileLayer(shader));
     layers.push_back(new TileLayer(shader2));
 
-    for (Layer* layer : layers )
-    {
-        layer->texture = new Texture("../textures/container.jpg");
-    }
-
     srand(time(NULL));
 
-    //float size_of_pixels = 0.1f;
-    //for (float y = 0.0f; y < 9.0f; y += size_of_pixels)
-    //{
-    //    for (float x = 0.0; x < 16.0f; x += size_of_pixels)
-    //    {
-    //        layers[0]->add(new Sprite(x, y, size_of_pixels, size_of_pixels, Vec4f(rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, 1.0f)));
-    //    }
-    //}
+    for (float y = 0.0f; y < 9.0f; y += 1.0f)
+    {
+        for (float x = 0.0; x < 16.0f; x += 1.0f)
+        {
+            layers[0]->add(new Sprite(x, y, 2.0f, 1.0f, Vec4f(rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, 1.0f)));
+        }
+    }
 
     Group* group = new Group(Mat4f::translation(Vec3f(2.0f, 2.0f, 0.0f)));
-    group->add(new Sprite(0.0f, 0.0f, 5.0f, 5.0f, Vec4f(1.0f, 0.0f, 0.0f, 1.0f)));
-    group->add(new Sprite(2.0f, 2.0f, 1.0f, 1.0f, Vec4f(0.0f, 0.0f, 1.0f, 1.0f)));
+    group->add(new Sprite(0.0f, 0.0f, 5.0f, 5.0f, new Texture("../textures/container.jpg")));
+    group->add(new Sprite(2.0f, 2.0f, 1.0f, 1.0f, group->getTextureFromChild(0)));
 
     layers[1]->add(group);
 

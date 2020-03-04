@@ -13,8 +13,10 @@ public:
     Group() = default;
     Group(const Mat4f transform);
     void add(Renderable2D* renderable);
-    void submit(GL2DRenderer* renderer) const override;
+    void submit(GL2DRenderer* renderer) override;
 
+
+    inline Texture* getTextureFromChild(GLuint index) const { return children[index]->getTexturePtr(); }
 };
 
 #endif

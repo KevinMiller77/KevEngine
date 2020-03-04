@@ -25,7 +25,9 @@ public:
 
     //There are two copies of all functions. We will want both static and non-static member functions to deal with shaders.
     void   setUniform1f(const GLchar* name, float value);
+    void   setUniform1fv(const GLchar* name, float* value, GLsizei count);
     void   setUniform1i(const GLchar* name, int value);
+    void   setUniform1iv(const GLchar* name, int* value, GLsizei count);
     void   setUniform2f(const GLchar* name, const Vec2f& vector);
     void   setUniform3f(const GLchar* name, const Vec3f& vector);
     void   setUniform4f(const GLchar* name, const Vec4f& vector);

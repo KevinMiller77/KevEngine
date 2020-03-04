@@ -13,16 +13,20 @@ class Texture
 {
 private:
     const char *imagePath;
-    GLuint width;
-    GLuint height;
+    GLuint width, height;
     GLint nrChannels;
 
     GLuint texture;
 
 public:
+    Texture();
     Texture(const char *inImagePath);
+    void init();
+    BYTE* ImageLoad(const char* path, GLuint *width, GLuint *height);
     void bind();
     void unbind();
+
+    inline const GLuint getTextureID() const { return texture; }
 };
 
 #endif

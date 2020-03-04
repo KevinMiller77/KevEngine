@@ -287,8 +287,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // Main loop
     MSG message = {};
     BOOL running = TRUE;
-    //clock_t TICK_KEEP;
-    //clock_t FRAME_KEEP;
+    
     while (running)
     {
         while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))

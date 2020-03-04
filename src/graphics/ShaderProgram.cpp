@@ -109,11 +109,21 @@ void   ShaderProgram::setUniform1f(const GLchar* name, float value)
 	setShaderUniform1f(programID, name, value);
 }
 
+void  ShaderProgram::setUniform1fv(const GLchar* name, float* value, GLsizei count)
+{
+	glUniform1fv(getUniformLocation(name), count, value);
+}
+
 void   ShaderProgram::setUniform1i(const GLchar* name, int value)
 {
 	setShaderUniform1i(programID, name, value);
 }
 
+
+void   ShaderProgram::setUniform1iv(const GLchar* name, int* value, GLsizei count)
+{
+	glUniform1iv(getUniformLocation(name), count, value);
+}
 void   ShaderProgram::setUniform2f(const GLchar* name, const Vec2f& vector)
 {
 	setShaderUniform2f(programID, name, vector);

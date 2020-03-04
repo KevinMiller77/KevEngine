@@ -14,9 +14,12 @@
 #define RENDERER_BUFFER_SIZE (RENDERER_SPRITE_SIZE * RENDERER_MAX_SPRITES)
 #define RENDERER_INDICIES_SIZE (RENDERER_MAX_SPRITES * 6)
 
-#define SHADER_TEXTURE_INDEX 2
+#define MAX_TEXTURE_SLOTS 32
+
 #define SHADER_VERTEX_INDEX 0
 #define SHADER_COLOR_INDEX 1
+#define SHADER_TEXTURE_INDEX 2
+#define SHADER_TEXTURE_ID_INDEX 3
 
 class BetterGL2DRenderer : public GL2DRenderer
 {
@@ -26,6 +29,8 @@ private:
     IndexBuffer *IBO;
     GLsizei indexCount;
     VertexData *VDataBuffer;
+
+    std::vector<GLuint> TextureSlots;
 
 public:
     BetterGL2DRenderer();
