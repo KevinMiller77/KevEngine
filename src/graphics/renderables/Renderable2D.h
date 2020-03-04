@@ -22,18 +22,18 @@ protected:
 
 public:
     Renderable2D(Vec3f pos, Vec2f size, Vec4f col)
-        : position(pos), size(size), color(color)
+        : position(pos), size(size), color(col)
     {
     }
     virtual ~Renderable2D() {}
 
-    inline const Vec3f &getPosition() const { return position; }
-    inline const Vec2f &getSize() const { return size; }
-    inline const Vec4f &getColor() const { return color; }
+    inline virtual const Vec3f &getPosition() const { return position; }
+    inline virtual const Vec2f &getSize() const { return size; }
+    inline virtual const Vec4f &getColor() const { return color; }
 
-    inline const void setPosition(Vec3f &newPosition) { position = newPosition; }
-    inline const void setSize(Vec2f &newSize) { size = newSize; }
-    inline const void setColor(Vec4f newColor) { color = newColor; }
+    inline virtual const void setPosition(Vec3f &newPosition) { position = newPosition; }
+    inline virtual const void setSize(Vec2f &newSize) { size = newSize; }
+    inline virtual const void setColor(Vec4f newColor) { color = newColor; }
 };
 
 #endif

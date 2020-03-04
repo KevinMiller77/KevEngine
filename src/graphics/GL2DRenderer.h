@@ -4,9 +4,6 @@
 #include <GL/glew.h>
 #include <math.h>
 
-#include <windows.h>
-#include <wingdi.h>
-
 #include "../utils/Logging.h"
 #include "../utils/FileIO.h"
 #include "buffers/IndexBuffer.h"
@@ -18,12 +15,14 @@
 
 class GL2DRenderer
 {
-private:
+protected:
     std::deque<const Renderable2D *> RenderQueue;
 
 public:
     virtual void submit(const Renderable2D *renderable) = 0;
     virtual void draw() = 0;
+    virtual void begin() = 0;
+    virtual void end() = 0;
 };
 
 void Win32Render(HDC windowHDC, GL2DRenderer *renderer);

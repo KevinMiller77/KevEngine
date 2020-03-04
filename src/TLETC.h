@@ -4,18 +4,18 @@
 #include "graphics/renderables/StaticSprite2D.h"
 #include "graphics/renderables/Sprite2D.h"
 #include "graphics/BetterGL2DRenderer.h"
+#include "graphics/layers/TileLayer.h"
 #include "utils/Timer.h"
 
 class TLETC
 {
 private:
     BetterGL2DRenderer *renderer = nullptr;
-    ShaderProgram shader;
+    TileLayer *layerTile = nullptr;
 
     Vec2u screenResolution;
     Vec2u mousePos;
 
-    uint32_t frameCount;
     Timer timer;
 
 public:

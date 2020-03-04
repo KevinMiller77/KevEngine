@@ -26,16 +26,12 @@ void BetterGL2DRenderer::init()
     //Enable the attributes our renderer will use (vertex, color, texture, etc.)
     glEnableVertexAttribArray(SHADER_VERTEX_INDEX);
     glEnableVertexAttribArray(SHADER_COLOR_INDEX);
-#if USING_TEXTURES
-    glEnableVertexArrayAttrib(SHADER_TEXTURE_INDEX);
-#endif
+    glEnableVertexAttribArray(SHADER_TEXTURE_INDEX);
 
     //Describe our memory map
     glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)offsetof(VertexData, VertexData::vertex));
     glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::color)));
-#if USING_TEXTURES
     glVertexAttribPointer(SHADER_TEXTURE_INDEX, 2, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::texture)));
-#endif
 
     //Unbind VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -80,30 +76,22 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
 
     VDataBuffer->vertex = position;
     VDataBuffer->color = color;
-#if USING_TEXTURES
     VDataBuffer->texture = Vec2f(1.0f, 1.0f);
-#endif
     VDataBuffer++;
 
     VDataBuffer->vertex = Vec3f(position.x, position.y + size.y, position.z);
     VDataBuffer->color = color;
-#if USING_TEXTURES
     VDataBuffer->texture = Vec2f(1.0f, 0.0f);
-#endif
     VDataBuffer++;
 
     VDataBuffer->vertex = Vec3f(position.x + size.x, position.y + size.y, position.z);
     VDataBuffer->color = color;
-#if USING_TEXTURES
     VDataBuffer->texture = Vec2f(0.0f, 0.0f);
-#endif
     VDataBuffer++;
 
     VDataBuffer->vertex = Vec3f(position.x + size.x, position.y, position.z);
     VDataBuffer->color = color;
-#if USING_TEXTURES
     VDataBuffer->texture = Vec2f(0.0f, 1.0f);
-#endif
     VDataBuffer++;
 
     indexCount += 6;
