@@ -41,6 +41,11 @@
         "xmemory": "cpp",
         "xstddef": "cpp",
         "xtr1common": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "*.in": "cpp",
+        "map": "cpp",
+        "xtree": "cpp",
+        "iostream": "cpp",
+        "ratio": "cpp"
     }
 }

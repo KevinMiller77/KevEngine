@@ -2,7 +2,7 @@
 #define __SHADER_PROGRAM__
 
 #include <vector>
-#include <string>
+#include <map>
 
 #include "GL/glew.h"
 
@@ -22,6 +22,7 @@ public:
 
 
     static GLuint CreateGLProgram(const char* vertex_file_path, const char* fragment_file_path);
+    inline const GLuint getShaderID() const { return programID; }
 
     //There are two copies of all functions. We will want both static and non-static member functions to deal with shaders.
     void   setUniform1f(const GLchar* name, float value);
@@ -51,6 +52,4 @@ public:
     static void   enableShaderProgram(GLuint shaderProgramID);
     static void   disableShaderProgram();    
 };
-    
-
 #endif

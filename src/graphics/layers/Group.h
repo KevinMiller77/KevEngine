@@ -15,7 +15,6 @@ public:
     void add(Renderable2D* renderable);
     void submit(GL2DRenderer* renderer) override;
 
-
     inline Texture* getTextureFromChild(GLuint index) const { return children[index]->getTexturePtr(); }
 };
 

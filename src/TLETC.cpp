@@ -11,36 +11,48 @@ void TLETC::OnGameStart()
 {
     timer.start();
 
-    //glClearColor(0.0f, 0.33f, 0.67f, 1.0f);
+    //Set shader info
+    for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) texIDs[i] = i;
+    shaderNames = new const char* [NUM_SHADERS] ({"basic"}); 
+    shaders.newShader(shaderNames[0], "../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
+    shaders.enable(shaderNames[0]);
+    shaders.setUniform1iv(shaderNames[0], "textures", texIDs, MAX_TEXTURE_SLOTS);
 
-    GLint texIDs[] = {
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-    };
+    //Setup textures
+    textureNames = new const char* [NUM_TEXTURES]({"crate", "sponge", "geez"});
+    textures.newTexture(textureNames[0], "../textures/container.jpg");
+    textures.newTexture(textureNames[1], "../textures/spongebob.jpg");
+    textures.newTexture(textureNames[2], "../textures/morty.jpg");
 
-    
-    ShaderProgram* shader = new ShaderProgram("../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
-    ShaderProgram* shader2 = new ShaderProgram("../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
-    shader->enable();
-    shader->setUniform1iv("textures", texIDs, 10);
-    shader2->enable();
-    shader2->setUniform1iv("textures", texIDs, 10);
-
-    layers.push_back(new TileLayer(shader));
-    layers.push_back(new TileLayer(shader2));
+    layers.push_back(new TileLayer(shaders.getShaderPtr(shaderNames[0])->getShaderID()));
+    layers.push_back(new TileLayer(shaders.getShaderPtr(shaderNames[0])->getShaderID()));
 
     srand(time(NULL));
 
+    Group* background = new Group(Mat4f::translation(Vec3f(0.0f, 0.0f, 0.0f)));
+
+    background->add(new Sprite(-1.0f, -1.0f, 0.0f, 0.0f, textures.getTexture(textureNames[0])));
     for (float y = 0.0f; y < 9.0f; y += 1.0f)
     {
         for (float x = 0.0; x < 16.0f; x += 1.0f)
         {
-            layers[0]->add(new Sprite(x, y, 2.0f, 1.0f, Vec4f(rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, rand() % 1000 / 1000.0f, 1.0f)));
+            if ((int)x % 2 == 0 ){
+                background->add(new Sprite(x, y, 1.0f, 1.0f, textures.getTexture(textureNames[1])));
+            }
+            else {
+                background->add(new Sprite(x, y, 1.0f, 1.0f, textures.getTexture(textureNames[0])));
+            }
+
+
         }
     }
 
+    layers[0]->add(background);
+
+    
     Group* group = new Group(Mat4f::translation(Vec3f(2.0f, 2.0f, 0.0f)));
-    group->add(new Sprite(0.0f, 0.0f, 5.0f, 5.0f, new Texture("../textures/container.jpg")));
-    group->add(new Sprite(2.0f, 2.0f, 1.0f, 1.0f, group->getTextureFromChild(0)));
+    group->add(new Sprite(0.0f, 0.0f, 5.0f, 5.0f, textures.getTexture(textureNames[1])));
+    group->add(new Sprite(2.0f, 2.0f, 1.0f, 1.0f, textures.getTexture(textureNames[2])));
 
     layers[1]->add(group);
 
@@ -68,9 +80,6 @@ void TLETC::Update()
     float newX = 16.0f * ((float)mousePos.x / screenResolution.x);
     float newY = 9.0f * ((float)mousePos.y / screenResolution.y);
 
-    for (Layer* layer : layers )
-    {
-        layer->getShader()->enable();
-        layer->getShader()->setUniform2f("light_pos", Vec2f(newX, newY));
-    }
+    shaders.enable(shaderNames[0]);
+    shaders.setUniform2f(shaderNames[0], "light_pos", Vec2f(newX, newY));
 }

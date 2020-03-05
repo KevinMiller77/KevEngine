@@ -83,6 +83,7 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
         {
             if (TextureSlots[i] == texID)
             {
+                
                 ts = (float)(i + 1);
                 found = true;
                 break;           

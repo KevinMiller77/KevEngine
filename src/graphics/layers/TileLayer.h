@@ -7,7 +7,7 @@
 class TileLayer : public Layer
 {
 public:
-    TileLayer(ShaderProgram *shader);
+    TileLayer(GLuint shader);
 };
 
 #endif

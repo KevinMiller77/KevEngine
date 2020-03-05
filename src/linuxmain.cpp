@@ -1,4 +1,3 @@
-#if 0
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
@@ -252,4 +251,3 @@ void render(GLuint ShaderProgramID, GLuint vertexBuffer, GLenum mode, int dimens
 
 	glDisableVertexAttribArray(0);
 }
-#endif

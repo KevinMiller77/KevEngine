@@ -4,10 +4,12 @@
 #define FREEIMAGE_LIB
 #include <FreeImage/FreeImage.h>
 
-#include <GL/glew.h>
-#include <math.h>
+#include "GL/glew.h"
 
 #include "../utils/Logging.h"
+#include "../utils/FileIO.h"
+
+#include "../math/math.h"
 
 class Texture
 {
