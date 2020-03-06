@@ -63,6 +63,11 @@ void Vec2u::operator/=(const Vec2u& other) {
     divide(other);
 }
 
+void Vec2u::operator=(const Vec2u& other) {
+    x = other.x;
+    y = other.y;
+}
+
 Vec2u operator+(Vec2u left, Vec2u right) {
     Vec2u result(left);
     result.add(right);

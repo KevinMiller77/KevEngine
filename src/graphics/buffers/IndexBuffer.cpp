@@ -1,7 +1,7 @@
 #include "IndexBuffer.h"
 
 IndexBuffer::IndexBuffer(GLuint *data, GLsizei count)
-    : Count(count)
+    : Count(count), HeapLoc(data)
 {
 
     glGenBuffers(1, &BufferID);
@@ -13,6 +13,7 @@ IndexBuffer::IndexBuffer(GLuint *data, GLsizei count)
 IndexBuffer::~IndexBuffer()
 {
     glDeleteBuffers(1, &BufferID);
+    free(HeapLoc);
 }
 
 void IndexBuffer::bind() const

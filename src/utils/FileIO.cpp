@@ -5,7 +5,15 @@ FileContents ReadFileContents(const char *filePath)
 {
     FileContents result;
 
-    FILE* file = fopen(filePath, "rt");
+    FILE* file;
+    errno_t err = fopen_s(&file, filePath, "r+");
+
+    if (err != 0 && file == NULL)
+    {
+        //Add error handle
+    }
+
+    
     fseek(file, 0, SEEK_END);
     result.length = ftell(file);
     result.data = (char*)malloc(result.length + 1);

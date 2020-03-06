@@ -10,52 +10,44 @@ TLETC::TLETC(Vec2u startScreenResolution)
 void TLETC::OnGameStart()
 {
     timer.start();
+    keyPressTimeout.start();
 
     //Set shader info
     for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) texIDs[i] = i;
-    shaderNames = new const char* [NUM_SHADERS] ({"basic"}); 
-    shaders.newShader(shaderNames[0], "../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
-    shaders.enable(shaderNames[0]);
-    shaders.setUniform1iv(shaderNames[0], "textures", texIDs, MAX_TEXTURE_SLOTS);
+    shaders.newShader("basic", "../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
+    shaders.enable("basic");
+    shaders.setUniform1iv("basic", "textures", texIDs, MAX_TEXTURE_SLOTS);
 
     //Setup textures
-    textureNames = new const char* [NUM_TEXTURES]({"crate", "sponge", "geez"});
-    textures.newTexture(textureNames[0], "../textures/container.jpg");
-    textures.newTexture(textureNames[1], "../textures/spongebob.jpg");
-    textures.newTexture(textureNames[2], "../textures/morty.jpg");
+    textures.newTexture("crate", "../textures/container.jpg");
+    textures.newTexture("sponge", "../textures/spongebob.jpg");
+    textures.newTexture("morty", "../textures/morty.jpg", Vec2f(0.0f, 1.0f));
 
-    layers.push_back(new TileLayer(shaders.getShaderPtr(shaderNames[0])->getShaderID()));
-    layers.push_back(new TileLayer(shaders.getShaderPtr(shaderNames[0])->getShaderID()));
+    layers.push_back(new TileLayer(shaders.getShaderPtr("basic")->getShaderID()));
+    layers.push_back(new TileLayer(shaders.getShaderPtr("basic")->getShaderID()));
 
     srand(time(NULL));
 
     Group* background = new Group(Mat4f::translation(Vec3f(0.0f, 0.0f, 0.0f)));
 
-    background->add(new Sprite(-1.0f, -1.0f, 0.0f, 0.0f, textures.getTexture(textureNames[0])));
-    for (float y = 0.0f; y < 9.0f; y += 1.0f)
+    background->add(new Sprite(-1.0f, -1.0f, 0.0f, 0.0f, textures.getTexture("crate")));
+    for (float y = 0.0f; y < 9.0f; y += 0.05f)
     {
-        for (float x = 0.0; x < 16.0f; x += 1.0f)
+        for (float x = 0.0; x < 16.0f; x += 0.05f)
         {
-            if ((int)x % 2 == 0 ){
-                background->add(new Sprite(x, y, 1.0f, 1.0f, textures.getTexture(textureNames[1])));
+            uint8_t m = rand() % 3;
+            switch(m)
+            {
+                case(0): background->add(new Sprite(x, y, 0.1f, 0.1f, textures.getTexture("sponge"))); break;
+                case(1): background->add(new Sprite(x, y, 0.1f, 0.1f, textures.getTexture("morty"))); break;
+                case(2): background->add(new Sprite(x, y, 0.1f, 0.1f, textures.getTexture("crate"))); break;
             }
-            else {
-                background->add(new Sprite(x, y, 1.0f, 1.0f, textures.getTexture(textureNames[0])));
-            }
-
-
         }
     }
-
+    unsigned int numToRender = background->getNumChildren();
     layers[0]->add(background);
 
-    
-    Group* group = new Group(Mat4f::translation(Vec3f(2.0f, 2.0f, 0.0f)));
-    group->add(new Sprite(0.0f, 0.0f, 5.0f, 5.0f, textures.getTexture(textureNames[1])));
-    group->add(new Sprite(2.0f, 2.0f, 1.0f, 1.0f, textures.getTexture(textureNames[2])));
-
-    layers[1]->add(group);
-
+    LOG_INF("Loaded %d Sprites to be renderered\n", numToRender);
     LOG_INF("Time to setup: %dms\n", (unsigned int)(timer.getTimePassedReset() * 1000));
 }
 
@@ -63,8 +55,9 @@ void TLETC::OnGameStart()
 void TLETC::Draw()
 {
     //End frame and display
-    for (Layer* layer : layers )
+    for (int i = 0; i < layers.size(); i++ )
     {
+        Layer* layer = layers[i];
         layer->render();
     }
 
@@ -80,6 +73,52 @@ void TLETC::Update()
     float newX = 16.0f * ((float)mousePos.x / screenResolution.x);
     float newY = 9.0f * ((float)mousePos.y / screenResolution.y);
 
-    shaders.enable(shaderNames[0]);
-    shaders.setUniform2f(shaderNames[0], "light_pos", Vec2f(newX, newY));
+    shaders.enable("basic");
+    shaders.setUniform2f("basic", "light_pos", Vec2f(newX, newY));
 }
+
+void TLETC::ProcessInput(InputInformation in)
+{
+    switch(in._key)
+    {
+        case 0:
+            break;
+        case 0x52:  //R key, reloads entire program
+            
+            if (keyPressTimeout.getTimePassed() > 0.5f)
+            {
+                ResetEngine();
+                OnGameStart();
+                keyPressTimeout.reset();
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    if ((in._mousePos.x != 0.0f) || (in._mousePos.y != 0.0f))
+    {
+        mousePos = in._mousePos;
+    }
+}
+
+void TLETC::ResetEngine()
+{
+    LOG_INF("Restarting engine\n");
+    for (Layer* layer : layers)
+        delete layer;
+    layers.clear();
+    
+    shaders.disable("basic");
+    shaders.clearShaders();
+    textures.clearTextures();
+
+    timer.reset();
+
+    if (restartContext != nullptr)
+    {
+        (*restartContext)();
+    }
+}
+

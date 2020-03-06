@@ -11,11 +11,13 @@ Layer::Layer(GL2DRenderer *renderer, GLuint shader, Mat4f projMatrix)
 
 Layer::~Layer()
 {
+
+    delete texture;
     delete Renderer;
 
-    for (int i = 0; i < renderables.size(); i++)
+    for (Renderable2D* renderable : renderables)
     {
-        delete renderables[i];
+        delete renderable;
     }
 }
 

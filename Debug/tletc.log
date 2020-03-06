@@ -1,7 +1,14 @@
-﻿  GL2DRenderer.cpp
-  ShaderProgram.cpp
-C:\Users\DatDudeOJ\Documents\Dev\tletc\src\graphics\GL2DRenderer.h(4,10): error C1083:  Cannot open include file: 'GL/glew.h': No such file or directory
-  Win32Main.cpp
-C:\Users\DatDudeOJ\Documents\Dev\tletc\src\graphics\ShaderProgram.h(9,10): error C1083:  Cannot open include file: 'GL/glew.h': No such file or directory
-  Generating Code...
-C:\Users\DatDudeOJ\Documents\Dev\tletc\src\Win32Main.cpp(7,10): error C1083:  Cannot open include file: 'GL/glew.h': No such file or directory
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(445,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+LINK : warning LNK4044: unrecognized option '/link'; ignored
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_Initialise referenced in function "public: void __thiscall Texture::init(struct Vec2f)" (?init@Texture@@QAEXUVec2f@@@Z)
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_DeInitialise referenced in function "public: void __thiscall Texture::init(struct Vec2f)" (?init@Texture@@QAEXUVec2f@@@Z)
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_Load referenced in function "public: unsigned char * __thiscall Texture::ImageLoad(char const *,unsigned int *,unsigned int *,struct Vec2f)" (?ImageLoad@Texture@@QAEPAEPBDPAI1UVec2f@@@Z)
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_GetFIFFromFilename referenced in function "public: unsigned char * __thiscall Texture::ImageLoad(char const *,unsigned int *,unsigned int *,struct Vec2f)" (?ImageLoad@Texture@@QAEPAEPBDPAI1UVec2f@@@Z)
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_FIFSupportsReading referenced in function "public: unsigned char * __thiscall Texture::ImageLoad(char const *,unsigned int *,unsigned int *,struct Vec2f)" (?ImageLoad@Texture@@QAEPAEPBDPAI1UVec2f@@@Z)
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_GetFileType referenced in function "public: unsigned char * __thiscall Texture::ImageLoad(char const *,unsigned int *,unsigned int *,struct Vec2f)" (?ImageLoad@Texture@@QAEPAEPBDPAI1UVec2f@@@Z)
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_GetBits referenced in function "public: unsigned char * __thiscall Texture::ImageLoad(char const *,unsigned int *,unsigned int *,struct Vec2f)" (?ImageLoad@Texture@@QAEPAEPBDPAI1UVec2f@@@Z)
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_GetWidth referenced in function "public: unsigned char * __thiscall Texture::ImageLoad(char const *,unsigned int *,unsigned int *,struct Vec2f)" (?ImageLoad@Texture@@QAEPAEPBDPAI1UVec2f@@@Z)
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_GetHeight referenced in function "public: unsigned char * __thiscall Texture::ImageLoad(char const *,unsigned int *,unsigned int *,struct Vec2f)" (?ImageLoad@Texture@@QAEPAEPBDPAI1UVec2f@@@Z)
+TextureProgram.obj : error LNK2019: unresolved external symbol _FreeImage_FlipHorizontal referenced in function "public: unsigned char * __thiscall Texture::ImageLoad(char const *,unsigned int *,unsigned int *,struct Vec2f)" (?ImageLoad@Texture@@QAEPAEPBDPAI1UVec2f@@@Z)
+.\bin\tletc.exe : fatal error LNK1120: 10 unresolved externals

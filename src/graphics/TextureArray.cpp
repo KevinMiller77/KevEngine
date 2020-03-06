@@ -7,12 +7,22 @@ void TextureArray::addTexture(const char* ID, Texture* Texture)
     LOG_INF("New texture in array. Key: %s Value: %d\n", ID, textures.size());
 }
 
-void TextureArray::newTexture(const char* ID, const char* image_path)
+void TextureArray::newTexture(const char* ID, const char* image_path, Vec2f flip)
 {
-    Texture* texture = new Texture(image_path);
+    Texture* texture = new Texture(image_path, flip);
     textures.push_back(texture);
     textureMap.insert({ ID, textures.size() - 1 });
     LOG_INF("New texture in array. Key: %s Value: %d\n", ID, textures.size());
+}
+
+void TextureArray::clearTextures()
+{
+     for (Texture* texture : textures)
+     {
+         delete texture;
+     }
+     textures.clear(); 
+     textureMap.clear();
 }
 
 Texture* TextureArray::getTexture(const char* ID)

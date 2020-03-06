@@ -8,7 +8,7 @@
 
 #define USING_TEXTURES 1
 
-#define RENDERER_MAX_SPRITES 60000
+#define RENDERER_MAX_SPRITES 1500000
 #define RENDERER_VERTEX_SIZE sizeof(VertexData)
 #define RENDERER_SPRITE_SIZE (RENDERER_VERTEX_SIZE * 4)
 #define RENDERER_BUFFER_SIZE (RENDERER_SPRITE_SIZE * RENDERER_MAX_SPRITES)
@@ -29,12 +29,14 @@ private:
     IndexBuffer *IBO;
     GLsizei indexCount;
     VertexData *VDataBuffer;
+    VertexData *VDataHeapLoc = nullptr;
 
     std::vector<GLuint> TextureSlots;
 
 public:
     BetterGL2DRenderer();
-    ~BetterGL2DRenderer();
+    ~BetterGL2DRenderer() override;
+
     void submit(const Renderable2D *renderable) override;
     void draw() override;
     void begin();

@@ -1,6 +1,14 @@
 #ifndef __TLETC_MATH__
 #define __TLETC_MATH__
 
+#include <string>
+
+struct StrCompare {
+public:
+    bool operator() (const char* str1, const char* str2) const
+    { return std::strcmp(str1, str2) < 0; }
+};
+
 #include "vec2f.h"
 #include "vec2u.h"
 #include "vec3f.h"

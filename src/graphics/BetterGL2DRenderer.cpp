@@ -9,6 +9,7 @@ BetterGL2DRenderer::BetterGL2DRenderer()
 BetterGL2DRenderer::~BetterGL2DRenderer()
 {
     delete IBO;
+    glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 }
 
@@ -65,6 +66,7 @@ void BetterGL2DRenderer::begin()
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     VDataBuffer = (VertexData *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+    VDataHeapLoc = VDataHeapLoc == nullptr ? VDataBuffer : VDataHeapLoc; 
 }
 
 void BetterGL2DRenderer::submit(const Renderable2D *renderable)
@@ -79,7 +81,7 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
     if (texID > 0)
     {
         bool found = false;
-        for (int i = 0; i < TextureSlots.size(); i++)
+        for (unsigned int i = 0; i < TextureSlots.size(); i++)
         {
             if (TextureSlots[i] == texID)
             {
@@ -104,10 +106,10 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
     }
     else
     {
-        int r = color.x * 255.0f;
-        int g = color.y * 255.0f;
-        int b = color.z * 255.0f;
-        int a = color.w * 255.0f;
+        int r = (int)(color.x * 255.0f);
+        int g = (int)(color.y * 255.0f);
+        int b = (int)(color.z * 255.0f);
+        int a = (int)(color.w * 255.0f);
 
         c = a << 24 | b << 16 | g << 8 | r;
     }
@@ -148,7 +150,7 @@ void BetterGL2DRenderer::end()
 
 void BetterGL2DRenderer::draw()
 {
-    for (int tex = 0; tex < TextureSlots.size(); tex++)
+    for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
     {
         glActiveTexture(GL_TEXTURE0 + tex);
         glBindTexture(GL_TEXTURE_2D, TextureSlots[tex]);

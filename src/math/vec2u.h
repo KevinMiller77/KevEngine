@@ -19,6 +19,7 @@ struct Vec2u {
     void operator-=(const Vec2u& other);
     void operator*=(const Vec2u& other);
     void operator/=(const Vec2u& other);
+    void operator=(const Vec2u& other);
     
     friend Vec2u operator+(Vec2u left, Vec2u right);
     friend Vec2u operator-(Vec2u left, Vec2u right);

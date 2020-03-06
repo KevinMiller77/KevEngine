@@ -246,6 +246,26 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
+HDC windowHDC;
+
+bool restartGLContext()
+{
+    HGLRC currentContext = wglGetCurrentContext();
+    wglMakeCurrent(NULL, NULL);
+    wglDeleteContext(currentContext);
+
+    
+    HGLRC gameGLContext = CreateGLContext(windowHDC);
+    if ( gameGLContext == 0)
+    {
+        LOG_ERR("Could not restart context. Leaving program\n");
+        return false;
+    }
+    wglMakeCurrent(windowHDC, gameGLContext);
+
+    return true;
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
     (void)hPrevInstance;
@@ -266,13 +286,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     LoadGLExtensions(hInstance);
 
     HWND window = CreateWindow(WINDOW_CLASS_NAME, "TLETC Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 960, 540, NULL, NULL, hInstance, NULL);
-    HDC windowHDC = GetDC(window);
+    windowHDC = GetDC(window);
 
     tletc = new TLETC(Vec2u(960, 540));
+    tletc->restartContext = restartGLContext;
 
-    HGLRC glContext = CreateGLContext(windowHDC);
+    //HGLRC baseGLContext = CreateGLContext(windowHDC);
+    HGLRC gameGLContext = CreateGLContext(windowHDC);
 
-    wglMakeCurrent(windowHDC, glContext);
+    wglMakeCurrent(windowHDC, gameGLContext);
 
     // TODO(Adin): Investigate why this needs "%s"
     LOG(DBG, "%s\n", glGetString(GL_VERSION));
@@ -288,10 +310,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     MSG message = {};
     BOOL running = TRUE;
     
+    InputInformation state;
+
     while (running)
     {
         while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
         {
+            state = InputInformation();
             switch (message.message)
             {
 
@@ -301,16 +326,31 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                 break;
 
             case (WM_MOUSEMOVE):
-                tletc->setMousePos(Vec2u(LOWORD(message.lParam), HIWORD(message.lParam)));
+                state._mousePos = Vec2u(LOWORD(message.lParam), HIWORD(message.lParam));
+                break;
+
+            case (WM_KEYDOWN):
+                state._key = (uint8_t)(message.wParam);
+                state._holdCount = (uint16_t)(message.lParam & 0xFFFF0000);
+                state._extendedKey = (bool)(message.lParam & 0x00000800);
+                state._previousKeyState = (bool)(message.lParam & 0x00000004);
+                break;
+            
+            case (WM_KEYUP):
+                state._key = (uint8_t)(message.wParam);
+                state._holdCount = 1;
+                state._direction = 1;
+                state._extendedKey = (bool)(message.lParam & 0x00000800);
                 break;
 
             default:
                 break;
             }
-
+            tletc->ProcessInput(state);
             TranslateMessage(&message);
             DispatchMessage(&message);
         }
+
         tletc->Update();
         tletc->Draw();
         SwapBuffers(windowHDC);
@@ -320,7 +360,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     ReleaseDC(window, windowHDC);
 
     wglMakeCurrent(NULL, NULL);
-    wglDeleteContext(glContext);
+    wglDeleteContext(gameGLContext);
+    //wglDeleteContext(baseGLContext);
 
     return 0;
 }

@@ -1,6 +1,8 @@
 #ifndef __GL_RENDERER_H__
 #define __GL_RENDERER_H__
 
+#include <vector>
+
 #include <GL/glew.h>
 #include <math.h>
 #include "../math/math.h"
@@ -23,6 +25,8 @@ protected:
     const Mat4f* curTransformationBack;
 
 public:
+    virtual ~GL2DRenderer() = default;
+    
     void push(const Mat4f &matrix, bool override = false)
     {
         if (override)

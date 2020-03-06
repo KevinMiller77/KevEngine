@@ -6,11 +6,15 @@
 class ShaderArray
 {
 private:
-    std::map<const char*, GLuint> shaderMap;
+    std::map<const char*, GLuint, StrCompare> shaderMap;
     std::vector<ShaderProgram*> shaders;
 
 public:
     ShaderArray() = default;
+    ~ShaderArray()
+    {
+        shaders.clear();
+    }
 
     void addShader(const char* ID, ShaderProgram* shader);
     void newShader(const char* ID, const char* vertex_file_path, const char* fragment_file_path);
@@ -19,6 +23,8 @@ public:
 
     inline void enable(const char* ID) { shaders[shaderMap[ID]]->enable(); }
     inline void disable(const char* ID) { shaders[shaderMap[ID]]->disable(); }
+
+    inline void clearShaders() { shaders.clear(); shaderMap.clear(); }
 
     inline void setUniform1f(const char * ID, const GLchar* name, float value)                      { shaders[shaderMap[ID]]->setUniform1f(name, value); }
     inline void setUniform1fv(const char * ID, const GLchar* name, float* value, GLsizei count)     { shaders[shaderMap[ID]]->setUniform1fv(name, value, count); }
@@ -30,6 +36,12 @@ public:
     inline void setUniformMat4(const char * ID, const GLchar* name, const Mat4f& matrix)            { shaders[shaderMap[ID]]->setUniformMat4(name, matrix); }
 
     inline GLuint getUniformLocation(const char* ID, const GLchar* name) { return shaders[shaderMap[ID]]->getUniformLocation(name); }
+
+    void _delete() {
+        for (ShaderProgram* shader : shaders)
+            delete shader;
+        shaderMap = std::map<const char*, GLuint, StrCompare>();
+    }
 
 };
 

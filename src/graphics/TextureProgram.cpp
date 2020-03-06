@@ -4,21 +4,29 @@ Texture::Texture()
 {
     texture = 0;
     imagePath = nullptr;
+    heapLoc;
     width = 0;
     height = 0;
+
 }
 
-Texture::Texture(const char *inImagePath)
+Texture::Texture(const char *inImagePath, Vec2f flip)
     : imagePath(inImagePath)
 {
-    init();
+    init(flip);
 }
 
-void Texture::init()
+Texture::~Texture()
+{
+    glDeleteTextures(1, &texture);
+}
+
+void Texture::init(Vec2f flip)
 {
     FreeImage_Initialise();
 
-    BYTE* image = ImageLoad(imagePath, &width, &height);
+    BYTE* image = ImageLoad(imagePath, &width, &height, flip);
+    heapLoc = image;
     
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -39,26 +47,52 @@ void Texture::init()
 
     FreeImage_DeInitialise();
     glBindTexture(GL_TEXTURE_2D, 0);
+
 }
 
-BYTE* Texture::ImageLoad(const char* path, GLuint *width, GLuint *height)
+BYTE* Texture::ImageLoad(const char* path, GLuint *width, GLuint *height, Vec2f flip)
 {
     FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 	FIBITMAP *dib = nullptr;
 	fif = FreeImage_GetFileType(path, 0);
-	if (fif == FIF_UNKNOWN)
-		fif = FreeImage_GetFIFFromFilename(path);
-	if (fif == FIF_UNKNOWN)
-		return nullptr;
 
-	if (FreeImage_FIFSupportsReading(fif))
-		dib = FreeImage_Load(fif, path);
-	if (!dib)
+    //Get file info
+	if (fif == FIF_UNKNOWN)
+    {
+        fif = FreeImage_GetFIFFromFilename(path);
+    }
+	if (fif == FIF_UNKNOWN)
+    {
 		return nullptr;
+    }
+
+    //Read file
+	if (FreeImage_FIFSupportsReading(fif))
+    {
+		dib = FreeImage_Load(fif, path);
+    }
+	if (!dib)
+    {
+	    return nullptr;
+    }
+
+    if((bool)(int)flip.x && dib)
+    {
+        LOG_INF("Flipping texture H\n");
+        FreeImage_FlipHorizontal(dib);
+    }
+    if((bool)(int)flip.y && dib)
+    {
+        LOG_INF("Flipping texture V\n");
+        FreeImage_FlipHorizontal(dib);
+    }
+
 
 	BYTE* result = FreeImage_GetBits(dib);
 	*width = FreeImage_GetWidth(dib);
 	*height = FreeImage_GetHeight(dib);
+
+    free(dib);
 
 	return result;
 }

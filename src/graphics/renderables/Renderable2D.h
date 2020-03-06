@@ -35,7 +35,7 @@ public:
     {
         texture = new Texture();
     }
-    virtual ~Renderable2D() {}
+    virtual ~Renderable2D() = default;
 
     virtual void submit(GL2DRenderer* renderer)
     {
