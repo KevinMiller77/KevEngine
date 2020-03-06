@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 *.txt
-=======
->>>>>>> 9385a6cb1b46d988773c0c175ebbdd2b460a3a3a
 *.sln
+*.vcxproj.
+*.vcxproj.*
 
 bin/*
 .vs/*
-<<<<<<< HEAD
-=======
 .vscode/*
-*.vcxproj*
->>>>>>> 9385a6cb1b46d988773c0c175ebbdd2b460a3a3a
