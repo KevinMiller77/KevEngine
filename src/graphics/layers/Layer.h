@@ -11,22 +11,29 @@ protected:
 
     GL2DRenderer *Renderer;
     std::vector<Renderable2D *> renderables;
+    std::map<const char*, unsigned int> groupMap;
     GLuint Shader;
 
     Mat4f projectionMatrix;
+    bool enabled;
 
 public:
     virtual ~Layer();
-    Texture *texture;
 
     virtual void add(Renderable2D *renderable);
     virtual void render();
 
     virtual inline GLuint getShader() { return Shader; }
     virtual inline void setShader(GLuint shader) { Shader = shader; }
-    
-    virtual void genTexture(const char* path) { texture = new Texture(path); }
-    virtual unsigned int getNumRenderables() {return renderables.size(); }
+
+    virtual inline unsigned int getNumRenderables() { return renderables.size(); }
+
+    virtual inline void pushTransform(Mat4f *transform) { Renderer->push(*transform); }
+    virtual inline void poptransform() { Renderer->pop(); }
+
+    inline void enable() { enabled = true; }
+    inline void disable() { enabled = false; }
+    inline void toggle() { enabled = !enabled; }
 };
 
 #endif

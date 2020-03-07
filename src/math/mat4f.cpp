@@ -28,6 +28,16 @@ Mat4f::Mat4f(Vec4f row0, Vec4f row1, Vec4f row2, Vec4f row3)
 
 Mat4f::~Mat4f() {}
 
+void Mat4f::printMatrix()
+{
+	printf("[ ");
+	for (int i = 0; i < 16; i+=4)
+	{
+		printf(" [ %f, %f, %f, %f ] \n", elements[i], elements[i + 1], elements[i + 2], elements[i + 3]);
+	}
+	printf(" ]\n");
+}
+
 Mat4f Mat4f::orthographic(float left, float right, float top, float bottom, float near, float far)
 {
 	Mat4f result(1.0f);
@@ -74,6 +84,27 @@ void Mat4f::multiply(const Mat4f &other)
 			for (int i = 0; i < 4; i++)
 			{
 				resultSum += elements[row * 4 + i] * other.elements[i * 4 + col];
+			}
+			result[row * 4 + col] = resultSum;
+		}
+	}
+
+	memcpy(elements, result, 4 * 4 * sizeof(float));
+}
+
+void Mat4f::multiplyLeft(const Mat4f &other)
+{
+	float result[16];
+
+	for (int row = 0; row < 4; row++)
+	{
+		for (int col = 0; col < 4; col++)
+		{
+			//Dot-product for each element of result
+			float resultSum = 0;
+			for (int i = 0; i < 4; i++)
+			{
+				resultSum += other.elements[row * 4 + i] * elements[i * 4 + col];
 			}
 			result[row * 4 + col] = resultSum;
 		}
@@ -159,6 +190,16 @@ Vec3f operator*(Mat4f left, const Vec3f &right)
 	return out;
 }
 
+Mat4f operator*(Mat4f left, const double &right)
+{
+	Mat4f out;
+	for (int i = 0; i < 16; i++)
+	{
+		out.elements[i] = left.elements[i] * right;
+	}
+	return out;
+}
+
 Mat4f Mat4f::perspective(float fov, float aspectRatio, float near, float far)
 {
 	Mat4f result(1.0f);
@@ -226,4 +267,134 @@ Mat4f Mat4f::scale(const Vec3f &scale)
 	result.elements[2 + 2 * 4] = scale.z;
 
 	return result;
+}
+
+Mat4f Mat4f::invertMatrix()
+{
+	Mat4f newMat = Mat4f(1.0f);
+	double det = 0;
+    int i;
+
+    newMat.elements[0] = elements[5]  * elements[10] * elements[15] - 
+             elements[5]  * elements[11] * elements[14] - 
+             elements[9]  * elements[6]  * elements[15] + 
+             elements[9]  * elements[7]  * elements[14] +
+             elements[13] * elements[6]  * elements[11] - 
+             elements[13] * elements[7]  * elements[10];
+
+    newMat.elements[4] = -elements[4]  * elements[10] * elements[15] + 
+              elements[4]  * elements[11] * elements[14] + 
+              elements[8]  * elements[6]  * elements[15] - 
+              elements[8]  * elements[7]  * elements[14] - 
+              elements[12] * elements[6]  * elements[11] + 
+              elements[12] * elements[7]  * elements[10];
+
+    newMat.elements[8] = elements[4]  * elements[9] * elements[15] - 
+             elements[4]  * elements[11] * elements[13] - 
+             elements[8]  * elements[5] * elements[15] + 
+             elements[8]  * elements[7] * elements[13] + 
+             elements[12] * elements[5] * elements[11] - 
+             elements[12] * elements[7] * elements[9];
+
+    newMat.elements[12] = -elements[4]  * elements[9] * elements[14] + 
+               elements[4]  * elements[10] * elements[13] +
+               elements[8]  * elements[5] * elements[14] - 
+               elements[8]  * elements[6] * elements[13] - 
+               elements[12] * elements[5] * elements[10] + 
+               elements[12] * elements[6] * elements[9];
+
+    newMat.elements[1] = -elements[1]  * elements[10] * elements[15] + 
+              elements[1]  * elements[11] * elements[14] + 
+              elements[9]  * elements[2] * elements[15] - 
+              elements[9]  * elements[3] * elements[14] - 
+              elements[13] * elements[2] * elements[11] + 
+              elements[13] * elements[3] * elements[10];
+
+    newMat.elements[5] = elements[0]  * elements[10] * elements[15] - 
+             elements[0]  * elements[11] * elements[14] - 
+             elements[8]  * elements[2] * elements[15] + 
+             elements[8]  * elements[3] * elements[14] + 
+             elements[12] * elements[2] * elements[11] - 
+             elements[12] * elements[3] * elements[10];
+
+    newMat.elements[9] = -elements[0]  * elements[9] * elements[15] + 
+              elements[0]  * elements[11] * elements[13] + 
+              elements[8]  * elements[1] * elements[15] - 
+              elements[8]  * elements[3] * elements[13] - 
+              elements[12] * elements[1] * elements[11] + 
+              elements[12] * elements[3] * elements[9];
+
+    newMat.elements[13] = elements[0]  * elements[9] * elements[14] - 
+              elements[0]  * elements[10] * elements[13] - 
+              elements[8]  * elements[1] * elements[14] + 
+              elements[8]  * elements[2] * elements[13] + 
+              elements[12] * elements[1] * elements[10] - 
+              elements[12] * elements[2] * elements[9];
+
+    newMat.elements[2] = elements[1]  * elements[6] * elements[15] - 
+             elements[1]  * elements[7] * elements[14] - 
+             elements[5]  * elements[2] * elements[15] + 
+             elements[5]  * elements[3] * elements[14] + 
+             elements[13] * elements[2] * elements[7] - 
+             elements[13] * elements[3] * elements[6];
+
+    newMat.elements[6] = -elements[0]  * elements[6] * elements[15] + 
+              elements[0]  * elements[7] * elements[14] + 
+              elements[4]  * elements[2] * elements[15] - 
+              elements[4]  * elements[3] * elements[14] - 
+              elements[12] * elements[2] * elements[7] + 
+              elements[12] * elements[3] * elements[6];
+
+    newMat.elements[10] = elements[0]  * elements[5] * elements[15] - 
+              elements[0]  * elements[7] * elements[13] - 
+              elements[4]  * elements[1] * elements[15] + 
+              elements[4]  * elements[3] * elements[13] + 
+              elements[12] * elements[1] * elements[7] - 
+              elements[12] * elements[3] * elements[5];
+
+    newMat.elements[14] = -elements[0]  * elements[5] * elements[14] + 
+               elements[0]  * elements[6] * elements[13] + 
+               elements[4]  * elements[1] * elements[14] - 
+               elements[4]  * elements[2] * elements[13] - 
+               elements[12] * elements[1] * elements[6] + 
+               elements[12] * elements[2] * elements[5];
+
+    newMat.elements[3] = -elements[1] * elements[6] * elements[11] + 
+              elements[1] * elements[7] * elements[10] + 
+              elements[5] * elements[2] * elements[11] - 
+              elements[5] * elements[3] * elements[10] - 
+              elements[9] * elements[2] * elements[7] + 
+              elements[9] * elements[3] * elements[6];
+
+    newMat.elements[7] = elements[0] * elements[6] * elements[11] - 
+             elements[0] * elements[7] * elements[10] - 
+             elements[4] * elements[2] * elements[11] + 
+             elements[4] * elements[3] * elements[10] + 
+             elements[8] * elements[2] * elements[7] - 
+             elements[8] * elements[3] * elements[6];
+
+    newMat.elements[11] = -elements[0] * elements[5] * elements[11] + 
+               elements[0] * elements[7] * elements[9] + 
+               elements[4] * elements[1] * elements[11] - 
+               elements[4] * elements[3] * elements[9] - 
+               elements[8] * elements[1] * elements[7] + 
+               elements[8] * elements[3] * elements[5];
+
+    newMat.elements[15] = elements[0] * elements[5] * elements[10] - 
+              elements[0] * elements[6] * elements[9] - 
+              elements[4] * elements[1] * elements[10] + 
+              elements[4] * elements[2] * elements[9] + 
+              elements[8] * elements[1] * elements[6] - 
+              elements[8] * elements[2] * elements[5];
+
+    det = elements[0] * newMat.elements[0] + elements[1] * newMat.elements[4] + elements[2] * newMat.elements[8] + elements[3] * newMat.elements[12];
+	if (det == 0)
+		return Mat4f(rows[0], rows[1], rows[2], rows[3]);
+	
+    det = 1.0 / det;
+	
+	Vec4f newRows[4];
+    for (i = 0; i < 16; i+=4)
+        newRows[i / 4] = Vec4f(newMat.elements[i] * det, newMat.elements[i + 1] * det, newMat.elements[i + 2] * det, newMat.elements[i + 3] * det);
+	return Mat4f(newRows[0], newRows[1], newRows[2], newRows[3]);
 }

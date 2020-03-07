@@ -1,7 +1,7 @@
 #include "Group.h"
 
 Group::Group(const Mat4f transform)
-: TransformationMatrix(transform)
+: ModelMatrix(transform)
 {
 }
 
@@ -12,7 +12,7 @@ void Group::add(Renderable2D* renderable)
 
 void Group::submit(GL2DRenderer* renderer)
 {
-    renderer->push(TransformationMatrix);
+    renderer->push(ModelMatrix);
     for (const Renderable2D* renderable : children)
     {
         renderer->submit(renderable);

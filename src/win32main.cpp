@@ -25,7 +25,13 @@
 
 // TODO(Adin): Switch to CreateWindowEx
 
+//Global window information. Required for toggling window fullscreen
 TLETC *tletc = nullptr;
+HDC windowHDC;
+HWND window;
+WINDOWPLACEMENT wpc;
+long HWNDStyle = 0;
+long HWNDStyleEx = 0;
 
 void GLAPIENTRY
 MessageCallback(GLenum source,
@@ -246,15 +252,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
     return DefWindowProc(hwnd, message, wParam, lParam);
 }
 
-HDC windowHDC;
-
 bool restartGLContext()
 {
     HGLRC currentContext = wglGetCurrentContext();
     wglMakeCurrent(NULL, NULL);
     wglDeleteContext(currentContext);
 
-    
     HGLRC gameGLContext = CreateGLContext(windowHDC);
     if ( gameGLContext == 0)
     {
@@ -264,6 +267,40 @@ bool restartGLContext()
     wglMakeCurrent(windowHDC, gameGLContext);
 
     return true;
+}
+
+bool ToggleFullscreen()
+{    
+    bool windowedMode = tletc->getWindowMode();
+    if ( windowedMode )
+    {
+        GetWindowPlacement( window, &wpc );
+        if ( HWNDStyle == 0 )
+            HWNDStyle = GetWindowLong( window, GWL_STYLE );
+        if ( HWNDStyleEx == 0 )
+            HWNDStyleEx = GetWindowLong( window, GWL_EXSTYLE );
+
+        LONG NewHWNDStyle = HWNDStyle;
+        NewHWNDStyle &= ~WS_BORDER;
+        NewHWNDStyle &= ~WS_DLGFRAME;
+        NewHWNDStyle &= ~WS_THICKFRAME;
+
+        LONG NewHWNDStyleEx =HWNDStyleEx;
+        NewHWNDStyleEx &= ~WS_EX_WINDOWEDGE;
+
+        SetWindowLong( window, GWL_STYLE, NewHWNDStyle | WS_POPUP );
+        SetWindowLong( window, GWL_EXSTYLE, NewHWNDStyleEx | WS_EX_TOPMOST );
+        ShowWindow( window, SW_SHOWMAXIMIZED );
+    }
+    else
+    {
+        SetWindowLong( window, GWL_STYLE, HWNDStyle );
+        SetWindowLong( window, GWL_EXSTYLE, HWNDStyleEx );
+        ShowWindow( window, SW_SHOWNORMAL );
+        SetWindowPlacement( window, &wpc );
+    }
+
+    return !windowedMode;
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
@@ -285,11 +322,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // GLEW is initalized in here
     LoadGLExtensions(hInstance);
 
-    HWND window = CreateWindow(WINDOW_CLASS_NAME, "TLETC Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 960, 540, NULL, NULL, hInstance, NULL);
+    window = CreateWindow(WINDOW_CLASS_NAME, "TLETC Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 960, 540, NULL, NULL, hInstance, NULL);
+    
     windowHDC = GetDC(window);
 
     tletc = new TLETC(Vec2u(960, 540));
     tletc->restartContext = restartGLContext;
+    tletc->toggleFullScreen = ToggleFullscreen;
 
     //HGLRC baseGLContext = CreateGLContext(windowHDC);
     HGLRC gameGLContext = CreateGLContext(windowHDC);
@@ -303,6 +342,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     glDebugMessageCallback(MessageCallback, 0);
 
     //Game start actions
+    tletc->restartContext();
     tletc->OnGameStart();
     ShowWindow(window, SW_SHOW);
 
@@ -317,6 +357,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
         {
             state = InputInformation();
+            state._mouseWheelMagConstant = WHEEL_DELTA;
             switch (message.message)
             {
 
@@ -326,8 +367,30 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                 break;
 
             case (WM_MOUSEMOVE):
+                state._mouseButtons = message.wParam;
+                state._mousePos = Vec2u(LOWORD(message.lParam), HIWORD(message.lParam));
+                state._mouseWheelMag = 0;
+                {
+                    RECT rect = { NULL };
+#if IMMERSIVE_CURSOR                    
+                    if (GetWindowRect(window, &rect))
+                    {
+                        Vec2u resolution = tletc->getScreenResolution();
+                        SetCursorPos(resolution.x / 2 + rect.left, resolution.y / 2 + rect.top);
+                        ShowCursor(false);
+                    }
+#endif
+                }
+                
+                break;
+
+            case (WM_MOUSEWHEEL):
+                state._mouseWheelMag = message.wParam;
                 state._mousePos = Vec2u(LOWORD(message.lParam), HIWORD(message.lParam));
                 break;
+            
+            case (WM_MOUSELEAVE):
+                ShowCursor(true);
 
             case (WM_KEYDOWN):
                 state._key = (uint8_t)(message.wParam);
@@ -342,6 +405,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                 state._direction = 1;
                 state._extendedKey = (bool)(message.lParam & 0x00000800);
                 break;
+
 
             default:
                 break;

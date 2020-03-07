@@ -26,6 +26,8 @@ struct Mat4f
     static Mat4f rotation(float angle, const Vec3f &axis);
     static Mat4f scale(const Vec3f &scale);
 
+    Mat4f invertMatrix();
+
     const Vec4f &operator[](int index) const;
     Vec4f &operator[](int index);
 
@@ -38,11 +40,15 @@ struct Mat4f
     friend Mat4f operator*(Mat4f left, const Mat4f &right);
     friend Vec4f operator*(Mat4f left, const Vec4f &right);
     friend Vec3f operator*(Mat4f left, const Vec3f &right);
+    friend Mat4f operator*(Mat4f left, const double &right);
 
     void multiply(const Mat4f &other);
+    void Mat4f::multiplyLeft(const Mat4f &other);
     Vec4f multiply(const Vec4f &other);
     Vec3f multiply(const Vec3f &other);
 
+    void printMatrix();
+    
 private:
     void add(const Mat4f &other);
     void subtract(const Mat4f &other);

@@ -21,8 +21,8 @@ public:
     inline ShaderProgram getShader(const char* ID) { return *(shaders[shaderMap[ID]]);}
     inline ShaderProgram* getShaderPtr(const char* ID) { return shaders[shaderMap[ID]]; }
 
-    inline void enable(const char* ID) { shaders[shaderMap[ID]]->enable(); }
-    inline void disable(const char* ID) { shaders[shaderMap[ID]]->disable(); }
+    inline void enable(const char* ID) { if (!shaders.empty()) shaders[shaderMap[ID]]->enable(); }
+    inline void disable(const char* ID) { if (!shaders.empty()) shaders[shaderMap[ID]]->disable(); }
 
     inline void clearShaders() { shaders.clear(); shaderMap.clear(); }
 

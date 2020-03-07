@@ -17,10 +17,8 @@ public:
     TextureArray() = default;
     ~TextureArray()
     {
-        for (Texture* tex : textures)
-        {
-            delete tex;
-        }
+        textures.clear();
+        textureMap.clear();
     }
 
     void addTexture(const char* ID, Texture* Texture);
@@ -30,12 +28,6 @@ public:
 
     GLuint getNum(const char* ID);
     Texture* getTexture(const char* ID);
-
-    void _delete() {
-        for (Texture* texture : textures)
-            delete texture;
-        textureMap = std::map<const char*, GLuint, StrCompare>();
-    }
 };
 
 #endif

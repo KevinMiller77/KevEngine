@@ -1,9 +1,8 @@
 #include "Layer.h"
 
 Layer::Layer(GL2DRenderer *renderer, GLuint shader, Mat4f projMatrix)
-    : Renderer(renderer), Shader(shader), projectionMatrix(projMatrix)
+    : Renderer(renderer), Shader(shader), projectionMatrix(projMatrix), enabled(true)
 {
-    texture = new Texture();
     ShaderProgram::enableShaderProgram(Shader);
     ShaderProgram::setShaderUniformMat4(Shader, "pr_matrix", projectionMatrix);
     ShaderProgram::disableShaderProgram();
@@ -11,8 +10,6 @@ Layer::Layer(GL2DRenderer *renderer, GLuint shader, Mat4f projMatrix)
 
 Layer::~Layer()
 {
-
-    delete texture;
     delete Renderer;
 
     for (Renderable2D* renderable : renderables)
@@ -28,14 +25,17 @@ void Layer::add(Renderable2D *renderable)
 
 void Layer::render()
 {
-    ShaderProgram::enableShaderProgram(Shader);
-    Renderer->begin();
-
-    for (Renderable2D *renderable : renderables)
+    if (enabled)
     {
-        renderable->submit(Renderer);
-    }
+        ShaderProgram::enableShaderProgram(Shader);
+        Renderer->begin();
 
-    Renderer->end();   
-    Renderer->draw();
+        for (Renderable2D *renderable : renderables)
+        {
+            renderable->submit(Renderer);
+        }
+        
+        Renderer->end();   
+        Renderer->draw();
+    }
 }

@@ -14,12 +14,12 @@
 class Texture
 {
 private:
-    const char *imagePath;
+    char *imagePath;
     GLuint width, height;
     GLint nrChannels;
 
     GLuint texture;
-    BYTE* heapLoc;
+    FIBITMAP* heapLocOfTexture;
 
 public:
     Texture();

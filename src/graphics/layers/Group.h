@@ -7,7 +7,7 @@ class Group : public Renderable2D
 {
 private:
     std::vector<Renderable2D*> children;
-    Mat4f TransformationMatrix;
+    Mat4f ModelMatrix;
 
 public:
     Group() = default;
