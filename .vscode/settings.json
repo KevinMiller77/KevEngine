@@ -58,6 +58,7 @@
         "set": "cpp",
         "stack": "cpp",
         "xlocmon": "cpp",
-        "xloctime": "cpp"
+        "xloctime": "cpp",
+        "internal.h": "c"
     }
 }

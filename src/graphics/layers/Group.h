@@ -21,7 +21,7 @@ public:
     }
 
     void add(Renderable2D* renderable);
-    void submit(GL2DRenderer* renderer) override;
+    void submit(GL2DRenderer* renderer) const override;
 
     inline Texture* getTextureFromChild(GLuint index) const { return children[index]->getTexturePtr(); }
     inline unsigned int getNumChildren() { return children.size(); }

@@ -10,12 +10,12 @@ void Group::add(Renderable2D* renderable)
     children.push_back(renderable);
 }
 
-void Group::submit(GL2DRenderer* renderer)
+void Group::submit(GL2DRenderer* renderer) const
 {
     renderer->push(ModelMatrix);
     for (const Renderable2D* renderable : children)
     {
-        renderer->submit(renderable);
+        renderable->submit(renderer);
     }
     renderer->pop();
 }

@@ -5,18 +5,19 @@ if not "%Platform%"=="x86" call scripts\setup_cl.bat x86
 REM TOOD(Adin): Turn off _CRT_SECURE_NO_WARNINGS
 
 setlocal
-set COMPILE_FLAGS=/nologo /diagnostics:caret /Zi /W0 /WX /EHsc
+set COMPILE_FLAGS=/nologo /diagnostics:caret /Zi /W0 /WX /EHsc /MP
 set WARNS_DISABLE= /wd4201
-set DEFINES=/DGLEW_BUILD=GLEW_STATIC /D_CRT_SECURE_NO_WARNINGS
-set INCLUDE_PATH=/I..\include
+set DEFINES=/DGLEW_BUILD=GLEW_STATIC /D_CRT_SECURE_NO_WARNINGS 
+set INCLUDE_PATH=/I..\include /I..\ext\freetype\include
 set LIBRARY_PATH=/libpath:..\lib
-set LIBRARIES=glew32s.lib user32.lib gdi32.lib opengl32.lib FreeImaged.lib FreeImageLib.lib
+set LIBRARIES=glew32s.lib user32.lib gdi32.lib opengl32.lib FreeImaged.lib FreeImageLib.lib ftbase.lib
 
-set TARGETS=..\src\Win32Main.cpp ..\src\TLETC.cpp ..\src\utils\FileIO.cpp ..\src\graphics\BetterGL2DRenderer.cpp ..\src\graphics\ShaderArray.cpp ..\src\graphics\TextureArray.cpp ..\src\graphics\ShaderProgram.cpp ..\src\graphics\TextureProgram.cpp ..\src\graphics\layers\Layer.cpp ..\src\graphics\layers\Group.cpp ..\src\graphics\layers\TileLayer.cpp ..\src\graphics\renderables\StaticSprite2D.cpp  ..\src\graphics\renderables\Sprite2D.cpp ..\src\graphics\buffers\Buffer.cpp ..\src\graphics\buffers\IndexBuffer.cpp ..\src\graphics\buffers\VertexArray.cpp ..\src\math\vec2u.cpp ..\src\math\vec2f.cpp ..\src\math\vec3f.cpp ..\src\math\vec4f.cpp ..\src\math\mat2f.cpp ..\src\math\mat4f.cpp
+set TARGETS=..\src\Win32Main.cpp ..\src\TLETC.cpp ..\src\utils\FileIO.cpp ..\src\graphics\BetterGL2DRenderer.cpp ..\src\graphics\ShaderArray.cpp ..\src\graphics\TextureArray.cpp ..\src\graphics\ShaderProgram.cpp ..\src\graphics\TextureProgram.cpp ..\src\graphics\layers\Layer.cpp ..\src\graphics\layers\Group.cpp ..\src\graphics\layers\TileLayer.cpp ..\src\graphics\renderables\StaticSprite2D.cpp  ..\src\graphics\renderables\Sprite2D.cpp ..\src\graphics\renderables\Label.cpp ..\src\graphics\buffers\Buffer.cpp ..\src\graphics\buffers\IndexBuffer.cpp ..\src\graphics\buffers\VertexArray.cpp ..\src\math\vec2u.cpp ..\src\math\vec2f.cpp ..\src\math\vec3f.cpp ..\src\math\vec4f.cpp ..\src\math\mat2f.cpp ..\src\math\mat4f.cpp ..\ext\freetype-gl\vector.c ..\ext\freetype-gl\texture-atlas.c ..\ext\freetype-gl\texture-font.c 
 
 if not exist "bin\" mkdir bin
 
 pushd bin
+
 echo.
 echo Compiling:
 echo -------

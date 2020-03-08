@@ -2,6 +2,7 @@
 #define __GL_RENDERER_H__
 
 #include <vector>
+#include <string>
 
 #include <GL/glew.h>
 #include <math.h>
@@ -52,6 +53,8 @@ public:
         curTransformationBack = &(TransformationStack.back());
     }
 
+
+    virtual void drawString(std::string text, Vec3f position, uint32_t color) = 0;
     virtual void submit(const Renderable2D *renderable) = 0;
     virtual void draw() = 0;
     virtual void begin() = 0;

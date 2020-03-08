@@ -12,6 +12,11 @@ TLETC::TLETC(Vec2u startScreenResolution)
 void TLETC::OnGameStart()
 {
 
+    //Enable blending of the alpha channel
+    //glClearColor(0.7f, 0.5f, 0.6f, 0.5f);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     Timer totalTime = Timer();
     totalTime.start();
     keyPressTimeout.start();
@@ -20,10 +25,11 @@ void TLETC::OnGameStart()
     shaders.newShader("basic", "../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
     shaders.enable("basic");
     std::string prefix = "tex_";
-    for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) 
-    {
-        shaders.setUniform1i("basic", (const GLchar*)(prefix + to_string(i)).c_str(), i);
-    }
+
+    int slots[MAX_TEXTURE_SLOTS];
+    for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
+    shaders.setUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
+
     //Setup textures
     textures.newTexture("crate", "../textures/container.jpg");
     textures.newTexture("sponge","../textures/spongebob.jpg");
@@ -38,26 +44,26 @@ void TLETC::OnGameStart()
     srand(time(NULL));
 
     Group* background = new Group(Mat4f::translation(Vec3f(-screenSize.x, -screenSize.y, 0.0f)));
-    Group* swirly = new Group(Mat4f::translation(Vec3f(0.0f, 0.0f, 0.0f)));
+    Group* textBox = new Group(Mat4f::translation(Vec3f(-screenSize.x + 0.3, -screenSize.y + 0.2, 0.0f)));
 
-    background->add(new Sprite(-1.0f, -1.0f, 0.0f, 0.0f, textures.getTexture("morty")));
+    background->add(new Sprite(-19.0f, -10.0f, 0.0f, 0.0f, Vec4f(0.0f, 0.0f, 0.0f, 0.0f)));
     for (float y = 0.0f; y < 9.0f; y += 0.5f)
     {
         for (float x = 0.0; x < 16.0f; x += 0.5f)
         {
             background->add(new Sprite(x, y, 0.5f, 0.5f, textures.getTexture("sponge")));
-            swirly->add(new Sprite(x, y, 0.5f, 0.5f, textures.getTexture("crate")));
+            //background->add(new Sprite(x, y, 0.5f, 0.5f, Vec4f(0.7f, 1.0f, 1.0f, 0.5f)));
+            //swirly->add(new Sprite(x, y, 0.5f, 0.5f, textures.getTexture("crate")));
         }
     }
-    
+
     layers[0]->add(background);
     layers[0]->pushTransform(new Mat4f(Mat4f::scale(Vec3f(2.0f, 2.0f, 0.0f))));
     
-    layers[1]->add(swirly);
-    layers[1]->pushTransform(new Mat4f(Mat4f::scale(Vec3f(2.0f, 2.0f, 0.0f))));
-    
-    layers[1]->pushTransform(new Mat4f(Mat4f::translation(Vec3f(-screenSize.x, -screenSize.y, 0.0f))));
-    layers[1]->pushTransform(new Mat4f(Mat4f::rotation((int64_t)(timer.getTimeMS() / 10) % 360, Vec3f(0.0f, 0.0f, 1.0f))));
+    textBox->add(new Sprite(0, 0, 5.0f, 1.5f, Vec4f(0.7f, 0.7f, 0.7f, 0.8f)));
+    textBox->add(new Label(std::string("A big fat BBW with cum on her face"), 0.3f, 0.3f, Vec4f(1.0f, 1.0f, 1.0f, 1.0f)));
+
+    layers[1]->add(textBox);
 
     unsigned int numToRender = background->getNumChildren();
     LOG_INF("Loaded %d Sprites to be renderered\n", numToRender);
@@ -83,19 +89,13 @@ void TLETC::Update()
 {
     //Begin frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    layers[1]->poptransform();
+    //layers[1]->poptransform();
 
     float newX = 16.0f * ((float)mousePos.x / screenResolution.x);
     float newY = 9.0f * ((float)mousePos.y / screenResolution.y);
 
     shaders.enable("basic");
     shaders.setUniform2f("basic", "light_pos", Vec2f(newX, newY));
-
-    if (layers.size() > 1) 
-    {
-        layers[1]->pushTransform(new Mat4f(Mat4f::rotation((int64_t)(timer.getTimeMS() / 10) % 360, Vec3f(0.0f, 0.0f, 1.0f))));
-
-    }
 }
 
 void TLETC::ProcessInput(InputInformation in)

@@ -1,0 +1,337 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(445,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  platform.c
+  texture-atlas.c
+C:\Users\DatDudeOJ\Documents\Dev\tletc\ext\freetype-gl\texture-atlas.c(132,40): warning C4090: '=': different 'const' qualifiers
+C:\Users\DatDudeOJ\Documents\Dev\tletc\ext\freetype-gl\texture-atlas.c(236,23): warning C4018: '<': signed/unsigned mismatch
+  texture-font.c
+C:\Users\DatDudeOJ\Documents\Dev\tletc\ext\freetype-gl\texture-font.c(340,1): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\string.h(536): message : see declaration of 'strdup'
+  vector.c
+  Generating Code...
+  BetterGL2DRenderer.cpp
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\graphics\BetterGL2DRenderer.cpp(174,23): warning C4018: '<': signed/unsigned mismatch
+  Buffer.cpp
+  IndexBuffer.cpp
+  VertexArray.cpp
+  Group.cpp
+  Layer.cpp
+  TileLayer.cpp
+  Sprite2D.cpp
+  StaticSprite2D.cpp
+  ShaderArray.cpp
+  ShaderProgram.cpp
+  TextureArray.cpp
+  TextureProgram.cpp
+  mat2.cpp
+  mat2f.cpp
+  mat4.cpp
+  mat4f.cpp
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\math\mat4f.cpp(198,38): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\math\mat4f.cpp(398,141): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\math\mat4f.cpp(398,111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\math\mat4f.cpp(398,81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\math\mat4f.cpp(398,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  vec2.cpp
+  vec2f.cpp
+  vec2u.cpp
+  Generating Code...
+  Compiling...
+  vec3.cpp
+  vec3f.cpp
+  vec4.cpp
+  vec4f.cpp
+  TLETC.cpp
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\TLETC.cpp(42,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\TLETC.cpp(64,90): warning C4244: 'argument': conversion from 'int64_t' to 'float', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\TLETC.cpp(75,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\TLETC.cpp(100,94): warning C4244: 'argument': conversion from 'int64_t' to 'float', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\TLETC.cpp(118,31): warning C4018: '>': signed/unsigned mismatch
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\TLETC.cpp(172,100): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\TLETC.cpp(172,72): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\TLETC.cpp(178,107): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\DatDudeOJ\Documents\Dev\tletc\src\TLETC.cpp(178,72): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  FileIO.cpp
+  SimpleList.cpp
+  Win32Main.cpp
+  Generating Code...
+LINK : warning LNK4044: unrecognized option '/link'; ignored
+FreeImageLib.lib(Plugin.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Plugin.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(BitmapAccess.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(BitmapAccess.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(GetType.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(GetType.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Flip.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Flip.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(FreeImage.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(FreeImage.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(FreeImageIO.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(FreeImageIO.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginBMP.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginBMP.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginCUT.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginCUT.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginICO.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginICO.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginIFF.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginIFF.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJPEG.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJPEG.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginKOALA.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginKOALA.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginMNG.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginMNG.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPCD.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPCD.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPCX.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPCX.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPNG.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPNG.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPNM.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPNM.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPSD.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPSD.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginRAS.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginRAS.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginTARGA.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginTARGA.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginTIFF.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginTIFF.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginWBMP.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginWBMP.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginXBM.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginXBM.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginXPM.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginXPM.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginDDS.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginDDS.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginGIF.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginGIF.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginHDR.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginHDR.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginG3.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginG3.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginSGI.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginSGI.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginEXR.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginEXR.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJ2K.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJ2K.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJP2.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJP2.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPFM.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPFM.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPICT.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginPICT.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginRAW.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginRAW.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJNG.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJNG.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginWebP.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginWebP.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJXR.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PluginJXR.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(TagLib.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(TagLib.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PixelAccess.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PixelAccess.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(FreeImageTag.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(FreeImageTag.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion32.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion32.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(MemoryIO.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(MemoryIO.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion24.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion24.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Exif.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Exif.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IPTC.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IPTC.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(MNGHelper.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(MNGHelper.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PSDParser.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(PSDParser.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Channels.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Channels.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(XTIFF.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(XTIFF.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(TIFFLogLuv.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(TIFFLogLuv.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(half.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(half.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ColorLookup.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ColorLookup.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfIO.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfIO.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IexBaseExc.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IexBaseExc.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IexThrowErrnoExc.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IexThrowErrnoExc.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfHeader.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfHeader.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfFrameBuffer.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfFrameBuffer.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfOutputFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfOutputFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfInputFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfInputFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfRgbaFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfRgbaFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfChannelList.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfChannelList.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPreviewImage.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPreviewImage.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(J2KHelper.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(J2KHelper.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(libraw_datastream.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(libraw_datastream.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(libraw_cxx.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(libraw_cxx.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(dcraw_common.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(dcraw_common.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion8.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion8.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion16_555.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion16_555.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion16_565.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Conversion16_565.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ConversionRGBF.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ConversionRGBF.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ConversionRGB16.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ConversionRGB16.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(WuQuantizer.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(WuQuantizer.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(NNQuantizer.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(NNQuantizer.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(LFPQuantizer.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(LFPQuantizer.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ClassicRotate.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ClassicRotate.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ZLibInterface.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ZLibInterface.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Colors.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(Colors.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(FIRational.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(FIRational.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfStdIO.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfStdIO.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfCompressor.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfCompressor.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfBoxAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfBoxAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfChannelListAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfChannelListAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfChromaticities.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfChromaticities.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfChromaticitiesAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfChromaticitiesAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfCompressionAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfCompressionAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepImageStateAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepImageStateAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDoubleAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDoubleAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDwaCompressor.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDwaCompressor.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfEnvmapAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfEnvmapAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfFloatAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfFloatAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfFloatVectorAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfFloatVectorAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfIntAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfIntAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfKeyCode.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfKeyCode.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfKeyCodeAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfKeyCodeAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfLineOrderAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfLineOrderAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfMatrixAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfMatrixAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfOpaqueAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfOpaqueAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPreviewImageAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPreviewImageAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfRationalAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfRationalAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfStringAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfStringAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfStringVectorAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfStringVectorAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTileDescriptionAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTileDescriptionAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTimeCode.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTimeCode.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTimeCodeAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTimeCodeAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfVecAttribute.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfVecAttribute.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPartType.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPartType.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IlmThreadPool.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IlmThreadPool.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfGenericOutputFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfGenericOutputFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfMisc.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfMisc.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfGenericInputFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfGenericInputFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfScanLineInputFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfScanLineInputFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTiledInputFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTiledInputFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfMultiPartInputFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfMultiPartInputFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfCompositeDeepScanLine.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfCompositeDeepScanLine.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepScanLineInputFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepScanLineInputFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfRgbaYca.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfRgbaYca.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfStandardAttributes.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfStandardAttributes.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(demosaic_packs.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(demosaic_packs.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(dcraw_fileio.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(dcraw_fileio.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfRleCompressor.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfRleCompressor.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfZipCompressor.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfZipCompressor.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPizCompressor.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPizCompressor.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPxr24Compressor.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfPxr24Compressor.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfB44Compressor.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfB44Compressor.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfZip.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfZip.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfHuf.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfHuf.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IlmThread.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(IlmThread.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfConvert.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfConvert.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTiledMisc.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTiledMisc.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTileOffsets.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfTileOffsets.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfInputPartData.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfInputPartData.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepTiledInputFile.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepTiledInputFile.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepScanLineInputPart.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepScanLineInputPart.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepFrameBuffer.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepFrameBuffer.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepCompositing.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfDeepCompositing.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfFastHuf.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '0' doesn't match value '2' in BetterGL2DRenderer.obj
+FreeImageLib.lib(ImfFastHuf.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MT_StaticRelease' doesn't match value 'MTd_StaticDebug' in BetterGL2DRenderer.obj
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+.\bin\tletc.exe : fatal error LNK1319: 278 mismatches detected
