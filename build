@@ -1,0 +1,7 @@
+clear
+echo Making...
+
+cmake --target .
+cmake --build .
+
+MESA_GL_VERSION_OVERRIDE=4.0 ./tletc-linux32-d

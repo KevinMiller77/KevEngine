@@ -1,7 +1,7 @@
 #ifndef __TLETC_MATH__
 #define __TLETC_MATH__
 
-#include <string>
+#include <cstring>
 
 struct StrCompare {
 public:

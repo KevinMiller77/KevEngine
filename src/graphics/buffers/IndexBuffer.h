@@ -2,7 +2,10 @@
 #define __INDEX_BUFFER__
 #include <cstdlib>
 #include <GL/glew.h>
+
+#if WIN32
 #include <GL/wglew.h>
+#endif
 
 class IndexBuffer
 {

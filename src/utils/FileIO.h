@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <cstring>
 #include <cstdlib>
+#include "../utils/Logging.h"
 
 // Palatform FileIO interface header
 

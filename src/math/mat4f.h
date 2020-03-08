@@ -43,7 +43,7 @@ struct Mat4f
     friend Mat4f operator*(Mat4f left, const double &right);
 
     void multiply(const Mat4f &other);
-    void Mat4f::multiplyLeft(const Mat4f &other);
+    void multiplyLeft(const Mat4f &other);
     Vec4f multiply(const Vec4f &other);
     Vec3f multiply(const Vec3f &other);
 

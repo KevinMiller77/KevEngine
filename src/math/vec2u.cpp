@@ -1,4 +1,4 @@
-#include "Vec2u.h"
+#include "vec2u.h"
 
 #include <string.h>
 #include <assert.h>

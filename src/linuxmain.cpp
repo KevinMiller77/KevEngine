@@ -8,8 +8,8 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <GL/glx.h>
-#include "commonTypes.h"
-#include "math.h"
+
+#include "TLETC.h"
 
 
 struct PlatformState {
@@ -24,9 +24,12 @@ XWindowAttributes       gwa;
 XEvent                  xev;
 };
 
+TLETC *tletc = nullptr;
 
 void render(GLuint ShaderProgramID, GLfloat *vertexArray, GLenum mode, int dimensions);
 GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path);
+bool restartContext();
+bool toggleFullscreen();
 
 int main (int argc, char* argv[]){
 
@@ -38,7 +41,7 @@ int main (int argc, char* argv[]){
 
     //Ensure ability to open display
     if (ps.dpy == NULL){
-        LOGE("Cannot connect to X server!\n");
+        LOG_ERR("Cannot connect to X server!\n");
         exit(0);
     } 
     //Find desktop window
@@ -74,7 +77,6 @@ int main (int argc, char* argv[]){
     ps.glc = glXCreateContext(ps.dpy, ps.vi, NULL, GL_TRUE);
     glXMakeCurrent(ps.dpy, ps.win, ps.glc);
 
-
     //Enable openGL
     glEnable(GL_DEPTH_TEST);
 
@@ -89,148 +91,81 @@ int main (int argc, char* argv[]){
     }
     printf("GLEW Enabled on version : %s\n", glewGetString(GLEW_VERSION));
     printf("GL Functions grabbed on version : %s\n", glGetString(GL_VERSION));
-    //Load shaders before entering loop
-    GLuint programID = loadShaders("shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
 
-    GLfloat vertices[] {
-        -1.0f, -1.0f, 0.0f,
-         1.0f, -1.0f, 0.0f,
-         0.0f, 1.0f,  0.0f
-    };
+    tletc = new TLETC(Vec2u(960, 540));
+    tletc->restartContext = restartContext;
+    tletc->toggleFullScreen = toggleFullscreen;
 
-	glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
-
-	//Create Vertex Array Object and bind to it
-	GLuint vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	//Create vertex buffer object
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-	//Bind the vertex buffer object
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	//Turn our vbo into an array buffer
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vao),
-	vao, GL_STATIC_DRAW);
+    tletc->OnGameStart();
 
     //Start the running loop
     bool running = true;
-    while(running){
+    while(true){
         //Check for current event
-        XNextEvent(ps.dpy, &ps.xev);
+        if (XCheckMaskEvent(ps.dpy, 5, &ps.xev))
+        {
+            if (ps.xev.type == Expose)
+            {
+                LOG_INF("Exposed");
+            }
 
-        //If window is exposed continue drawing
-        if(ps.xev.type == Expose){
-            XGetWindowAttributes(ps.dpy, ps.win, &ps.gwa);
-            glViewport(0, 0, ps.gwa.width, ps.gwa.height);
-            render(programID, vertices, vbo, GL_TRIANGLES, 3);
+            //If button is pressed destroy the window
+            if (ps.xev.type == KeyPress) {
+
+                InputInformation state;
+                switch (ps.xev.xbutton.button)
+                {
+                    case 0:
+                        break;
+
+                    case 0xA:
+                    case 0xB:
+                    case 0xC:
+                    case 0xD:
+                    case 0xE:
+                    case 0xF:
+                    case 0x10:
+                    case 0x11:
+                    case 0x12:
+                        state._key = ps.xev.xbutton.button - 0x9 + 0x30;
+                        tletc->ProcessInput(state);
+                        break;
+                    case 0x13:
+                        state._key = 0x30;
+                        tletc->ProcessInput(state);
+                        break;
+                        
+
+
+
+                    case 0x1B:
+                        state._key = 0x52;
+                        tletc->ProcessInput(state);
+                        break;
+
+                    default:
+                        LOG_INF("Indientified button pressed: 0x%x", ps.xev.xbutton.button);
+                        break;
+                }
+
+#if 0
+                glXMakeCurrent(ps.dpy, None, NULL);
+                glXDestroyContext(ps.dpy, ps.glc);
+                XDestroyWindow(ps.dpy, ps.win);
+                XCloseDisplay(ps.dpy);
+                running = false;
+                exit(0);
+#endif
+            }
+        }
+
+
+            tletc->Update();
+            tletc->Draw();
             glXSwapBuffers(ps.dpy, ps.win);
-        }
-
-        //If button is pressed destroy the window
-        else if (ps.xev.type == KeyPress) {
-            glXMakeCurrent(ps.dpy, None, NULL);
-            glXDestroyContext(ps.dpy, ps.glc);
-            XDestroyWindow(ps.dpy, ps.win);
-            XCloseDisplay(ps.dpy);
-            running = false;
-            exit(0);
-        }
     }
-
-    return 0;
-}
-
-GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path){
     
-    //Create the shaders
-    GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-    GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
-    //Grab vertex shader info from file
-    std::string VertexShaderCode;
-    std::ifstream VertexShaderStream(vertex_file_path, std::ifstream::in);
-    if(VertexShaderStream.is_open()){
-        std::stringstream sstr;
-        sstr << VertexShaderStream.rdbuf();
-        VertexShaderCode = sstr.str();
-        VertexShaderStream.close();
-    } else {
-        printf("Could not open vertex shader file. Are you in the right dir?\n");
-        getchar();
-        return 0;
-    }
-
-    //Grab fragment shader info from file
-    std::string FragmentShaderCode;
-    std::ifstream FragmentShaderStream(fragment_file_path, std::ifstream::in);
-    if(FragmentShaderStream.is_open()){
-        std::stringstream sstr;
-        sstr << FragmentShaderStream.rdbuf();
-        FragmentShaderCode = sstr.str();
-        FragmentShaderStream.close();
-    } else {
-        printf("Could not open fragment shader file. Are you in the right dir?\n");
-        getchar();
-        return 0;
-    }
-
-    GLint Result = GL_FALSE;
-    int InfoLogLength;
-
-    //Compile vertex shader
-    printf("Compiling shader : %s\n", vertex_file_path);
-    char const * VertexShaderPointer = VertexShaderCode.c_str();
-    glShaderSource(VertexShaderID, 1, &VertexShaderPointer, NULL);
-    glCompileShader(VertexShaderID);
-
-    //Check the Compile
-    glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
-    glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    if (InfoLogLength > 0){
-        std::vector<char> VertexShaderErrorMessage(InfoLogLength + 1);
-        glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-        printf("%s\n", &VertexShaderErrorMessage[0]);
-    }
-
-    //Compile fragment shader
-    printf("Compiling shader : %s\n", fragment_file_path);
-    char const * FragmentShaderPointer = FragmentShaderCode.c_str();
-    glShaderSource(FragmentShaderID, 1, &FragmentShaderPointer, NULL);
-    glCompileShader(FragmentShaderID);
-
-    //Check the Compile
-    glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
-    glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    if (InfoLogLength > 0){
-        std::vector<char> FragmentShaderErrorMessage(InfoLogLength + 1);
-        glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-        printf("%s\n", &FragmentShaderErrorMessage[0]);
-    }
-
-    printf("Linking program!\n");
-    GLuint ProgramID = glCreateProgram();
-    glAttachShader(ProgramID, VertexShaderID);
-    glAttachShader(ProgramID, FragmentShaderID);
-    glLinkProgram(ProgramID);
-
-    //Check the program
-    glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
-    glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    if (InfoLogLength > 0){
-        std::vector<char> ProgramErrorMessage(InfoLogLength + 1);
-        glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
-        printf("%s\n", &ProgramErrorMessage[0]);
-    }
-
-    glDetachShader(ProgramID, VertexShaderID);
-    glDetachShader(ProgramID, FragmentShaderID);
-
-    glDeleteShader(VertexShaderID);
-    glDeleteShader(FragmentShaderID);
-
-    return ProgramID;
+    return 0;
 }
 
 
@@ -250,4 +185,16 @@ void render(GLuint ShaderProgramID, GLuint vertexBuffer, GLenum mode, int dimens
 	glDrawArrays(mode, 0, dimensions);
 
 	glDisableVertexAttribArray(0);
+}
+
+bool restartContext()
+{
+    LOG_ERR("Cant restart on linux yet!\n");
+    return false;
+}
+
+bool toggleFullscreen()
+{
+    void glutFullScreen();
+    return true;
 }

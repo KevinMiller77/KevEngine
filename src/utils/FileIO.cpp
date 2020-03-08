@@ -6,12 +6,27 @@ FileContents ReadFileContents(const char *filePath)
     FileContents result;
 
     FILE* file;
-    errno_t err = fopen_s(&file, filePath, "r+");
+#ifdef WIN32
+    int err = fopen_s(&file, filePath, "r+");
 
     if (err != 0 && file == NULL)
     {
-        //Add error handle
+        LOG_ERR("Couldn't open file %s!\n", filePath);
+        result.length = 0;
+        result.data = nullptr;
+        return result;
     }
+#else
+    file = fopen(filePath, "rt");
+
+    if (!file)
+    {
+        LOG_ERR("Couldn't open file %s!\n", filePath);
+        result.length = 0;
+        result.data = nullptr;
+        return result;
+    }
+#endif
 
     
     fseek(file, 0, SEEK_END);

@@ -11,6 +11,8 @@ GLuint ShaderProgram::CreateGLProgram(const char* vertex_file_path, const char* 
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
     
+	LOG_INF("Getting first file\n");
+
 	//Grab vertex shader info from file
 	FileContents vertexShader = ReadFileContents(vertex_file_path);
 	if(!vertexShader.length) {

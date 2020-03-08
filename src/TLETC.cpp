@@ -11,20 +11,23 @@ TLETC::TLETC(Vec2u startScreenResolution)
 //Call that happens every time the game starts
 void TLETC::OnGameStart()
 {
+
     Timer totalTime = Timer();
     totalTime.start();
     keyPressTimeout.start();
 
     //Set shader info
-    for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) texIDs[i] = i;
-    shaders.newShader("basic", "../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
+    shaders.newShader("basic", "shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
     shaders.enable("basic");
-    shaders.setUniform1iv("basic", "textures", texIDs, MAX_TEXTURE_SLOTS);
-
+    std::string prefix = "tex_";
+    for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) 
+    {
+        shaders.setUniform1i("basic", (prefix + to_string(i)).c_str(), i);
+    }
     //Setup textures
-    textures.newTexture("crate", "../textures/container.jpg");
-    textures.newTexture("sponge","../textures/spongebob.jpg");
-    textures.newTexture("morty", "../textures/morty.jpg", Vec2f(0.0f, 1.0f));
+    textures.newTexture("crate", "textures/container.jpg");
+    textures.newTexture("sponge","textures/spongebob.jpg");
+    textures.newTexture("morty", "textures/morty.jpg", Vec2f(0.0f, 1.0f));
 
     TileLayer* lay1 = new TileLayer(shaders.getShaderPtr("basic")->getShaderID());
     TileLayer* lay2 = new TileLayer(shaders.getShaderPtr("basic")->getShaderID());
@@ -37,7 +40,7 @@ void TLETC::OnGameStart()
     Group* background = new Group(Mat4f::translation(Vec3f(-screenSize.x, -screenSize.y, 0.0f)));
     Group* swirly = new Group(Mat4f::translation(Vec3f(0.0f, 0.0f, 0.0f)));
 
-    background->add(new Sprite(-1.0f, -1.0f, 0.0f, 0.0f, textures.getTexture("crate")));
+    background->add(new Sprite(-1.0f, -1.0f, 0.0f, 0.0f, textures.getTexture("morty")));
     for (float y = 0.0f; y < 9.0f; y += 0.5f)
     {
         for (float x = 0.0; x < 16.0f; x += 0.5f)
@@ -48,13 +51,13 @@ void TLETC::OnGameStart()
     }
     
     layers[0]->add(background);
-    layers[0]->pushTransform(&Mat4f::scale(Vec3f(2.0f, 2.0f, 0.0f)));
+    layers[0]->pushTransform(new Mat4f(Mat4f::scale(Vec3f(2.0f, 2.0f, 0.0f))));
     
     layers[1]->add(swirly);
-    layers[1]->pushTransform(&Mat4f::scale(Vec3f(2.0f, 2.0f, 0.0f)));
+    layers[1]->pushTransform(new Mat4f(Mat4f::scale(Vec3f(2.0f, 2.0f, 0.0f))));
     
-    layers[1]->pushTransform(&Mat4f::translation(Vec3f(-screenSize.x, -screenSize.y, 0.0f)));
-    layers[1]->pushTransform(&Mat4f::rotation((int64_t)(timer.getTimeMS() / 10) % 360, Vec3f(0.0f, 0.0f, 1.0f)));
+    layers[1]->pushTransform(new Mat4f(Mat4f::translation(Vec3f(-screenSize.x, -screenSize.y, 0.0f))));
+    layers[1]->pushTransform(new Mat4f(Mat4f::rotation((int64_t)(timer.getTimeMS() / 10) % 360, Vec3f(0.0f, 0.0f, 1.0f))));
 
     unsigned int numToRender = background->getNumChildren();
     LOG_INF("Loaded %d Sprites to be renderered\n", numToRender);
@@ -151,7 +154,7 @@ void TLETC::ProcessInput(InputInformation in)
             float newX = (float)screenSize.x * (((float)in._mousePos.x - (float)mousePos.x) / screenResolution.x);
             float newY = (float)screenSize.y * (((float)in._mousePos.y - (float)mousePos.y) / screenResolution.y);
             
-            layers[0]->pushTransform(&Mat4f::translation(Vec3f(newX , newY, 0.0f)));
+            layers[0]->pushTransform(new Mat4f(Mat4f::translation(Vec3f(newX , newY, 0.0f))));
         }
 
         mousePos = in._mousePos;
@@ -160,13 +163,13 @@ void TLETC::ProcessInput(InputInformation in)
         {
             LOG_INF("Zoom In\n");
             double magnitude = ((double)in._mouseWheelMag / ((double)in._mouseWheelMagConstant * 0xffff));
-            layers[0]->pushTransform(&Mat4f::scale(Vec3f(1.0f + (magnitude * 0.1f) , 1.0f + (magnitude * 0.1f), 0.0f)));
+            layers[0]->pushTransform(new Mat4f(Mat4f::scale(Vec3f(1.0f + (magnitude * 0.1f) , 1.0f + (magnitude * 0.1f), 0.0f))));
         }
         else if (in._mouseWheelMag < 0)
         {
             LOG_INF("Zoom Out\n");
             double magnitude = (-(double)in._mouseWheelMag / ((double)in._mouseWheelMagConstant * 0xffff));
-            layers[0]->pushTransform(&Mat4f::scale(Vec3f(1.0f / (1.0f + magnitude * 0.1f) , 1.0f / (1.0f + magnitude * 0.1f) , 0.0f)));
+            layers[0]->pushTransform(new Mat4f(Mat4f::scale(Vec3f(1.0f / (1.0f + magnitude * 0.1f) , 1.0f / (1.0f + magnitude * 0.1f) , 0.0f))));
         }
     }
 }
