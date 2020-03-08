@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <GL/glew.h>
 
-#if WIN32
+#ifdef WIN32
 #include <GL/wglew.h>
 #endif
 

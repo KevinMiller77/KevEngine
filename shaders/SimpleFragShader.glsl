@@ -24,22 +24,22 @@ void main()
 
 		switch (tid)
 		{
-			case 1: texColor = texture(tex_0, fs_in.texture); break;
-			case 2: texColor = texture(tex_1, fs_in.texture); break;
-			case 3: texColor = texture(tex_2, fs_in.texture); break;
-			case 4: texColor = texture(tex_3, fs_in.texture); break;
-			case 5: texColor = texture(tex_4, fs_in.texture); break;
-			case 6: texColor = texture(tex_5, fs_in.texture); break;
-			case 7: texColor = texture(tex_6, fs_in.texture); break;
-			case 8: texColor = texture(tex_7, fs_in.texture); break;
-			case 9: texColor = texture(tex_8, fs_in.texture); break;
-			case 10: texColor = texture(tex_9, fs_in.texture); break;
-			case 11: texColor = texture(tex_10, fs_in.texture); break;
-			case 12: texColor = texture(tex_11, fs_in.texture); break;
-			case 13: texColor = texture(tex_12, fs_in.texture); break;
-			case 14: texColor = texture(tex_13, fs_in.texture); break;
-			case 15: texColor = texture(tex_14, fs_in.texture); break;
-			case 16: texColor = texture(tex_15, fs_in.texture); break;
+			case 0: texColor = texture(tex_0, fs_in.texture); break;
+			case 1: texColor = texture(tex_1, fs_in.texture); break;
+			case 2: texColor = texture(tex_2, fs_in.texture); break;
+			case 3: texColor = texture(tex_3, fs_in.texture); break;
+			case 4: texColor = texture(tex_4, fs_in.texture); break;
+			case 5: texColor = texture(tex_5, fs_in.texture); break;
+			case 6: texColor = texture(tex_6, fs_in.texture); break;
+			case 7: texColor = texture(tex_7, fs_in.texture); break;
+			case 8: texColor = texture(tex_8, fs_in.texture); break;
+			case 9: texColor = texture(tex_9, fs_in.texture); break;
+			case 10: texColor = texture(tex_10, fs_in.texture); break;
+			case 11: texColor = texture(tex_11, fs_in.texture); break;
+			case 12: texColor = texture(tex_12, fs_in.texture); break;
+			case 13: texColor = texture(tex_13, fs_in.texture); break;
+			case 14: texColor = texture(tex_14, fs_in.texture); break;
+			case 15: texColor = texture(tex_15, fs_in.texture); break;
 		} 
 		
 	}

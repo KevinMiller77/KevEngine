@@ -17,17 +17,17 @@ void TLETC::OnGameStart()
     keyPressTimeout.start();
 
     //Set shader info
-    shaders.newShader("basic", "shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
+    shaders.newShader("basic", "../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
     shaders.enable("basic");
     std::string prefix = "tex_";
     for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) 
     {
-        shaders.setUniform1i("basic", (prefix + to_string(i)).c_str(), i);
+        shaders.setUniform1i("basic", (const GLchar*)(prefix + to_string(i)).c_str(), i);
     }
     //Setup textures
-    textures.newTexture("crate", "textures/container.jpg");
-    textures.newTexture("sponge","textures/spongebob.jpg");
-    textures.newTexture("morty", "textures/morty.jpg", Vec2f(0.0f, 1.0f));
+    textures.newTexture("crate", "../textures/container.jpg");
+    textures.newTexture("sponge","../textures/spongebob.jpg");
+    textures.newTexture("morty", "../textures/morty.jpg", Vec2f(0.0f, 1.0f));
 
     TileLayer* lay1 = new TileLayer(shaders.getShaderPtr("basic")->getShaderID());
     TileLayer* lay2 = new TileLayer(shaders.getShaderPtr("basic")->getShaderID());
@@ -46,7 +46,7 @@ void TLETC::OnGameStart()
         for (float x = 0.0; x < 16.0f; x += 0.5f)
         {
             background->add(new Sprite(x, y, 0.5f, 0.5f, textures.getTexture("sponge")));
-            swirly->add(new Sprite(x, y, 0.5f, 0.5f, textures.getTexture("morty")));
+            swirly->add(new Sprite(x, y, 0.5f, 0.5f, textures.getTexture("crate")));
         }
     }
     
@@ -112,8 +112,10 @@ void TLETC::ProcessInput(InputInformation in)
                 break;
             
             if (layers.size() > in._key - 0x30)
+            {
                 LOG_INF("Toggling layer %d\n", in._key - 0x30);
                 layers[in._key - 0x30]->toggle();
+            }
             break;
 
         case 0x46: //F key, switches fullscreen

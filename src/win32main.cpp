@@ -370,17 +370,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                 state._mouseButtons = message.wParam;
                 state._mousePos = Vec2u(LOWORD(message.lParam), HIWORD(message.lParam));
                 state._mouseWheelMag = 0;
+#if IMMERSIVE_CURSOR                    
                 {
                     RECT rect = { NULL };
-#if IMMERSIVE_CURSOR                    
                     if (GetWindowRect(window, &rect))
                     {
                         Vec2u resolution = tletc->getScreenResolution();
                         SetCursorPos(resolution.x / 2 + rect.left, resolution.y / 2 + rect.top);
                         ShowCursor(false);
                     }
-#endif
                 }
+#endif
                 
                 break;
 

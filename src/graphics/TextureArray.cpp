@@ -12,7 +12,7 @@ void TextureArray::newTexture(const char* ID, const char* image_path, Vec2f flip
     Texture* texture = new Texture(image_path, flip);
     textures.push_back(texture);
     textureMap.insert({ ID, textures.size() - 1 });
-    LOG_INF("New texture in array. Key: %s Value: %d\n", ID, textures.size());
+    LOG_INF("New texture in array. Key: %s Value: %d GLuint %d\n", ID, textures.size() - 1, texture->getTextureID());
 }
 
 void TextureArray::clearTextures()
