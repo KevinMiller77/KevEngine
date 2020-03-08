@@ -61,7 +61,7 @@ void TLETC::OnGameStart()
     layers[0]->pushTransform(new Mat4f(Mat4f::scale(Vec3f(2.0f, 2.0f, 0.0f))));
     
     textBox->add(new Sprite(0, 0, 5.0f, 1.5f, Vec4f(0.7f, 0.7f, 0.7f, 0.8f)));
-    textBox->add(new Label(std::string("A big fat BBW with cum on her face"), 0.3f, 0.3f, Vec4f(1.0f, 1.0f, 1.0f, 1.0f)));
+    textBox->add(new Label(std::string("A big fat BBW with cum on her face"), 0.3f, 1.2f, Vec4f(1.0f, 1.0f, 1.0f, 1.0f)));
 
     layers[1]->add(textBox);
 

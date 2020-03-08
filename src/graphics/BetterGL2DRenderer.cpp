@@ -64,7 +64,7 @@ void BetterGL2DRenderer::init()
     glBindVertexArray(0);
 
     Font.atlas =  ftgl::texture_atlas_new(512, 512, 2);
-    Font.font = ftgl::texture_font_new_from_file(Font.atlas, 32, "../fonts/INKFREE.ttf");
+    Font.font = ftgl::texture_font_new_from_file(Font.atlas, 32, "../fonts/arial.ttf");
 
     if (!Font.font)
     {
@@ -142,6 +142,7 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
     VDataBuffer->texID = ts;
     VDataBuffer++;
 
+
     indexCount += 6;
 }
 
@@ -179,6 +180,8 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t c
 
     float x = position.x;
 
+
+    
     for (int i = 0; i < text.length(); i++)
     {
         char c = text[i];
@@ -186,41 +189,37 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t c
         if (glyph != NULL)
         {
 
-            if (i > 0)
-            {
-                float kerning = texture_glyph_get_kerning(glyph, text[i - 1]);
-                x += kerning / scaleX;
-            }
-
             float x0 = x + glyph->offset_x / scaleX;
-            float y0 = position.y + ((glyph->height - glyph->offset_y) / scaleY);
+            float y0 = position.y + (glyph->height - glyph->offset_y) / scaleY;
             float x1 = x0 + glyph->width / scaleX;
-            float y1 = y0 + glyph->height / scaleY;
+            float y1 = y0 - glyph->height / scaleY;                
 
             float u0 = glyph->s0;
             float v0 = glyph->t1;
             float u1 = glyph->s1;
             float v1 = glyph->t0;
 
-            VDataBuffer->vertex = *curTransformationBack * Vec3f(x0, y1, 0);
+            
+
+            VDataBuffer->vertex = *curTransformationBack * Vec3f(x0, y0, 0);
             VDataBuffer->texture = Vec2f(u0, v0);
             VDataBuffer->texID = ts;
             VDataBuffer->color = color;
             VDataBuffer++;
 
-            VDataBuffer->vertex = *curTransformationBack * Vec3f(x0, y0, 0);
+            VDataBuffer->vertex = *curTransformationBack * Vec3f(x0, y1, 0);
             VDataBuffer->texture = Vec2f(u0, v1);
             VDataBuffer->texID = ts;
             VDataBuffer->color = color;
             VDataBuffer++;
 
-            VDataBuffer->vertex = *curTransformationBack * Vec3f(x1, y0, 0);
+            VDataBuffer->vertex = *curTransformationBack * Vec3f(x1, y1, 0);
             VDataBuffer->texture = Vec2f(u1, v1);
             VDataBuffer->texID = ts;
             VDataBuffer->color = color;
             VDataBuffer++;
 
-            VDataBuffer->vertex = *curTransformationBack * Vec3f(x1, y1, 0);
+            VDataBuffer->vertex = *curTransformationBack * Vec3f(x1, y0, 0);
             VDataBuffer->texture = Vec2f(u1, v0);
             VDataBuffer->texID = ts;
             VDataBuffer->color = color;
