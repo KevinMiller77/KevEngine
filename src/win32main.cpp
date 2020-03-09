@@ -7,6 +7,7 @@
 #include <wingdi.h>
 
 #include <GL/glew.h>
+#include <GL/wglew.h>
 
 #include "math/math.h"
 #include "CommonTypes.h"

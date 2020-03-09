@@ -3,6 +3,9 @@
 *.vcxproj.
 *.vcxproj.*
 
+Debug/*
+Release/*
+ext/freetype/bin
 bin/*
 .vs/*
 .vscode/*

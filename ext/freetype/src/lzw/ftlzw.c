@@ -23,7 +23,6 @@
 /***************************************************************************/
 
 #include <ft2build.h>
-#include <ftsystem.h>
 #include FT_INTERNAL_MEMORY_H
 #include FT_INTERNAL_STREAM_H
 #include FT_INTERNAL_DEBUG_H
@@ -344,6 +343,7 @@
     return ft_lzw_file_io( zip, pos, buffer, count );
   }
 
+#if 0
   FT_EXPORT_DEF( FT_Error )
   FT_Stream_OpenLZW( FT_Stream  stream,
                      FT_Stream  source )
@@ -360,6 +360,7 @@
     }
 
     memory = source->memory;
+#endif
     /*
      *  Check the header right now; this prevents allocation of a huge
      *  LZWFile object (400 KByte of heap memory) if not necessary.
@@ -367,7 +368,7 @@
      *  Did I mention that you should never use .Z compressed font
      *  files?
      */
-    error = ft_lzw_check_header( stream );
+    error = ft_lzw_check_header( source );
     if ( error )
       goto Exit;
 
