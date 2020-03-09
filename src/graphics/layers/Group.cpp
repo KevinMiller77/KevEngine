@@ -10,7 +10,7 @@ void Group::add(Renderable2D* renderable)
     children.push_back(renderable);
 }
 
-void Group::submit(GL2DRenderer* renderer) const
+void Group::submit(Renderer2D* renderer) const
 {
     renderer->push(ModelMatrix);
     for (const Renderable2D* renderable : children)

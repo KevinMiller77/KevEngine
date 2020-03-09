@@ -1,6 +1,6 @@
-#include "BetterGL2DRenderer.h"
+#include "Renderer2D.h"
 
-BetterGL2DRenderer::BetterGL2DRenderer()
+Renderer2D::Renderer2D()
 {
     indexCount = 0;
     Font.font = nullptr;
@@ -8,14 +8,14 @@ BetterGL2DRenderer::BetterGL2DRenderer()
     init();
 }
 
-BetterGL2DRenderer::~BetterGL2DRenderer()
+Renderer2D::~Renderer2D()
 {
     delete IBO;
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 }
 
-void BetterGL2DRenderer::init()
+void Renderer2D::init()
 {
     //Generate all of the necessary spaces in memory
     glGenVertexArrays(1, &VAO);
@@ -74,15 +74,40 @@ void BetterGL2DRenderer::init()
     LOG_INF("Font loaded\n");
     
 }
+void Renderer2D::push(const Mat4f &matrix, bool override = false)
+{
+    if (override)
+    {
+        TransformationStack.push_back(matrix);
+        //LOG_INF("Pushed to transformation stack with override\n");
+    }
+    else
+    {
+        TransformationStack.push_back(TransformationStack.back() * matrix);
+        //LOG_INF("Pushed to transformation stack\n");
+    }
+    curTransformationBack = &(TransformationStack.back());
+}
 
-void BetterGL2DRenderer::begin()
+void Renderer2D::pop()
+{
+    if (TransformationStack.size() > 1)
+    {
+        TransformationStack.pop_back();
+        //LOG_INF("Popped transformation stack\n");
+    }
+    curTransformationBack = &(TransformationStack.back());
+}
+
+
+void Renderer2D::begin()
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     VDataBuffer = (VertexData *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     VDataHeapLoc = VDataHeapLoc ? VDataHeapLoc : VDataBuffer; 
 }
 
-void BetterGL2DRenderer::submit(const Renderable2D *renderable)
+void Renderer2D::submit(const Renderable2D *renderable)
 {
     const Vec3f position = renderable->getPosition();
     const Vec2f size = renderable->getSize();
@@ -146,7 +171,7 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
     indexCount += 6;
 }
 
-void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t color)
+void Renderer2D::drawString(std::string text, Vec3f position, uint32_t color)
 {
     using namespace ftgl;
 
@@ -170,6 +195,8 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t c
             end();
             draw();
             begin();
+
+            TextureSlots.clear();
         }
         TextureSlots.push_back(Font.atlas->id);
         ts = (float)(TextureSlots.size());
@@ -233,13 +260,13 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t c
     }
 }
 
-void BetterGL2DRenderer::end()
+void Renderer2D::end()
 {
     glUnmapBuffer(GL_ARRAY_BUFFER);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void BetterGL2DRenderer::draw()
+void Renderer2D::draw()
 {
     for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
     {

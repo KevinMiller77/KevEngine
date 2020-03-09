@@ -4,12 +4,10 @@
 #include "../../math/math.h"
 #include "../buffers/IndexBuffer.h"
 #include "../buffers/VertexArray.h"
-
-#include "../GL2DRenderer.h"
 #include "../TextureProgram.h"
-
 #include "../../utils/Logging.h"
 #include "../ShaderProgram.h"
+#include "../Renderer2D.h"
 
 struct VertexData
 {
@@ -51,7 +49,7 @@ public:
     }
     virtual ~Renderable2D() = default;
 
-    virtual void submit(GL2DRenderer* renderer) const
+    virtual void submit(Renderer2D* renderer) const
     {
         renderer->submit(this);
     }

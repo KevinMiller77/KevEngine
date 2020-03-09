@@ -2,7 +2,7 @@
 #define __TLETC_TILE_LAYER__
 
 #include "Layer.h"
-#include "../BetterGL2DRenderer.h"
+#include "../Renderer2D.h"
 
 class TileLayer : public Layer
 {

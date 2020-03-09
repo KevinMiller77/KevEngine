@@ -11,7 +11,7 @@
 #include "graphics/layers/Group.h"
 #include "graphics/ShaderArray.h"
 #include "graphics/TextureArray.h"
-#include "graphics/BetterGL2DRenderer.h"
+#include "graphics/Renderer2D.h"
 #include "utils/Timer.h"
 
 #include "graphics/layers/TileLayer.h"
@@ -49,6 +49,8 @@ private:
 
     Timer timer;
     Timer keyPressTimeout;
+
+    Label* fps;
 
 public:
     TLETC(Vec2u startScreenResolution);

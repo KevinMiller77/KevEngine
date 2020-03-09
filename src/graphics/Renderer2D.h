@@ -1,9 +1,10 @@
-#ifndef __BETTER_GL_2D_RENDERER__
-#define __BETTER_GL_2D_RENDERER__
+#ifndef __2D_GL_RENDERER__
+#define __2D_GL_RENDERER__
 
 #include <cstddef>
+#include <string>
+#include "TextureArray.h"
 #include "buffers/VertexArray.h"
-#include "GL2DRenderer.h"
 #include "renderables/Sprite2D.h"
 
 #include <../ext/freetype-gl/freetype-gl.h>
@@ -28,7 +29,7 @@ struct FontInfo
 	ftgl::texture_font_t* font;
 };
 
-class BetterGL2DRenderer : public GL2DRenderer
+class Renderer2D
 {
 private:
     GLuint VAO;
@@ -40,16 +41,22 @@ private:
 
     std::vector<GLuint> TextureSlots;
     FontInfo Font;
+    
+    std::vector<Mat4f> TransformationStack;
+    const Mat4f* curTransformationBack;
 
 public:
-    BetterGL2DRenderer();
-    ~BetterGL2DRenderer() override;
+    Renderer2D();
+    ~Renderer2D();
 
-    void submit(const Renderable2D *renderable) override;
-    void draw() override;
-    void drawString(std::string text, Vec3f position, uint32_t color) override;
+    void submit(const Renderable2D *renderable);
+    void draw();
+    void drawString(std::string text, Vec3f position, uint32_t color);
     void begin();
     void end();
+
+    void push(const Mat4f &matrix, bool  = false);
+    void pop();
 
 private:
     void init();

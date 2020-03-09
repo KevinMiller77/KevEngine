@@ -1,15 +1,15 @@
 #ifndef __TLETC_LAYER__
 #define __TLETC_LAYER__
 
-#include "../BetterGL2DRenderer.h"
+#include "../Renderer2D.h"
 #include "../TextureProgram.h"
 
 class Layer
 {
 protected:
-    Layer(GL2DRenderer *renderer, GLuint shader, Mat4f projMatrix);
+    Layer(Renderer2D *renderer, GLuint shader, Mat4f projMatrix);
 
-    GL2DRenderer *Renderer;
+    Renderer2D *Renderer;
     std::vector<Renderable2D *> renderables;
     std::map<const char*, unsigned int> groupMap;
     GLuint Shader;
