@@ -3,6 +3,7 @@
 *.vcxproj.
 *.vcxproj.*
 
+x64/*
 Debug/*
 Release/*
 ext/freetype/bin
