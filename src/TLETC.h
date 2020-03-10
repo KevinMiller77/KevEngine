@@ -5,15 +5,17 @@
 #include <string>
 #include <vector>
 #include <map>
+
 #include "graphics/renderables/Renderable2D.h"
 #include "graphics/renderables/Sprite2D.h"
 #include "graphics/renderables/Label.h"
 #include "graphics/layers/Group.h"
-#include "graphics/ShaderArray.h"
-#include "graphics/TextureArray.h"
+#include "graphics/ShaderManager.h"
+#include "graphics/TextureManager.h"
 #include "graphics/BetterGL2DRenderer.h"
-#include "utils/Timer.h"
 
+#include "utils/MemoryTracker.h"
+#include "utils/Timer.h"
 #include "graphics/layers/TileLayer.h"
 
 //TODO: Move this to the input.h util
@@ -39,8 +41,9 @@ private:
     std::vector<Layer*> layers;
     GLint texIDs[MAX_TEXTURE_SLOTS];
 
-    ShaderArray shaders;
-    TextureArray textures;
+    ShaderManager shaders;
+    TextureManager textures;
+    FontManager fonts;
     
     bool windowedMode;
     Vec2u screenResolution;
@@ -51,7 +54,7 @@ private:
     Timer keyPressTimeout;
 
 public:
-    TLETC(Vec2u startScreenResolution);
+    TLETC(Vec2u startScreenResolution, bool RestartContext(), bool ToggleFullscreen());
 
     void OnGameStart();
     void Draw();

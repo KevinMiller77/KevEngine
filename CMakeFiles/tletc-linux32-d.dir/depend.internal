@@ -6,9 +6,9 @@ CMakeFiles/tletc-linux32-d.dir/src/TLETC.cpp.o
  /home/kev/Documents/dev/tletc/src/TLETC.h
  /home/kev/Documents/dev/tletc/src/graphics/BetterGL2DRenderer.h
  /home/kev/Documents/dev/tletc/src/graphics/GL2DRenderer.h
- /home/kev/Documents/dev/tletc/src/graphics/ShaderArray.h
+ /home/kev/Documents/dev/tletc/src/graphics/ShaderManager.h
  /home/kev/Documents/dev/tletc/src/graphics/ShaderProgram.h
- /home/kev/Documents/dev/tletc/src/graphics/TextureArray.h
+ /home/kev/Documents/dev/tletc/src/graphics/TextureManager.h
  /home/kev/Documents/dev/tletc/src/graphics/TextureProgram.h
  /home/kev/Documents/dev/tletc/src/graphics/buffers/Buffer.h
  /home/kev/Documents/dev/tletc/src/graphics/buffers/IndexBuffer.h
@@ -54,9 +54,9 @@ CMakeFiles/tletc-linux32-d.dir/src/graphics/BetterGL2DRenderer.cpp.o
  include/FreeImage/FreeImage.h
  include/GL/glew.h
  include/GL/wglew.h
-CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o
- /home/kev/Documents/dev/tletc/src/graphics/ShaderArray.cpp
- /home/kev/Documents/dev/tletc/src/graphics/ShaderArray.h
+CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o
+ /home/kev/Documents/dev/tletc/src/graphics/ShaderManager.cpp
+ /home/kev/Documents/dev/tletc/src/graphics/ShaderManager.h
  /home/kev/Documents/dev/tletc/src/graphics/ShaderProgram.h
  /home/kev/Documents/dev/tletc/src/math/mat2f.h
  /home/kev/Documents/dev/tletc/src/math/mat4f.h
@@ -81,9 +81,9 @@ CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderProgram.cpp.o
  /home/kev/Documents/dev/tletc/src/utils/FileIO.h
  /home/kev/Documents/dev/tletc/src/utils/Logging.h
  include/GL/glew.h
-CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o
- /home/kev/Documents/dev/tletc/src/graphics/TextureArray.cpp
- /home/kev/Documents/dev/tletc/src/graphics/TextureArray.h
+CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o
+ /home/kev/Documents/dev/tletc/src/graphics/TextureManager.cpp
+ /home/kev/Documents/dev/tletc/src/graphics/TextureManager.h
  /home/kev/Documents/dev/tletc/src/graphics/TextureProgram.h
  /home/kev/Documents/dev/tletc/src/math/mat2f.h
  /home/kev/Documents/dev/tletc/src/math/mat4f.h
@@ -243,9 +243,9 @@ CMakeFiles/tletc-linux32-d.dir/src/linuxmain.cpp.o
  /home/kev/Documents/dev/tletc/src/TLETC.h
  /home/kev/Documents/dev/tletc/src/graphics/BetterGL2DRenderer.h
  /home/kev/Documents/dev/tletc/src/graphics/GL2DRenderer.h
- /home/kev/Documents/dev/tletc/src/graphics/ShaderArray.h
+ /home/kev/Documents/dev/tletc/src/graphics/ShaderManager.h
  /home/kev/Documents/dev/tletc/src/graphics/ShaderProgram.h
- /home/kev/Documents/dev/tletc/src/graphics/TextureArray.h
+ /home/kev/Documents/dev/tletc/src/graphics/TextureManager.h
  /home/kev/Documents/dev/tletc/src/graphics/TextureProgram.h
  /home/kev/Documents/dev/tletc/src/graphics/buffers/Buffer.h
  /home/kev/Documents/dev/tletc/src/graphics/buffers/IndexBuffer.h

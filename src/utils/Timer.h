@@ -38,12 +38,12 @@ public:
         return timeSpan.count();
     }
 
-    void frameKeep()
+    void frameKeep(uint32_t memUsage)
     {
         frames++;
         if (getTimePassed() >= 1.0f)
         {
-            LOG_INF("FPS: %d\n", frames);
+            LOG_INF("FPS: %dn", frames);
             reset();
             frames = 0;
         }

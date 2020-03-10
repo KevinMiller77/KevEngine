@@ -1,22 +1,28 @@
-#ifndef __SHADER_ARRAY__
-#define __SHADER_ARRAY__
+#ifndef __SHADER_MANAGER__
+#define __SHADER_MANAGER__
 
 #include "ShaderProgram.h"
 
-class ShaderArray
+class ShaderManager
 {
 private:
     std::map<const char*, GLuint, StrCompare> shaderMap;
     std::vector<ShaderProgram*> shaders;
 
 public:
-    ShaderArray() = default;
-    ~ShaderArray()
+    ShaderManager() = default;
+    ~ShaderManager()
     {
+        for (ShaderProgram* shader : shaders)
+        {
+            delete shader;
+        }
         shaders.clear();
+        shaderMap.clear();
     }
 
     void addShader(const char* ID, ShaderProgram* shader);
+    void clearShaders();
     void newShader(const char* ID, const char* vertex_file_path, const char* fragment_file_path);
     inline ShaderProgram getShader(const char* ID) { return *(shaders[shaderMap[ID]]);}
     inline ShaderProgram* getShaderPtr(const char* ID) { return shaders[shaderMap[ID]]; }
@@ -24,7 +30,6 @@ public:
     inline void enable(const char* ID) { if (!shaders.empty()) shaders[shaderMap[ID]]->enable(); }
     inline void disable(const char* ID) { if (!shaders.empty()) shaders[shaderMap[ID]]->disable(); }
 
-    inline void clearShaders() { shaders.clear(); shaderMap.clear(); }
 
     inline void setUniform1f(const char * ID, const GLchar* name, float value)                      { shaders[shaderMap[ID]]->setUniform1f(name, value); }
     inline void setUniform1fv(const char * ID, const GLchar* name, float* value, GLsizei count)     { shaders[shaderMap[ID]]->setUniform1fv(name, value, count); }

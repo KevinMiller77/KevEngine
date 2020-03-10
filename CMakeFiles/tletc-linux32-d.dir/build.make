@@ -109,31 +109,31 @@ CMakeFiles/tletc-linux32-d.dir/src/graphics/BetterGL2DRenderer.cpp.s: cmake_forc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tletc-linux32-d.dir/src/graphics/BetterGL2DRenderer.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kev/Documents/dev/tletc/src/graphics/BetterGL2DRenderer.cpp -o CMakeFiles/tletc-linux32-d.dir/src/graphics/BetterGL2DRenderer.cpp.s
 
-CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o: CMakeFiles/tletc-linux32-d.dir/flags.make
-CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o: src/graphics/ShaderArray.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kev/Documents/dev/tletc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o -c /home/kev/Documents/dev/tletc/src/graphics/ShaderArray.cpp
+CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o: CMakeFiles/tletc-linux32-d.dir/flags.make
+CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o: src/graphics/ShaderManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kev/Documents/dev/tletc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o -c /home/kev/Documents/dev/tletc/src/graphics/ShaderManager.cpp
 
-CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kev/Documents/dev/tletc/src/graphics/ShaderArray.cpp > CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.i
+CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kev/Documents/dev/tletc/src/graphics/ShaderManager.cpp > CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.i
 
-CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kev/Documents/dev/tletc/src/graphics/ShaderArray.cpp -o CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.s
+CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kev/Documents/dev/tletc/src/graphics/ShaderManager.cpp -o CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.s
 
-CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o: CMakeFiles/tletc-linux32-d.dir/flags.make
-CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o: src/graphics/TextureArray.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kev/Documents/dev/tletc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o -c /home/kev/Documents/dev/tletc/src/graphics/TextureArray.cpp
+CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o: CMakeFiles/tletc-linux32-d.dir/flags.make
+CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o: src/graphics/TextureManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kev/Documents/dev/tletc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o -c /home/kev/Documents/dev/tletc/src/graphics/TextureManager.cpp
 
-CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kev/Documents/dev/tletc/src/graphics/TextureArray.cpp > CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.i
+CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kev/Documents/dev/tletc/src/graphics/TextureManager.cpp > CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.i
 
-CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kev/Documents/dev/tletc/src/graphics/TextureArray.cpp -o CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.s
+CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kev/Documents/dev/tletc/src/graphics/TextureManager.cpp -o CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.s
 
 CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderProgram.cpp.o: CMakeFiles/tletc-linux32-d.dir/flags.make
 CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderProgram.cpp.o: src/graphics/ShaderProgram.cpp
@@ -349,8 +349,8 @@ tletc__linux32__d_OBJECTS = \
 "CMakeFiles/tletc-linux32-d.dir/src/TLETC.cpp.o" \
 "CMakeFiles/tletc-linux32-d.dir/src/utils/FileIO.cpp.o" \
 "CMakeFiles/tletc-linux32-d.dir/src/graphics/BetterGL2DRenderer.cpp.o" \
-"CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o" \
-"CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o" \
+"CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o" \
+"CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o" \
 "CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderProgram.cpp.o" \
 "CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureProgram.cpp.o" \
 "CMakeFiles/tletc-linux32-d.dir/src/graphics/layers/Layer.cpp.o" \
@@ -375,8 +375,8 @@ tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/linuxmain.cpp.o
 tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/TLETC.cpp.o
 tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/utils/FileIO.cpp.o
 tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/graphics/BetterGL2DRenderer.cpp.o
-tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o
-tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o
+tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o
+tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o
 tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderProgram.cpp.o
 tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureProgram.cpp.o
 tletc-linux32-d: CMakeFiles/tletc-linux32-d.dir/src/graphics/layers/Layer.cpp.o

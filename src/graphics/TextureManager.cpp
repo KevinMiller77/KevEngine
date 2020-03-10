@@ -1,13 +1,13 @@
-#include "TextureArray.h"
+#include "TextureManager.h"
 
-void TextureArray::addTexture(const char* ID, Texture* Texture)
+void TextureManager::addTexture(const char* ID, Texture* Texture)
 {
     textures.push_back(Texture);
     textureMap.insert({ ID, textures.size() - 1});
     LOG_INF("New texture in array. Key: %s Value: %d\n", ID, textures.size());
 }
 
-void TextureArray::newTexture(const char* ID, const char* image_path, Vec2f flip)
+void TextureManager::newTexture(const char* ID, const char* image_path, Vec2f flip)
 {
     Texture* texture = new Texture(image_path, flip);
     textures.push_back(texture);
@@ -15,7 +15,7 @@ void TextureArray::newTexture(const char* ID, const char* image_path, Vec2f flip
     LOG_INF("New texture in array. Key: %s Value: %d GLuint %d\n", ID, textures.size() - 1, texture->getTextureID());
 }
 
-void TextureArray::clearTextures()
+void TextureManager::clearTextures()
 {
      for (Texture* texture : textures)
      {
@@ -25,13 +25,13 @@ void TextureArray::clearTextures()
      textureMap.clear();
 }
 
-Texture* TextureArray::getTexture(const char* ID)
+Texture* TextureManager::getTexture(const char* ID)
 {
     Texture* wantedTex = textures[textureMap[ID]];
     return wantedTex;
 }
 
-GLuint TextureArray::getNum(const char* ID)
+GLuint TextureManager::getNum(const char* ID)
 {
     return textureMap[ID];
 }

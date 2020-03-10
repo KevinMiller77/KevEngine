@@ -21,13 +21,6 @@
 #define SHADER_TEXTURE_INDEX 2
 #define SHADER_TEXTURE_ID_INDEX 3
 
-struct FontInfo 
-{
-    std::string location;
-    ftgl::texture_atlas_t* atlas;
-	ftgl::texture_font_t* font;
-};
-
 class BetterGL2DRenderer : public GL2DRenderer
 {
 private:
@@ -39,7 +32,6 @@ private:
     VertexData *VDataHeapLoc = nullptr;
 
     std::vector<GLuint> TextureSlots;
-    FontInfo Font;
 
 public:
     BetterGL2DRenderer();
@@ -47,7 +39,7 @@ public:
 
     void submit(const Renderable2D *renderable) override;
     void draw() override;
-    void drawString(std::string text, Vec3f position, uint32_t color) override;
+    void drawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) override;
     void begin();
     void end();
 

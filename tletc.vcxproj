@@ -128,9 +128,9 @@
     <ClCompile Include="src\graphics\layers\TileLayer.cpp" />
     <ClCompile Include="src\graphics\renderables\Sprite2D.cpp" />
     <ClCompile Include="src\graphics\renderables\StaticSprite2D.cpp" />
-    <ClCompile Include="src\graphics\ShaderArray.cpp" />
+    <ClCompile Include="src\graphics\ShaderManager.cpp" />
     <ClCompile Include="src\graphics\ShaderProgram.cpp" />
-    <ClCompile Include="src\graphics\TextureArray.cpp" />
+    <ClCompile Include="src\graphics\TextureManager.cpp" />
     <ClCompile Include="src\graphics\TextureProgram.cpp" />
     <ClCompile Include="src\math\mat2.cpp" />
     <ClCompile Include="src\math\mat2f.cpp" />
@@ -358,9 +358,9 @@
     <ClInclude Include="src\graphics\renderables\Renderable2D.h" />
     <ClInclude Include="src\graphics\renderables\Sprite2D.h" />
     <ClInclude Include="src\graphics\renderables\StaticSprite2D.h" />
-    <ClInclude Include="src\graphics\ShaderArray.h" />
+    <ClInclude Include="src\graphics\ShaderManager.h" />
     <ClInclude Include="src\graphics\ShaderProgram.h" />
-    <ClInclude Include="src\graphics\TextureArray.h" />
+    <ClInclude Include="src\graphics\TextureManager.h" />
     <ClInclude Include="src\graphics\TextureProgram.h" />
     <ClInclude Include="src\input\Keys.h" />
     <ClInclude Include="src\math\mat2.h" />

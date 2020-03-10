@@ -19,7 +19,7 @@ Texture::Texture(const char *inImagePath, Vec2f flip)
 Texture::~Texture()
 {
     glDeleteTextures(1, &texture);
-    FreeImage_Unload(heapLocOfTexture);
+    delete heapLocOfTexture;
 }
 
 void Texture::init(Vec2f flip)

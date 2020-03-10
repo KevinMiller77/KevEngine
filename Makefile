@@ -177,32 +177,32 @@ src/graphics/BetterGL2DRenderer.cpp.s:
 	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/BetterGL2DRenderer.cpp.s
 .PHONY : src/graphics/BetterGL2DRenderer.cpp.s
 
-src/graphics/ShaderArray.o: src/graphics/ShaderArray.cpp.o
+src/graphics/ShaderManager.o: src/graphics/ShaderManager.cpp.o
 
-.PHONY : src/graphics/ShaderArray.o
+.PHONY : src/graphics/ShaderManager.o
 
 # target to build an object file
-src/graphics/ShaderArray.cpp.o:
-	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o
-.PHONY : src/graphics/ShaderArray.cpp.o
+src/graphics/ShaderManager.cpp.o:
+	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o
+.PHONY : src/graphics/ShaderManager.cpp.o
 
-src/graphics/ShaderArray.i: src/graphics/ShaderArray.cpp.i
+src/graphics/ShaderManager.i: src/graphics/ShaderManager.cpp.i
 
-.PHONY : src/graphics/ShaderArray.i
+.PHONY : src/graphics/ShaderManager.i
 
 # target to preprocess a source file
-src/graphics/ShaderArray.cpp.i:
-	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.i
-.PHONY : src/graphics/ShaderArray.cpp.i
+src/graphics/ShaderManager.cpp.i:
+	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.i
+.PHONY : src/graphics/ShaderManager.cpp.i
 
-src/graphics/ShaderArray.s: src/graphics/ShaderArray.cpp.s
+src/graphics/ShaderManager.s: src/graphics/ShaderManager.cpp.s
 
-.PHONY : src/graphics/ShaderArray.s
+.PHONY : src/graphics/ShaderManager.s
 
 # target to generate assembly for a file
-src/graphics/ShaderArray.cpp.s:
-	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.s
-.PHONY : src/graphics/ShaderArray.cpp.s
+src/graphics/ShaderManager.cpp.s:
+	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.s
+.PHONY : src/graphics/ShaderManager.cpp.s
 
 src/graphics/ShaderProgram.o: src/graphics/ShaderProgram.cpp.o
 
@@ -231,32 +231,32 @@ src/graphics/ShaderProgram.cpp.s:
 	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderProgram.cpp.s
 .PHONY : src/graphics/ShaderProgram.cpp.s
 
-src/graphics/TextureArray.o: src/graphics/TextureArray.cpp.o
+src/graphics/TextureManager.o: src/graphics/TextureManager.cpp.o
 
-.PHONY : src/graphics/TextureArray.o
+.PHONY : src/graphics/TextureManager.o
 
 # target to build an object file
-src/graphics/TextureArray.cpp.o:
-	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o
-.PHONY : src/graphics/TextureArray.cpp.o
+src/graphics/TextureManager.cpp.o:
+	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o
+.PHONY : src/graphics/TextureManager.cpp.o
 
-src/graphics/TextureArray.i: src/graphics/TextureArray.cpp.i
+src/graphics/TextureManager.i: src/graphics/TextureManager.cpp.i
 
-.PHONY : src/graphics/TextureArray.i
+.PHONY : src/graphics/TextureManager.i
 
 # target to preprocess a source file
-src/graphics/TextureArray.cpp.i:
-	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.i
-.PHONY : src/graphics/TextureArray.cpp.i
+src/graphics/TextureManager.cpp.i:
+	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.i
+.PHONY : src/graphics/TextureManager.cpp.i
 
-src/graphics/TextureArray.s: src/graphics/TextureArray.cpp.s
+src/graphics/TextureManager.s: src/graphics/TextureManager.cpp.s
 
-.PHONY : src/graphics/TextureArray.s
+.PHONY : src/graphics/TextureManager.s
 
 # target to generate assembly for a file
-src/graphics/TextureArray.cpp.s:
-	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.s
-.PHONY : src/graphics/TextureArray.cpp.s
+src/graphics/TextureManager.cpp.s:
+	$(MAKE) -f CMakeFiles/tletc-linux32-d.dir/build.make CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.s
+.PHONY : src/graphics/TextureManager.cpp.s
 
 src/graphics/TextureProgram.o: src/graphics/TextureProgram.cpp.o
 
@@ -732,15 +732,15 @@ help:
 	@echo "... src/graphics/BetterGL2DRenderer.o"
 	@echo "... src/graphics/BetterGL2DRenderer.i"
 	@echo "... src/graphics/BetterGL2DRenderer.s"
-	@echo "... src/graphics/ShaderArray.o"
-	@echo "... src/graphics/ShaderArray.i"
-	@echo "... src/graphics/ShaderArray.s"
+	@echo "... src/graphics/ShaderManager.o"
+	@echo "... src/graphics/ShaderManager.i"
+	@echo "... src/graphics/ShaderManager.s"
 	@echo "... src/graphics/ShaderProgram.o"
 	@echo "... src/graphics/ShaderProgram.i"
 	@echo "... src/graphics/ShaderProgram.s"
-	@echo "... src/graphics/TextureArray.o"
-	@echo "... src/graphics/TextureArray.i"
-	@echo "... src/graphics/TextureArray.s"
+	@echo "... src/graphics/TextureManager.o"
+	@echo "... src/graphics/TextureManager.i"
+	@echo "... src/graphics/TextureManager.s"
 	@echo "... src/graphics/TextureProgram.o"
 	@echo "... src/graphics/TextureProgram.i"
 	@echo "... src/graphics/TextureProgram.s"

@@ -10,7 +10,7 @@
 #include <GL/wglew.h>
 
 #include "math/math.h"
-#include "CommonTypes.h"
+#include "utils/commonTypes.h"
 #include "TLETC.h"
 
 #define WINDOW_CLASS_NAME "TLETCTestWindowClass"
@@ -326,10 +326,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     windowHDC = GetDC(window);
 
-    tletc = new TLETC(Vec2u(960, 540));
-    tletc->restartContext = restartGLContext;
-    tletc->toggleFullScreen = ToggleFullscreen;
-
+    tletc = new TLETC(Vec2u(960, 540), restartGLContext, ToggleFullscreen);
+    
     //HGLRC baseGLContext = CreateGLContext(windowHDC);
     HGLRC gameGLContext = CreateGLContext(windowHDC);
 

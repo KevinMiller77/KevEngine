@@ -21,10 +21,10 @@ graphics/renderables/Sprite2D.h
 /home/kev/Documents/dev/tletc/src/graphics/renderables/Sprite2D.h
 graphics/layers/Group.h
 /home/kev/Documents/dev/tletc/src/graphics/layers/Group.h
-graphics/ShaderArray.h
-/home/kev/Documents/dev/tletc/src/graphics/ShaderArray.h
-graphics/TextureArray.h
-/home/kev/Documents/dev/tletc/src/graphics/TextureArray.h
+graphics/ShaderManager.h
+/home/kev/Documents/dev/tletc/src/graphics/ShaderManager.h
+graphics/TextureManager.h
+/home/kev/Documents/dev/tletc/src/graphics/TextureManager.h
 graphics/BetterGL2DRenderer.h
 /home/kev/Documents/dev/tletc/src/graphics/BetterGL2DRenderer.h
 utils/Timer.h
@@ -54,7 +54,7 @@ math.h
 deque
 -
 
-/home/kev/Documents/dev/tletc/src/graphics/ShaderArray.h
+/home/kev/Documents/dev/tletc/src/graphics/ShaderManager.h
 ShaderProgram.h
 /home/kev/Documents/dev/tletc/src/graphics/ShaderProgram.h
 
@@ -72,7 +72,7 @@ GL/glew.h
 ../math/math.h
 /home/kev/Documents/dev/tletc/src/math/math.h
 
-/home/kev/Documents/dev/tletc/src/graphics/TextureArray.h
+/home/kev/Documents/dev/tletc/src/graphics/TextureManager.h
 string
 -
 vector

@@ -6,9 +6,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/kev/Documents/dev/tletc/src/TLETC.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/TLETC.cpp.o"
   "/home/kev/Documents/dev/tletc/src/graphics/BetterGL2DRenderer.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/graphics/BetterGL2DRenderer.cpp.o"
-  "/home/kev/Documents/dev/tletc/src/graphics/ShaderArray.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o"
+  "/home/kev/Documents/dev/tletc/src/graphics/ShaderManager.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o"
   "/home/kev/Documents/dev/tletc/src/graphics/ShaderProgram.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderProgram.cpp.o"
-  "/home/kev/Documents/dev/tletc/src/graphics/TextureArray.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o"
+  "/home/kev/Documents/dev/tletc/src/graphics/TextureManager.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o"
   "/home/kev/Documents/dev/tletc/src/graphics/TextureProgram.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureProgram.cpp.o"
   "/home/kev/Documents/dev/tletc/src/graphics/buffers/Buffer.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/graphics/buffers/Buffer.cpp.o"
   "/home/kev/Documents/dev/tletc/src/graphics/buffers/IndexBuffer.cpp" "/home/kev/Documents/dev/tletc/CMakeFiles/tletc-linux32-d.dir/src/graphics/buffers/IndexBuffer.cpp.o"

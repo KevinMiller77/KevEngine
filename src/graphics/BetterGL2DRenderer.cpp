@@ -3,8 +3,6 @@
 BetterGL2DRenderer::BetterGL2DRenderer()
 {
     indexCount = 0;
-    Font.font = nullptr;
-    Font.atlas = nullptr;
     init();
 }
 
@@ -61,18 +59,7 @@ void BetterGL2DRenderer::init()
     IBO = new IndexBuffer(indicies, RENDERER_INDICIES_SIZE);
 
     //Unbind VAO
-    glBindVertexArray(0);
-
-    Font.atlas =  ftgl::texture_atlas_new(512, 512, 2);
-    Font.font = ftgl::texture_font_new_from_file(Font.atlas, 32, "../fonts/arial.ttf");
-
-    if (!Font.font)
-    {
-        LOG_INF("Could not load font\n");
-        return;
-    }
-    LOG_INF("Font loaded\n");
-    
+    glBindVertexArray(0);    
 }
 
 void BetterGL2DRenderer::begin()
@@ -146,7 +133,7 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
     indexCount += 6;
 }
 
-void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t color)
+void BetterGL2DRenderer::drawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
 {
     using namespace ftgl;
 
@@ -154,7 +141,7 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t c
     bool found = false;
     for (unsigned int i = 0; i < TextureSlots.size(); i++)
     {
-        if (TextureSlots[i] == Font.atlas->id)
+        if (TextureSlots[i] == font->atlas->id)
         {
             
             ts = (float)(i + 1);
@@ -162,7 +149,6 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t c
             break;           
         }
     }
-
     if (!found)
     {
         if (TextureSlots.size() >= MAX_TEXTURE_SLOTS)
@@ -171,7 +157,7 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t c
             draw();
             begin();
         }
-        TextureSlots.push_back(Font.atlas->id);
+        TextureSlots.push_back(font->atlas->id);
         ts = (float)(TextureSlots.size());
     }
 
@@ -180,12 +166,10 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, uint32_t c
 
     float x = position.x;
 
-
-    
     for (int i = 0; i < text.length(); i++)
     {
         char c = text[i];
-        texture_glyph_t* glyph = texture_font_get_glyph(Font.font, c);
+        texture_glyph_t* glyph = texture_font_get_glyph(font->font, c);
         if (glyph != NULL)
         {
 

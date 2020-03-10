@@ -1,5 +1,5 @@
-#ifndef __TEXTURE_ARRAY__
-#define __TEXTURE_ARRAY__
+#ifndef __TEXTURE_MANAGER__
+#define __TEXTURE_MANAGER__
 
 #include <string>
 #include <vector>
@@ -7,15 +7,15 @@
 
 #include "TextureProgram.h"
 
-class TextureArray
+class TextureManager
 {
 private:
     std::vector<Texture*> textures;
     std::map<const char*, GLuint, StrCompare> textureMap;
 
 public:
-    TextureArray() = default;
-    ~TextureArray()
+    TextureManager() = default;
+    ~TextureManager()
     {
         textures.clear();
         textureMap.clear();

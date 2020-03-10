@@ -3,12 +3,13 @@
 
 #include <vector>
 #include <string>
+#include <deque>
 
 #include <GL/glew.h>
 #include <math.h>
 #include "../math/math.h"
+#include "FontManager.h"
 
-#include <deque>
 
 class Renderable2D;
 
@@ -54,7 +55,7 @@ public:
     }
 
 
-    virtual void drawString(std::string text, Vec3f position, uint32_t color) = 0;
+    virtual void drawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) = 0;
     virtual void submit(const Renderable2D *renderable) = 0;
     virtual void draw() = 0;
     virtual void begin() = 0;

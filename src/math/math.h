@@ -3,10 +3,10 @@
 
 #include <cstring>
 
+//A compare for map in order to use a c string
 struct StrCompare {
 public:
-    bool operator() (const char* str1, const char* str2) const
-    { return std::strcmp(str1, str2) < 0; }
+    bool operator() (const char* str1, const char* str2) const { return std::strcmp(str1, str2) < 0; }
 };
 
 #include "vec2f.h"

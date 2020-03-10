@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/tletc-linux32-d.dir/src/TLETC.cpp.o"
   "CMakeFiles/tletc-linux32-d.dir/src/graphics/BetterGL2DRenderer.cpp.o"
-  "CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderArray.cpp.o"
+  "CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderManager.cpp.o"
   "CMakeFiles/tletc-linux32-d.dir/src/graphics/ShaderProgram.cpp.o"
-  "CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureArray.cpp.o"
+  "CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureManager.cpp.o"
   "CMakeFiles/tletc-linux32-d.dir/src/graphics/TextureProgram.cpp.o"
   "CMakeFiles/tletc-linux32-d.dir/src/graphics/buffers/Buffer.cpp.o"
   "CMakeFiles/tletc-linux32-d.dir/src/graphics/buffers/IndexBuffer.cpp.o"

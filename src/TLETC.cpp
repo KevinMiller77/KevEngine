@@ -1,19 +1,37 @@
 #include "TLETC.h"
+MemoryMetrics memoryTracker;
 
-TLETC::TLETC(Vec2u startScreenResolution)
+void* operator new(size_t size)
+{   
+    memoryTracker.add(size);
+    return malloc(size);
+}
+
+void operator delete(void* data, size_t size)
+{
+    memoryTracker.del(size);
+    free(data);
+}
+
+TLETC::TLETC(Vec2u startScreenResolution, bool RestartContext(), bool ToggleFullscreen())
 {
     screenResolution = startScreenResolution;
     mousePos = Vec2u(0, 0);
     screenSize = Vec2f(16.0f, 9.0f);
     windowedMode = true;
+
+    restartContext = RestartContext;
+    toggleFullScreen = ToggleFullscreen;
+
 }
 
 //Call that happens every time the game starts
 void TLETC::OnGameStart()
 {
+    //Reinstantiate memory monitor and set it to start
+    memoryTracker.track();
 
     //Enable blending of the alpha channel
-    //glClearColor(0.7f, 0.5f, 0.6f, 0.5f);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -21,11 +39,16 @@ void TLETC::OnGameStart()
     totalTime.start();
     keyPressTimeout.start();
 
+    fonts.add("arial", "../fonts/arial.ttf", 32);
+    fonts.add("inkfree", "../fonts/INKFREE.ttf", 28);
+    fonts.add("cookie", "../fonts/Cookie Cake Demo.otf", 28);
+
     //Set shader info
     shaders.newShader("basic", "../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
     shaders.enable("basic");
-    std::string prefix = "tex_";
 
+
+    //Load in the texture coords for the shader
     int slots[MAX_TEXTURE_SLOTS];
     for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
     shaders.setUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
@@ -37,14 +60,15 @@ void TLETC::OnGameStart()
 
     TileLayer* lay1 = new TileLayer(shaders.getShaderPtr("basic")->getShaderID());
     TileLayer* lay2 = new TileLayer(shaders.getShaderPtr("basic")->getShaderID());
+    TileLayer* lay3 = new TileLayer(shaders.getShaderPtr("basic")->getShaderID());
     
-    layers.push_back(lay1);
-    layers.push_back(lay2);
+    layers.push_back(lay1); layers.push_back(lay2); layers.push_back(lay3);
 
     srand(time(NULL));
 
     Group* background = new Group(Mat4f::translation(Vec3f(-screenSize.x, -screenSize.y, 0.0f)));
     Group* textBox = new Group(Mat4f::translation(Vec3f(-screenSize.x + 0.3, -screenSize.y + 0.2, 0.0f)));
+    Group* swirly = new Group(Mat4f::translation(Vec3f(-screenSize.x, screenSize.y, 0.0f)));
 
     background->add(new Sprite(-19.0f, -10.0f, 0.0f, 0.0f, Vec4f(0.0f, 0.0f, 0.0f, 0.0f)));
     for (float y = 0.0f; y < 9.0f; y += 0.5f)
@@ -53,7 +77,7 @@ void TLETC::OnGameStart()
         {
             background->add(new Sprite(x, y, 0.5f, 0.5f, textures.getTexture("sponge")));
             //background->add(new Sprite(x, y, 0.5f, 0.5f, Vec4f(0.7f, 1.0f, 1.0f, 0.5f)));
-            //swirly->add(new Sprite(x, y, 0.5f, 0.5f, textures.getTexture("crate")));
+            if ((int)x % 1 == 0) swirly->add(new Sprite(x, y, 0.5f, 0.5f, textures.getTexture("crate")));
         }
     }
 
@@ -61,13 +85,17 @@ void TLETC::OnGameStart()
     layers[0]->pushTransform(new Mat4f(Mat4f::scale(Vec3f(2.0f, 2.0f, 0.0f))));
     
     textBox->add(new Sprite(0, 0, 5.0f, 1.5f, Vec4f(0.7f, 0.7f, 0.7f, 0.8f)));
-    textBox->add(new Label(std::string("A big fat BBW with cum on her face"), 0.3f, 1.2f, Vec4f(1.0f, 1.0f, 1.0f, 1.0f)));
+    textBox->add(new Label(std::string("These r wrds"), 0.3f, 1.2f, fonts.get("arial"), Vec4f(1.0f, 1.0f, 1.0f, 1.0f)));
 
     layers[1]->add(textBox);
+
+    layers[2]->add(swirly);
 
     unsigned int numToRender = background->getNumChildren();
     LOG_INF("Loaded %d Sprites to be renderered\n", numToRender);
     LOG_INF("Time to setup: %dms\n", (unsigned int)(totalTime.getTimePassedReset() * 1000));
+    LOG_INF("Heap allocations during setup: %d Bytes.\n", memoryTracker.doneTracking());
+
 }
 
 //Code that is called directly before each frame is drawn
@@ -82,14 +110,14 @@ void TLETC::Draw()
     
 
     //Let the timer know a frame passed
-    timer.frameKeep();
+    timer.frameKeep((float)memoryTracker.get() / 1000000.0f);
 }
 
 void TLETC::Update()
 {
     //Begin frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //layers[1]->poptransform();
+    //layers[2]->poptransform();
 
     float newX = 16.0f * ((float)mousePos.x / screenResolution.x);
     float newY = 9.0f * ((float)mousePos.y / screenResolution.y);
@@ -151,7 +179,7 @@ void TLETC::ProcessInput(InputInformation in)
     if (((in._mousePos.x != 0) || (in._mousePos.y != 0)) && ((in._mousePos.x != mousePos.x) || (in._mousePos.y == mousePos.y))) 
     {
 
-        if ((bool)(in._mouseButtons & 0x0010))
+        if ((bool)(in._mouseButtons & 0x0010) || (in._key == 0x11))
         {
             float newX = (float)screenSize.x * (((float)in._mousePos.x - (float)mousePos.x) / screenResolution.x);
             float newY = (float)screenSize.y * (((float)in._mousePos.y - (float)mousePos.y) / screenResolution.y);
@@ -178,15 +206,18 @@ void TLETC::ProcessInput(InputInformation in)
 
 void TLETC::ResetEngine()
 {
-    timer.start();
     LOG_INF("Restarting engine\n");
+    
+    memoryTracker.track();
+
+    timer.start();
     for (Layer* layer : layers)
         delete layer;
     layers.clear();
     
-    shaders.disable("basic");
     shaders.clearShaders();
     textures.clearTextures();
+    fonts.clearFonts();
 
     glFlush();
     if (restartContext != nullptr)
@@ -194,7 +225,6 @@ void TLETC::ResetEngine()
         (*restartContext)();
     }
 
-    
     LOG_INF("Time to reset: %dms\n", (unsigned int)(timer.getTimePassedReset() * 1000));
 }
 

@@ -3,11 +3,9 @@
 
 #include <cstddef>
 #include <string>
-#include "TextureArray.h"
+#include "TextureManager.h"
 #include "buffers/VertexArray.h"
 #include "renderables/Sprite2D.h"
-
-#include <../ext/freetype-gl/freetype-gl.h>
 
 #define RENDERER_MAX_SPRITES 50000
 #define RENDERER_VERTEX_SIZE sizeof(VertexData)
@@ -22,13 +20,6 @@
 #define SHADER_TEXTURE_INDEX 2
 #define SHADER_TEXTURE_ID_INDEX 3
 
-struct FontInfo 
-{
-    std::string location;
-    ftgl::texture_atlas_t* atlas;
-	ftgl::texture_font_t* font;
-};
-
 class Renderer2D
 {
 private:
@@ -40,8 +31,6 @@ private:
     VertexData *VDataHeapLoc = nullptr;
 
     std::vector<GLuint> TextureSlots;
-    FontInfo Font;
-    
     std::vector<Mat4f> TransformationStack;
     const Mat4f* curTransformationBack;
 
