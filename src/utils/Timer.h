@@ -43,7 +43,7 @@ public:
         frames++;
         if (getTimePassed() >= 1.0f)
         {
-            LOG_INF("FPS: %dn", frames);
+            LOG_INF("FPS: %dn\n", frames);
             reset();
             frames = 0;
         }

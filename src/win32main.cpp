@@ -18,6 +18,22 @@
 #define TICK_RATE 1000;
 #define FRAME_RATE 60;
 
+MemoryMetrics memoryTracker;
+
+void* operator new(size_t size)
+{   
+    memoryTracker.add(size);
+    return malloc(size);
+}
+
+void operator delete(void* data, size_t size)
+{
+    memoryTracker.del(size);
+    free(data);
+}
+
+extern TLETC* engine;
+
 /*
   OpenGL Reference Wiki:
   https://www.khronos.org/opengl/wiki/Creating_an_OpenGL_Context_(WGL)
@@ -25,8 +41,6 @@
 
 // TODO(Adin): Switch to CreateWindowEx
 
-//Global window information. Required for toggling window fullscreen
-TLETC *tletc = nullptr;
 HDC windowHDC;
 HWND window;
 WINDOWPLACEMENT wpc;
@@ -237,8 +251,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
         glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
 
         HDC tempHDC = GetDC(hwnd);
-        tletc->setScreenResolution(Vec2u(LOWORD(lParam), HIWORD(lParam)));
-        tletc->Draw();
+        engine->setScreenResolution(Vec2u(LOWORD(lParam), HIWORD(lParam)));
+        engine->Draw();
         ReleaseDC(hwnd, tempHDC);
         SwapBuffers(tempHDC);
         return 0;
@@ -271,7 +285,7 @@ bool restartGLContext()
 
 bool ToggleFullscreen()
 {    
-    bool windowedMode = tletc->getWindowMode();
+    bool windowedMode = engine->getWindowMode();
     if ( windowedMode )
     {
         GetWindowPlacement( window, &wpc );
@@ -326,7 +340,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
     windowHDC = GetDC(window);
 
-    tletc = new TLETC(Vec2u(960, 540), restartGLContext, ToggleFullscreen);
+    engine->restartContext = restartGLContext;
+    engine->toggleFullScreen = ToggleFullscreen;
     
     //HGLRC baseGLContext = CreateGLContext(windowHDC);
     HGLRC gameGLContext = CreateGLContext(windowHDC);
@@ -340,8 +355,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     glDebugMessageCallback(MessageCallback, 0);
 
     //Game start actions
-    tletc->restartContext();
-    tletc->OnGameStart();
+    engine->restartContext();
+    engine->OnGameStart();
     ShowWindow(window, SW_SHOW);
 
     // Main loop
@@ -349,6 +364,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     BOOL running = TRUE;
     
     InputInformation state;
+    Timer onUpdateTimer;
+    onUpdateTimer.start();
 
     while (running)
     {
@@ -373,7 +390,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                     RECT rect = { NULL };
                     if (GetWindowRect(window, &rect))
                     {
-                        Vec2u resolution = tletc->getScreenResolution();
+                        Vec2u resolution = engine->getScreenResolution();
                         SetCursorPos(resolution.x / 2 + rect.left, resolution.y / 2 + rect.top);
                         ShowCursor(false);
                     }
@@ -408,13 +425,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             default:
                 break;
             }
-            tletc->ProcessInput(state);
+            engine->ProcessInput(state);
             TranslateMessage(&message);
             DispatchMessage(&message);
         }
 
-        tletc->Update();
-        tletc->Draw();
+        if (onUpdateTimer.getTimePassed() > 1.0f / 60.0f)
+        {
+            engine->OnUpdate();
+            onUpdateTimer.reset();
+        }
+        engine->OnTick();
+        engine->Draw();
         SwapBuffers(windowHDC);
     }
 

@@ -7,8 +7,11 @@
 #include "../math/math.h"
 #include "../utils/Logging.h"
 
+#ifdef BUILD_STATIC_LIB
+#include <freetype-gl/freetype-gl.h>
+#else
 #include <../ext/freetype-gl/freetype-gl.h>
-
+#endif
 
 struct FontInfo 
 {

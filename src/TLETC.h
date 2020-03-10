@@ -1,6 +1,8 @@
 #ifndef __TLETC__
 #define __TLETC__
 
+//Will be ifdef WIN32
+
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -21,6 +23,8 @@
 //TODO: Move this to the input.h util
 #define KEY_DEBOUNCE_TIME 0.2f
 
+void DummyStartEngine();
+
 struct InputInformation
 {
     uint8_t _key = 0;               //If key = 0, do nothing with it
@@ -37,7 +41,7 @@ struct InputInformation
 
 class TLETC
 {
-private:
+protected:
     std::vector<Layer*> layers;
     GLint texIDs[MAX_TEXTURE_SLOTS];
 
@@ -53,13 +57,24 @@ private:
     Timer timer;
     Timer keyPressTimeout;
 
+    TLETC(int screenX, int screenY)
+    {
+        screenResolution = Vec2u(screenX, screenY);
+        mousePos = Vec2u(0, 0);
+        screenSize = Vec2f(16.0f, 9.0f);
+        windowedMode = true;
+    }
 public:
-    TLETC(Vec2u startScreenResolution, bool RestartContext(), bool ToggleFullscreen());
 
-    void OnGameStart();
-    void Draw();
-    void Update();
-    void ProcessInput(InputInformation in);
+    //Runs at start of game
+    virtual void OnGameStart() {};
+    //Draw call obviously
+    virtual void Draw() {};
+    //As fast as possible
+    virtual void OnTick() {};
+    //60 times a second
+    virtual void OnUpdate() {};
+    virtual void ProcessInput(InputInformation in) {};
 
     inline void setScreenResolution(Vec2u in) { screenResolution = in; }
     inline Vec2u getScreenResolution() const { return screenResolution; }
@@ -70,12 +85,13 @@ public:
     inline Vec2u getMousePos() const { return mousePos; }
 
     //Callback to platform specific contect restart. Must return bool (true = success, false = fail)
+    //Will be handeled in the background -- just use it
     bool (*restartContext)(); 
     //Callback to the platforma specific fullscreen toggle. Must return new windowed mode (true = windowed, false = fullscreen)
+    //Will be handled in the background -- just use it
     bool (*toggleFullScreen)();  
 
-    void ResetEngine();
-private:
+    virtual void ResetEngine() {};
 };
 
 #endif
