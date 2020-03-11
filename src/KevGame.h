@@ -2,15 +2,15 @@
 #define __KEV_GAME__
 
 #include <windows.h>
-#include "TLETC.h"
+#include "KevEngine.h"
 
 #define SCREEN_SIZE_X 960
 #define SCREEN_SIZE_Y 540
 
-class KevGame : public TLETC
+class KevGame : public KevEngine
 {
 public:
-    KevGame(int screenX, int screenY) : TLETC(screenX, screenY) {}
+    KevGame(int screenX, int screenY) : KevEngine(screenX, screenY) {}
 
     void OnGameStart() override;
     void Draw() override;

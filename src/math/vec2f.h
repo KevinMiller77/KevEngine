@@ -1,5 +1,5 @@
-#ifndef __TLETC_Vec2__
-#define __TLETC_Vec2__
+#ifndef __KevEngine_Vec2__
+#define __KevEngine_Vec2__
 
 //2 Float vector
 struct Vec2f {

@@ -9,7 +9,7 @@
 #include <GL/glew.h>
 #include <GL/glx.h>
 
-#include "TLETC.h"
+#include "KevEngine.h"
 
 
 struct PlatformState {
@@ -24,7 +24,7 @@ XWindowAttributes       gwa;
 XEvent                  xev;
 };
 
-TLETC *tletc = nullptr;
+KevEngine *tletc = nullptr;
 
 void render(GLuint ShaderProgramID, GLfloat *vertexArray, GLenum mode, int dimensions);
 GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path);
@@ -71,7 +71,7 @@ int main (int argc, char* argv[]){
     
     //Show the window and give it a name`
     XMapWindow(ps.dpy, ps.win);
-    XStoreName(ps.dpy, ps.win, "TLETC Test Window");
+    XStoreName(ps.dpy, ps.win, "KevEngine Test Window");
 
     //Create context and assign it to the current context`
     ps.glc = glXCreateContext(ps.dpy, ps.vi, NULL, GL_TRUE);
@@ -92,7 +92,7 @@ int main (int argc, char* argv[]){
     printf("GLEW Enabled on version : %s\n", glewGetString(GLEW_VERSION));
     printf("GL Functions grabbed on version : %s\n", glGetString(GL_VERSION));
 
-    tletc = new TLETC(Vec2u(960, 540));
+    tletc = new KevEngine(Vec2u(960, 540));
     tletc->restartContext = restartContext;
     tletc->toggleFullScreen = toggleFullscreen;
 

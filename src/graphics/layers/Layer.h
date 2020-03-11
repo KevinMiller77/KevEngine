@@ -1,5 +1,5 @@
-#ifndef __TLETC_LAYER__
-#define __TLETC_LAYER__
+#ifndef __KevEngine_LAYER__
+#define __KevEngine_LAYER__
 
 #include "../BetterGL2DRenderer.h"
 #include "../TextureProgram.h"

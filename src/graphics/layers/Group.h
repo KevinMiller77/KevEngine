@@ -1,5 +1,5 @@
-#ifndef __TLETC_GROUP__
-#define __TLETC_GROUP__
+#ifndef __KevEngine_GROUP__
+#define __KevEngine_GROUP__
 
 #include "../renderables/Renderable2D.h"
 

@@ -1,5 +1,5 @@
-#ifndef __TLETC_TIMER__
-#define __TLETC_TIMER__
+#ifndef __KevEngine_TIMER__
+#define __KevEngine_TIMER__
 
 #include <chrono>
 

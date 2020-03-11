@@ -1,5 +1,5 @@
-#ifndef __TLETC__
-#define __TLETC__
+#ifndef __KevEngine__
+#define __KevEngine__
 
 //Will be ifdef WIN32
 
@@ -39,7 +39,7 @@ struct InputInformation
     uint32_t _mouseButtons = 0; 
 };
 
-class TLETC
+class KevEngine
 {
 protected:
     std::vector<Layer*> layers;
@@ -57,7 +57,7 @@ protected:
     Timer timer;
     Timer keyPressTimeout;
 
-    TLETC(int screenX, int screenY)
+    KevEngine(int screenX, int screenY)
     {
         screenResolution = Vec2u(screenX, screenY);
         mousePos = Vec2u(0, 0);

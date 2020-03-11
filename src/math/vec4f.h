@@ -1,5 +1,5 @@
-#ifndef __TLETC_VEC4__
-#define __TLETC_VEC4__
+#ifndef __KevEngine_VEC4__
+#define __KevEngine_VEC4__
 
 //4 Float vector
 struct Vec4f {

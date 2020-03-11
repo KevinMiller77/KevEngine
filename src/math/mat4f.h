@@ -1,5 +1,5 @@
-#ifndef __TLETC_MAT4__
-#define __TLETC_MAT4__
+#ifndef __KevEngine_MAT4__
+#define __KevEngine_MAT4__
 
 #include <math.h>
 #include "vec2f.h"

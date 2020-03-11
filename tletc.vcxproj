@@ -143,7 +143,7 @@
     <ClCompile Include="src\math\vec3f.cpp" />
     <ClCompile Include="src\math\vec4.cpp" />
     <ClCompile Include="src\math\vec4f.cpp" />
-    <ClCompile Include="src\TLETC.cpp" />
+    <ClCompile Include="src\KevEngine.cpp" />
     <ClCompile Include="src\utils\FileIO.cpp" />
     <ClCompile Include="src\utils\SimpleList.cpp" />
     <ClCompile Include="src\Win32Main.cpp" />
@@ -375,7 +375,7 @@
     <ClInclude Include="src\math\vec3f.h" />
     <ClInclude Include="src\math\vec4.h" />
     <ClInclude Include="src\math\vec4f.h" />
-    <ClInclude Include="src\TLETC.h" />
+    <ClInclude Include="src\KevEngine.h" />
     <ClInclude Include="src\utils\FileIO.h" />
     <ClInclude Include="src\utils\Logging.h" />
     <ClInclude Include="src\utils\SimpleList.h" />

@@ -1,5 +1,5 @@
-#ifndef __TLETC_Vec2_U__
-#define __TLETC_Vec2_U__
+#ifndef __KevEngine_Vec2_U__
+#define __KevEngine_Vec2_U__
 
 //2 unsigned int vector
 struct Vec2u {

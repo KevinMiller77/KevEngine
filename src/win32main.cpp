@@ -11,9 +11,9 @@
 
 #include "math/math.h"
 #include "utils/commonTypes.h"
-#include "TLETC.h"
+#include "KevEngine.h"
 
-#define WINDOW_CLASS_NAME "TLETCTestWindowClass"
+#define WINDOW_CLASS_NAME "KevEngineTestWindowClass"
 
 #define TICK_RATE 1000;
 #define FRAME_RATE 60;
@@ -32,7 +32,7 @@ void operator delete(void* data, size_t size)
     free(data);
 }
 
-extern TLETC* engine;
+extern KevEngine* engine;
 
 /*
   OpenGL Reference Wiki:
@@ -124,7 +124,7 @@ int InitalizeConsole()
 
 int LoadGLExtensions(HINSTANCE hInstance)
 {
-    const char DummyWindowClassName[] = "TLETCDummyWinClass";
+    const char DummyWindowClassName[] = "KevEngineDummyWinClass";
 
     WNDCLASS dummyWindowClass = {};
     dummyWindowClass.style = CS_OWNDC;
@@ -336,7 +336,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // GLEW is initalized in here
     LoadGLExtensions(hInstance);
 
-    window = CreateWindow(WINDOW_CLASS_NAME, "TLETC Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 960, 540, NULL, NULL, hInstance, NULL);
+    window = CreateWindow(WINDOW_CLASS_NAME, "KevEngine Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 960, 540, NULL, NULL, hInstance, NULL);
     
     windowHDC = GetDC(window);
 

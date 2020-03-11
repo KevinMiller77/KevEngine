@@ -1,5 +1,5 @@
-#ifndef __TLETC_TILE_LAYER__
-#define __TLETC_TILE_LAYER__
+#ifndef __KevEngine_TILE_LAYER__
+#define __KevEngine_TILE_LAYER__
 
 #include "Layer.h"
 #include "../BetterGL2DRenderer.h"

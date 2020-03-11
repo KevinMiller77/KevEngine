@@ -1,5 +1,5 @@
-#ifndef __TLETC_TYPES__
-#define __TLETC_TYPES__
+#ifndef __KevEngine_TYPES__
+#define __KevEngine_TYPES__
 
 #define local static
 #define global static

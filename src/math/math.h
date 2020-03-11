@@ -1,5 +1,5 @@
-#ifndef __TLETC_MATH__
-#define __TLETC_MATH__
+#ifndef __KevEngine_MATH__
+#define __KevEngine_MATH__
 
 #include <cstring>
 

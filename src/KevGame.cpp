@@ -2,7 +2,7 @@
 
 //Both equired for the interface with the OS.
 extern MemoryMetrics memoryTracker;
-TLETC* engine = new KevGame(SCREEN_SIZE_X, SCREEN_SIZE_Y);
+KevEngine* engine = new KevGame(SCREEN_SIZE_X, SCREEN_SIZE_Y);
 
 //Call that happens every time the game starts
 void KevGame::OnGameStart()

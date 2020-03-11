@@ -1,5 +1,5 @@
-#ifndef __TLETC_VEC3__
-#define __TLETC_VEC3__
+#ifndef __KevEngine_VEC3__
+#define __KevEngine_VEC3__
 
 //3 Float vector
 struct Vec3 {
