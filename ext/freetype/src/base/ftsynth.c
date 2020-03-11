@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    FreeType synthesizing code for emboldening and slanting (body).      */
 /*                                                                         */
-/*  Copyright 2000-2006, 2010, 2012-2014 by                                */
+/*  Copyright 2000-2006, 2010, 2012 by                                     */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -48,13 +48,8 @@
   FT_GlyphSlot_Oblique( FT_GlyphSlot  slot )
   {
     FT_Matrix    transform;
-    FT_Outline*  outline;
+    FT_Outline*  outline = &slot->outline;
 
-
-    if ( !slot )
-      return;
-
-    outline = &slot->outline;
 
     /* only oblique outline glyphs */
     if ( slot->format != FT_GLYPH_FORMAT_OUTLINE )
@@ -68,7 +63,7 @@
     transform.xx = 0x10000L;
     transform.yx = 0x00000L;
 
-    transform.xy = 0x0366AL;
+    transform.xy = 0x06000L;
     transform.yy = 0x10000L;
 
     FT_Outline_Transform( outline, &transform );
@@ -89,17 +84,11 @@
   FT_EXPORT_DEF( void )
   FT_GlyphSlot_Embolden( FT_GlyphSlot  slot )
   {
-    FT_Library  library;
-    FT_Face     face;
+    FT_Library  library = slot->library;
+    FT_Face     face    = slot->face;
     FT_Error    error;
     FT_Pos      xstr, ystr;
 
-
-    if ( !slot )
-      return;
-
-    library = slot->library;
-    face    = slot->face;
 
     if ( slot->format != FT_GLYPH_FORMAT_OUTLINE &&
          slot->format != FT_GLYPH_FORMAT_BITMAP  )
@@ -111,8 +100,10 @@
     ystr = xstr;
 
     if ( slot->format == FT_GLYPH_FORMAT_OUTLINE )
-      FT_Outline_EmboldenXY( &slot->outline, xstr, ystr );
-
+    {
+      /* ignore error */
+      (void)FT_Outline_EmboldenXY( &slot->outline, xstr, ystr );
+    }
     else /* slot->format == FT_GLYPH_FORMAT_BITMAP */
     {
       /* round to full pixels */
@@ -148,11 +139,10 @@
     if ( slot->advance.y )
       slot->advance.y += ystr;
 
-    slot->metrics.width        += xstr;
-    slot->metrics.height       += ystr;
-    slot->metrics.horiAdvance  += xstr;
-    slot->metrics.vertAdvance  += ystr;
-    slot->metrics.horiBearingY += ystr;
+    slot->metrics.width       += xstr;
+    slot->metrics.height      += ystr;
+    slot->metrics.horiAdvance += xstr;
+    slot->metrics.vertAdvance += ystr;
 
     /* XXX: 16-bit overflow case must be excluded before here */
     if ( slot->format == FT_GLYPH_FORMAT_BITMAP )

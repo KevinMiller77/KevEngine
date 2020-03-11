@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <wingdi.h>
 
+#define  GLEW_BUILD GLEW_STATIC
 #include <GL/glew.h>
 #include <GL/wglew.h>
 

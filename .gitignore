@@ -2,6 +2,9 @@
 *.sln
 *.vcxproj.
 *.vcxproj.*
+*.exe
+*.ilk
+*.pdb
 
 x64/*
 Debug/*

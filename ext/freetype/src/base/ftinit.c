@@ -4,7 +4,7 @@
 /*                                                                         */
 /*    FreeType initialization layer (body).                                */
 /*                                                                         */
-/*  Copyright 1996-2002, 2005, 2007, 2009, 2012-2014 by                    */
+/*  Copyright 1996-2001, 2002, 2005, 2007, 2009, 2012 by                   */
 /*  David Turner, Robert Wilhelm, and Werner Lemberg.                      */
 /*                                                                         */
 /*  This file is part of the FreeType project, and may only be used,       */
@@ -23,8 +23,8 @@
   /*  FT_Add_Default_Modules():                                            */
   /*     This function is used to add the set of default modules to a      */
   /*     fresh new library object.  The set is taken from the header file  */
-  /*     `config/ftmodule.h'.  See the document `FreeType 2.0 Build        */
-  /*     System' for more information.                                     */
+  /*     `freetype/config/ftmodule.h'.  See the document `FreeType 2.0     */
+  /*     Build System' for more information.                               */
   /*                                                                       */
   /*  FT_Init_FreeType():                                                  */
   /*     This function creates a system object for the current platform,   */
@@ -156,7 +156,7 @@
   {
     FT_Error           error;
     FT_Memory          memory;
-    FT_Module_Class*  *classes = NULL;
+    FT_Module_Class*  *classes;
     FT_Module_Class*   clazz;
     FT_UInt            i;
     BasePIC*           pic_container = (BasePIC*)library->pic_container.base;
@@ -166,7 +166,7 @@
 
     pic_container->default_module_classes = 0;
 
-    if ( FT_ALLOC( classes, sizeof ( FT_Module_Class* ) *
+    if ( FT_ALLOC( classes, sizeof ( FT_Module_Class* ) * 
                               ( FT_NUM_MODULE_CLASSES + 1 ) ) )
       return error;
 
@@ -235,8 +235,6 @@
     FT_Memory  memory;
 
 
-    /* check of `alibrary' delayed to `FT_New_Library' */
-
     /* First of all, allocate a new system object -- this function is part */
     /* of the system-specific component, i.e. `ftsystem.c'.                */
 
@@ -244,7 +242,7 @@
     if ( !memory )
     {
       FT_ERROR(( "FT_Init_FreeType: cannot find memory manager\n" ));
-      return FT_THROW( Unimplemented_Feature );
+      return FT_Err_Unimplemented_Feature;
     }
 
     /* build a library out of it, then fill it with the set of */
@@ -265,19 +263,17 @@
   FT_EXPORT_DEF( FT_Error )
   FT_Done_FreeType( FT_Library  library )
   {
-    FT_Memory  memory;
+    if ( library )
+    {
+      FT_Memory  memory = library->memory;
 
 
-    if ( !library )
-      return FT_THROW( Invalid_Library_Handle );
+      /* Discard the library object */
+      FT_Done_Library( library );
 
-    memory = library->memory;
-
-    /* Discard the library object */
-    FT_Done_Library( library );
-
-    /* discard memory manager */
-    FT_Done_Memory( memory );
+      /* discard memory manager */
+      FT_Done_Memory( memory );
+    }
 
     return FT_Err_Ok;
   }

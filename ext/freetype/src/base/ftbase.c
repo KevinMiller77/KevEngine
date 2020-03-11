@@ -34,4 +34,8 @@
 #include "fttrigon.c"
 #include "ftutil.c"
 
+#ifdef FT_MACINTOSH
+#include "ftmac.c"
+#endif
+
 /* END */
