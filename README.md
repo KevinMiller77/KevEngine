@@ -18,13 +18,18 @@ At the moment the engine supports the following
 
 1) *git clone https://KevinMiller77/KevEngine*
 2) *cd KevEngine*
-3) *./build*  __(Both windows and linux)
-4) *../bin/KevEngine* __(Both windows and linux)
+3) *./build*  __(Both windows and linux)__
+4) *../bin/KevEngine* __(Both windows and linux)__
 
 # Using KevEngine in your projects
 
 1) *git clone https://KevinMiller77/KevEngine*
 2) *cd KevEngine*
-3) *./build AS_DEPENDANCY*
+3) *./build AS_DEPENDANCY* __(Both windows and linux)__
 4) Copy the files and directories inside of "KevEngine/out/" into your projects root dir.
+5) Override the following members from the KevEngine class
+   - OnGameStart()  Gets called once when you run the game and anytime to engine is restarted
+   - Draw()         Gets called every frame
+   - OnTick()       Gets called 60 times a second
+   - ResetEngine()  Gets called when the engine takes in a restart event
 
