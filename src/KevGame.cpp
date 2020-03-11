@@ -18,12 +18,12 @@ void KevGame::OnGameStart()
     totalTime.start();
     keyPressTimeout.start();
 
-    fonts.add("arial", "../fonts/arial.ttf", 32);
-    fonts.add("inkfree", "../fonts/INKFREE.ttf", 28);
-    fonts.add("cookie", "../fonts/Cookie Cake Demo.otf", 28);
+    fonts.add("arial", "fonts/arial.ttf", 32);
+    fonts.add("inkfree", "fonts/INKFREE.ttf", 28);
+    fonts.add("cookie", "fonts/Cookie Cake Demo.otf", 28);
 
     //Set shader info
-    shaders.newShader("basic", "../shaders/SimpleVertexShader.glsl", "../shaders/SimpleFragShader.glsl");
+    shaders.newShader("basic", "shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
     shaders.enable("basic");
 
 
@@ -33,9 +33,9 @@ void KevGame::OnGameStart()
     shaders.setUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
 
     //Setup textures
-    textures.newTexture("crate", "../textures/container.jpg");
-    textures.newTexture("sponge","../textures/spongebob.jpg");
-    textures.newTexture("morty", "../textures/morty.jpg", Vec2f(0.0f, 1.0f));
+    textures.newTexture("crate", "textures/container.jpg");
+    textures.newTexture("sponge","textures/spongebob.jpg");
+    textures.newTexture("morty", "textures/morty.jpg", Vec2f(0.0f, 1.0f));
 
     TileLayer* lay1 = new TileLayer(shaders.getShaderPtr("basic")->getShaderID());
     TileLayer* lay2 = new TileLayer(shaders.getShaderPtr("basic")->getShaderID());

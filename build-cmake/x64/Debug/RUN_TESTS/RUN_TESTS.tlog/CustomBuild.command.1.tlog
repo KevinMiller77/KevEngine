@@ -1,0 +1,10 @@
+^C:\USERS\DATDUDEOJ\DOCUMENTS\DEV\NINJA\BUILD-CMAKE\CMAKEFILES\5CA40508203A3F741A333EFF49EE40CD\RUN_TESTS_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
