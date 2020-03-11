@@ -16,15 +16,15 @@ At the moment the engine supports the following
   
 # Using the example
 
-1) _git clone https://KevinMiller77/KevEngine
-2) _cd KevEngine
-3) _./build  __(Both windows and linux)
-4) _../bin/KevEngine __(Both windows and linux)
+1) *git clone https://KevinMiller77/KevEngine*
+2) *cd KevEngine*
+3) *./build*  __(Both windows and linux)
+4) *../bin/KevEngine* __(Both windows and linux)
 
 # Using KevEngine in your projects
 
-1) _git clone https://KevinMiller77/KevEngine
-2) _cd KevEngine
-3) _./build AS_DEPENDANCY
+1) *git clone https://KevinMiller77/KevEngine*
+2) *cd KevEngine*
+3) *./build AS_DEPENDANCY*
 4) Copy the files and directories inside of "KevEngine/out/" into your projects root dir.
 
