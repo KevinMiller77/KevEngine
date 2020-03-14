@@ -10,35 +10,35 @@ class Timer
 {
 private:
     unsigned int frames;
-    duration<double> timeSpan{};
+    duration<double> timeSpan;
+    steady_clock::time_point mainTimerStart;
     steady_clock::time_point mainTimer;
 
 public:
     Timer()
     {
         frames = 0;
-        mainTimer = steady_clock::now();
+        mainTimerStart = steady_clock::now();
     }
 
     void start()
     {
         timeSpan = (duration<double>)(0);
-        mainTimer = steady_clock::now();
+        mainTimerStart = steady_clock::now();
         frames = 0;
     }
 
     void reset()
     {
-        mainTimer = steady_clock::now();
+        mainTimerStart = steady_clock::now();
     }
 
-    double getTimePassed()
-    {
-        timeSpan = duration_cast<duration<double>>(steady_clock::now() - mainTimer);
+    double getTimePassed() { 
+        timeSpan = (steady_clock::now() - mainTimerStart);
         return timeSpan.count();
     }
 
-    void frameKeep(uint32_t memUsage)
+    void frameKeep()
     {
         frames++;
         if (getTimePassed() >= 1.0f)

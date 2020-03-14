@@ -12,7 +12,7 @@ set INCLUDE_PATH=/I..\include /I..\ext\freetype\include
 set LIBRARY_PATH=/libpath:..\lib
 set LIBRARIES=glew32s.lib user32.lib gdi32.lib opengl32.lib FreeImaged.lib FreeImageLib.lib freetype.lib
 
-set TARGETS=..\src\Win32Main.cpp ..\src\KevGame.cpp ..\src\utils\FileIO.cpp ..\src\utils\MemoryTracker.cpp ..\src\graphics\BetterGL2DRenderer.cpp ..\src\graphics\ShaderManager.cpp ..\src\graphics\FontManager.cpp ..\src\graphics\TextureManager.cpp ..\src\graphics\ShaderProgram.cpp ..\src\graphics\TextureProgram.cpp ..\src\graphics\layers\Layer.cpp ..\src\graphics\layers\Group.cpp ..\src\graphics\layers\TileLayer.cpp  ..\src\graphics\renderables\Sprite2D.cpp ..\src\graphics\renderables\Label.cpp ..\src\graphics\buffers\Buffer.cpp ..\src\graphics\buffers\IndexBuffer.cpp ..\src\graphics\buffers\VertexArray.cpp ..\src\math\vec2u.cpp ..\src\math\vec2f.cpp ..\src\math\vec3f.cpp ..\src\math\vec4f.cpp ..\src\math\mat2f.cpp ..\src\math\mat4f.cpp ..\ext\freetype-gl\vector.c ..\ext\freetype-gl\texture-atlas.c ..\ext\freetype-gl\texture-font.c 
+set TARGETS=..\src\core\Win32Main.cpp ..\src\core\KevGame.cpp ..\src\core\utils\FileIO.cpp ..\src\core\utils\MemoryTracker.cpp ..\src\core\graphics\BetterGL2DRenderer.cpp ..\src\core\graphics\ShaderManager.cpp ..\src\core\graphics\FontManager.cpp ..\src\core\graphics\TextureManager.cpp ..\src\core\graphics\ShaderProgram.cpp ..\src\core\graphics\TextureProgram.cpp ..\src\core\graphics\layers\Layer.cpp ..\src\core\graphics\layers\Group.cpp ..\src\core\graphics\layers\TileLayer.cpp  ..\src\core\graphics\renderables\Sprite2D.cpp ..\src\core\graphics\renderables\Label.cpp ..\src\core\graphics\buffers\Buffer.cpp ..\src\core\graphics\buffers\IndexBuffer.cpp ..\src\core\graphics\buffers\VertexArray.cpp ..\src\core\math\vec2u.cpp ..\src\core\math\vec2f.cpp ..\src\core\math\vec3f.cpp ..\src\core\math\vec4f.cpp ..\src\core\math\mat2f.cpp ..\src\core\math\mat4f.cpp ..\ext\freetype-gl\vector.c ..\ext\freetype-gl\texture-atlas.c ..\ext\freetype-gl\texture-font.c 
 
 if not exist "bin\" mkdir bin
 
@@ -30,7 +30,7 @@ for /r %%a in (./*.obj) do (
 
 IF "%1%"=="mathtest" (
 REM Mathtest build
-cl %COMPILE_FLAGS% %WARNS_DISABLE% ..\src\mathtest.cpp ..\src\math\*.cpp
+cl %COMPILE_FLAGS% %WARNS_DISABLE% ..\src\core\mathtest.cpp ..\src\core\math\*.cpp
 
 ) 
 IF "%1%"=="build.lib" (

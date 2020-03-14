@@ -29,7 +29,7 @@ protected:
     Texture* texture;
     GLuint texID;
 
-    Renderable2D() : texture(nullptr) { };
+    Renderable2D() : texture(nullptr) { texID = 0; };
 public:
     Renderable2D(Vec3f pos, Vec2f size, Vec4f col)
         : size(size)
@@ -59,7 +59,7 @@ public:
     inline virtual const Vec3f &getPosition() const { return position; }
     inline virtual const Vec2f &getSize() const { return size; }
     inline virtual const uint32_t &getColor() const { return color; }
-    inline virtual const GLuint &getTextureID() const { return texture ? texture->getTextureID() : 0; }
+    inline virtual const GLuint getTextureID() const { return texID; }
     inline virtual Texture* getTexturePtr() { return texture; }
 
     inline virtual const void setPosition(Vec3f &newPosition) { position = newPosition; }

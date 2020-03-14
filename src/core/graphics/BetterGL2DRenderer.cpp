@@ -93,7 +93,6 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
 
         if (!found)
         {
-            LOG_INF("New texture slot\n");
             if (TextureSlots.size() >= MAX_TEXTURE_SLOTS)
             {
                 end();
@@ -102,6 +101,7 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
             }
             TextureSlots.push_back(texID);
             ts = (float)(TextureSlots.size());
+            LOG_INF("New texture slot. Using %d\n", (int)ts);
         }
     }
 

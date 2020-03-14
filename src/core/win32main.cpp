@@ -368,10 +368,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     Timer onUpdateTimer;
     onUpdateTimer.start();
 
+    float updateConstant = 1.0f / 240.0f;
+    double timeNow = onUpdateTimer.getTimePassed();
+
     while (running)
     {
         while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
         {
+            SwapBuffers(windowHDC);
             state = InputInformation();
             state._mouseWheelMagConstant = WHEEL_DELTA;
             switch (message.message)
@@ -415,9 +419,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                 state._previousKeyState = (bool)(message.lParam & 0x00000004);
                 break;
             
+            case (WM_MBUTTONDOWN): case (WM_LBUTTONDOWN): case (WM_RBUTTONDOWN): case (WM_XBUTTONDOWN):
+                LOG_INF("Mouse key: %d\n", (int)log2(message.wParam));
+                break;
+
             case (WM_KEYUP):
                 state._key = (uint8_t)(message.wParam);
-                state._holdCount = 1;
+                state._holdCount = 0;
                 state._direction = 1;
                 state._extendedKey = (bool)(message.lParam & 0x00000800);
                 break;
@@ -431,10 +439,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             DispatchMessage(&message);
         }
 
-        if (onUpdateTimer.getTimePassed() > 1.0f / 60.0f)
+        if (onUpdateTimer.getTimePassed() - timeNow > updateConstant)
         {
+            timeNow = onUpdateTimer.getTimePassed();
             engine->OnUpdate();
-            onUpdateTimer.reset();
         }
         engine->OnTick();
         engine->Draw();
@@ -446,7 +454,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     wglMakeCurrent(NULL, NULL);
     wglDeleteContext(gameGLContext);
-    //wglDeleteContext(baseGLContext);
 
     return 0;
 }

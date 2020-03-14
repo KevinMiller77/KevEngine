@@ -20,7 +20,7 @@ void KevGame::OnGameStart()
 
     fonts.add("arial", "fonts/arial.ttf", 32);
     fonts.add("inkfree", "fonts/INKFREE.ttf", 28);
-    fonts.add("cookie", "fonts/Cookie Cake Demo.otf", 28);
+    //fonts.add("cookie", "fonts/Cookie Cake Demo.otf", 28);
 
     //Set shader info
     shaders.newShader("basic", "shaders/SimpleVertexShader.glsl", "shaders/SimpleFragShader.glsl");
@@ -81,15 +81,14 @@ void KevGame::OnGameStart()
 void KevGame::Draw()
 {
     //End frame and display
-    for (int i = 0; i < layers.size(); i++ )
+    for (Layer* layer : layers)
     {
-        Layer* layer = layers[i];
         layer->render();
     }
     
 
     //Let the timer know a frame passed
-    timer.frameKeep((float)memoryTracker.get() / 1000000.0f);
+    //timer.frameKeep();
 }
 
 
@@ -109,6 +108,8 @@ void KevGame::OnUpdate()
 
     shaders.enable("basic");
     shaders.setUniform2f("basic", "light_pos", Vec2f(newX, newY));
+
+    timer.frameKeep();
 }
 
 void KevGame::ProcessInput(InputInformation in)
