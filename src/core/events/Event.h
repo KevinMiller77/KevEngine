@@ -1,5 +1,16 @@
 #ifndef __EVENT__
 #define __EVENT__
+#include "../Core.h"
+
+
+#ifdef KEV_PLATFORM_WINDOWS
+#include "WindowsInputCodes.h"
+#endif
+
+//TODO (Kevin): Add support for more platforms at their native level
+//Pass all things into the event from the platform. 
+//Reference all things according to the generic key names 
+//Ex. KEV_KEY_D0
 
 #include "../Core.h"
 
@@ -9,7 +20,6 @@ enum class EventType
 {
     None = 0,
 	WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
-	PlatformTick, PlatformUpdate, PlatformRender,
 	KeyPressed, KeyReleased, KeyHeld,
 	MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 };
@@ -70,7 +80,7 @@ public:
     {
         if (curEvent.GetEventType() == T::GetStaticType())
         {
-            curEvent.eventHandled = func(*(T)&curEvent);
+            curEvent.eventHandled = func(*(T) &curEvent);
             return true;
         }
         return false;

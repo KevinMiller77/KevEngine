@@ -189,8 +189,6 @@ enum class KeyCode
 #define KEV_KEY_BACKSLASH       Key::Backslash     /* \ */
 #define KEV_KEY_RIGHT_BRACKET   Key::RightBracket  /* ] */
 #define KEV_KEY_GRAVE_ACCENT    Key::GraveAccent   /* ` */
-#define KEV_KEY_WORLD_1         Key::World1        /* non-US #1 */
-#define KEV_KEY_WORLD_2         Key::World2        /* non-US #2 */
 
 /* Function keys */
 #define KEV_KEY_ESCAPE          Key::Escape

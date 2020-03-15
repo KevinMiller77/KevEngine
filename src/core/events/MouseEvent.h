@@ -4,18 +4,68 @@
 
 //MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 
-class MouseButtonPressedEvent : public Event
+class MouseMovedEvent : Event
 {
-    int pressedButton;
-
-    EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryMouseButton)
+protected:
+    Vec2f position;
 
 public:
-    MouseButtonPressedEvent(int button)
-    {
-        pressedButton = button;
-    }
+    MouseMovedEvent(Vec2f newPos)
+        :   position(newPos)  {}
+
+    inline const Vec2f getPos() const { return position; }
+
+    EVENT_CLASS_TYPE(MouseMoved)
+    EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+};
+
+class MouseScrolledEvent : Event
+{
+protected:
+    float XOffset, YOffset;
+
+public:
+    MouseScrolledEvent(float X = 0.0f, float Y = 0.0f)
+        :   XOffset(X), YOffset(Y)  {}
+
+    inline const float getXOffset() const { return XOffset; }
+    inline const float getYOffset() const { return YOffset;}
+
+    EVENT_CLASS_TYPE(MouseScrolled)
+    EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+};
+
+class MouseButtonEvent : public Event
+{
+protected:
+    MouseCode ButtonIQ;
+
+public:
+    MouseButtonEvent(MouseCode buttonInQuestion)
+        :   ButtonIQ(buttonInQuestion) {}
+
+    inline MouseCode getButton() { return ButtonIQ; }
     
+    EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
+};
+
+
+class MouseButtonPressedEvent : public MouseButtonEvent
+{
+
+public:
+    MouseButtonPressedEvent(MouseCode button)
+        : MouseButtonEvent(button)  {}
     
 	EVENT_CLASS_TYPE(MouseButtonPressed);
+};
+
+class MouseButtonReleasedEvent : public MouseButtonEvent
+{
+
+public:
+    MouseButtonReleasedEvent(MouseCode button)
+        : MouseButtonEvent(button)  {}
+    
+	EVENT_CLASS_TYPE(MouseButtonReleased);
 };
