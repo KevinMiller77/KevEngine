@@ -1,14 +1,14 @@
 #include "KevGame.h"
 
 //Both equired for the interface with the OS.
-extern MemoryMetrics memoryTracker;
+//extern MemoryMetrics memoryTracker;
 KevEngine* engine = new KevGame(SCREEN_SIZE_X, SCREEN_SIZE_Y);
 
 //Call that happens every time the game starts
 void KevGame::OnGameStart()
 {
     //Reinstantiate memory monitor and set it to start
-    memoryTracker.track();
+    //memoryTracker.track();
 
     //Enable blending of the alpha channel
     glEnable(GL_BLEND);
@@ -73,7 +73,7 @@ void KevGame::OnGameStart()
     unsigned int numToRender = background->getNumChildren();
     LOG_INF("Loaded %d Sprites to be renderered\n", numToRender);
     LOG_INF("Time to setup: %dms\n", (unsigned int)(totalTime.getTimePassedReset() * 1000));
-    LOG_INF("Heap allocations during setup: %d Bytes.\n", memoryTracker.doneTracking());
+    //LOG_INF("Heap allocations during setup: %d Bytes.\n", memoryTracker.doneTracking());
 
 }
 
@@ -194,7 +194,7 @@ void KevGame::ResetEngine()
 {
     LOG_INF("Restarting engine\n");
     
-    memoryTracker.track();
+    //memoryTracker.track();
 
     timer.start();
     for (Layer* layer : layers)

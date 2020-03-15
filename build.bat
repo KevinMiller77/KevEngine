@@ -12,7 +12,7 @@ set INCLUDE_PATH=/I..\include /I..\ext\freetype\include
 set LIBRARY_PATH=/libpath:..\lib
 set LIBRARIES=glew32s.lib user32.lib gdi32.lib opengl32.lib FreeImaged.lib FreeImageLib.lib freetype.lib
 
-set TARGETS=..\src\core\Win32Main.cpp ..\src\core\KevGame.cpp ..\src\core\utils\FileIO.cpp ..\src\core\utils\MemoryTracker.cpp ..\src\core\graphics\BetterGL2DRenderer.cpp ..\src\core\graphics\ShaderManager.cpp ..\src\core\graphics\FontManager.cpp ..\src\core\graphics\TextureManager.cpp ..\src\core\graphics\ShaderProgram.cpp ..\src\core\graphics\TextureProgram.cpp ..\src\core\graphics\layers\Layer.cpp ..\src\core\graphics\layers\Group.cpp ..\src\core\graphics\layers\TileLayer.cpp  ..\src\core\graphics\renderables\Sprite2D.cpp ..\src\core\graphics\renderables\Label.cpp ..\src\core\graphics\buffers\Buffer.cpp ..\src\core\graphics\buffers\IndexBuffer.cpp ..\src\core\graphics\buffers\VertexArray.cpp ..\src\core\math\vec2u.cpp ..\src\core\math\vec2f.cpp ..\src\core\math\vec3f.cpp ..\src\core\math\vec4f.cpp ..\src\core\math\mat2f.cpp ..\src\core\math\mat4f.cpp ..\ext\freetype-gl\vector.c ..\ext\freetype-gl\texture-atlas.c ..\ext\freetype-gl\texture-font.c 
+set TARGETS=..\src\platform\Windows\WindowsWindow.cpp ..\src\core\graphics\Window.cpp ..\src\core\KevGame.cpp ..\src\core\utils\FileIO.cpp ..\src\core\utils\MemoryTracker.cpp ..\src\core\graphics\BetterGL2DRenderer.cpp ..\src\core\graphics\ShaderManager.cpp ..\src\core\graphics\FontManager.cpp ..\src\core\graphics\TextureManager.cpp ..\src\core\graphics\ShaderProgram.cpp ..\src\core\graphics\TextureProgram.cpp ..\src\core\graphics\layers\Layer.cpp ..\src\core\graphics\layers\Group.cpp ..\src\core\graphics\layers\TileLayer.cpp  ..\src\core\graphics\renderables\Sprite2D.cpp ..\src\core\graphics\renderables\Label.cpp ..\src\core\graphics\buffers\Buffer.cpp ..\src\core\graphics\buffers\IndexBuffer.cpp ..\src\core\graphics\buffers\VertexArray.cpp ..\src\core\math\vec2u.cpp ..\src\core\math\vec2f.cpp ..\src\core\math\vec3f.cpp ..\src\core\math\vec4f.cpp ..\src\core\math\mat2f.cpp ..\src\core\math\mat4f.cpp ..\ext\freetype-gl\vector.c ..\ext\freetype-gl\texture-atlas.c ..\ext\freetype-gl\texture-font.c 
 
 if not exist "bin\" mkdir bin
 
@@ -42,7 +42,7 @@ REM Build static lib
 IF "%1%" == "" (
 echo NORMAL BUILD
 REM Normal build
-cl %COMPILE_FLAGS% %INCLUDE_PATH% %WARNS_DISABLE% %DEFINES% %TARGETS% /link /SUBSYSTEM:WINDOWS /OUT:"..\KevEngine.exe" %LIBRARY_PATH% %LIBRARIES%
+cl %COMPILE_FLAGS% %INCLUDE_PATH% %WARNS_DISABLE% %DEFINES% %TARGETS% /link /OUT:"..\KevEngine.exe" %LIBRARY_PATH% %LIBRARIES%
 )
 
 echo.

@@ -13,6 +13,8 @@
 //Ex. KEV_KEY_D0
 
 #include "../Core.h"
+#include "../math/math.h"
+#include "../utils/Logging.h"
 
 #include <functional>
 
@@ -27,7 +29,7 @@ enum class EventType
 enum EventCategory
 {
     None = 0,
-    EventCategoryApplication    = BIT(0),
+    EventCategoryWindow         = BIT(0),
 	EventCategoryInput          = BIT(1),
 	EventCategoryKeyboard       = BIT(2),
 	EventCategoryMouse          = BIT(3),
@@ -80,7 +82,7 @@ public:
     {
         if (curEvent.GetEventType() == T::GetStaticType())
         {
-            curEvent.eventHandled = func(*(T) &curEvent);
+            curEvent.eventHandled = func(*(T)&curEvent);
             return true;
         }
         return false;

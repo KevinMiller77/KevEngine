@@ -16,7 +16,7 @@
 #include "graphics/TextureManager.h"
 #include "graphics/BetterGL2DRenderer.h"
 
-#include "utils/MemoryTracker.h"
+//#include "utils/MemoryTracker.h"
 #include "utils/Timer.h"
 #include "graphics/layers/TileLayer.h"
 

@@ -2,16 +2,17 @@
 #define __CORE__
 
 #include <memory>
+#include "utils/MemoryTracker.h"
 
 // Platform detection using predefined macros
 #ifdef _WIN32
 	/* Windows x64/x86 */
 	#ifdef _WIN64
 		/* Windows x64  */
-		#define KEV_PLATFORM_WINDOWS
+		#error "x64 Builds are not yet supported!"
 	#else
 		/* Windows x86 */
-		#error "x86 Builds are not supported!"
+		#define KEV_PLATFORM_WINDOWS
 	#endif
 #elif defined(__APPLE__) || defined(__MACH__)
 	#include <TargetConditionals.h>
@@ -46,4 +47,19 @@
 
 #define BIT(x) (1 << x)
 
+template<typename T>
+using Scope = std::unique_ptr<T>;
+template<typename T, typename ... Args>
+constexpr Scope<T> CreateScope(Args&& ... args)
+{
+	return std::make_unique<T>(std::forward<Args>(args)...);
+}
+
+template<typename T>
+using Ref = std::shared_ptr<T>;
+template<typename T, typename ... Args>
+constexpr Ref<T> CreateRef(Args&& ... args)
+{
+	return std::make_shared<T>(std::forward<Args>(args)...);
+}
 #endif

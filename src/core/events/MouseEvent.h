@@ -1,31 +1,32 @@
-#include "Event.h"
+#ifndef __MOUSE_EVENT__
+#define __MOUSE_EVENT__
 
-#include "../math/math.h"
+#include "Event.h"
 
 //MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 
-class MouseMovedEvent : Event
+class MouseMovedEvent : public Event
 {
 protected:
-    Vec2f position;
+    Vec2u position;
 
 public:
-    MouseMovedEvent(Vec2f newPos)
+    MouseMovedEvent(Vec2u newPos)
         :   position(newPos)  {}
 
-    inline const Vec2f getPos() const { return position; }
+    inline const Vec2u getPos() const { return position; }
 
     EVENT_CLASS_TYPE(MouseMoved)
     EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 };
 
-class MouseScrolledEvent : Event
+class MouseScrolledEvent : public Event
 {
 protected:
     float XOffset, YOffset;
 
 public:
-    MouseScrolledEvent(float X = 0.0f, float Y = 0.0f)
+    MouseScrolledEvent(float X, float Y)
         :   XOffset(X), YOffset(Y)  {}
 
     inline const float getXOffset() const { return XOffset; }
@@ -69,3 +70,5 @@ public:
     
 	EVENT_CLASS_TYPE(MouseButtonReleased);
 };
+
+#endif

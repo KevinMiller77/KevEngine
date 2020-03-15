@@ -1,5 +1,5 @@
-#ifndef INPUT_CODES
-#define INPUT_CODES
+#ifndef __INPUT_CODES__
+#define __INPUT_CODES__
 
 #include <windows.h>
 

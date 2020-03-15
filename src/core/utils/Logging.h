@@ -1,7 +1,7 @@
 #ifndef __KevEngine_LOGGING__
 #define __KevEngine_LOGGING__
 
-#define DEBUG_LEVEL 4   //(Debugging level; 1) Error  2) Warning 3) Info
+#define DEBUG_LEVEL 5   //(Debugging level; 1) Error  2) Warning 3) Info
 //                  4) Debug 5) Verbose 6)Too Much Info
 
 #ifdef DEBUG_LEVEL
