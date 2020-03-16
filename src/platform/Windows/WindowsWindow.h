@@ -33,6 +33,8 @@ class WindowsWindow : public Window
     long HWNDStyle = 0;
     long HWNDStyleEx = 0;
 
+    Timer keyDebounce;
+
     WindowInfo info;
 
     int InitalizeConsole();

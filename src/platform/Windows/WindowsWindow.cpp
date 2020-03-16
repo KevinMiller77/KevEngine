@@ -287,6 +287,8 @@ void WindowsWindow::ToggleFullscreen()
         SetWindowPlacement( window, &wpc );
     }
     data.windowed = !data.windowed;
+
+    keyDebounce.start();
 }
 
 WindowsWindow::WindowsWindow(WindowInfo inf)
@@ -331,7 +333,7 @@ void WindowsWindow::OnUpdate()
 
     while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
     {
-        
+
         switch (message.message)
         {
     
@@ -379,6 +381,8 @@ void WindowsWindow::OnUpdate()
 
         case (WM_KEYDOWN):
         {
+            if (keyDebounce.getTimePassed() < KEY_DEBOUNCE_TIME) break;
+            keyDebounce.reset();
             KeyPressedEvent event = KeyPressedEvent(message.wParam, message.lParam & 0xFFFF0000);
             data.EventCallback(event);
             Input::SetKeyPressed((KeyCode)message.wParam);

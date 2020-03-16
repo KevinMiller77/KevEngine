@@ -48,9 +48,16 @@ void OrthographicCameraController::OnUpdate()
 		Camera.SetRotation(CamRot);
 	}
 
+	if (Input::IsKeyPressed(KEV_KEY_R))
+	{
+		CamPos = Vec3f(0.0f, 0.0f, 0.0f);
+		CamRot = 0;
+		Zoom = 1.0f;
+		Camera.SetProjection(-AspectRatio, AspectRatio, -Zoom, Zoom);
+	}
+
 	Camera.SetPosition(CamPos);
 
-	CamTranslationSpeed = Zoom;
 	time.reset();
 }
 
@@ -64,9 +71,8 @@ void OrthographicCameraController::OnEvent(Event& e)
 
 bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 {
-	LOG_INF("Yoffset %f\n", (float)e.getYOffset() / 65536.0f);
-	Zoom -= ((float)e.getYOffset() / 65536.0f) * 0.25f;
-	Zoom = Zoom > 0.25f ? Zoom : 0.25f;
+	Zoom -= ((float)e.getYOffset() / 65536.0f) * 0.1f;
+	Zoom = Zoom > 0.1f ? Zoom : 0.1f;
 	Camera.SetProjection(-AspectRatio * Zoom, AspectRatio * Zoom, -Zoom, Zoom);
 	return false;
 }

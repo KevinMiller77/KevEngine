@@ -60,11 +60,6 @@ void GameLayer::OnUpdate()
     //Begin frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    if (Input::IsKeyPressed(KEV_KEY_R))
-    {
-        LOG_INF("R Pressed\n");
-    }
-
     camera.OnUpdate();
     ShaderProgram::enableShaderProgram(Shader);
     ShaderProgram::setShaderUniformMat4(Shader, "pr_matrix", camera.GetCamera().GetViewProjectionMatrix());
