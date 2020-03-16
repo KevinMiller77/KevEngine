@@ -48,7 +48,7 @@ class Event
 {
     friend class EventDispatcher;
 protected:
-    bool eventHandled;
+    bool eventHandled = false;
 
 public:
     virtual EventType GetEventType() const = 0;
@@ -61,6 +61,8 @@ public:
         return GetCategoryFlags() & cat;
     }
 
+    inline bool IsHandled() const { return eventHandled; }
+    inline void Handle() { eventHandled = true; }
 };
 
 
@@ -77,12 +79,12 @@ public:
     {
     }
 
-    template<typename T>
-    bool Dispatch(EventFunc<T> func)
+    template<typename T, typename F>
+    bool Dispatch(const F& func)
     {
         if (curEvent.GetEventType() == T::GetStaticType())
         {
-            curEvent.eventHandled = func(*(T)&curEvent);
+            curEvent.eventHandled = func(static_cast<T&>(curEvent));
             return true;
         }
         return false;

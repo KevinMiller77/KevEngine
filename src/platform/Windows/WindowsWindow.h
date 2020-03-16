@@ -13,11 +13,12 @@
 #include <GL/glew.h>
 #include <GL/wglew.h>
 
-#include "../../core/math/math.h"
-#include "../../core/utils/commonTypes.h"
-#include "../../core/KevEngine.h"
+#include <core/math/math.h>
+#include <core/utils/commonTypes.h>
+#include <core/KevEngine.h>
 
-#include "../../core/graphics/Window.h"
+#include <core/graphics/Window.h>
+#include <core/Input.h>
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 #define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
@@ -39,8 +40,6 @@ class WindowsWindow : public Window
     int LoadGLExtensions(HINSTANCE hInstance);
 
 public:
-    static void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam);
-    static LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
     bool restartGLContext();
     void ToggleFullscreen();
 
@@ -65,9 +64,9 @@ public:
         bool windowed;
 	    bool VSync;
 	    EventCallbackFn EventCallback;
-    }; 
+    };
     
-    static WindowsData data;
+    WindowsData data; 
 };
 
 #endif

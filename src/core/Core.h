@@ -2,6 +2,7 @@
 #define __CORE__
 
 #include <memory>
+#include <functional>
 #include "utils/MemoryTracker.h"
 
 // Platform detection using predefined macros
@@ -12,6 +13,8 @@
 		#error "x64 Builds are not yet supported!"
 	#else
 		/* Windows x86 */
+		
+		#include <windows.h>
 		#define KEV_PLATFORM_WINDOWS
 	#endif
 #elif defined(__APPLE__) || defined(__MACH__)
@@ -46,6 +49,8 @@
 #endif // End of platform detection
 
 #define BIT(x) (1 << x)
+
+#define KEV_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
 template<typename T>
 using Scope = std::unique_ptr<T>;

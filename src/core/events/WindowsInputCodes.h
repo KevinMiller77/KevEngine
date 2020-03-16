@@ -18,12 +18,12 @@ enum class MouseCode
 	ButtonLeft             = Button0,
 	ButtonRight            = Button1,
 	ButtonMiddle           = Button4
-} Mouse;
+};
 
 enum class KeyCode
 {
 	//From windows
-	Space               = VK_SPACE,
+	Space               = 0x20,
 	Apostrophe          = 0xDE, /* ' */
 	Comma               = 0xBC, /* , */
 	Minus               = 0xBD, /* - */
@@ -40,7 +40,7 @@ enum class KeyCode
 	D8                  = 56, /* 8 */
 	D9                  = 57, /* 9 */
 	Semicolon           = 0xBA, /* ; */
-	Equal               = 100 + 61, /* = */
+	Equal               = 61, /* = */
 	A                   = 65,
 	B                   = 66,
 	C                   = 67,
@@ -80,8 +80,8 @@ enum class KeyCode
 	Delete              = 0x2E,
 	Right               = 0x27,
 	Left                = 0x25,
-	Down                = WM_KEYDOWN,
-	Up                  = WM_KEYUP,
+	Down                = 0x28,
+	Up                  = 0x26,
 	PageUp              = 0x21,
 	PageDown            = 0x22,
 	Home                = 0x24,
@@ -126,152 +126,152 @@ enum class KeyCode
 	KP7                 = 0x67,
 	KP8                 = 0x68,
 	KP9                 = 0x69,
-	KPDecimal           = VK_DECIMAL,
-	KPDivide            = VK_DIVIDE,
-	KPMultiply          = VK_MULTIPLY,
-	KPSubtract          = VK_SUBTRACT,
-	KPAdd               = VK_ADD,
+	KPDecimal           = 0x6E,
+	KPDivide            = 0x6F,
+	KPMultiply          = 0x6A,
+	KPSubtract          = 0x6D,
+	KPAdd               = 0x6B,
 	KPEnter             = 0xD,
 	KPEqual             = 336,
 	LeftShift           = 0x10,
 	LeftControl         = 0x11,
 	LeftAlt             = 0x12,
 	LeftSuper           = 0x14,
-} Key;
+};
 
 // From Windows
 // All of these must be defined for each platform
-#define KEV_KEY_SPACE           Key::Space
-#define KEV_KEY_APOSTROPHE      Key::Apostrophe    /* ' */
-#define KEV_KEY_COMMA           Key::Comma         /* , */
-#define KEV_KEY_MINUS           Key::Minus         /* - */
-#define KEV_KEY_PERIOD          Key::Period        /* . */
-#define KEV_KEY_SLASH           Key::Slash         /* / */
-#define KEV_KEY_0               Key::D0
-#define KEV_KEY_1               Key::D1
-#define KEV_KEY_2               Key::D2
-#define KEV_KEY_3               Key::D3
-#define KEV_KEY_4               Key::D4
-#define KEV_KEY_5               Key::D5
-#define KEV_KEY_6               Key::D6
-#define KEV_KEY_7               Key::D7
-#define KEV_KEY_8               Key::D8
-#define KEV_KEY_9               Key::D9
-#define KEV_KEY_SEMICOLON       Key::Semicolon     /* ; */
-#define KEV_KEY_EQUAL           Key::Equal         /* = */
-#define KEV_KEY_A               Key::A
-#define KEV_KEY_B               Key::B
-#define KEV_KEY_C               Key::C
-#define KEV_KEY_D               Key::D
-#define KEV_KEY_E               Key::E
-#define KEV_KEY_F               Key::F
-#define KEV_KEY_G               Key::G
-#define KEV_KEY_H               Key::H
-#define KEV_KEY_I               Key::I
-#define KEV_KEY_J               Key::J
-#define KEV_KEY_K               Key::K
-#define KEV_KEY_L               Key::L
-#define KEV_KEY_M               Key::M
-#define KEV_KEY_N               Key::N
-#define KEV_KEY_O               Key::O
-#define KEV_KEY_P               Key::P
-#define KEV_KEY_Q               Key::Q
-#define KEV_KEY_R               Key::R
-#define KEV_KEY_S               Key::S
-#define KEV_KEY_T               Key::T
-#define KEV_KEY_U               Key::U
-#define KEV_KEY_V               Key::V
-#define KEV_KEY_W               Key::W
-#define KEV_KEY_X               Key::X
-#define KEV_KEY_Y               Key::Y
-#define KEV_KEY_Z               Key::Z
-#define KEV_KEY_LEFT_BRACKET    Key::LeftBracket   /* [ */
-#define KEV_KEY_BACKSLASH       Key::Backslash     /* \ */
-#define KEV_KEY_RIGHT_BRACKET   Key::RightBracket  /* ] */
-#define KEV_KEY_GRAVE_ACCENT    Key::GraveAccent   /* ` */
+#define KEV_KEY_SPACE           KeyCode::Space
+#define KEV_KEY_APOSTROPHE      KeyCode::Apostrophe    /* ' */
+#define KEV_KEY_COMMA           KeyCode::Comma         /* , */
+#define KEV_KEY_MINUS           KeyCode::Minus         /* - */
+#define KEV_KEY_PERIOD          KeyCode::Period        /* . */
+#define KEV_KEY_SLASH           KeyCode::Slash         /* / */
+#define KEV_KEY_0               KeyCode::D0
+#define KEV_KEY_1               KeyCode::D1
+#define KEV_KEY_2               KeyCode::D2
+#define KEV_KEY_3               KeyCode::D3
+#define KEV_KEY_4               KeyCode::D4
+#define KEV_KEY_5               KeyCode::D5
+#define KEV_KEY_6               KeyCode::D6
+#define KEV_KEY_7               KeyCode::D7
+#define KEV_KEY_8               KeyCode::D8
+#define KEV_KEY_9               KeyCode::D9
+#define KEV_KEY_SEMICOLON       KeyCode::Semicolon     /* ; */
+#define KEV_KEY_EQUAL           KeyCode::Equal         /* = */
+#define KEV_KEY_A               KeyCode::A
+#define KEV_KEY_B               KeyCode::B
+#define KEV_KEY_C               KeyCode::C
+#define KEV_KEY_D               KeyCode::D
+#define KEV_KEY_E               KeyCode::E
+#define KEV_KEY_F               KeyCode::F
+#define KEV_KEY_G               KeyCode::G
+#define KEV_KEY_H               KeyCode::H
+#define KEV_KEY_I               KeyCode::I
+#define KEV_KEY_J               KeyCode::J
+#define KEV_KEY_K               KeyCode::K
+#define KEV_KEY_L               KeyCode::L
+#define KEV_KEY_M               KeyCode::M
+#define KEV_KEY_N               KeyCode::N
+#define KEV_KEY_O               KeyCode::O
+#define KEV_KEY_P               KeyCode::P
+#define KEV_KEY_Q               KeyCode::Q
+#define KEV_KEY_R               KeyCode::R
+#define KEV_KEY_S               KeyCode::S
+#define KEV_KEY_T               KeyCode::T
+#define KEV_KEY_U               KeyCode::U
+#define KEV_KEY_V               KeyCode::V
+#define KEV_KEY_W               KeyCode::W
+#define KEV_KEY_X               KeyCode::X
+#define KEV_KEY_Y               KeyCode::Y
+#define KEV_KEY_Z               KeyCode::Z
+#define KEV_KEY_LEFT_BRACKET    KeyCode::LeftBracket   /* [ */
+#define KEV_KEY_BACKSLASH       KeyCode::Backslash     /* \ */
+#define KEV_KEY_RIGHT_BRACKET   KeyCode::RightBracket  /* ] */
+#define KEV_KEY_GRAVE_ACCENT    KeyCode::GraveAccent   /* ` */
 
 /* Function keys */
-#define KEV_KEY_ESCAPE          Key::Escape
-#define KEV_KEY_ENTER           Key::Enter
-#define KEV_KEY_TAB             Key::Tab
-#define KEV_KEY_BACKSPACE       Key::Backspace
-#define KEV_KEY_INSERT          Key::Insert
-#define KEV_KEY_DELETE          Key::Delete
-#define KEV_KEY_RIGHT           Key::Right
-#define KEV_KEY_LEFT            Key::Left
-#define KEV_KEY_DOWN            Key::Down
-#define KEV_KEY_UP              Key::Up
-#define KEV_KEY_PAGE_UP         Key::PageUp
-#define KEV_KEY_PAGE_DOWN       Key::PageDown
-#define KEV_KEY_HOME            Key::Home
-#define KEV_KEY_END             Key::End
-#define KEV_KEY_CAPS_LOCK       Key::CapsLock
-#define KEV_KEY_SCROLL_LOCK     Key::ScrollLock
-#define KEV_KEY_NUM_LOCK        Key::NumLock
-#define KEV_KEY_PRINT_SCREEN    Key::PrintScreen
-#define KEV_KEY_PAUSE           Key::Pause
-#define KEV_KEY_F1              Key::F1
-#define KEV_KEY_F2              Key::F2
-#define KEV_KEY_F3              Key::F3
-#define KEV_KEY_F4              Key::F4
-#define KEV_KEY_F5              Key::F5
-#define KEV_KEY_F6              Key::F6
-#define KEV_KEY_F7              Key::F7
-#define KEV_KEY_F8              Key::F8
-#define KEV_KEY_F9              Key::F9
-#define KEV_KEY_F10             Key::F10
-#define KEV_KEY_F11             Key::F11
-#define KEV_KEY_F12             Key::F12
-#define KEV_KEY_F13             Key::F13
-#define KEV_KEY_F14             Key::F14
-#define KEV_KEY_F15             Key::F15
-#define KEV_KEY_F16             Key::F16
-#define KEV_KEY_F17             Key::F17
-#define KEV_KEY_F18             Key::F18
-#define KEV_KEY_F19             Key::F19
-#define KEV_KEY_F20             Key::F20
-#define KEV_KEY_F21             Key::F21
-#define KEV_KEY_F22             Key::F22
-#define KEV_KEY_F23             Key::F23
-#define KEV_KEY_F24             Key::F24
-#define KEV_KEY_F25             Key::F25
+#define KEV_KEY_ESCAPE          KeyCode::Escape
+#define KEV_KEY_ENTER           KeyCode::Enter
+#define KEV_KEY_TAB             KeyCode::Tab
+#define KEV_KEY_BACKSPACE       KeyCode::Backspace
+#define KEV_KEY_INSERT          KeyCode::Insert
+#define KEV_KEY_DELETE          KeyCode::Delete
+#define KEV_KEY_RIGHT           KeyCode::Right
+#define KEV_KEY_LEFT            KeyCode::Left
+#define KEV_KEY_DOWN            KeyCode::Down
+#define KEV_KEY_UP              KeyCode::Up
+#define KEV_KEY_PAGE_UP         KeyCode::PageUp
+#define KEV_KEY_PAGE_DOWN       KeyCode::PageDown
+#define KEV_KEY_HOME            KeyCode::Home
+#define KEV_KEY_END             KeyCode::End
+#define KEV_KEY_CAPS_LOCK       KeyCode::CapsLock
+#define KEV_KEY_SCROLL_LOCK     KeyCode::ScrollLock
+#define KEV_KEY_NUM_LOCK        KeyCode::NumLock
+#define KEV_KEY_PRINT_SCREEN    KeyCode::PrintScreen
+#define KEV_KEY_PAUSE           KeyCode::Pause
+#define KEV_KEY_F1              KeyCode::F1
+#define KEV_KEY_F2              KeyCode::F2
+#define KEV_KEY_F3              KeyCode::F3
+#define KEV_KEY_F4              KeyCode::F4
+#define KEV_KEY_F5              KeyCode::F5
+#define KEV_KEY_F6              KeyCode::F6
+#define KEV_KEY_F7              KeyCode::F7
+#define KEV_KEY_F8              KeyCode::F8
+#define KEV_KEY_F9              KeyCode::F9
+#define KEV_KEY_F10             KeyCode::F10
+#define KEV_KEY_F11             KeyCode::F11
+#define KEV_KEY_F12             KeyCode::F12
+#define KEV_KEY_F13             KeyCode::F13
+#define KEV_KEY_F14             KeyCode::F14
+#define KEV_KEY_F15             KeyCode::F15
+#define KEV_KEY_F16             KeyCode::F16
+#define KEV_KEY_F17             KeyCode::F17
+#define KEV_KEY_F18             KeyCode::F18
+#define KEV_KEY_F19             KeyCode::F19
+#define KEV_KEY_F20             KeyCode::F20
+#define KEV_KEY_F21             KeyCode::F21
+#define KEV_KEY_F22             KeyCode::F22
+#define KEV_KEY_F23             KeyCode::F23
+#define KEV_KEY_F24             KeyCode::F24
+#define KEV_KEY_F25             KeyCode::F25
 
 /* Keypad */
-#define KEV_KEY_KP_0            Key::KP0
-#define KEV_KEY_KP_1            Key::KP1
-#define KEV_KEY_KP_2            Key::KP2
-#define KEV_KEY_KP_3            Key::KP3
-#define KEV_KEY_KP_4            Key::KP4
-#define KEV_KEY_KP_5            Key::KP5
-#define KEV_KEY_KP_6            Key::KP6
-#define KEV_KEY_KP_7            Key::KP7
-#define KEV_KEY_KP_8            Key::KP8
-#define KEV_KEY_KP_9            Key::KP9
-#define KEV_KEY_KP_DECIMAL      Key::KPDecimal
-#define KEV_KEY_KP_DIVIDE       Key::KPDivide
-#define KEV_KEY_KP_MULTIPLY     Key::KPMultiply
-#define KEV_KEY_KP_SUBTRACT     Key::KPSubtract
-#define KEV_KEY_KP_ADD          Key::KPAdd
-#define KEV_KEY_KP_ENTER        Key::KPEnter
-#define KEV_KEY_KP_EQUAL        Key::KPEqual
+#define KEV_KEY_KP_0            KeyCode::KP0
+#define KEV_KEY_KP_1            KeyCode::KP1
+#define KEV_KEY_KP_2            KeyCode::KP2
+#define KEV_KEY_KP_3            KeyCode::KP3
+#define KEV_KEY_KP_4            KeyCode::KP4
+#define KEV_KEY_KP_5            KeyCode::KP5
+#define KEV_KEY_KP_6            KeyCode::KP6
+#define KEV_KEY_KP_7            KeyCode::KP7
+#define KEV_KEY_KP_8            KeyCode::KP8
+#define KEV_KEY_KP_9            KeyCode::KP9
+#define KEV_KEY_KP_DECIMAL      KeyCode::KPDecimal
+#define KEV_KEY_KP_DIVIDE       KeyCode::KPDivide
+#define KEV_KEY_KP_MULTIPLY     KeyCode::KPMultiply
+#define KEV_KEY_KP_SUBTRACT     KeyCode::KPSubtract
+#define KEV_KEY_KP_ADD          KeyCode::KPAdd
+#define KEV_KEY_KP_ENTER        KeyCode::KPEnter
+#define KEV_KEY_KP_EQUAL        KeyCode::KPEqual
 
-#define KEV_KEY_LEFT_SHIFT      Key::LeftShift
-#define KEV_KEY_LEFT_CONTROL    Key::LeftControl
-#define KEV_KEY_LEFT_ALT        Key::LeftAlt
-#define KEV_KEY_LEFT_SUPER      Key::LeftSuper
+#define KEV_KEY_LEFT_SHIFT      KeyCode::LeftShift
+#define KEV_KEY_LEFT_CONTROL    KeyCode::LeftControl
+#define KEV_KEY_LEFT_ALT        KeyCode::LeftAlt
+#define KEV_KEY_LEFT_SUPER      KeyCode::LeftSuper
 
-#define KEV_MOUSE_BUTTON_0      Mouse::Button0
-#define KEV_MOUSE_BUTTON_1      Mouse::Button1
-#define KEV_MOUSE_BUTTON_2      Mouse::Button2
-#define KEV_MOUSE_BUTTON_3      Mouse::Button3
-#define KEV_MOUSE_BUTTON_4      Mouse::Button4
-#define KEV_MOUSE_BUTTON_5      Mouse::Button5
-#define KEV_MOUSE_BUTTON_16     Mouse::Button16
-#define KEV_MOUSE_BUTTON_17     Mouse::Button17
-#define KEV_MOUSE_BUTTON_NEXT	Mouse::ButtonNext
-#define KEV_MOUSE_BUTTON_LAST   Mouse::ButtonLast
-#define KEV_MOUSE_BUTTON_LEFT   Mouse::ButtonLeft
-#define KEV_MOUSE_BUTTON_RIGHT  Mouse::ButtonRight
-#define KEV_MOUSE_BUTTON_MIDDLE Mouse::ButtonMiddle
+#define KEV_MOUSE_BUTTON_0      MouseCode::Button0
+#define KEV_MOUSE_BUTTON_1      MouseCode::Button1
+#define KEV_MOUSE_BUTTON_2      MouseCode::Button2
+#define KEV_MOUSE_BUTTON_3      MouseCode::Button3
+#define KEV_MOUSE_BUTTON_4      MouseCode::Button4
+#define KEV_MOUSE_BUTTON_5      MouseCode::Button5
+#define KEV_MOUSE_BUTTON_16     MouseCode::Button16
+#define KEV_MOUSE_BUTTON_17     MouseCode::Button17
+#define KEV_MOUSE_BUTTON_NEXT	MouseCode::ButtonNext
+#define KEV_MOUSE_BUTTON_LAST   MouseCode::ButtonLast
+#define KEV_MOUSE_BUTTON_LEFT   MouseCode::ButtonLeft
+#define KEV_MOUSE_BUTTON_RIGHT  MouseCode::ButtonRight
+#define KEV_MOUSE_BUTTON_MIDDLE MouseCode::ButtonMiddle
 
 #endif

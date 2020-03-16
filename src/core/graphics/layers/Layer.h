@@ -2,22 +2,29 @@
 #define __KevEngine_LAYER__
 
 #include "../BetterGL2DRenderer.h"
-#include "../TextureProgram.h"
+#include "../TextureManager.h"
+#include "../FontManager.h"
+#include "../ShaderManager.h"
+#include "../../events/Event.h"
+#include "../OrthographicCameraController.h"
 
 class Layer
 {
 protected:
-    Layer(GL2DRenderer *renderer, GLuint shader, Mat4f projMatrix);
+    Layer(GL2DRenderer *renderer, GLuint shader);
 
     GL2DRenderer *Renderer;
     std::vector<Renderable2D *> renderables;
     std::map<const char*, unsigned int> groupMap;
     GLuint Shader;
 
-    Mat4f projectionMatrix;
+    TextureManager textures;
+    FontManager fonts;
+
     bool enabled;
 
 public:
+    Layer() {};
     virtual ~Layer();
 
     virtual void add(Renderable2D *renderable);
@@ -25,6 +32,13 @@ public:
 
     virtual inline GLuint getShader() { return Shader; }
     virtual inline void setShader(GLuint shader) { Shader = shader; }
+
+    virtual void OnAttach() = 0;
+    virtual void OnDetatch() = 0;
+
+    virtual void OnUpdate() = 0;
+    virtual void OnDraw() = 0;
+    virtual void OnEvent(Event& e) = 0;
 
     virtual inline unsigned int getNumRenderables() { return renderables.size(); }
 

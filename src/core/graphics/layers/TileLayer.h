@@ -8,6 +8,13 @@ class TileLayer : public Layer
 {
 public:
     TileLayer(GLuint shader);
+
+    void OnAttach() override {};
+    void OnDetatch() override {};
+    void OnUpdate() override {};
+    void OnDraw() override {};
+    void OnEvent(Event& e) override {};
+
 };
 
 #endif

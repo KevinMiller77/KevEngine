@@ -2,6 +2,7 @@
 #define __KevEngine__
 
 //Will be ifdef WIN32
+#include <core/Core.h>
 
 #include <stdio.h>
 #include <string>
@@ -13,41 +14,31 @@
 #include "graphics/renderables/Label.h"
 #include "graphics/layers/Group.h"
 #include "graphics/ShaderManager.h"
-#include "graphics/TextureManager.h"
 #include "graphics/BetterGL2DRenderer.h"
 
 //#include "utils/MemoryTracker.h"
 #include "utils/Timer.h"
 #include "graphics/layers/TileLayer.h"
+#include "graphics/Window.h"
+#include "events/Event.h"
 
 //TODO: Move this to the input.h util
 #define KEY_DEBOUNCE_TIME 0.2f
 
-void DummyStartEngine();
-
-struct InputInformation
-{
-    uint8_t _key = 0;               //If key = 0, do nothing with it
-    bool _direction = 0;            //0 is down, 1 is up
-    bool _previousKeyState = false; //If key was down before message sent
-    uint16_t _holdCount = 0;        //How many repeats of the key were pressed
-    bool _extendedKey = false;      
-
-    Vec2u _mousePos = Vec2u(0, 0);  //New pos of mouse
-    int32_t _mouseWheelMag = 0;
-    int32_t _mouseWheelMagConstant = 0;
-    uint32_t _mouseButtons = 0; 
-};
-
+#ifdef KEV_PLATFORM_WINDOWS
+    int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
+#else
+    int main(int argv, char** argc);
+#endif
 class KevEngine
 {
 protected:
+    std::unique_ptr<Window> window;
+    bool running = true;
+    bool minimized = false;
+
     std::vector<Layer*> layers;
     GLint texIDs[MAX_TEXTURE_SLOTS];
-
-    ShaderManager shaders;
-    TextureManager textures;
-    FontManager fonts;
     
     bool windowedMode;
     Vec2u screenResolution;
@@ -57,24 +48,24 @@ protected:
     Timer timer;
     Timer keyPressTimeout;
 
-    KevEngine(int screenX, int screenY)
-    {
-        screenResolution = Vec2u(screenX, screenY);
-        mousePos = Vec2u(0, 0);
-        screenSize = Vec2f(16.0f, 9.0f);
-        windowedMode = true;
-    }
-public:
+    ShaderManager shaders;
 
-    //Runs at start of game
-    virtual void OnGameStart() {};
-    //Draw call obviously
-    virtual void Draw() {};
-    //As fast as possible
-    virtual void OnTick() {};
+    void Run();
+    bool OnWindowClose(WindowCloseEvent& e);
+	bool OnWindowResize(WindowResizeEvent& e);
+
+public:
+    KevEngine();
+    virtual ~KevEngine() {}
+
     //60 times a second
-    virtual void OnUpdate() {};
-    virtual void ProcessInput(InputInformation in) {};
+    void OnUpdate();
+    void OnEvent(Event& e);
+
+    void PushLayer(Layer* layer);
+    void PushOverlay(Layer* layer);
+
+    virtual void ResetEngine() {};
 
     inline void setScreenResolution(Vec2u in) { screenResolution = in; }
     inline Vec2u getScreenResolution() const { return screenResolution; }
@@ -82,16 +73,16 @@ public:
     inline void setWindowMode(bool newMode) { windowedMode = newMode; }
 
     inline void setMousePos(Vec2u in) { mousePos = in; }
-    inline Vec2u getMousePos() const { return mousePos; }
+    inline Vec2u getMousePos() const { return mousePos; } 
 
-    //Callback to platform specific contect restart. Must return bool (true = success, false = fail)
-    //Will be handeled in the background -- just use it
-    bool (*restartContext)(); 
-    //Callback to the platforma specific fullscreen toggle. Must return new windowed mode (true = windowed, false = fullscreen)
-    //Will be handled in the background -- just use it
-    bool (*toggleFullScreen)();  
-
-    virtual void ResetEngine() {};
+private:
+    static KevEngine* curEngine;
+#ifdef KEV_PLATFORM_WINDOWS
+#include <windef.h>
+    friend int ::WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
+#else
+    friend int ::main(int argv, char** argc);
+#endif
 };
 
 #endif

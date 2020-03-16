@@ -1,10 +1,5 @@
 #include "WindowsWindow.h"
 
-#include "../../core/events/KeyEvent.h"
-#include "../../core/events/MouseEvent.h"
-#include "../../core/events/WindowEvent.h"
-#include  "../../core/events/WindowsInputCodes.h"
-
 /*
   OpenGL Reference Wiki:
   https://www.khronos.org/opengl/wiki/Creating_an_OpenGL_Context_(WGL)
@@ -14,7 +9,7 @@
 
 
 void GLAPIENTRY
-WindowsWindow::MessageCallback(GLenum source,
+MessageCallback(GLenum source,
                 GLenum type,
                 GLuint id,
                 GLenum severity,
@@ -38,8 +33,19 @@ int WindowsWindow::InitalizeConsole()
     BOOL success = AllocConsole();
     if (!success)
     {
-        DebugBreak();
-        return 1;
+        if (!FreeConsole())
+        {
+            DebugBreak();
+            return 1;
+        }
+
+        BOOL success2 = AllocConsole();
+        if (!success2)
+        {
+            DebugBreak();
+            return 1;
+        }
+
     }
 
     // TODO(Adin): If possible get the first method to work it seems
@@ -200,14 +206,16 @@ HGLRC WindowsWindow::CreateGLContext()
     return result;
 }
 
-LRESULT CALLBACK WindowsWindow::WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+
+
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
     case WM_DESTROY:
     {
         WindowCloseEvent event;
-        data.EventCallback(event);
+        //data.EventCallback(event);
         PostQuitMessage(0);
     }
     break;
@@ -218,7 +226,7 @@ LRESULT CALLBACK WindowsWindow::WindowProc(HWND hwnd, UINT message, WPARAM wPara
         glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
         HDC tempHDC = GetDC(hwnd);
         WindowResizeEvent event = WindowResizeEvent((Vec2u(LOWORD(lParam), HIWORD(lParam))));
-        data.EventCallback(event);
+        //data.EventCallback(event);
         ReleaseDC(hwnd, tempHDC);
         SwapBuffers(tempHDC);
         return 0;
@@ -312,7 +320,7 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
     LOG(DBG, "%s\n", glGetString(GL_VERSION));
 
     glEnable(GL_DEBUG_OUTPUT);
-    glDebugMessageCallback(WindowsWindow::MessageCallback, 0);
+    glDebugMessageCallback(MessageCallback, 0);
 
     ShowWindow(window, SW_SHOW);
 }
@@ -323,7 +331,6 @@ void WindowsWindow::OnUpdate()
 
     while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
     {
-        SwapBuffers(windowHDC);
         
         switch (message.message)
         {
@@ -340,17 +347,18 @@ void WindowsWindow::OnUpdate()
         {
             MouseMovedEvent event = MouseMovedEvent(Vec2u(LOWORD(message.lParam), HIWORD(message.lParam)));
             data.EventCallback(event);
+            Input::SetMousePos(Vec2u(LOWORD(message.lParam), HIWORD(message.lParam)));
             break;
         }
         case (WM_MOUSEWHEEL):
         {
-            MouseScrolledEvent event = MouseScrolledEvent(0.0f, message.wParam / WHEEL_DELTA);
+            MouseScrolledEvent event = MouseScrolledEvent(0, (int)message.wParam / WHEEL_DELTA);
             data.EventCallback(event);
             break;
         }
         case (WM_MOUSEHWHEEL):
         {
-            MouseScrolledEvent event(message.wParam / WHEEL_DELTA, 0.0f);
+            MouseScrolledEvent event((int)message.wParam / WHEEL_DELTA, 0);
             data.EventCallback(event);
             break;
         }    
@@ -373,6 +381,7 @@ void WindowsWindow::OnUpdate()
         {
             KeyPressedEvent event = KeyPressedEvent(message.wParam, message.lParam & 0xFFFF0000);
             data.EventCallback(event);
+            Input::SetKeyPressed((KeyCode)message.wParam);
             break;
         }
 
@@ -380,20 +389,25 @@ void WindowsWindow::OnUpdate()
         {
             KeyReleasedEvent event = KeyReleasedEvent(message.wParam);
             data.EventCallback(event);
+            Input::SetKeyReleased((KeyCode)message.wParam);
             break;
         }
 
         case (WM_MBUTTONDOWN): case (WM_LBUTTONDOWN): case (WM_RBUTTONDOWN): case (WM_XBUTTONDOWN):
         {
-            MouseButtonPressedEvent event = MouseButtonPressedEvent((MouseCode)(int)log2(message.wParam));
+            MouseCode code = (MouseCode)(unsigned int)log2(message.wParam + 0.1f);
+            MouseButtonPressedEvent event = MouseButtonPressedEvent(code);
             data.EventCallback(event);
+            Input::SetMouseButtonPressed(code);
             break;
         }
 
         case (WM_MBUTTONUP): case (WM_LBUTTONUP): case (WM_RBUTTONUP): case (WM_XBUTTONUP):
         {
-            MouseButtonReleasedEvent event = MouseButtonReleasedEvent((MouseCode)(int)log2(message.wParam));
+            MouseCode code = (MouseCode)(unsigned int)log2(message.wParam + 0.1f);
+            MouseButtonReleasedEvent event = MouseButtonReleasedEvent(code);
             data.EventCallback(event);
+            Input::SetMouseButtonReleased(code);
             break;
         }
 

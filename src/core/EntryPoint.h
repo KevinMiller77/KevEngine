@@ -5,12 +5,14 @@
 
 #ifdef KEV_PLATFORM_WINDOWS
 
-extern MainApp* CreateApplication();
+extern KevEngine* CreateApplication();
 
-int main(int argc, char** argv)
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-    auto app = CreateApplication
+    printf("Main\n");
+    auto app = CreateApplication();
 
+    printf("Running app\n");
     app->Run();
 
     delete app;

@@ -1,11 +1,8 @@
 #include "Layer.h"
 
-Layer::Layer(GL2DRenderer *renderer, GLuint shader, Mat4f projMatrix)
-    : Renderer(renderer), Shader(shader), projectionMatrix(projMatrix), enabled(true)
+Layer::Layer(GL2DRenderer *renderer, GLuint shader)
+    : Renderer(renderer), Shader(shader), enabled(true)
 {
-    ShaderProgram::enableShaderProgram(Shader);
-    ShaderProgram::setShaderUniformMat4(Shader, "pr_matrix", projectionMatrix);
-    ShaderProgram::disableShaderProgram();
 }
 
 Layer::~Layer()
