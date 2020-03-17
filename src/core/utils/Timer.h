@@ -38,14 +38,19 @@ public:
         return timeSpan.count();
     }
 
-    void frameKeep()
+    unsigned int frameKeep()
     {
         frames++;
         if (getTimePassed() >= 1.0f)
         {
-            LOG_INF("FPS: %dn\n", frames);
+            unsigned int thisgoround = frames;
             reset();
             frames = 0;
+            return thisgoround;
+        }
+        else
+        {
+            return 0;
         }
     }
 

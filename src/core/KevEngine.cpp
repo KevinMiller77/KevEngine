@@ -3,7 +3,8 @@
 
 KevEngine* KevEngine::curEngine = nullptr;
 
-KevEngine::KevEngine()
+KevEngine::KevEngine(KevEngine* child)
+    : childInstance(child)
 {
     LOG_INF("Making engine instance\n");
     if (curEngine != nullptr)
@@ -11,9 +12,7 @@ KevEngine::KevEngine()
         LOG_ERR("Engine already exists!!\n");
     }
     curEngine = this;
-	LOG_INF("Creating window\n");
     window = Window::Create(WindowInfo());
-    LOG_INF("Window made\n");
 	window->SetEventCallback(KEV_BIND_EVENT_FN(KevEngine::OnEvent));
 }
 
@@ -41,6 +40,11 @@ void KevEngine::OnUpdate()
     {
         layer->OnUpdate();
         layer->OnDraw();
+    }
+
+    if (childInstance != nullptr)
+    {
+        childInstance->OnChildUpdate();
     }
 }
 

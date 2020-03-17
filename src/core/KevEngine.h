@@ -50,21 +50,26 @@ protected:
 
     ShaderManager shaders;
 
+    KevEngine* childInstance;
+
     void Run();
     bool OnWindowClose(WindowCloseEvent& e);
 	bool OnWindowResize(WindowResizeEvent& e);
 
 public:
-    KevEngine();
+    KevEngine(KevEngine* child);
     virtual ~KevEngine() {}
 
     //60 times a second
     void OnUpdate();
     void OnEvent(Event& e);
 
+    virtual void OnChildUpdate() {};
+
     void PushLayer(Layer* layer);
     void PushOverlay(Layer* layer);
 
+    //TODO: Reset engine
     virtual void ResetEngine() {};
 
     inline void setScreenResolution(Vec2u in) { screenResolution = in; }

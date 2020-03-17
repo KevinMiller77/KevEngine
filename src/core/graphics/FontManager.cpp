@@ -16,7 +16,7 @@ void FontManager::add(const char* ID, const char* location, uint16_t size)
     FontInfo* newFont = new FontInfo();
     newFont->name = ID;
     newFont->location = location;
-    newFont->atlas =  ftgl::texture_atlas_new(512, 512, 2);
+    newFont->atlas =  ftgl::texture_atlas_new(1024, 1024, 2);
     newFont->font = ftgl::texture_font_new_from_file(newFont->atlas, size, newFont->location);
 
     if (!(newFont->font))

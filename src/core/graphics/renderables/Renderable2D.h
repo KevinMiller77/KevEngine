@@ -29,6 +29,8 @@ protected:
     Texture* texture;
     GLuint texID;
 
+    Vec3f* baseOrigin = nullptr;
+
     Renderable2D() : texture(nullptr) { texID = 0; };
 public:
     Renderable2D(Vec3f pos, Vec2f size, Vec4f col)
@@ -65,6 +67,20 @@ public:
     inline virtual const void setPosition(Vec3f &newPosition) { position = newPosition; }
     inline virtual const void setSize(Vec2f &newSize) { size = newSize; }
     inline virtual const void setColor(uint32_t newColor) { color = newColor; }
+
+    inline virtual const void SetBase(Vec3f* origin) { baseOrigin = origin; }
+
+    float GetLeftBound() { return position.x; }
+    float GetRightBound() { return position.x + size.x; }
+    float GetUpBound() { return position.y; }
+    float GetDownBound() {return position.y + size.y; }
+
+    Vec3f GetWorldPos()
+    {
+        if (baseOrigin == nullptr) return Vec3f(0, 0, 0);
+
+        return Vec3f(position.x + baseOrigin->x, position.y + baseOrigin->y, position.z + baseOrigin->z);
+    }
 };
 
 #endif
