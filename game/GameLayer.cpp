@@ -41,14 +41,14 @@ void GameLayer::OnAttach()
     {
         for (float y = 0.0f; y < 18.0f; y++)
         {
-           add(new Sprite(x, y, 0.9f, 0.9f, textures.getTexture("morty")));
+            background->add(new Sprite(x, y, 1.0f, 1.0f, textures.getTexture("morty")));
         }
     }
     player = new Sprite(0, 0, 2.0f, 4.0f, textures.getTexture("dude")); 
-    add(player);
+    background->add(player);
     //camera.SetRenderable(player);
 
-    pushTransform(new Mat4f(Mat4f::translation(Vec3f(-screenExtremes.x, -screenExtremes.y, 0.0f))));
+    //pushTransform(new Mat4f(Mat4f::translation(Vec3f(-screenExtremes.x, -screenExtremes.y, 0.0f))));
     add(background);
 
     updateTime.reset();
@@ -171,6 +171,7 @@ void GameLayer::OnUpdate()
     updateTime.reset();
 
     CollisionCheck();
+    MouseCheck();
 }
 
 void GameLayer::OnDraw()
@@ -180,9 +181,11 @@ void GameLayer::OnDraw()
 
 void GameLayer::CollisionCheck()
 {
-    unsigned int numCollisions = 0;
     std::sort(renderables.begin(), renderables.end(), GameLayer::SortRenderables);
     std::vector<Renderable2D*> CurrentlyViewed;
+    std::map<std::pair<Renderable2D*, Renderable2D*>, bool> checkedMap;
+    std::map<Renderable2D*, bool> hadCol;
+
     for (Renderable2D* renderable : renderables)
     {
         if (!renderable->IsSolid())
@@ -190,29 +193,39 @@ void GameLayer::CollisionCheck()
             continue;
         }
 
+        //LOG_INF("Left bound: %f\n", renderable->GetLeftBound());
         for (Renderable2D* second : CurrentlyViewed)
         {
-            //LOG_INF("Got seconds\n");
-            if (renderable->GetLeftBound() > second->GetRightBound())
+            if (renderable->GetLeftBound() >= second->GetRightBound())
             {
-                //LOG_INF("X match\n");
                 std::remove(CurrentlyViewed.begin(), CurrentlyViewed.end(), second);
+                continue;
+            }
+            if (checkedMap[std::pair<Renderable2D*, Renderable2D*>(renderable, second)])
+            {
                 continue;
             }
 
             //Collision
-            if (renderable->GetUpBound() > second->GetDownBound() && renderable->GetDownBound() > second->GetUpBound())
-            {
-                renderable->OnCollision(second);
-                second->OnCollision(renderable);
-                numCollisions++;
-            }
+            bool collision = renderable->IsColliding(second);           
+            hadCol[renderable] = true;
+            hadCol[second] = true;
+            checkedMap[std::pair<Renderable2D*, Renderable2D*>(renderable, second)] = true;
         }
-
+        for (Renderable2D* renderable : renderables)
+        {
+            if (hadCol.find(renderable) == hadCol.end()) renderable->NoCollision();
+        }
         CurrentlyViewed.push_back(renderable);
     }
+}
 
-    LOG_INF("%d Collisions\n", numCollisions);
+void GameLayer::MouseCheck()
+{
+    for (Renderable2D* renderable : renderables)
+    {
+        renderable->MouseCheck(mousePos);
+    }
 }
 
 bool GameLayer::MouseScroll(MouseScrolledEvent& e)
@@ -254,47 +267,3 @@ void GameLayer::OnEvent(Event& e)
     camera.OnEvent(e);
 
 }
-
-/*
-void GenerateKeyTest
-{
-    float yMin = 2.0f; float yMax = 4.5f; float xMin = 1.0f; float xMax = 15.0f;
-
-    int cols = 0x10;
-    int rows = 0xff / cols; 
-
-    float xTerm = (xMax - xMin) / (float)cols;
-    float yTerm = (yMax - yMin) / (float)rows;
-
-    Vec2f sqSize = Vec2f(xTerm - xTerm / 10, yTerm - yTerm / 10);
-
-    float curX = xMin;
-    float curY = yMin;
-    for (int x = 0; x < 0xff + 1; x ++)
-    {
-        if (x % 16 == 0)
-        {
-            curX = xMin;
-            curY += 0.25;
-        }
-        keys[x] = new Sprite(curX, curY, sqSize.x, 0.225, Vec4f(0, 0, 0, 1));
-        curX += xTerm;
-    }
-    int curKey = 0;
-    for (float x = 1.0f; x < 15.0f; x += 14.0f / 18.0f)
-    {
-        mouse[curKey] = new Sprite(x, 8.0, 14.0f /18.0f - 1.4f / 18.0f, 0.5f, Vec4f(0, 0, 0, 1));
-        curKey++;
-    }
-
-    for (int i = 0; i < 0xff + 1; i++)
-    {
-        if (i < 18)
-        {
-            //background->add(mouse[i]);
-        }
-
-        //background->add(keys[i]);
-    }
-}
-*/

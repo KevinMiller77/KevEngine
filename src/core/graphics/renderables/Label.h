@@ -18,6 +18,7 @@ public:
 
     inline void setText(std::string Text) { text = Text; }
     inline std::string getText() { return text; }
+
 };
 
 #endif

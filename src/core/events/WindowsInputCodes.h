@@ -22,6 +22,12 @@ enum class MouseCode
 
 enum class KeyCode
 {
+	MouseLeft			= 0x01,
+	MouseRight			= 0x02,
+	MouseMiddle			= 0x04,
+	MouseX1				= 0x05,
+	MouseX2				= 0x06,
+	
 	//From windows
 	Space               = 0x20,
 	Apostrophe          = 0xDE, /* ' */
@@ -260,18 +266,18 @@ enum class KeyCode
 #define KEV_KEY_LEFT_ALT        KeyCode::LeftAlt
 #define KEV_KEY_LEFT_SUPER      KeyCode::LeftSuper
 
-#define KEV_MOUSE_BUTTON_0      MouseCode::Button0
-#define KEV_MOUSE_BUTTON_1      MouseCode::Button1
+#define KEV_MOUSE_BUTTON_0      KeyCode::MouseLeft
+#define KEV_MOUSE_BUTTON_1      KeyCode::MouseRight
 #define KEV_MOUSE_BUTTON_2      MouseCode::Button2
 #define KEV_MOUSE_BUTTON_3      MouseCode::Button3
-#define KEV_MOUSE_BUTTON_4      MouseCode::Button4
+#define KEV_MOUSE_BUTTON_4      KeyCode::MouseMiddle
 #define KEV_MOUSE_BUTTON_5      MouseCode::Button5
-#define KEV_MOUSE_BUTTON_16     MouseCode::Button16
-#define KEV_MOUSE_BUTTON_17     MouseCode::Button17
-#define KEV_MOUSE_BUTTON_NEXT	MouseCode::ButtonNext
-#define KEV_MOUSE_BUTTON_LAST   MouseCode::ButtonLast
-#define KEV_MOUSE_BUTTON_LEFT   MouseCode::ButtonLeft
-#define KEV_MOUSE_BUTTON_RIGHT  MouseCode::ButtonRight
-#define KEV_MOUSE_BUTTON_MIDDLE MouseCode::ButtonMiddle
+#define KEV_MOUSE_BUTTON_16     KeyCode::MouseX1
+#define KEV_MOUSE_BUTTON_17     KeyCode::MouseX2
+#define KEV_MOUSE_BUTTON_NEXT	KeyCode::MouseX2
+#define KEV_MOUSE_BUTTON_LAST   KeyCode::MouseX1
+#define KEV_MOUSE_BUTTON_LEFT   KeyCode::MouseLeft
+#define KEV_MOUSE_BUTTON_RIGHT  KeyCode::MouseRight
+#define KEV_MOUSE_BUTTON_MIDDLE KeyCode::MouseMiddle
 
 #endif

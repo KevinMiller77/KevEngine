@@ -312,7 +312,7 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
     // GLEW is initalized in here
     LoadGLExtensions(hInstance);
 
-    window = CreateWindow((LPCSTR)inf.Title, "KevEngine Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 960, 540, NULL, NULL, hInstance, NULL);
+    window = CreateWindow((LPCSTR)inf.Title, "KevEngine Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720, NULL, NULL, hInstance, NULL);
     
     windowHDC = GetDC(window);
     

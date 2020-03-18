@@ -1,6 +1,7 @@
 #ifndef __RENDERABLE_2D__
 #define __RENDERABLE_2D__
 
+#include <core/Input.h> 
 #include "../../math/math.h"
 #include "../buffers/IndexBuffer.h"
 #include "../buffers/VertexArray.h"
@@ -13,9 +14,11 @@
 
 #include <core/events/Event.h>
 
-enum CollisionDir
+enum RenderableType
 {
-    CollisionUp, CollisionDown, CollisionLeft, CollisionRight
+    PlayerType,
+    TerrainType,
+    GroupType
 };
 
 struct VertexData
@@ -40,6 +43,9 @@ protected:
     Vec3f* baseOrigin = nullptr;
 
     bool SolidObject = true;
+    bool mouseHovering = false;
+
+    RenderableType type = TerrainType;
 
     Renderable2D() : texture(nullptr) { texID = 0; };
 public:
@@ -63,10 +69,7 @@ public:
     }
     virtual ~Renderable2D() = default;
 
-    virtual void submit(GL2DRenderer* renderer) const
-    {
-        renderer->submit(this);
-    }
+    inline virtual void submit(GL2DRenderer* renderer) const { renderer->submit(this); }
 
     inline virtual const Vec3f &getPosition() const { return position; }
     inline virtual const Vec2f &getSize() const { return size; }
@@ -99,15 +102,51 @@ public:
     inline bool IsSolid()   {return SolidObject; }
     inline void SetSolid(bool isSolid)   {SolidObject = isSolid; }
 
+    inline RenderableType GetType() { return type; }
+    inline void SetType(RenderableType newType) { type = newType; }
+
+    virtual bool IsColliding(Renderable2D* other)
+    {
+        float topY1 = GetWorldPos().y;
+        float bottomY1 = GetWorldPos().y + size.y;
+        float topY2 = other->GetWorldPos().y;
+        float bottomY2 = other->GetWorldPos().y + size.y;
+
+        if ((topY1 < bottomY2 && bottomY1 > topY2) || (topY2 < bottomY1 && bottomY2 > topY1))
+        {
+            other->OnCollision(this);
+            OnCollision(other);
+            return true;
+        } 
+        return false;
+    }
+
+    virtual void MouseCheck(Vec2f& mousePos)
+    {
+        // LOG_INF("Mouse Pos: %f, %f\t World Pos: %f, %f\n", mousePos.x, mousePos.y, GetWorldPos().x, GetWorldPos().y);
+        if ((mousePos.x > GetWorldPos().x && mousePos.x < GetWorldPos().x + size.x) && (mousePos.y > GetWorldPos().y && mousePos.y < GetWorldPos().y + size.y))
+        {
+            OnMouseHover();
+            mouseHovering = true;
+        }
+        else if (mouseHovering)
+        {
+            OnMouseLeave();
+            mouseHovering = false;
+        }
+        
+    }
+
     virtual void OnMouseHover() {}
+    virtual void OnMouseLeave() {}
     virtual void OnCollision(Renderable2D* collidedWith) {}
+    virtual void NoCollision() {}
     virtual void OnClick() {}
 
     Vec3f GetWorldPos()
     {
         if (baseOrigin == nullptr) return Vec3f(0, 0, 0);
-
-        return Vec3f(position.x + baseOrigin->x, position.y + baseOrigin->y, position.z + baseOrigin->z);
+        return Vec3f(position.x + baseOrigin->x, -(position.y + baseOrigin->y), position.z + baseOrigin->z);
     }
 };
 

@@ -56,7 +56,7 @@ public:
     void OnEvent(Event& e);
 
     void CollisionCheck();
-    inline static bool SortRenderables(const void* p1, const void* p2) { return ((Renderable2D*)p1)->getPosition().x < ((Renderable2D*)p2)->getPosition().x; }  
+    inline static bool SortRenderables(const void* p1, const void* p2) { return ((Renderable2D*)p1)->GetLeftBound() <= ((Renderable2D*)p2)->GetLeftBound(); }  
     void MouseCheck();
 };
 

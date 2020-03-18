@@ -25,6 +25,9 @@ public:
 
     inline Texture* getTextureFromChild(GLuint index) const { return children[index]->getTexturePtr(); }
     inline unsigned int getNumChildren() { return children.size(); }
+
+    bool IsColliding(Renderable2D* other) override;
+    virtual void MouseCheck(Vec2f& mousePos) override;
 };
 
 #endif
