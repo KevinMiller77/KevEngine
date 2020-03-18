@@ -1,5 +1,7 @@
 #include "TextureProgram.h"
 
+
+
 Texture::Texture() 
 {
     texture = 0;
@@ -26,7 +28,8 @@ void Texture::init(Vec2f flip)
 {
     FreeImage_Initialise();
 
-    BYTE* image = ImageLoad(imagePath, &width, &height, flip);
+    FREE_IMAGE_FORMAT formatOfImage;
+    BYTE* image = ImageLoad(imagePath, &width, &height, &formatOfImage, flip);
     
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -37,7 +40,17 @@ void Texture::init(Vec2f flip)
 
     if (image)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
+        if (formatOfImage == FIF_PNG)
+        {
+            LOG_INF("PNG loaded\n");
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
+        }
+        else
+        {
+            LOG_INF("Loading texture of %d type\n", (int)formatOfImage);
+           glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
+        }
+        
         LOG_INF("Texture (%s) loaded\n", imagePath);
     }
     else
@@ -50,11 +63,12 @@ void Texture::init(Vec2f flip)
 
 }
 
-BYTE* Texture::ImageLoad(const char* path, GLuint *width, GLuint *height, Vec2f flip)
+BYTE* Texture::ImageLoad(const char* path, GLuint *width, GLuint *height, FREE_IMAGE_FORMAT* format, Vec2f flip)
 {
     FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 	FIBITMAP *dib = nullptr;
 	fif = FreeImage_GetFileType(path, 0);
+    *format = fif;
 
     //Get file info
 	if (fif == FIF_UNKNOWN)

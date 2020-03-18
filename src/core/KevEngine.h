@@ -13,12 +13,12 @@
 #include "graphics/renderables/Sprite2D.h"
 #include "graphics/renderables/Label.h"
 #include "graphics/layers/Group.h"
+#include "graphics/layers/Layer.h"
 #include "graphics/ShaderManager.h"
 #include "graphics/BetterGL2DRenderer.h"
 
 //#include "utils/MemoryTracker.h"
 #include "utils/Timer.h"
-#include "graphics/layers/TileLayer.h"
 #include "graphics/Window.h"
 #include "events/Event.h"
 
@@ -62,9 +62,11 @@ public:
 
     //60 times a second
     void OnUpdate();
+    void OnDraw();
     void OnEvent(Event& e);
 
     virtual void OnChildUpdate() {};
+    virtual void OnChildDraw()  {};
 
     void PushLayer(Layer* layer);
     void PushOverlay(Layer* layer);

@@ -39,12 +39,23 @@ void KevEngine::OnUpdate()
     for (Layer* layer : layers)
     {
         layer->OnUpdate();
-        layer->OnDraw();
     }
 
     if (childInstance != nullptr)
     {
         childInstance->OnChildUpdate();
+    }
+}
+
+void KevEngine::OnDraw()
+{
+    for (Layer* layer : layers)
+    {
+        layer->OnDraw();
+    }
+    if (childInstance != nullptr)
+    {
+        childInstance->OnChildDraw();
     }
 }
 
@@ -83,11 +94,18 @@ void KevEngine::PushOverlay(Layer* layer)
 
 void KevEngine::Run()
 {
+    double c = 1.0f / 60.0f;
+    timer.reset();
     while (running)
     {
         if (!minimized)
         {
-            OnUpdate();
+            if (timer.getTimePassed() >= c)
+            {
+                OnUpdate();
+                timer.reset();
+            }
+            OnDraw();
         }
 
         window->OnUpdate();

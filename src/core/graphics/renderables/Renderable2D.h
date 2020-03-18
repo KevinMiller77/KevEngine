@@ -11,6 +11,13 @@
 #include "../../utils/Logging.h"
 #include "../ShaderProgram.h"
 
+#include <core/events/Event.h>
+
+enum CollisionDir
+{
+    CollisionUp, CollisionDown, CollisionLeft, CollisionRight
+};
+
 struct VertexData
 {
     Vec3f vertex;
@@ -22,6 +29,7 @@ struct VertexData
 class Renderable2D
 {
 protected:
+    const char* name;
     Vec3f position;
     Vec2f size;
     uint32_t color = 0;
@@ -30,6 +38,8 @@ protected:
     GLuint texID;
 
     Vec3f* baseOrigin = nullptr;
+
+    bool SolidObject = true;
 
     Renderable2D() : texture(nullptr) { texID = 0; };
 public:
@@ -66,14 +76,32 @@ public:
 
     inline virtual const void setPosition(Vec3f &newPosition) { position = newPosition; }
     inline virtual const void setSize(Vec2f &newSize) { size = newSize; }
+    inline virtual const void setColor(Vec4f newColor) 
+    { 
+        uint32_t c;
+        uint32_t r = (int)(newColor.x * 255.0f);
+        uint32_t g = (int)(newColor.y * 255.0f);
+        uint32_t b = (int)(newColor.z * 255.0f);
+        uint32_t a = (int)(newColor.w * 255.0f);
+        
+        c = a << 24 | b << 16 | g << 8 | r;
+        color = c;
+    }
     inline virtual const void setColor(uint32_t newColor) { color = newColor; }
 
     inline virtual const void SetBase(Vec3f* origin) { baseOrigin = origin; }
 
-    float GetLeftBound() { return position.x; }
-    float GetRightBound() { return position.x + size.x; }
-    float GetUpBound() { return position.y; }
-    float GetDownBound() {return position.y + size.y; }
+    inline float GetLeftBound() { return position.x; }
+    inline float GetRightBound() { return position.x + size.x; }
+    inline float GetUpBound() { return position.y; }
+    inline float GetDownBound() {return position.y + size.y; }
+
+    inline bool IsSolid()   {return SolidObject; }
+    inline void SetSolid(bool isSolid)   {SolidObject = isSolid; }
+
+    virtual void OnMouseHover() {}
+    virtual void OnCollision(Renderable2D* collidedWith) {}
+    virtual void OnClick() {}
 
     Vec3f GetWorldPos()
     {

@@ -20,8 +20,8 @@ void HUD::OnAttach()
 
     Group* FrameCounterGroup = new Group(Mat4f::translation(Vec3f(-16, -9, 0)));
 
-    FrameCounterGroup->add(new Sprite(0.2, 0.3, 5.0, 1.5, Vec4f(0.7f, 0.7f, 0.7f, 0.6f)));
-    FrameCounter = new Label("", 0.3f, 1.3, fonts.get("inkfree"), Vec4f(1, 1, 1, 1));
+    FrameCounterGroup->add(new Sprite(0.2, 0.3, 5.0, 1.5, Vec4f(0.3f, 0.3f, 0.3f, 1.0f)));
+    FrameCounter = new Label("", 0.3f, 1.3, fonts.get("inkfree"), Vec4f(0, 0, 0, 1));
     FrameCounterGroup->add(FrameCounter);
 
     add(FrameCounterGroup);

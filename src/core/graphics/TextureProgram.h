@@ -26,7 +26,7 @@ public:
     Texture(const char *inImagePath, Vec2f flip = Vec2f(0.0f, 0.0f));
     ~Texture();
     void init(Vec2f flip = Vec2f(0.0f, 0.0f));
-    BYTE* ImageLoad(const char* path, GLuint *width, GLuint *height, Vec2f flip = Vec2f(0.0f, 0.0f));
+    BYTE* ImageLoad(const char* path, GLuint *width, GLuint *height, FREE_IMAGE_FORMAT* format, Vec2f flip = Vec2f(0.0f, 0.0f));
     void bind();
     void unbind();
 

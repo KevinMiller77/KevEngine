@@ -10,6 +10,11 @@ public:
     Sprite(float x, float y, float width, float height, const Vec4f color);
     Sprite(float x, float y, float width, float height, Texture* inTexture);
 
+    void OnMouseHover() override
+    {
+        color = color | 0x000000FF;
+    }
+
 };
 
 #endif

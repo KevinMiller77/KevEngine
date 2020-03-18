@@ -7,6 +7,7 @@
 
 // TODO(Adin): Switch to CreateWindowEx
 
+WindowsData WindowsWindow::data = WindowsData();
 
 void GLAPIENTRY
 MessageCallback(GLenum source,
@@ -215,7 +216,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
     case WM_DESTROY:
     {
         WindowCloseEvent event;
-        //data.EventCallback(event);
+        WindowsWindow::data.EventCallback(event);
         PostQuitMessage(0);
     }
     break;
@@ -226,7 +227,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
         glViewport(0, 0, LOWORD(lParam), HIWORD(lParam));
         HDC tempHDC = GetDC(hwnd);
         WindowResizeEvent event = WindowResizeEvent((Vec2u(LOWORD(lParam), HIWORD(lParam))));
-        //data.EventCallback(event);
+        if (WindowsWindow::data.callbackSet)
+        {
+            WindowsWindow::data.EventCallback(event);
+        }
         ReleaseDC(hwnd, tempHDC);
         SwapBuffers(tempHDC);
         return 0;
@@ -378,7 +382,6 @@ void WindowsWindow::OnUpdate()
             data.EventCallback(event);
             break;
         }
-
         case (WM_KEYDOWN):
         {
             if (keyDebounce.getTimePassed() < KEY_DEBOUNCE_TIME) break;

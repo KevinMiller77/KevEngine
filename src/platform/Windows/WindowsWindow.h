@@ -23,6 +23,16 @@
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 #define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
 
+struct WindowsData
+{
+    using EventCallbackFn = std::function<void(Event&)>;
+    unsigned int width, height;
+    bool windowed;
+    bool VSync;
+    bool callbackSet = false;
+    EventCallbackFn EventCallback;
+};
+
 class WindowsWindow : public Window
 {
     HINSTANCE hInstance;
@@ -53,22 +63,16 @@ public:
 	unsigned int GetHeight() const override;
 
     // Window attributes
-	inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallback = callback; }
+	inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallback = callback; data.callbackSet = true; }
 	void SetVSync(bool enabled) override;
 	bool IsVSync() const override;
     bool IsWindowed() const;
 
-    void ShutDown();
+    void* GetNativeWindow() override { return (void*)window; }
 
-    struct WindowsData
-    {
-        unsigned int width, height;
-        bool windowed;
-	    bool VSync;
-	    EventCallbackFn EventCallback;
-    };
+    void ShutDown();
     
-    WindowsData data; 
+    static WindowsData data; 
 };
 
 #endif

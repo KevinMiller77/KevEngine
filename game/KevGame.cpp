@@ -21,12 +21,12 @@ public:
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
         shaders.setUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
         
-        PushLayer(new GameLayer(shaders.getShader("basic").getShaderID()));
+        PushOverlay(new GameLayer(shaders.getShader("basic").getShaderID(), Vec2u(window->GetWidth(), window->GetHeight())));
         PushOverlay(new HUD(shaders.getShader("basic").getShaderID()));
     }
     ~KevGame() override {}
 
-    void OnChildUpdate()
+    void OnChildDraw()
     {
         unsigned int newFrames = fps.frameKeep();
         if ( newFrames != 0)

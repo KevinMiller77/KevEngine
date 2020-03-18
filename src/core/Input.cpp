@@ -1,3 +1,8 @@
 #include "Input.h"
+#include <core/Core.h>
 
-Input Input::input = Input();
+#ifdef KEV_PLATFORM_WINDOWS
+#include <windows.h>
+#endif
+
+Input* Input::input = new Input;
