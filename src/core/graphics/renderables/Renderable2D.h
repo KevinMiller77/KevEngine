@@ -129,23 +129,21 @@ public:
     }
 
     //Checks if the mouse is hovering over any renderables, if so it will return a vector of them
-    virtual void MouseCheck(Vec2f& mousePos, bool& seen, std::vector<Renderable2D*>& underMouse)
+    virtual void MouseCheck(Vec2f& mousePos, std::vector<Renderable2D*>& underMouse)
     {
         if ((mousePos.x > GetScreenPos().x && mousePos.x < GetScreenPos().x + size.x) && (mousePos.y > GetScreenPos().y && mousePos.y < GetScreenPos().y + size.y))
         {
-            if (!seen)
+            if (underMouse.size() == 0)
             {
-                underMouse = new std::vector<Renderable2D*>();
-                underMouse->
                 OnMouseHover();
                 mouseHovering = true;
-                seen = true;   
-            }
-            else if (mouseHovering)
+            } else if (mouseHovering)
             {
                 OnMouseLeave();
                 mouseHovering = false;
             }
+
+            underMouse.push_back(this);
         }
         else if (mouseHovering)
         {

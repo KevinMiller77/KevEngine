@@ -224,11 +224,11 @@ void GameLayer::CollisionCheck()
 void GameLayer::MouseCheck()
 {
     
-    LOG_INF("Player Pos: %f, %f\t World Pos: %f, %f\n", player->getPosition().x, player->getPosition().y, player->GetScreenPos().x, player->GetScreenPos().y);
-    bool seen = false;
+    //LOG_INF("Player Pos: %f, %f\t World Pos: %f, %f\n", player->getPosition().x, player->getPosition().y, player->GetScreenPos().x, player->GetScreenPos().y);
+    std::vector<Renderable2D*> underMouse;
     for (int rend = renderables.size() - 1; rend >= 0; rend--)
     {
-        renderables[rend]->MouseCheck(mousePos, seen);
+        renderables[rend]->MouseCheck(mousePos, underMouse);
     }
 }
 

@@ -28,7 +28,7 @@ public:
     {
         if (activated)
         {
-            0xFFFF00FF;
+            color = 0xFFFF00FF;
             return;
         }
         //LOG_INF("Leave\n");
@@ -37,6 +37,8 @@ public:
 
     void OnCollision(Renderable2D* collidedWith) override
     {
+        if (!SolidObject)   {return;}
+
         color = 0xFFFF0000;
     }
 

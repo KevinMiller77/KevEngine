@@ -42,10 +42,10 @@ bool Group::IsColliding(Renderable2D* other)
     return false;
 }
 
-void Group::MouseCheck(Vec2f& mousePos, bool& seen)
+void Group::MouseCheck(Vec2f& mousePos, std::vector<Renderable2D*>& underMouse)
 {
     for (int i = children.size() - 1; i >= 0; i--)
     {
-        children[i]->MouseCheck(mousePos, seen);
+        children[i]->MouseCheck(mousePos, underMouse);
     }
 }
