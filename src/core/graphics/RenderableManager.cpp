@@ -50,7 +50,6 @@ void RenderableManager::CollisionCheck()
     std::vector<Renderable2D*> CurrentlyViewing;
     for (Renderable2D* RigidBody : RenderablesToCheck)
     {
-        
         RigidBody->NoCollision();
         // LOG_INF("\n%d was solid and possibly collides\n", RigidBody->GetUID());
         for (Renderable2D* second : CurrentlyViewing)
@@ -72,9 +71,8 @@ void RenderableManager::CollisionCheck()
 
             // LOG_INF("Looking at %d and %d", RigidBody->GetUID(), second->GetUID());
             //Collision
-            if ((RigidBody->GetWorldUpBound() < second->GetWorldUpBound() && RigidBody->GetWorldDownBound() > second->GetWorldDownBound()) || (RigidBody->GetWorldUpBound() > second->GetWorldUpBound() && RigidBody->GetWorldDownBound() < second->GetWorldDownBound()))
+            if ((RigidBody->GetWorldUpBound() <= second->GetWorldUpBound() && RigidBody->GetWorldDownBound() >= second->GetWorldDownBound()) || (RigidBody->GetWorldUpBound() >= second->GetWorldUpBound() && RigidBody->GetWorldDownBound() <= second->GetWorldDownBound()))
             {
-                LOG_INF("Collision\n");
                 detectedCollisions[RigidBody] = second; detectedCollisions[second] = RigidBody;
                 RigidBody->OnCollision(second);
                 second->OnCollision(RigidBody);
