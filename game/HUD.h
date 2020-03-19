@@ -17,6 +17,7 @@
 class HUD : public Layer
 {
     Label* FrameCounter;
+    Label* UpdateCounter;
 
 public:
     HUD(unsigned int shader);

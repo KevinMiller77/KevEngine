@@ -35,6 +35,7 @@ class GameLayer : public Layer
     float maxAcceleration = 0.5f;
     float maxJumpAcceleration = 2;
     float jumpAcceleration = 0.8;
+    float gravityConstant = 0.2;
     bool jumping = false;
     int jumpCount = 0;
     int maxJump = 15;

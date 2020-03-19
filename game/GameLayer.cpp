@@ -44,12 +44,14 @@ void GameLayer::OnAttach()
             background->add(new Sprite(x, y, 1.0f, 1.0f, textures.getTexture("morty")));
         }
     }
+
+
     player = new Sprite(0, 0, 2.0f, 4.0f, textures.getTexture("dude")); 
     background->add(player);
     //camera.SetRenderable(player);
+    add(background);
 
     //pushTransform(new Mat4f(Mat4f::translation(Vec3f(-screenExtremes.x, -screenExtremes.y, 0.0f))));
-    add(background);
 
     updateTime.reset();
 }
@@ -61,7 +63,6 @@ void GameLayer::OnDetatch()
 
 void GameLayer::OnUpdate()
 {
-
     //Begin frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -127,7 +128,7 @@ void GameLayer::OnUpdate()
 
         }
 
-        playerVelocity.y += 0.5 ;
+        playerVelocity.y += gravityConstant;
     }
 
     if (Input::IsKeyPressed(KEV_KEY_SPACE))
@@ -222,9 +223,12 @@ void GameLayer::CollisionCheck()
 
 void GameLayer::MouseCheck()
 {
-    for (Renderable2D* renderable : renderables)
+    
+    LOG_INF("Player Pos: %f, %f\t World Pos: %f, %f\n", player->getPosition().x, player->getPosition().y, player->GetScreenPos().x, player->GetScreenPos().y);
+    bool seen = false;
+    for (int rend = renderables.size() - 1; rend >= 0; rend--)
     {
-        renderable->MouseCheck(mousePos);
+        renderables[rend]->MouseCheck(mousePos, seen);
     }
 }
 
@@ -243,8 +247,8 @@ bool GameLayer::MouseMove(MouseMovedEvent& e)
     if (mouseXN < 0.5f) { mouseX = -screenExtremes.x + screenExtremes.x * mouseXN * 2; }
     else { mouseX = screenExtremes.x * (mouseXN - 0.5f) * 2; }
     
-    if (mouseYN < 0.5f) { mouseY = screenExtremes.y - screenExtremes.y * mouseYN * 2; }
-    else { mouseY = -(screenExtremes.y * ((mouseYN - 0.5f) * 2)); }
+    if (mouseYN < 0.5f) { mouseY = -screenExtremes.y + screenExtremes.y * mouseYN * 2; }
+    else { mouseY = screenExtremes.y * ((mouseYN - 0.5f) * 2); }
 
     mousePos = Vec2f(mouseX, mouseY);
 

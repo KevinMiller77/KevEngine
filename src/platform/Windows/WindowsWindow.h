@@ -53,7 +53,7 @@ class WindowsWindow : public Window
 
 public:
     bool restartGLContext();
-    void ToggleFullscreen();
+    void ToggleFullscreen() override;
 
     WindowsWindow(WindowInfo inf);
     

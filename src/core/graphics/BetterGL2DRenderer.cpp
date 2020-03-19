@@ -1,5 +1,7 @@
 #include "BetterGL2DRenderer.h"
 
+unsigned int Renderable2D::globalNumRenderables;
+
 BetterGL2DRenderer::BetterGL2DRenderer()
 {
     indexCount = 0;

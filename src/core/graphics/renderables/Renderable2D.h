@@ -1,6 +1,7 @@
 #ifndef __RENDERABLE_2D__
 #define __RENDERABLE_2D__
 
+#include <string>
 #include <core/Input.h> 
 #include "../../math/math.h"
 #include "../buffers/IndexBuffer.h"
@@ -29,10 +30,13 @@ struct VertexData
     uint32_t color;
 };
 
+
 class Renderable2D
 {
 protected:
-    const char* name;
+    static unsigned int globalNumRenderables;
+    const char* name = nullptr;
+    
     Vec3f position;
     Vec2f size;
     uint32_t color = 0;
@@ -49,16 +53,16 @@ protected:
 
     Renderable2D() : texture(nullptr) { texID = 0; };
 public:
-    Renderable2D(Vec3f pos, Vec2f size, Vec4f col)
-        : size(size)
+    Renderable2D(Vec3f Position, Vec2f Size, Vec4f Color, const char* Name = ("REND_" + std::to_string(GetGlobalNumRenderables())).c_str())
+        : size(Size)
     {
-        position = pos;
+        position = Position;
 
         uint32_t c;
-        uint32_t r = (int)(col.x * 255.0f);
-        uint32_t g = (int)(col.y * 255.0f);
-        uint32_t b = (int)(col.z * 255.0f);
-        uint32_t a = (int)(col.w * 255.0f);
+        uint32_t r = (int)(Color.x * 255.0f);
+        uint32_t g = (int)(Color.y * 255.0f);
+        uint32_t b = (int)(Color.z * 255.0f);
+        uint32_t a = (int)(Color.w * 255.0f);
         
         c = a << 24 | b << 16 | g << 8 | r;
 
@@ -66,6 +70,8 @@ public:
 
         texture = nullptr;
         texID = 0;
+
+        globalNumRenderables++;
     }
     virtual ~Renderable2D() = default;
 
@@ -93,6 +99,7 @@ public:
     inline virtual const void setColor(uint32_t newColor) { color = newColor; }
 
     inline virtual const void SetBase(Vec3f* origin) { baseOrigin = origin; }
+    inline virtual const Vec3f* GetBase() { return baseOrigin; }
 
     inline float GetLeftBound() { return position.x; }
     inline float GetRightBound() { return position.x + size.x; }
@@ -107,10 +114,10 @@ public:
 
     virtual bool IsColliding(Renderable2D* other)
     {
-        float topY1 = GetWorldPos().y;
-        float bottomY1 = GetWorldPos().y + size.y;
-        float topY2 = other->GetWorldPos().y;
-        float bottomY2 = other->GetWorldPos().y + size.y;
+        float topY1 = GetScreenPos().y;
+        float bottomY1 = GetScreenPos().y + size.y;
+        float topY2 = other->GetScreenPos().y;
+        float bottomY2 = other->GetScreenPos().y + size.y;
 
         if ((topY1 < bottomY2 && bottomY1 > topY2) || (topY2 < bottomY1 && bottomY2 > topY1))
         {
@@ -121,20 +128,31 @@ public:
         return false;
     }
 
-    virtual void MouseCheck(Vec2f& mousePos)
+    //Checks if the mouse is hovering over any renderables, if so it will return a vector of them
+    virtual void MouseCheck(Vec2f& mousePos, bool& seen, std::vector<Renderable2D*>& underMouse)
     {
-        // LOG_INF("Mouse Pos: %f, %f\t World Pos: %f, %f\n", mousePos.x, mousePos.y, GetWorldPos().x, GetWorldPos().y);
-        if ((mousePos.x > GetWorldPos().x && mousePos.x < GetWorldPos().x + size.x) && (mousePos.y > GetWorldPos().y && mousePos.y < GetWorldPos().y + size.y))
+        if ((mousePos.x > GetScreenPos().x && mousePos.x < GetScreenPos().x + size.x) && (mousePos.y > GetScreenPos().y && mousePos.y < GetScreenPos().y + size.y))
         {
-            OnMouseHover();
-            mouseHovering = true;
+            if (!seen)
+            {
+                underMouse = new std::vector<Renderable2D*>();
+                underMouse->
+                OnMouseHover();
+                mouseHovering = true;
+                seen = true;   
+            }
+            else if (mouseHovering)
+            {
+                OnMouseLeave();
+                mouseHovering = false;
+            }
         }
         else if (mouseHovering)
         {
             OnMouseLeave();
             mouseHovering = false;
         }
-        
+
     }
 
     virtual void OnMouseHover() {}
@@ -143,11 +161,14 @@ public:
     virtual void NoCollision() {}
     virtual void OnClick() {}
 
-    Vec3f GetWorldPos()
+    Vec3f GetScreenPos()
     {
-        if (baseOrigin == nullptr) return Vec3f(0, 0, 0);
-        return Vec3f(position.x + baseOrigin->x, -(position.y + baseOrigin->y), position.z + baseOrigin->z);
+        if (baseOrigin == nullptr) return Vec3f(position.x, -position.y, 0);
+        return Vec3f(position.x + baseOrigin->x, position.y + baseOrigin->y, position.z + baseOrigin->z);
     }
+
+    inline static void GameStart() { globalNumRenderables = 0; }
+    inline static unsigned int GetGlobalNumRenderables()    { return globalNumRenderables; } 
 };
 
 #endif

@@ -20,7 +20,7 @@ void FollowRenderableCamera::OnUpdate()
     }
     
 	double ts = time.getTimePassed();
-    Vec3f renPos = renderableToFollow->GetWorldPos();
+    Vec3f renPos = renderableToFollow->GetScreenPos();
     Vec3f camPos = Camera.GetPosition();
     
     LOG_INF("Player Pos: %f, %f\t Cam Pos: %f, %f\n", renPos.x, renPos.y, camPos.x, camPos.y);

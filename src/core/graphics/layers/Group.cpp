@@ -4,14 +4,22 @@ Group::Group(const Mat4f transform)
 : ModelMatrix(transform)
 {
     type = GroupType;
-    Vec4f base = transform * Vec4f(1, 1, 1, 1);
-    baseOrigin = new Vec3f(base.x - 1.0f, base.y, base.z - 1.0f);
+    SolidObject = false;
+    baseOrigin = new Vec3f(ModelMatrix[3].x, ModelMatrix[3].y, ModelMatrix[3].z);
 }
 
 void Group::add(Renderable2D* renderable)
 {
     children.push_back(renderable);
-    renderable->SetBase(baseOrigin);
+    if (renderable->GetBase() == nullptr)
+    {
+        renderable->SetBase(baseOrigin);
+    }
+    else
+    {
+        Vec3f curBase = *renderable->GetBase();
+        renderable->SetBase(new Vec3f(curBase.x + baseOrigin->x, curBase.y + baseOrigin->y, curBase.z + baseOrigin->z));
+    }
 }
 
 void Group::submit(GL2DRenderer* renderer) const
@@ -26,20 +34,18 @@ void Group::submit(GL2DRenderer* renderer) const
 
 bool Group::IsColliding(Renderable2D* other)
 {
-    bool hadOne = false;
     for (Renderable2D* child : children)
     {
         child->IsColliding(other);
-        for (Renderable2D* child2 : children);
     }
 
-    return hadOne;
+    return false;
 }
 
-void Group::MouseCheck(Vec2f& mousePos)
+void Group::MouseCheck(Vec2f& mousePos, bool& seen)
 {
-    for (Renderable2D* child : children)
+    for (int i = children.size() - 1; i >= 0; i--)
     {
-        child->MouseCheck(mousePos);
+        children[i]->MouseCheck(mousePos, seen);
     }
 }

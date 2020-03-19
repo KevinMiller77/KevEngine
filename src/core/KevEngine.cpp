@@ -94,7 +94,7 @@ void KevEngine::PushOverlay(Layer* layer)
 
 void KevEngine::Run()
 {
-    double c = 1.0f / 60.0f;
+    double c = 1.0f / 70.0f;
     timer.reset();
     while (running)
     {

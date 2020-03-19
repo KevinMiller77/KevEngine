@@ -27,7 +27,7 @@ public:
     inline unsigned int getNumChildren() { return children.size(); }
 
     bool IsColliding(Renderable2D* other) override;
-    virtual void MouseCheck(Vec2f& mousePos) override;
+    virtual void MouseCheck(Vec2f& mousePos, bool& seen) override;
 };
 
 #endif

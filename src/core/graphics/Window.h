@@ -8,9 +8,13 @@
 #include "../events/MouseEvent.h"
 #include "../events/WindowEvent.h"
 
+
+
 //Information a generic window will need for construction
 struct WindowInfo
 {
+	bool windowed;
+
     const char* Title;
     unsigned int Width;
     unsigned int Height;
@@ -40,6 +44,8 @@ public:
 	virtual bool IsVSync() const = 0;
 
 	virtual void* GetNativeWindow() = 0;
+
+	virtual void ToggleFullscreen() = 0;
 
 	static Scope<Window> Create(const WindowInfo& inf = WindowInfo());
 };
