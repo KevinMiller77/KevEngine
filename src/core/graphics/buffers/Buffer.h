@@ -11,10 +11,10 @@ public:
     Buffer(GLfloat* data, GLsizei count, GLuint compCount);
     ~Buffer();
 
-    void bind();
-    void unbind();
+    void Bind();
+    void Unbind();
 
-    inline GLuint getComponentCount() const { return ComponentCount; }
+    inline GLuint GetComponentCount() const { return ComponentCount; }
 };
 
 #endif

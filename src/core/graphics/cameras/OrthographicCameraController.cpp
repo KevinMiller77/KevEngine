@@ -5,12 +5,12 @@
 OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
 	: AspectRatio(aspectRatio), Camera(-AspectRatio * Zoom, AspectRatio * Zoom, -Zoom, Zoom), m_Rotation(rotation)
 {
-	time.reset();
+	time.Reset();
 }
 
 void OrthographicCameraController::OnUpdate()
 {
-	double ts = time.getTimePassed();
+	double ts = time.GetTimePassed();
 	if (Input::IsKeyPressed(KEV_KEY_A))
 	{
 		CamPos.x -= cos(CamRot) * CamTranslationSpeed * ts;
@@ -58,7 +58,7 @@ void OrthographicCameraController::OnUpdate()
 
 	Camera.SetPosition(CamPos);
 
-	time.reset();
+	time.Reset();
 }
 
 void OrthographicCameraController::OnEvent(Event& e)

@@ -78,25 +78,25 @@ public:
     }
     virtual ~Renderable2D() = default;
 
-    inline virtual void submit(GL2DRenderer* renderer) const { renderer->submit(this); }
+    inline virtual void Submit(GL2DRenderer* renderer) const { renderer->Submit(this); }
 
-    inline virtual const Vec3f &getPosition() const { return position; }
-    inline virtual const void setPosition(Vec3f &newPosition) { position = newPosition; screenPos = GetScreenPos(); }
+    inline virtual const Vec3f &GetPosition() const { return position; }
+    inline virtual const void SetPosition(Vec3f &newPosition) { position = newPosition; screenPos = GetScreenPos(); }
     
-    inline virtual const Vec2f &getSize() const { return size; }
-    inline virtual const void setSize(Vec2f &newSize) { size = newSize; }
+    inline virtual const Vec2f &GetSize() const { return size; }
+    inline virtual const void SetSize(Vec2f &newSize) { size = newSize; }
     
-    inline virtual const uint32_t &getColor() const { return color; }
-    inline virtual const void setColor(Vec4f newColor) {color = newColor.ColorAsInt(); }
-    inline virtual const void setColor(uint32_t newColor) { color = newColor; }
+    inline virtual const uint32_t &GetColor() const { return color; }
+    inline virtual const void SetColor(Vec4f newColor) {color = newColor.ColorAsInt(); }
+    inline virtual const void SetColor(uint32_t newColor) { color = newColor; }
     
-    inline virtual Texture* getTexturePtr() { return texture; }
+    inline virtual Texture* GetTexturePtr() { return texture; }
     
     inline virtual const char* GetName()    { return name; }
     inline virtual const void SetName(const char* Name) { name = Name; }
     
     inline virtual const unsigned int GetUID() { return uid; }
-    inline virtual const GLuint getTextureID() const { return texID; }
+    inline virtual const GLuint GetTextureID() const { return texID; }
 
     inline virtual const void SetBase(Vec3f* origin) { baseOrigin = origin; screenPos = GetScreenPos(); }
     inline virtual const Vec3f* GetBase() { return baseOrigin; }

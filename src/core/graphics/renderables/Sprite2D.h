@@ -64,11 +64,11 @@ public:
 
     void OnClick()
     {
-        if (debounce.getTimePassed() > 0.5f)
+        if (debounce.GetTimePassed() > 0.5f)
         {
             activated = !activated;
             SolidObject = !SolidObject;
-            debounce.reset();
+            debounce.Reset();
         }
     }
 

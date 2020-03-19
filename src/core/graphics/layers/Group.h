@@ -20,11 +20,11 @@ public:
         }
     }
 
-    void add(Renderable2D* renderable);
-    void submit(GL2DRenderer* renderer) const override;
+    void Add(Renderable2D* renderable);
+    void Submit(GL2DRenderer* renderer) const override;
 
-    inline Texture* getTextureFromChild(GLuint index) const { return children[index]->getTexturePtr(); }
-    inline unsigned int getNumChildren() { return children.size(); }
+    inline Texture* GetTextureFromChild(GLuint index) const { return children[index]->GetTexturePtr(); }
+    inline unsigned int GetNumChildren() { return children.size(); }
 
     //bool IsColliding(Renderable2D* other) override;
     virtual void CheckCollision(Renderable2D* other) override;

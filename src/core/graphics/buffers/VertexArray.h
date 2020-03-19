@@ -16,8 +16,8 @@ public:
     VertexArray();
     ~VertexArray();
 
-    void addBuffer(Buffer* buf, GLuint idx);
-    void bind() const;
-    void unbind() const;
+    void AddBuffer(Buffer* buf, GLuint idx);
+    void Bind() const;
+    void Unbind() const;
 };
 #endif

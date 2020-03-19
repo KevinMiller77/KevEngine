@@ -25,12 +25,12 @@ public:
     Texture();
     Texture(const char *inImagePath, Vec2f flip = Vec2f(0.0f, 0.0f));
     ~Texture();
-    void init(Vec2f flip = Vec2f(0.0f, 0.0f));
+    void Init(Vec2f flip = Vec2f(0.0f, 0.0f));
     BYTE* ImageLoad(const char* path, GLuint *width, GLuint *height, FREE_IMAGE_FORMAT* format, Vec2f flip = Vec2f(0.0f, 0.0f));
-    void bind();
-    void unbind();
+    void Bind();
+    void Unbind();
 
-    inline const GLuint getTextureID() const { return texture; }
+    inline const GLuint GetTexID() const { return texture; }
 };
 
 #endif

@@ -15,7 +15,7 @@ Texture::Texture()
 Texture::Texture(const char *inImagePath, Vec2f flip)
 {
     imagePath = (char*) inImagePath;
-    init(flip);
+    Init(flip);
 }
 
 Texture::~Texture()
@@ -24,7 +24,7 @@ Texture::~Texture()
     delete heapLocOfTexture;
 }
 
-void Texture::init(Vec2f flip)
+void Texture::Init(Vec2f flip)
 {
     FreeImage_Initialise();
 
@@ -110,12 +110,12 @@ BYTE* Texture::ImageLoad(const char* path, GLuint *width, GLuint *height, FREE_I
 	return result;
 }
 
-void Texture::bind()
+void Texture::Bind()
 {
     glBindTexture(GL_TEXTURE_2D, texture);
 }
 
-void Texture::unbind()
+void Texture::Unbind()
 {
     glBindTexture(GL_TEXTURE_2D, 0);
 }

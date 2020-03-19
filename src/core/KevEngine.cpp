@@ -96,7 +96,7 @@ void KevEngine::Run()
 {
     double c = 1.0f / 60.0f;
     unsigned int updatesThiscSec = 0;
-    timer.reset();
+    timer.Reset();
     while (running)
     {
         if (!minimized)
@@ -106,10 +106,10 @@ void KevEngine::Run()
                 OnUpdate();
                 updatesThiscSec++;
             }
-            else if (timer.getTimePassed() >= c)
+            else if (timer.GetTimePassed() >= c)
             {
                 updatesThiscSec = 0;
-                timer.reset();
+                timer.Reset();
             }
             OnDraw();
         }

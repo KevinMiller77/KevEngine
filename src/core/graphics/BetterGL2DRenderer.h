@@ -37,14 +37,14 @@ public:
     BetterGL2DRenderer();
     ~BetterGL2DRenderer() override;
 
-    void submit(const Renderable2D *renderable) override;
-    void draw() override;
-    void drawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) override;
-    void begin();
-    void end();
+    void Submit(const Renderable2D *renderable) override;
+    void Draw() override;
+    void DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) override;
+    void Begin();
+    void End();
 
 private:
-    void init();
+    void Init();
 };
 
 #endif

@@ -28,11 +28,11 @@ public:
     Layer() {};
     virtual ~Layer();
 
-    virtual void add(Renderable2D *renderable);
-    virtual void render();
+    virtual void Add(Renderable2D *renderable);
+    virtual void Render();
 
-    virtual inline GLuint getShader() { return Shader; }
-    virtual inline void setShader(GLuint shader) { Shader = shader; }
+    virtual inline GLuint GetShader() { return Shader; }
+    virtual inline void SetShader(GLuint shader) { Shader = shader; }
 
     virtual void OnAttach() = 0;
     virtual void OnDetatch() = 0;
@@ -41,14 +41,14 @@ public:
     virtual void OnDraw() = 0;
     virtual void OnEvent(Event& e) = 0;
 
-    virtual inline unsigned int getNumRenderables() { return renderables.size(); }
+    virtual inline unsigned int GetNumRenderables() { return renderables.size(); }
 
-    virtual inline void pushTransform(Mat4f *transform) { Renderer->push(*transform); }
-    virtual inline void poptransform() { Renderer->pop(); }
+    virtual inline void PushTransform(Mat4f *transform) { Renderer->Push(*transform); }
+    virtual inline void PopTransform() { Renderer->Pop(); }
 
-    inline void enable() { enabled = true; }
-    inline void disable() { enabled = false; }
-    inline void toggle() { enabled = !enabled; }
+    inline void Enable() { enabled = true; }
+    inline void Disable() { enabled = false; }
+    inline void Toggle() { enabled = !enabled; }
 };
 
 #endif

@@ -14,10 +14,10 @@ private:
 public:
     Label(std::string Text, float x, float y, FontInfo* font, Vec4f col);
 
-    void submit(GL2DRenderer* renderer) const override;
+    void Submit(GL2DRenderer* renderer) const override;
 
-    inline void setText(std::string Text) { text = Text; }
-    inline std::string getText() { return text; }
+    inline void SetText(std::string Text) { text = Text; }
+    inline std::string GetText() { return text; }
 
 };
 

@@ -5,7 +5,7 @@ unsigned int Renderable2D::globalNumRenderables;
 BetterGL2DRenderer::BetterGL2DRenderer()
 {
     indexCount = 0;
-    init();
+    Init();
 }
 
 BetterGL2DRenderer::~BetterGL2DRenderer()
@@ -15,7 +15,7 @@ BetterGL2DRenderer::~BetterGL2DRenderer()
     glDeleteBuffers(1, &VBO);
 }
 
-void BetterGL2DRenderer::init()
+void BetterGL2DRenderer::Init()
 {
     //Generate all of the necessary spaces in memory
     glGenVertexArrays(1, &VAO);
@@ -64,19 +64,19 @@ void BetterGL2DRenderer::init()
     glBindVertexArray(0);    
 }
 
-void BetterGL2DRenderer::begin()
+void BetterGL2DRenderer::Begin()
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     VDataBuffer = (VertexData *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     VDataHeapLoc = VDataHeapLoc ? VDataHeapLoc : VDataBuffer; 
 }
 
-void BetterGL2DRenderer::submit(const Renderable2D *renderable)
+void BetterGL2DRenderer::Submit(const Renderable2D *renderable)
 {
-    const Vec3f position = renderable->getPosition();
-    const Vec2f size = renderable->getSize();
-    const uint32_t color = renderable->getColor();
-    const GLuint texID = renderable->getTextureID();
+    const Vec3f position = renderable->GetPosition();
+    const Vec2f size = renderable->GetSize();
+    const uint32_t color = renderable->GetColor();
+    const GLuint texID = renderable->GetTextureID();
 
     float ts = 0.0f;
     if (texID > 0)
@@ -97,9 +97,9 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
         {
             if (TextureSlots.size() >= MAX_TEXTURE_SLOTS)
             {
-                end();
-                draw();
-                begin();
+                End();
+                Draw();
+                Begin();
             }
             TextureSlots.push_back(texID);
             ts = (float)(TextureSlots.size());
@@ -135,7 +135,7 @@ void BetterGL2DRenderer::submit(const Renderable2D *renderable)
     indexCount += 6;
 }
 
-void BetterGL2DRenderer::drawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
+void BetterGL2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
 {
     using namespace ftgl;
 
@@ -155,9 +155,9 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, FontInfo* 
     {
         if (TextureSlots.size() >= MAX_TEXTURE_SLOTS)
         {
-            end();
-            draw();
-            begin();
+            End();
+            Draw();
+            Begin();
         }
         TextureSlots.push_back(font->atlas->id);
         ts = (float)(TextureSlots.size());
@@ -219,13 +219,13 @@ void BetterGL2DRenderer::drawString(std::string text, Vec3f position, FontInfo* 
     }
 }
 
-void BetterGL2DRenderer::end()
+void BetterGL2DRenderer::End()
 {
     glUnmapBuffer(GL_ARRAY_BUFFER);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void BetterGL2DRenderer::draw()
+void BetterGL2DRenderer::Draw()
 {
     for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
     {
@@ -234,11 +234,11 @@ void BetterGL2DRenderer::draw()
     }
 
     glBindVertexArray(VAO);
-    IBO->bind();
+    IBO->Bind();
 
     glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
 
-    IBO->unbind();
+    IBO->Unbind();
     glBindVertexArray(0);
 
     indexCount = 0;

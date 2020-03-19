@@ -3,13 +3,13 @@
 FollowRenderableCamera::FollowRenderableCamera(float horizontalMax, float verticalMax)
     : Camera(-horizontalMax, horizontalMax, -verticalMax, verticalMax)
 {
-    time.reset();
+    time.Reset();
 }
 
 FollowRenderableCamera::FollowRenderableCamera(float horizontalMax, float verticalMax, Renderable2D* renderable)
     : Camera(-horizontalMax, horizontalMax, -verticalMax, verticalMax), renderableToFollow(renderable)
 {
-    time.reset();
+    time.Reset();
 }
     
 void FollowRenderableCamera::OnUpdate()
@@ -19,7 +19,7 @@ void FollowRenderableCamera::OnUpdate()
         return;
     }
     
-	double ts = time.getTimePassed();
+	double ts = time.GetTimePassed();
     Vec3f renPos = renderableToFollow->GetScreenPos();
     Vec3f camPos = Camera.GetPosition();
     
@@ -41,7 +41,7 @@ void FollowRenderableCamera::OnUpdate()
     //     Camera.SetPosition(Vec3f(renPos.x, renPos.y, renPos.z)); 
     // }
 
-    time.reset();
+    time.Reset();
 }
 
 void FollowRenderableCamera::OnEvent(Event& e)

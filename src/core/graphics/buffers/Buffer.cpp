@@ -15,12 +15,12 @@ Buffer::~Buffer()
     glDeleteBuffers(1, &BufferID);
 }
 
-void Buffer::bind()
+void Buffer::Bind()
 {
     glBindBuffer(GL_ARRAY_BUFFER, BufferID);
 }
 
-void Buffer::unbind()
+void Buffer::Unbind()
 {
     glBindBuffer(GL_ARRAY_BUFFER, BufferID);
 }

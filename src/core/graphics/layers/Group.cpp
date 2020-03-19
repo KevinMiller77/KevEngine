@@ -9,7 +9,7 @@ Group::Group(const Mat4f transform)
     baseOrigin = new Vec3f(ModelMatrix[3].x, ModelMatrix[3].y, ModelMatrix[3].z);
 }
 
-void Group::add(Renderable2D* renderable)
+void Group::Add(Renderable2D* renderable)
 {
     children.push_back(renderable);
     if (renderable->GetBase() == nullptr)
@@ -23,14 +23,14 @@ void Group::add(Renderable2D* renderable)
     }
 }
 
-void Group::submit(GL2DRenderer* renderer) const
+void Group::Submit(GL2DRenderer* renderer) const
 {
-    renderer->push(ModelMatrix);
+    renderer->Push(ModelMatrix);
     for (const Renderable2D* renderable : children)
     {
-        renderable->submit(renderer);
+        renderable->Submit(renderer);
     }
-    renderer->pop();
+    renderer->Pop();
 }
 
 void Group::CheckCollision(Renderable2D* other)

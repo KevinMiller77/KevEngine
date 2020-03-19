@@ -21,13 +21,13 @@ public:
         textureMap.clear();
     }
 
-    void addTexture(const char* ID, Texture* Texture);
-    void newTexture(const char* ID, const char* image_path, Vec2f flip = Vec2f(0.0f, 0.0f));
+    void AddTexture(const char* ID, Texture* Texture);
+    void NewTexture(const char* ID, const char* image_path, Vec2f flip = Vec2f(0.0f, 0.0f));
 
-    void clearTextures();
+    void ClearTextures();
 
-    GLuint getNum(const char* ID);
-    Texture* getTexture(const char* ID);
+    GLuint GetNum(const char* ID);
+    Texture* GetTexture(const char* ID);
 };
 
 #endif

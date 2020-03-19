@@ -1,6 +1,6 @@
 #include "FontManager.h"
 
-void FontManager::add(const char* ID, const char* location, uint16_t size)
+void FontManager::Add(const char* ID, const char* location, uint16_t size)
 {
     for (FontInfo* font : fonts)
     {
@@ -29,7 +29,7 @@ void FontManager::add(const char* ID, const char* location, uint16_t size)
     fonts.push_back(newFont);
 }
 
-FontInfo* FontManager::get(const char* ID)
+FontInfo* FontManager::Get(const char* ID)
 {
     for (FontInfo* font : fonts)
     {
@@ -44,7 +44,7 @@ FontInfo* FontManager::get(const char* ID)
     return nullptr;
 }
 
-void FontManager::clearFonts()
+void FontManager::ClearFonts()
 {
     for (FontInfo* font : fonts)
     {

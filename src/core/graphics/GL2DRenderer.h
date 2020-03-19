@@ -29,7 +29,7 @@ protected:
 public:
     virtual ~GL2DRenderer() = default;
     
-    void push(const Mat4f &matrix, bool override = false)
+    void Push(const Mat4f &matrix, bool override = false)
     {
         if (override)
         {
@@ -44,7 +44,7 @@ public:
         curTransformationBack = &(TransformationStack.back());
     }
 
-    void pop()
+    void Pop()
     {
         if (TransformationStack.size() > 1)
         {
@@ -55,11 +55,11 @@ public:
     }
 
 
-    virtual void drawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) = 0;
-    virtual void submit(const Renderable2D *renderable) = 0;
-    virtual void draw() = 0;
-    virtual void begin() = 0;
-    virtual void end() = 0;
+    virtual void DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) = 0;
+    virtual void Submit(const Renderable2D *renderable) = 0;
+    virtual void Draw() = 0;
+    virtual void Begin() = 0;
+    virtual void End() = 0;
 };
 
 #endif

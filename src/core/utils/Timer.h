@@ -21,30 +21,30 @@ public:
         mainTimerStart = steady_clock::now();
     }
 
-    void start()
+    void Start()
     {
         timeSpan = (duration<double>)(0);
         mainTimerStart = steady_clock::now();
         frames = 0;
     }
 
-    void reset()
+    void Reset()
     {
         mainTimerStart = steady_clock::now();
     }
 
-    double getTimePassed() { 
+    double GetTimePassed() { 
         timeSpan = (steady_clock::now() - mainTimerStart);
         return timeSpan.count();
     }
 
-    unsigned int frameKeep()
+    unsigned int FrameKeep()
     {
         frames++;
-        if (getTimePassed() >= 1.0f)
+        if (GetTimePassed() >= 1.0f)
         {
             unsigned int thisgoround = frames;
-            reset();
+            Reset();
             frames = 0;
             return thisgoround;
         }
@@ -54,10 +54,10 @@ public:
         }
     }
 
-    double getTimePassedReset()
+    double GetTimePassedReset()
     {
-        double time = getTimePassed();
-        reset();
+        double time = GetTimePassed();
+        Reset();
         return time;
     }
 

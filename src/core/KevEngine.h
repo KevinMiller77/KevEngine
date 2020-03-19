@@ -73,13 +73,13 @@ public:
     //TODO: Reset engine
     virtual void ResetEngine() {};
 
-    inline void setScreenResolution(Vec2u in) { screenResolution = in; }
-    inline Vec2u getScreenResolution() const { return screenResolution; }
-    inline bool getWindowMode() const { return windowedMode; }
-    inline void setWindowMode(bool newMode) { windowedMode = newMode; }
+    inline void SetScreenResolution(Vec2u in) { screenResolution = in; }
+    inline Vec2u GetScreenResolution() const { return screenResolution; }
+    inline bool GetWindowMode() const { return windowedMode; }
+    inline void SetWindowMode(bool newMode) { windowedMode = newMode; }
 
-    inline void setMousePos(Vec2u in) { mousePos = in; }
-    inline Vec2u getMousePos() const { return mousePos; } 
+    inline void SetMousePos(Vec2u in) { mousePos = in; }
+    inline Vec2u GetMousePos() const { return mousePos; } 
 
 private:
     static KevEngine* curEngine;

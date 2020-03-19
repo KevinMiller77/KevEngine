@@ -19,25 +19,25 @@ VertexArray::~VertexArray()
     }
 }
 
-void VertexArray::addBuffer(Buffer *buf, GLuint idx)
+void VertexArray::AddBuffer(Buffer *buf, GLuint idx)
 {
-    bind();
-    buf->bind();
+    Bind();
+    buf->Bind();
 
     glEnableVertexAttribArray(idx);
-    glVertexAttribPointer(idx, buf->getComponentCount(), GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(idx, buf->GetComponentCount(), GL_FLOAT, GL_FALSE, 0, 0);
 
-    buf->unbind();
-    unbind();
+    buf->Unbind();
+    Unbind();
 }
 
-void VertexArray::bind() const
+void VertexArray::Bind() const
 {
     LOG_INF("Binding VAO: %d\n", BufferID);
     glBindVertexArray(BufferID);
 }
 
-void VertexArray::unbind() const
+void VertexArray::Unbind() const
 {
 
     LOG_INF("Unbinding VAO: %d\n", BufferID);

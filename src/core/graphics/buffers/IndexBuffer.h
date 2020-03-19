@@ -18,10 +18,10 @@ public:
     IndexBuffer(GLuint *data, GLsizei count);
     ~IndexBuffer();
 
-    void bind() const;
-    void unbind() const;
+    void Bind() const;
+    void Unbind() const;
 
-    inline GLuint getCount() const { return Count; }
+    inline GLuint GetCount() const { return Count; }
 };
 
 #endif

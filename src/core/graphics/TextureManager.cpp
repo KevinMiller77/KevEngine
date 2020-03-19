@@ -1,21 +1,21 @@
 #include "TextureManager.h"
 
-void TextureManager::addTexture(const char* ID, Texture* Texture)
+void TextureManager::AddTexture(const char* ID, Texture* Texture)
 {
     textures.push_back(Texture);
     textureMap.insert({ ID, textures.size() - 1});
     LOG_INF("New texture in array. Key: %s Value: %d\n", ID, textures.size());
 }
 
-void TextureManager::newTexture(const char* ID, const char* image_path, Vec2f flip)
+void TextureManager::NewTexture(const char* ID, const char* image_path, Vec2f flip)
 {
     Texture* texture = new Texture(image_path, flip);
     textures.push_back(texture);
     textureMap.insert({ ID, textures.size() - 1 });
-    LOG_INF("New texture in array. Key: %s Value: %d GLuint %d\n", ID, textures.size() - 1, texture->getTextureID());
+    LOG_INF("New texture in array. Key: %s Value: %d GLuint %d\n", ID, textures.size() - 1, texture->GetTexID());
 }
 
-void TextureManager::clearTextures()
+void TextureManager::ClearTextures()
 {
      for (Texture* texture : textures)
      {
@@ -25,13 +25,13 @@ void TextureManager::clearTextures()
      textureMap.clear();
 }
 
-Texture* TextureManager::getTexture(const char* ID)
+Texture* TextureManager::GetTexture(const char* ID)
 {
     Texture* wantedTex = textures[textureMap[ID]];
     return wantedTex;
 }
 
-GLuint TextureManager::getNum(const char* ID)
+GLuint TextureManager::GetNum(const char* ID)
 {
     return textureMap[ID];
 }

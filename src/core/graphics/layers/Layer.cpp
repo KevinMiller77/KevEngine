@@ -15,24 +15,24 @@ Layer::~Layer()
     }
 }
 
-void Layer::add(Renderable2D *renderable)
+void Layer::Add(Renderable2D *renderable)
 {
     renderables.push_back(renderable);
 }
 
-void Layer::render()
+void Layer::Render()
 {
     if (enabled)
     {
-        ShaderProgram::enableShaderProgram(Shader);
-        Renderer->begin();
+        ShaderProgram::EnableShaderProgram(Shader);
+        Renderer->Begin();
 
         for (Renderable2D *renderable : renderables)
         {
-            renderable->submit(Renderer);
+            renderable->Submit(Renderer);
         }
         
-        Renderer->end();   
-        Renderer->draw();
+        Renderer->End();   
+        Renderer->Draw();
     }
 }

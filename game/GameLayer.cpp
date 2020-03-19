@@ -24,13 +24,13 @@ GameLayer::~GameLayer()
 
 void GameLayer::OnAttach()
 {
-    updateTime.reset();
+    updateTime.Reset();
 
     //Setup textures
     //textures.newTexture("crate", "resources/textures/container.jpg");
     //textures.newTexture("sponge","resources/textures/spongebob.jpg");
-    textures.newTexture("morty", "resources/textures/morty.jpg", Vec2f(0.0f, 1.0f));
-    textures.newTexture("dude", "resources/textures/KevDude.png");
+    textures.NewTexture("morty", "resources/textures/morty.jpg", Vec2f(0.0f, 1.0f));
+    textures.NewTexture("dude", "resources/textures/KevDude.png");
 
     Group* background = new Group(Mat4f::translation(Vec3f(-16.0f, -9.0f, 0.0f)));
     Group* text = new Group(Mat4f::translation(Vec3f(-16.0f, -9.0f, 0.0f)));
@@ -41,17 +41,17 @@ void GameLayer::OnAttach()
     {
         for (float y = 0.0f; y < 18.0f; y++)
         {
-            background->add(new Sprite(x, y, 1, 1, textures.getTexture("morty")));
+            background->Add(new Sprite(x, y, 1, 1, textures.GetTexture("morty")));
         }
     }
 
 
-    player = new Sprite(0, 0, 2.0f, 4.0f, textures.getTexture("dude")); 
-    background->add(player);
+    player = new Sprite(0, 0, 2.0f, 4.0f, textures.GetTexture("dude")); 
+    background->Add(player);
     //camera.SetRenderable(player);
-    add(background);
+    Add(background);
 
-    updateTime.reset();
+    updateTime.Reset();
 }
 
 void GameLayer::OnDetatch()
@@ -64,13 +64,13 @@ void GameLayer::OnUpdate()
     //Begin frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    double ts = updateTime.getTimePassed();
+    double ts = updateTime.GetTimePassed();
 
     camera.OnUpdate();
-    ShaderProgram::enableShaderProgram(Shader);
-    ShaderProgram::setShaderUniformMat4(Shader, "pr_matrix", camera.GetCamera().GetViewProjectionMatrix());
+    ShaderProgram::EnableShaderProgram(Shader);
+    ShaderProgram::SetShaderUniformMat4(Shader, "pr_matrix", camera.GetCamera().GetViewProjectionMatrix());
 
-    Vec3f curPlayerPos = player->getPosition();
+    Vec3f curPlayerPos = player->GetPosition();
 
     if (Input::IsKeyPressed(KEV_KEY_D))
     {
@@ -107,7 +107,7 @@ void GameLayer::OnUpdate()
     }
 
     //On ground
-    if (curPlayerPos.y + player->getSize().y >= 17.95f)
+    if (curPlayerPos.y + player->GetSize().y >= 17.95f)
     {
         //Is the first time ive been here
         if (!onGround)
@@ -150,24 +150,24 @@ void GameLayer::OnUpdate()
     float newX = curPlayerPos.x + playerVelocity.x;
     float newY = curPlayerPos.y + playerVelocity.y;
 
-    if (newX > 32.0f - player->getSize().x)
+    if (newX > 32.0f - player->GetSize().x)
     {
-        newX = 32.0f - player->getSize().x;
+        newX = 32.0f - player->GetSize().x;
     } else if (newX < 0.0f)
     {
         newX = 0.0f;
     }
-    if (newY > 18.0f - player->getSize().y)
+    if (newY > 18.0f - player->GetSize().y)
     {
-        newY = 18.0f - player->getSize().y;
+        newY = 18.0f - player->GetSize().y;
     } else if (newY < 0.0f)
     {
         newY = 0.0f;
     }
 
-    player->setPosition(Vec3f(newX, newY, 0.0f));
+    player->SetPosition(Vec3f(newX, newY, 0.0f));
     
-    updateTime.reset();
+    updateTime.Reset();
 
     Manager.MouseCheck(mousePos);
     Manager.CollisionCheck();
@@ -175,7 +175,7 @@ void GameLayer::OnUpdate()
 
 void GameLayer::OnDraw()
 {
-    render();
+    Render();
 }
 
 bool GameLayer::MouseScroll(MouseScrolledEvent& e)

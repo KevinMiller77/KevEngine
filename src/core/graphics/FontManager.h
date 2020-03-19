@@ -40,10 +40,10 @@ public:
         fonts.clear();
     }
 
-    void add(const char* ID, const char* location, uint16_t size);
-    FontInfo* get(const char* ID);
+    void Add(const char* ID, const char* location, uint16_t size);
+    FontInfo* Get(const char* ID);
 
-    void clearFonts();
+    void ClearFonts();
     
 };
 

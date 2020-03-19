@@ -15,29 +15,29 @@ public:
         : KevEngine(this)
     {
         Renderable2D::GameStart();
-        fps.start();
-        ups.start();
-        keyPressTimeout.start();
+        fps.Start();
+        ups.Start();
+        keyPressTimeout.Start();
 
         //Set shader info
-        shaders.newShader("basic", "resources/shaders/SimpleVertexShader.glsl", "resources/shaders/SimpleFragShader.glsl");
-        shaders.enable("basic");
+        shaders.NewShader("basic", "resources/shaders/SimpleVertexShader.glsl", "resources/shaders/SimpleFragShader.glsl");
+        shaders.Enable("basic");
 
         //Load in the texture coords for the shader
         int slots[MAX_TEXTURE_SLOTS];
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
-        shaders.setUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
+        shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
         
         LOG_INF("Screen size: %d, %d", window->GetWidth(), window->GetHeight());
 
-        PushLayer(new GameLayer(shaders.getShader("basic").getShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
-        PushOverlay(new HUD(shaders.getShader("basic").getShaderID()));
+        PushLayer(new GameLayer(shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
+        PushOverlay(new HUD(shaders.GetShader("basic").GetShaderID()));
     }
     ~KevGame() override {}
 
     void OnChildDraw()
     {
-        unsigned int newFrames = fps.frameKeep();
+        unsigned int newFrames = fps.FrameKeep();
         if ( newFrames != 0)
         {
             LastFrameKeep = newFrames;
@@ -47,18 +47,18 @@ public:
     void OnChildUpdate()
     {
         //LOG_INF("Numrenderablesglobal: %d", Renderable2D::GetGlobalNumRenderables());
-        unsigned int newUpdate = ups.frameKeep();
+        unsigned int newUpdate = ups.FrameKeep();
         if ( newUpdate != 0)
         {
             LastUpdateKeep = newUpdate;
         }
 
-        if (keyPressTimeout.getTimePassed() > 0.6)
+        if (keyPressTimeout.GetTimePassed() > 0.6)
         {
             if (Input::IsKeyPressed(KEV_KEY_F))
             {
                 window->ToggleFullscreen();
-                keyPressTimeout.reset();
+                keyPressTimeout.Reset();
             }
         }
     }
