@@ -46,7 +46,6 @@ protected:
     Vec2f screenSize;
 
     Timer timer;
-    Timer keyPressTimeout;
 
     ShaderManager shaders;
 

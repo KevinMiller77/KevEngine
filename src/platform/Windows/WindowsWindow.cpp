@@ -301,26 +301,36 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
     hInstance = HINST_THISCOMPONENT;
     InitalizeConsole();
 
-    WNDCLASS wc = {};
-    wc.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
-    wc.lpfnWndProc = WindowProc;
+    WNDCLASSEX wc = {};
     wc.hInstance = hInstance;
     wc.lpszClassName = (LPCSTR)inf.Title;
+    wc.lpfnWndProc = WindowProc;
+    wc.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
+    wc.cbSize = sizeof(WNDCLASSEX);
+    
+    wc.hIcon = LoadIcon (NULL, IDI_APPLICATION);
+    wc.hIconSm = LoadIcon (NULL, IDI_APPLICATION);
+    wc.hCursor = LoadCursor (NULL, IDC_ARROW);
+    wc.lpszMenuName = NULL;   
+    wc.cbClsExtra = 0;            
+    wc.cbWndExtra = 0;
 
-    RegisterClass(&wc);
-
+    RegisterClassEx(&wc);
+    
     // GLEW is initalized in here
     LoadGLExtensions(hInstance);
 
-    window = CreateWindow((LPCSTR)inf.Title, "KevGame", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720, NULL, NULL, hInstance, NULL);
-    
+    RECT r = {0, 0, KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y};
+    AdjustWindowRect(&r, WS_OVERLAPPEDWINDOW, FALSE);
+
+    window = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, (LPCSTR)inf.Title, "KevGame", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, r.right - r.left, r.bottom - r.top, HWND_DESKTOP, NULL, hInstance, NULL);
+
     windowHDC = GetDC(window);
     
     //HGLRC baseGLContext = CreateGLContext(windowHDC);
     gameGLContext = CreateGLContext();
 
     wglMakeCurrent(windowHDC, gameGLContext);
-    restartGLContext();
     data.windowed = true;
 
     // TODO(Adin): Investigate why this needs "%s"
@@ -442,6 +452,14 @@ unsigned int WindowsWindow::GetHeight() const
     RECT rect;
     if (GetWindowRect(window, &rect))
         return rect.bottom - rect.top;
+}
+
+Vec2u WindowsWindow::GetMousePos() const
+{
+    POINT pt;
+    GetCursorPos(&pt);
+    ScreenToClient(window, &pt);
+    return Vec2u(pt.x, pt.y);
 }
 
 void WindowsWindow::ShutDown()

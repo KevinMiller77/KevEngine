@@ -1,6 +1,9 @@
 #ifndef __CORE__
 #define __CORE__
 
+#define KEV_ENGINE_WINDOW_X 1280
+#define KEV_ENGINE_WINDOW_Y 720
+
 #include <memory>
 #include <functional>
 #include "utils/MemoryTracker.h"

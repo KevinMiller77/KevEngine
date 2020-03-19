@@ -19,7 +19,7 @@
 
 class GameLayer : public Layer
 {
-    Vec2u screenSize = Vec2u(1280, 720);
+    Vec2u screenSize;
     Vec2f screenExtremes;
     //Mouse pos adjusted to be in world space (-X, X, -Y, Y)
     Vec2f mousePos;
@@ -35,7 +35,7 @@ class GameLayer : public Layer
     float maxAcceleration = 0.5f;
     float maxJumpAcceleration = 2;
     float jumpAcceleration = 0.8;
-    float gravityConstant = 0.2;
+    float gravityConstant = 0.5;
     bool jumping = false;
     int jumpCount = 0;
     int maxJump = 15;

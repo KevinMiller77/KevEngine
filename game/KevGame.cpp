@@ -9,6 +9,7 @@ class KevGame : public KevEngine
 {
     Timer fps;
     Timer ups;
+    Timer keyPressTimeout;
 public:
     KevGame()
         : KevEngine(this)
@@ -16,6 +17,8 @@ public:
         Renderable2D::GameStart();
         fps.start();
         ups.start();
+        keyPressTimeout.start();
+
         //Set shader info
         shaders.newShader("basic", "resources/shaders/SimpleVertexShader.glsl", "resources/shaders/SimpleFragShader.glsl");
         shaders.enable("basic");
@@ -25,7 +28,9 @@ public:
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
         shaders.setUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
         
-        PushLayer(new GameLayer(shaders.getShader("basic").getShaderID(), Vec2u(window->GetWidth(), window->GetHeight())));
+        LOG_INF("Screen size: %d, %d", window->GetWidth(), window->GetHeight());
+
+        PushLayer(new GameLayer(shaders.getShader("basic").getShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
         PushOverlay(new HUD(shaders.getShader("basic").getShaderID()));
     }
     ~KevGame() override {}
@@ -46,6 +51,15 @@ public:
         if ( newUpdate != 0)
         {
             LastUpdateKeep = newUpdate;
+        }
+
+        if (keyPressTimeout.getTimePassed() > 0.6)
+        {
+            if (Input::IsKeyPressed(KEV_KEY_F))
+            {
+                window->ToggleFullscreen();
+                keyPressTimeout.reset();
+            }
         }
     }
 };

@@ -94,15 +94,21 @@ void KevEngine::PushOverlay(Layer* layer)
 
 void KevEngine::Run()
 {
-    double c = 1.0f / 70.0f;
+    double c = 1.0f / 60.0f;
+    unsigned int updatesThiscSec = 0;
     timer.reset();
     while (running)
     {
         if (!minimized)
         {
-            if (timer.getTimePassed() >= c)
+            if (updatesThiscSec < 1)
             {
                 OnUpdate();
+                updatesThiscSec++;
+            }
+            else if (timer.getTimePassed() >= c)
+            {
+                updatesThiscSec = 0;
                 timer.reset();
             }
             OnDraw();

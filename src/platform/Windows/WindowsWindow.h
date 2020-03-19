@@ -61,6 +61,7 @@ public:
 
     unsigned int GetWidth() const override;
 	unsigned int GetHeight() const override;
+    Vec2u GetMousePos() const override;
 
     // Window attributes
 	inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallback = callback; data.callbackSet = true; }

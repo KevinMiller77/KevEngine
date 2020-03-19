@@ -24,7 +24,7 @@ GameLayer::~GameLayer()
 
 void GameLayer::OnAttach()
 {
-    glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+    updateTime.reset();
 
     //Setup textures
     //textures.newTexture("crate", "resources/textures/container.jpg");
@@ -51,8 +51,6 @@ void GameLayer::OnAttach()
     //camera.SetRenderable(player);
     add(background);
 
-    //pushTransform(new Mat4f(Mat4f::translation(Vec3f(-screenExtremes.x, -screenExtremes.y, 0.0f))));
-
     updateTime.reset();
 }
 
@@ -78,33 +76,33 @@ void GameLayer::OnUpdate()
     {
         if (playerVelocity.x < 0)
         {
-            playerVelocity.x += 2.0f * acceleration ;
+            playerVelocity.x += 2.0f * acceleration * ts;
         }
         else
         {
-            playerVelocity.x = playerVelocity.x  + acceleration  <= maxAcceleration ? playerVelocity.x + acceleration : playerVelocity.x;
+            playerVelocity.x = playerVelocity.x  + acceleration * ts <= maxAcceleration ? playerVelocity.x + acceleration * ts: playerVelocity.x;
         }  
     }
     else if (Input::IsKeyPressed(KEV_KEY_A))
     {
         if (playerVelocity.x > 0)
         {
-            playerVelocity.x -= 2.0f * acceleration ;
+            playerVelocity.x -= 2.0f * acceleration * ts;
         }
         else
         {
-            playerVelocity.x = playerVelocity.x - acceleration  >= -maxAcceleration ? playerVelocity.x - acceleration : playerVelocity.x;
+            playerVelocity.x = playerVelocity.x - acceleration * ts >= -maxAcceleration ? playerVelocity.x - acceleration * ts: playerVelocity.x;
         }
     }
     else
     {
         if (playerVelocity.x > 0)
         {
-            playerVelocity.x = playerVelocity.x - 2 * acceleration  < 0 ? 0.0f : playerVelocity.x - 4 * acceleration ;
+            playerVelocity.x = playerVelocity.x - 2 * acceleration * ts < 0 ? 0.0f : playerVelocity.x - 4 * acceleration * ts;
         }
         else
         {
-            playerVelocity.x = playerVelocity.x + 2 * acceleration  > 0 ? 0.0f : playerVelocity.x + 4 * acceleration ;
+            playerVelocity.x = playerVelocity.x + 2 * acceleration * ts > 0 ? 0.0f : playerVelocity.x + 4 * acceleration * ts;
         }
     }
 
@@ -128,7 +126,7 @@ void GameLayer::OnUpdate()
 
         }
 
-        playerVelocity.y += gravityConstant;
+        playerVelocity.y += gravityConstant * ts;
     }
 
     if (Input::IsKeyPressed(KEV_KEY_SPACE))

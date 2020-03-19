@@ -46,7 +46,7 @@ void RenderableManager::CollisionCheck()
     std::sort(RenderablesToCheck.begin(), RenderablesToCheck.end(), RenderableManager::SortRenderablesByScreenX);
     // LOG_INF("Checking %d collisions\n", RenderablesToCheck.size());
     
-    std::map <Renderable2D*, Renderable2D*> detectedCollisions;
+    std::unordered_map <Renderable2D*, Renderable2D*> detectedCollisions;
     std::vector<Renderable2D*> CurrentlyViewing;
     for (Renderable2D* RigidBody : RenderablesToCheck)
     {
@@ -57,8 +57,6 @@ void RenderableManager::CollisionCheck()
             //New renderable passed old
             if (RigidBody->GetWorldLeftBound() >= second->GetWorldRightBound())
             {
-                // LOG_INF("RigidBodyX %d, other: %d\n");
-                std::remove(CurrentlyViewing.begin(), CurrentlyViewing.end(), second);
                 continue;
             }
 
