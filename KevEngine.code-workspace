@@ -1,0 +1,42 @@
+{
+	"folders": [
+		{
+			"path": "C:\\Users\\DatDudeOJ\\Documents\\Dev\\kevengine"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"fstream": "cpp",
+			"memory": "cpp",
+			"xhash": "cpp",
+			"algorithm": "cpp",
+			"xlocnum": "cpp",
+			"functional": "cpp",
+			"type_traits": "cpp",
+			"xmemory": "cpp",
+			"ios": "cpp",
+			"istream": "cpp",
+			"ostream": "cpp",
+			"xstring": "cpp",
+			"deque": "cpp",
+			"vector": "cpp",
+			"initializer_list": "cpp",
+			"list": "cpp",
+			"xtree": "cpp",
+			"xutility": "cpp",
+			"sstream": "cpp",
+			"streambuf": "cpp",
+			"string": "cpp",
+			"xiosbase": "cpp",
+			"xlocale": "cpp",
+			"iosfwd": "cpp",
+			"ratio": "cpp",
+			"xlocinfo": "cpp",
+			"chrono": "cpp",
+			"exception": "cpp",
+			"tuple": "cpp",
+			"utility": "cpp",
+			"*.rh": "cpp"
+		}
+	}
+}

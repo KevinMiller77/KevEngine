@@ -12,4 +12,3 @@ Release/*
 ext/freetype/bin
 bin/*
 .vs/*
-.vscode/*

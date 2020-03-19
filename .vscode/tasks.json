@@ -1,0 +1,80 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build",
+            "windows":
+            {
+                "command": ".\\build.bat",
+                "options": {
+                    "cwd": "${workspaceFolder}",
+                    "statusbar": {
+                        "hide": false,
+                        "label": "Build"
+                    }
+                },
+            },
+            "linux":
+            {
+                "command": "./build.sh",
+                "options": {
+                    "cwd": "${workspaceFolder}",
+                    "statusbar": {
+                        "hide": false,
+                        "label": "Build"
+                    }
+                },
+            },
+            "args": [],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$msCompile",
+                "$gcc"
+            ]
+        },
+        {
+            "type": "process",
+            "label": "Run",
+            "command": ".\\KevEngine",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "statusbar": {
+                    "hide": false,
+                    "label": "Run"
+                }
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "B & R",
+            "type": "shell",
+            "command": "",
+            "dependsOn": ["Build", "Run"],
+            "options": {
+                "statusbar": {
+                    "hide": false,
+                    "label": "B & R"
+                }
+            },
+        }
+    ],
+    "version": "2.0.0"
+}
