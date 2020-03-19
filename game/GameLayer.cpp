@@ -41,7 +41,7 @@ void GameLayer::OnAttach()
     {
         for (float y = 0.0f; y < 18.0f; y++)
         {
-            background->add(new Sprite(x, y, 1.0f, 1.0f, textures.getTexture("morty")));
+            background->add(new Sprite(x, y, 1, 1, textures.getTexture("morty")));
         }
     }
 
@@ -171,65 +171,13 @@ void GameLayer::OnUpdate()
     
     updateTime.reset();
 
-    CollisionCheck();
-    MouseCheck();
+    Manager.MouseCheck(mousePos);
+    Manager.CollisionCheck();
 }
 
 void GameLayer::OnDraw()
 {
     render();
-}
-
-void GameLayer::CollisionCheck()
-{
-    std::sort(renderables.begin(), renderables.end(), GameLayer::SortRenderables);
-    std::vector<Renderable2D*> CurrentlyViewed;
-    std::map<std::pair<Renderable2D*, Renderable2D*>, bool> checkedMap;
-    std::map<Renderable2D*, bool> hadCol;
-
-    for (Renderable2D* renderable : renderables)
-    {
-        if (!renderable->IsSolid())
-        {
-            continue;
-        }
-
-        //LOG_INF("Left bound: %f\n", renderable->GetLeftBound());
-        for (Renderable2D* second : CurrentlyViewed)
-        {
-            if (renderable->GetLeftBound() >= second->GetRightBound())
-            {
-                std::remove(CurrentlyViewed.begin(), CurrentlyViewed.end(), second);
-                continue;
-            }
-            if (checkedMap[std::pair<Renderable2D*, Renderable2D*>(renderable, second)])
-            {
-                continue;
-            }
-
-            //Collision
-            bool collision = renderable->IsColliding(second);           
-            hadCol[renderable] = true;
-            hadCol[second] = true;
-            checkedMap[std::pair<Renderable2D*, Renderable2D*>(renderable, second)] = true;
-        }
-        for (Renderable2D* renderable : renderables)
-        {
-            if (hadCol.find(renderable) == hadCol.end()) renderable->NoCollision();
-        }
-        CurrentlyViewed.push_back(renderable);
-    }
-}
-
-void GameLayer::MouseCheck()
-{
-    
-    //LOG_INF("Player Pos: %f, %f\t World Pos: %f, %f\n", player->getPosition().x, player->getPosition().y, player->GetScreenPos().x, player->GetScreenPos().y);
-    std::vector<Renderable2D*> underMouse;
-    for (int rend = renderables.size() - 1; rend >= 0; rend--)
-    {
-        renderables[rend]->MouseCheck(mousePos, underMouse);
-    }
 }
 
 bool GameLayer::MouseScroll(MouseScrolledEvent& e)

@@ -5,6 +5,7 @@ Group::Group(const Mat4f transform)
 {
     type = GroupType;
     SolidObject = false;
+    singleItem = false;
     baseOrigin = new Vec3f(ModelMatrix[3].x, ModelMatrix[3].y, ModelMatrix[3].z);
 }
 
@@ -32,14 +33,9 @@ void Group::submit(GL2DRenderer* renderer) const
     renderer->pop();
 }
 
-bool Group::IsColliding(Renderable2D* other)
+void Group::CheckCollision(Renderable2D* other)
 {
-    for (Renderable2D* child : children)
-    {
-        child->IsColliding(other);
-    }
-
-    return false;
+    
 }
 
 void Group::MouseCheck(Vec2f& mousePos, std::vector<Renderable2D*>& underMouse)

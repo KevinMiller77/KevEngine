@@ -15,6 +15,18 @@ struct Vec4f {
     const float& operator[](int index) const;
     float& operator[](int index);
     
+    inline unsigned int ColorAsInt() 
+    { 
+        unsigned int c;
+        unsigned int r = (int)(x * 255.0f);
+        unsigned int g = (int)(y * 255.0f);
+        unsigned int b = (int)(z * 255.0f);
+        unsigned int a = (int)(w * 255.0f);
+        
+        c = a << 24 | b << 16 | g << 8 | r;
+        return c;
+    }
+
     void operator+=(const Vec4f& other);
     void operator-=(const Vec4f& other);
     void operator*=(const Vec4f& other);

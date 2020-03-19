@@ -5,6 +5,7 @@
 #include "../TextureManager.h"
 #include "../FontManager.h"
 #include "../ShaderManager.h"
+#include "../RenderableManager.h"
 #include "../../events/Event.h"
 #include "../cameras/OrthographicCameraController.h"
 
@@ -15,7 +16,7 @@ protected:
 
     GL2DRenderer *Renderer;
     std::vector<Renderable2D *> renderables;
-    std::map<const char*, unsigned int> groupMap;
+    RenderableManager Manager = RenderableManager(&renderables);
     GLuint Shader;
 
     TextureManager textures;

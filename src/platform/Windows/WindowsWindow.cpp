@@ -34,18 +34,18 @@ int WindowsWindow::InitalizeConsole()
     BOOL success = AllocConsole();
     if (!success)
     {
-        if (!FreeConsole())
-        {
+        // if (!FreeConsole())
+        // {
             DebugBreak();
             return 1;
-        }
+        // }
 
-        BOOL success2 = AllocConsole();
-        if (!success2)
-        {
-            DebugBreak();
-            return 1;
-        }
+        // BOOL success2 = AllocConsole();
+        // if (!success2)
+        // {
+        //     DebugBreak();
+        //     return 1;
+        // }
 
     }
 
@@ -312,7 +312,7 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
     // GLEW is initalized in here
     LoadGLExtensions(hInstance);
 
-    window = CreateWindow((LPCSTR)inf.Title, "KevEngine Test Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720, NULL, NULL, hInstance, NULL);
+    window = CreateWindow((LPCSTR)inf.Title, "KevGame", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720, NULL, NULL, hInstance, NULL);
     
     windowHDC = GetDC(window);
     
@@ -320,6 +320,7 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
     gameGLContext = CreateGLContext();
 
     wglMakeCurrent(windowHDC, gameGLContext);
+    restartGLContext();
     data.windowed = true;
 
     // TODO(Adin): Investigate why this needs "%s"

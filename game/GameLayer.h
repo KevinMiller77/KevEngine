@@ -55,10 +55,6 @@ public:
     void OnUpdate() override;
     void OnDraw() override;
     void OnEvent(Event& e);
-
-    void CollisionCheck();
-    inline static bool SortRenderables(const void* p1, const void* p2) { return ((Renderable2D*)p1)->GetLeftBound() <= ((Renderable2D*)p2)->GetLeftBound(); }  
-    void MouseCheck();
 };
 
 #endif
