@@ -1,6 +1,5 @@
 #include "TextureProgram.h"
-
-
+#include <assert.h>
 
 Texture::Texture() 
 {
@@ -26,11 +25,14 @@ Texture::~Texture()
 
 void Texture::Init(Vec2f flip)
 {
-    FreeImage_Initialise();
+    stbi_set_flip_vertically_on_load(1);
 
-    FREE_IMAGE_FORMAT formatOfImage;
-    BYTE* image = ImageLoad(imagePath, &width, &height, &formatOfImage, flip);
+    stbi_uc* image = nullptr;
+    image = stbi_load(imagePath, &width, &height, &nrChannels, 4);
     
+    unsigned int InternalFormat = GL_RGBA8;
+    unsigned int DataFormat = GL_RGBA;
+
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -40,76 +42,21 @@ void Texture::Init(Vec2f flip)
 
     if (image)
     {
-        if (formatOfImage == FIF_PNG)
-        {
-            LOG_INF("PNG loaded\n");
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
-        }
-        else
-        {
-            LOG_INF("Loading texture of %d type\n", (int)formatOfImage);
-           glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
-        }
+        glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, width, height, 0, DataFormat, GL_UNSIGNED_BYTE, image);
         
         LOG_INF("Texture (%s) loaded\n", imagePath);
     }
     else
     {
         LOG_WRN("Failed to load texture (%s)\n", imagePath);
+        LOG_INF("Reason for fail: %s\n", stbi_failure_reason());
     }
 
-    FreeImage_DeInitialise();
     glBindTexture(GL_TEXTURE_2D, 0);
 
+    stbi_image_free(image);
+
 }
-
-BYTE* Texture::ImageLoad(const char* path, GLuint *width, GLuint *height, FREE_IMAGE_FORMAT* format, Vec2f flip)
-{
-    FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
-	FIBITMAP *dib = nullptr;
-	fif = FreeImage_GetFileType(path, 0);
-    *format = fif;
-
-    //Get file info
-	if (fif == FIF_UNKNOWN)
-    {
-        fif = FreeImage_GetFIFFromFilename(path);
-    }
-	if (fif == FIF_UNKNOWN)
-    {
-		return nullptr;
-    }
-
-    //Read file
-	if (FreeImage_FIFSupportsReading(fif))
-    {
-		dib = FreeImage_Load(fif, path);
-    }
-	if (!dib)
-    {
-	    return nullptr;
-    }
-
-    if((bool)(int)flip.x && dib)
-    {
-        LOG_INF("Flipping texture H\n");
-        FreeImage_FlipHorizontal(dib);
-    }
-    if((bool)(int)flip.y && dib)
-    {
-        LOG_INF("Flipping texture V\n");
-        FreeImage_FlipHorizontal(dib);
-    }
-
-
-	BYTE* result = FreeImage_GetBits(dib);
-	*width = FreeImage_GetWidth(dib);
-	*height = FreeImage_GetHeight(dib);
-    heapLocOfTexture = dib;
-
-	return result;
-}
-
 void Texture::Bind()
 {
     glBindTexture(GL_TEXTURE_2D, texture);

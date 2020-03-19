@@ -2,7 +2,7 @@
 #define __TEXTURE_PROGRAM__
 
 #define FREEIMAGE_LIB
-#include <FreeImage/FreeImage.h>
+#include <stb_image/stb_image.h>
 
 #include "GL/glew.h"
 
@@ -15,18 +15,17 @@ class Texture
 {
 private:
     char *imagePath;
-    GLuint width, height;
+    GLint width, height;
     GLint nrChannels;
 
     GLuint texture;
-    FIBITMAP* heapLocOfTexture;
+    void* heapLocOfTexture;
 
 public:
     Texture();
     Texture(const char *inImagePath, Vec2f flip = Vec2f(0.0f, 0.0f));
     ~Texture();
     void Init(Vec2f flip = Vec2f(0.0f, 0.0f));
-    BYTE* ImageLoad(const char* path, GLuint *width, GLuint *height, FREE_IMAGE_FORMAT* format, Vec2f flip = Vec2f(0.0f, 0.0f));
     void Bind();
     void Unbind();
 

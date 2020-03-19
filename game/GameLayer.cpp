@@ -28,8 +28,8 @@ void GameLayer::OnAttach()
 
     //Setup textures
     //textures.newTexture("crate", "resources/textures/container.jpg");
-    //textures.newTexture("sponge","resources/textures/spongebob.jpg");
-    textures.NewTexture("morty", "resources/textures/morty.jpg", Vec2f(0.0f, 1.0f));
+    //textures.NewTexture("sponge","resources/textures/spongebob.jpg");
+    textures.NewTexture("morty", "resources/textures/morty.jpg");
     textures.NewTexture("dude", "resources/textures/KevDude.png");
 
     Group* background = new Group(Mat4f::translation(Vec3f(-16.0f, -9.0f, 0.0f)));

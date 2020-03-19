@@ -27,8 +27,6 @@ public:
         int slots[MAX_TEXTURE_SLOTS];
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
         shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
-        
-        LOG_INF("Screen size: %d, %d", window->GetWidth(), window->GetHeight());
 
         PushLayer(new GameLayer(shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
         PushOverlay(new HUD(shaders.GetShader("basic").GetShaderID()));
