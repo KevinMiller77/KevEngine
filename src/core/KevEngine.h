@@ -21,15 +21,13 @@
 #include "utils/Timer.h"
 #include "graphics/Window.h"
 #include "events/Event.h"
+#include "graphics/Window.h"
 
 //TODO: Move this to the input.h util
 #define KEY_DEBOUNCE_TIME 0.2f
 
-#ifdef KEV_PLATFORM_WINDOWS
-    int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
-#else
-    int main(int argv, char** argc);
-#endif
+int main(int argv, char** argc);
+
 class KevEngine
 {
 protected:
@@ -38,7 +36,7 @@ protected:
     bool minimized = false;
 
     std::vector<Layer*> layers;
-    GLint texIDs[MAX_TEXTURE_SLOTS];
+    int texIDs[MAX_TEXTURE_SLOTS];
     
     bool windowedMode;
     Vec2u screenResolution;
@@ -58,6 +56,9 @@ protected:
 public:
     KevEngine(KevEngine* child);
     virtual ~KevEngine() {}
+
+    inline static KevEngine* Get() { return curEngine; }
+    inline Window& GetWindow() { return *window; }
 
     //60 times a second
     void OnUpdate();
@@ -83,12 +84,7 @@ public:
 
 private:
     static KevEngine* curEngine;
-#ifdef KEV_PLATFORM_WINDOWS
-#include <windef.h>
-    friend int ::WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
-#else
     friend int ::main(int argv, char** argc);
-#endif
 };
 
 #endif

@@ -26,8 +26,8 @@ XEvent                  xev;
 
 KevEngine *tletc = nullptr;
 
-void render(GLuint ShaderProgramID, GLfloat *vertexArray, GLenum mode, int dimensions);
-GLuint loadShaders(const char *vertex_file_path, const char *fragment_file_path);
+void render(unsigned int ShaderProgramID, float *vertexArray, GLenum mode, int dimensions);
+unsigned int loadShaders(const char *vertex_file_path, const char *fragment_file_path);
 bool restartContext();
 bool toggleFullscreen();
 
@@ -35,7 +35,7 @@ int main (int argc, char* argv[]){
 
     //Initialize platform state variables
     PlatformState ps;
-    GLint att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
+    int att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
 
     ps.dpy = XOpenDisplay(NULL);
 
@@ -169,7 +169,7 @@ int main (int argc, char* argv[]){
 }
 
 
-void render(GLuint ShaderProgramID, GLuint vertexBuffer, GLenum mode, int dimensions) { 
+void render(unsigned int ShaderProgramID, unsigned int vertexBuffer, GLenum mode, int dimensions) { 
 
 	//Draw background
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -1,8 +1,9 @@
 #include "GameLayer.h"
-#include <core/Core.h>
-
 #include <algorithm>
 #include <iostream> 
+#include <core/KevInput.h>
+
+#include <glad/glad.h>
 
 
 GameLayer::GameLayer(unsigned int shader, Vec2u screensize, Vec2f screenextremes)
@@ -72,7 +73,7 @@ void GameLayer::OnUpdate()
 
     Vec3f curPlayerPos = player->GetPosition();
 
-    if (Input::IsKeyPressed(KEV_KEY_D))
+    if (KevInput::IsKeyPressed(KEV_KEY_D))
     {
         if (playerVelocity.x < 0)
         {
@@ -83,7 +84,7 @@ void GameLayer::OnUpdate()
             playerVelocity.x = playerVelocity.x  + acceleration * ts <= maxAcceleration ? playerVelocity.x + acceleration * ts: playerVelocity.x;
         }  
     }
-    else if (Input::IsKeyPressed(KEV_KEY_A))
+    else if (KevInput::IsKeyPressed(KEV_KEY_A))
     {
         if (playerVelocity.x > 0)
         {
@@ -129,7 +130,7 @@ void GameLayer::OnUpdate()
         playerVelocity.y += gravityConstant * ts;
     }
 
-    if (Input::IsKeyPressed(KEV_KEY_SPACE))
+    if (KevInput::IsKeyPressed(KEV_KEY_SPACE))
     {
         if (!jumping)
         {

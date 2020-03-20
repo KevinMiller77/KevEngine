@@ -12,7 +12,7 @@ void TextureManager::NewTexture(const char* ID, const char* image_path, Vec2f fl
     Texture* texture = new Texture(image_path, flip);
     textures.push_back(texture);
     textureMap.insert({ ID, textures.size() - 1 });
-    LOG_INF("New texture in array. Key: %s Value: %d GLuint %d\n", ID, textures.size() - 1, texture->GetTexID());
+    LOG_INF("New texture in array. Key: %s Value: %d unsigned int %d\n", ID, textures.size() - 1, texture->GetTexID());
 }
 
 void TextureManager::ClearTextures()
@@ -31,7 +31,7 @@ Texture* TextureManager::GetTexture(const char* ID)
     return wantedTex;
 }
 
-GLuint TextureManager::GetNum(const char* ID)
+unsigned int TextureManager::GetNum(const char* ID)
 {
     return textureMap[ID];
 }

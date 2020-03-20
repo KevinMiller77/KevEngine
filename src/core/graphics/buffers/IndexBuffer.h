@@ -1,27 +1,23 @@
 #ifndef __INDEX_BUFFER__
 #define __INDEX_BUFFER__
 #include <cstdlib>
-#include <GL/glew.h>
-
-#ifdef WIN32
-#include <GL/wglew.h>
-#endif
+// #include <GLFW/glfw3.h>
 
 class IndexBuffer
 {
 private:
-    GLuint BufferID;
-    GLuint Count;
-    GLuint* HeapLoc;
+    unsigned int BufferID;
+    unsigned int Count;
+    unsigned int* HeapLoc;
 
 public:
-    IndexBuffer(GLuint *data, GLsizei count);
+    IndexBuffer(unsigned int *data, int count);
     ~IndexBuffer();
 
     void Bind() const;
     void Unbind() const;
 
-    inline GLuint GetCount() const { return Count; }
+    inline unsigned int GetCount() const { return Count; }
 };
 
 #endif

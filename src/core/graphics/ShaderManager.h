@@ -6,7 +6,7 @@
 class ShaderManager
 {
 private:
-    std::map<const char*, GLuint, StrCompare> shaderMap;
+    std::map<const char*, unsigned int, StrCompare> shaderMap;
     std::vector<ShaderProgram*> shaders;
 
 public:
@@ -31,21 +31,21 @@ public:
     inline void Disable(const char* ID) { if (!shaders.empty()) shaders[shaderMap[ID]]->Disable(); }
 
 
-    inline void SetUniform1f(const char * ID, const GLchar* name, float value)                      { shaders[shaderMap[ID]]->SetUniform1f(name, value); }
-    inline void SetUniform1fv(const char * ID, const GLchar* name, float* value, GLsizei count)     { shaders[shaderMap[ID]]->SetUniform1fv(name, value, count); }
-    inline void SetUniform1i(const char * ID, const GLchar* name, int value)                        { shaders[shaderMap[ID]]->SetUniform1i(name, value); }
-    inline void SetUniform1iv(const char * ID, const GLchar* name, int* value, GLsizei count)       { shaders[shaderMap[ID]]->SetUniform1iv(name, value, count); }
-    inline void SetUniform2f(const char * ID, const GLchar* name, const Vec2f& vector)              { shaders[shaderMap[ID]]->SetUniform2f(name, vector); }
-    inline void SetUniform3f(const char * ID, const GLchar* name, const Vec3f& vector)              { shaders[shaderMap[ID]]->SetUniform3f(name, vector); }
-    inline void SetUniform4f(const char * ID, const GLchar* name, const Vec4f& vector)              { shaders[shaderMap[ID]]->SetUniform4f(name, vector); }
-    inline void SetUniformMat4(const char * ID, const GLchar* name, const Mat4f& matrix)            { shaders[shaderMap[ID]]->SetUniformMat4(name, matrix); }
+    inline void SetUniform1f(const char * ID, const char* name, float value)                      { shaders[shaderMap[ID]]->SetUniform1f(name, value); }
+    inline void SetUniform1fv(const char * ID, const char* name, float* value, int count)     { shaders[shaderMap[ID]]->SetUniform1fv(name, value, count); }
+    inline void SetUniform1i(const char * ID, const char* name, int value)                        { shaders[shaderMap[ID]]->SetUniform1i(name, value); }
+    inline void SetUniform1iv(const char * ID, const char* name, int* value, int count)       { shaders[shaderMap[ID]]->SetUniform1iv(name, value, count); }
+    inline void SetUniform2f(const char * ID, const char* name, const Vec2f& vector)              { shaders[shaderMap[ID]]->SetUniform2f(name, vector); }
+    inline void SetUniform3f(const char * ID, const char* name, const Vec3f& vector)              { shaders[shaderMap[ID]]->SetUniform3f(name, vector); }
+    inline void SetUniform4f(const char * ID, const char* name, const Vec4f& vector)              { shaders[shaderMap[ID]]->SetUniform4f(name, vector); }
+    inline void SetUniformMat4(const char * ID, const char* name, const Mat4f& matrix)            { shaders[shaderMap[ID]]->SetUniformMat4(name, matrix); }
 
-    inline GLuint GetUniformLocation(const char* ID, const GLchar* name) { return shaders[shaderMap[ID]]->GetUniformLocation(name); }
+    inline unsigned int GetUniformLocation(const char* ID, const char* name) { return shaders[shaderMap[ID]]->GetUniformLocation(name); }
 
     void _delete() {
         for (ShaderProgram* shader : shaders)
             delete shader;
-        shaderMap = std::map<const char*, GLuint, StrCompare>();
+        shaderMap = std::map<const char*, unsigned int, StrCompare>();
     }
 
 };

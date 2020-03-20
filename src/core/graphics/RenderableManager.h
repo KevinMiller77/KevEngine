@@ -7,7 +7,6 @@
 #include <core/math/math.h>
 #include <core/events/Event.h>
 #include "renderables/Renderable2D.h"
-#include "layers/Group.h"
 
 enum class Attributes
 {

@@ -1,16 +1,15 @@
 #ifndef __GAME_LAYER__
 #define __GAME_LAYER__
 
-#include <core/Input.h>
-#include "../src/core/graphics/layers/Layer.h"
 
-
-#include <core/events/WindowsInputCodes.h>
+#include <core/events/InputCodes.h>
 #include <core/events/MouseEvent.h>
 #include <core/events/KeyEvent.h>
 #include <core/events/WindowEvent.h>
 #include <core/graphics/layers/Layer.h>
+#include <core/graphics/renderables/Sprite2D.h>
 #include <core/graphics/layers/Group.h>
+#include "../src/core/graphics/layers/Layer.h"
 #include <core/graphics/BetterGL2DRenderer.h>
 #include <core/math/math.h>
 #include <core/utils/Logging.h>

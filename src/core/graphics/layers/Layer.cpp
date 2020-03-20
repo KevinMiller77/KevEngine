@@ -1,6 +1,6 @@
 #include "Layer.h"
 
-Layer::Layer(GL2DRenderer *renderer, GLuint shader)
+Layer::Layer(GL2DRenderer *renderer, unsigned int shader)
     : Renderer(renderer), Shader(shader), enabled(true)
 {
 }

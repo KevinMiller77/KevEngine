@@ -1,5 +1,5 @@
 #include "Window.h"
-#include <core/Input.h>
+#include <core/KevInput.h>
 
 #ifdef KEV_PLATFORM_WINDOWS
 #include "../../platform/Windows/WindowsWindow.h"

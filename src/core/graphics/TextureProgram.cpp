@@ -1,5 +1,6 @@
 #include "TextureProgram.h"
 #include <assert.h>
+#include <glad/glad.h>
 
 Texture::Texture() 
 {

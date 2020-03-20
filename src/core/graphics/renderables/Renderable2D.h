@@ -2,18 +2,14 @@
 #define __RENDERABLE_2D__
 
 #include <string>
-#include <core/Input.h> 
 #include "../../math/math.h"
 #include "../buffers/IndexBuffer.h"
 #include "../buffers/VertexArray.h"
-
-#include "../GL2DRenderer.h"
 #include "../TextureProgram.h"
-
 #include "../../utils/Logging.h"
 #include "../ShaderProgram.h"
+#include "../GL2DRenderer.h"
 
-#include <core/events/Event.h>
 
 enum RenderableType
 {
@@ -44,7 +40,7 @@ protected:
     uint32_t color = 0;
 
     Texture* texture;
-    GLuint texID;
+    unsigned int texID;
 
     Vec3f* baseOrigin = nullptr;
 
@@ -96,7 +92,7 @@ public:
     inline virtual const void SetName(const char* Name) { name = Name; }
     
     inline virtual const unsigned int GetUID() { return uid; }
-    inline virtual const GLuint GetTextureID() const { return texID; }
+    inline virtual const unsigned int GetTextureID() const { return texID; }
 
     inline virtual const void SetBase(Vec3f* origin) { baseOrigin = origin; screenPos = GetScreenPos(); }
     inline virtual const Vec3f* GetBase() { return baseOrigin; }

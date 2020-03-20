@@ -8,13 +8,13 @@
 class MouseMovedEvent : public Event
 {
 protected:
-    Vec2u position;
+    Vec2f position;
 
 public:
-    MouseMovedEvent(Vec2u newPos)
+    MouseMovedEvent(Vec2f newPos)
         :   position(newPos)  {}
 
-    inline const Vec2u getPos() const { return position; }
+    inline const Vec2f getPos() const { return position; }
 
     EVENT_CLASS_TYPE(MouseMoved)
     EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)

@@ -1,6 +1,7 @@
 #include <core/KevEngine.h>
 #include "GameLayer.h"
 #include "HUD.h"
+#include <core/KevInput.h>
 
 unsigned int LastFrameKeep = 0;
 unsigned int LastUpdateKeep = 0;
@@ -53,7 +54,7 @@ public:
 
         if (keyPressTimeout.GetTimePassed() > 0.6)
         {
-            if (Input::IsKeyPressed(KEV_KEY_F))
+            if (KevInput::IsKeyPressed(KEV_KEY_F))
             {
                 window->ToggleFullscreen();
                 keyPressTimeout.Reset();

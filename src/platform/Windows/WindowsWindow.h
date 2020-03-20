@@ -1,24 +1,19 @@
 #ifndef __WINDOWS_WINDOW__
 #define __WINDOWS_WINDOW__
 
+#include <windows.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <time.h>
-
-#include <windows.h>
-#include <wingdi.h>
-
-#define  GLEW_BUILD GLEW_STATIC
-#include <GL/glew.h>
-#include <GL/wglew.h>
-
 #include <core/math/math.h>
-#include <core/utils/commonTypes.h>
-#include <core/KevEngine.h>
 
+#include <core/utils/commonTypes.h>
 #include <core/graphics/Window.h>
-#include <core/Input.h>
+#include <core/graphics/GLContext.h>
+
+#include <glfw/glfw3.h>
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 #define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
@@ -35,33 +30,24 @@ struct WindowsData
 
 class WindowsWindow : public Window
 {
-    HINSTANCE hInstance;
-    HDC windowHDC;
-    HWND window;
-    HGLRC gameGLContext;
-    WINDOWPLACEMENT wpc;
-    long HWNDStyle = 0;
-    long HWNDStyleEx = 0;
 
-    Timer keyDebounce;
-
+    GLFWwindow* window;
+    OpenGLContext context;
+    unsigned int GLFWWinCount;
     WindowInfo info;
 
     int InitalizeConsole();
-    HGLRC CreateGLContext();
-    int LoadGLExtensions(HINSTANCE hInstance);
 
 public:
-    bool restartGLContext();
     void ToggleFullscreen() override;
 
     WindowsWindow(WindowInfo inf);
+    ~WindowsWindow();
     
     void OnUpdate() override;
 
     unsigned int GetWidth() const override;
 	unsigned int GetHeight() const override;
-    Vec2u GetMousePos() const override;
 
     // Window attributes
 	inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallback = callback; data.callbackSet = true; }

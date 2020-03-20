@@ -1,4 +1,5 @@
 #include "BetterGL2DRenderer.h"
+#include "renderables/Renderable2D.h"
 
 unsigned int Renderable2D::globalNumRenderables;
 
@@ -42,9 +43,9 @@ void BetterGL2DRenderer::Init()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     //Generate Index Buffer data for drawing pleasure
-    GLuint *indicies = new GLuint[RENDERER_INDICIES_SIZE];
+    unsigned int *indicies = new unsigned int[RENDERER_INDICIES_SIZE];
 
-    GLuint offset = 0;
+    unsigned int offset = 0;
     for (int i = 0; i < RENDERER_INDICIES_SIZE; i += 6)
     {
         indicies[i + 0] = offset + 0;
@@ -76,7 +77,7 @@ void BetterGL2DRenderer::Submit(const Renderable2D *renderable)
     const Vec3f position = renderable->GetPosition();
     const Vec2f size = renderable->GetSize();
     const uint32_t color = renderable->GetColor();
-    const GLuint texID = renderable->GetTextureID();
+    const unsigned int texID = renderable->GetTextureID();
 
     float ts = 0.0f;
     if (texID > 0)

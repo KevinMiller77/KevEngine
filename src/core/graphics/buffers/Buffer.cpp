@@ -1,12 +1,13 @@
 #include "Buffer.h"
+#include <glad/glad.h>
 
-Buffer::Buffer(GLfloat *data, GLsizei count, GLuint compCount)
+Buffer::Buffer(float *data, int count, unsigned int compCount)
     : ComponentCount(compCount)
 {
 
     glGenBuffers(1, &BufferID);
     glBindBuffer(GL_ARRAY_BUFFER, BufferID);
-    glBufferData(GL_ARRAY_BUFFER, count * sizeof(GLfloat), data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), data, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

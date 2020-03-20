@@ -1,23 +1,24 @@
 #ifndef __KevEngine_LAYER__
 #define __KevEngine_LAYER__
 
-#include "../BetterGL2DRenderer.h"
+#include "../GL2DRenderer.h"
+
 #include "../TextureManager.h"
 #include "../FontManager.h"
-#include "../ShaderManager.h"
 #include "../RenderableManager.h"
+
 #include "../../events/Event.h"
 #include "../cameras/OrthographicCameraController.h"
 
 class Layer
 {
 protected:
-    Layer(GL2DRenderer *renderer, GLuint shader);
+    Layer(GL2DRenderer *renderer, unsigned int shader);
 
     GL2DRenderer *Renderer;
     std::vector<Renderable2D *> renderables;
     RenderableManager Manager = RenderableManager(&renderables);
-    GLuint Shader;
+    unsigned int Shader;
 
     TextureManager textures;
     FontManager fonts;
@@ -31,8 +32,8 @@ public:
     virtual void Add(Renderable2D *renderable);
     virtual void Render();
 
-    virtual inline GLuint GetShader() { return Shader; }
-    virtual inline void SetShader(GLuint shader) { Shader = shader; }
+    virtual inline unsigned int GetShader() { return Shader; }
+    virtual inline void SetShader(unsigned int shader) { Shader = shader; }
 
     virtual void OnAttach() = 0;
     virtual void OnDetatch() = 0;

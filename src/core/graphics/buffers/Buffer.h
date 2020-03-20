@@ -1,20 +1,18 @@
 #ifndef __GENERAL_BUFFER__
 #define __GENERAL_BUFFER__
 
-#include <GL/glew.h>
-
 class Buffer {
-    GLuint BufferID;
-    GLuint ComponentCount;
+    unsigned int BufferID;
+    unsigned int ComponentCount;
 
 public:
-    Buffer(GLfloat* data, GLsizei count, GLuint compCount);
+    Buffer(float* data, int count, unsigned int compCount);
     ~Buffer();
 
     void Bind();
     void Unbind();
 
-    inline GLuint GetComponentCount() const { return ComponentCount; }
+    inline unsigned int GetComponentCount() const { return ComponentCount; }
 };
 
 #endif

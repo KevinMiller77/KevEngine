@@ -2,6 +2,7 @@
 #define __VERTEX_ARRAY__
 #include "VertexArray.h"
 #include "../../utils/Logging.h"
+#include <glad/glad.h>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ VertexArray::~VertexArray()
     }
 }
 
-void VertexArray::AddBuffer(Buffer *buf, GLuint idx)
+void VertexArray::AddBuffer(Buffer *buf, unsigned int idx)
 {
     Bind();
     buf->Bind();

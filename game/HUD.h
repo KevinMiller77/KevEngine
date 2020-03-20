@@ -9,6 +9,7 @@
 #include <core/events/WindowEvent.h>
 #include <core/graphics/layers/Layer.h>
 #include <core/graphics/layers/Group.h>
+#include <core/graphics/renderables/Sprite2D.h>
 #include <core/graphics/renderables/Label.h>
 #include <core/graphics/BetterGL2DRenderer.h>
 #include <core/math/math.h>

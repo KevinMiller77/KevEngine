@@ -2,9 +2,9 @@
 #define __BETTER_GL_2D_RENDERER__
 
 #include <cstddef>
-#include "buffers/VertexArray.h"
 #include "GL2DRenderer.h"
-#include "renderables/Sprite2D.h"
+#include "buffers/IndexBuffer.h"
+#include "buffers/VertexArray.h"
 
 #include <../ext/freetype-gl/freetype-gl.h>
 
@@ -21,17 +21,19 @@
 #define SHADER_TEXTURE_INDEX 2
 #define SHADER_TEXTURE_ID_INDEX 3
 
+class VertexData;
+
 class BetterGL2DRenderer : public GL2DRenderer
 {
 private:
-    GLuint VAO;
-    GLuint VBO;
+    unsigned int VAO;
+    unsigned int VBO;
     IndexBuffer *IBO;
-    GLsizei indexCount;
+    int indexCount;
     VertexData *VDataBuffer;
     VertexData *VDataHeapLoc = nullptr;
 
-    std::vector<GLuint> TextureSlots;
+    std::vector<unsigned int> TextureSlots;
 
 public:
     BetterGL2DRenderer();

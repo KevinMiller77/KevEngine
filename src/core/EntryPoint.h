@@ -1,13 +1,9 @@
 #ifndef __ENTRY_POINT__
 #define __ENTRY_POINT__
 
-#include "Core.h"
-
-#ifdef KEV_PLATFORM_WINDOWS
-
 extern KevEngine* CreateApplication();
 
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+int main(int argv, char** argc)
 {
     printf("Main\n");
     auto app = CreateApplication();
@@ -18,5 +14,4 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     delete app;
 }
 
-#endif
 #endif

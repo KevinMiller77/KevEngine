@@ -23,7 +23,7 @@ public:
     void Add(Renderable2D* renderable);
     void Submit(GL2DRenderer* renderer) const override;
 
-    inline Texture* GetTextureFromChild(GLuint index) const { return children[index]->GetTexturePtr(); }
+    inline Texture* GetTextureFromChild(unsigned int index) const { return children[index]->GetTexturePtr(); }
     inline unsigned int GetNumChildren() { return children.size(); }
 
     //bool IsColliding(Renderable2D* other) override;

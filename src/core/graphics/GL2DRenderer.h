@@ -5,10 +5,9 @@
 #include <string>
 #include <deque>
 
-#include <GL/glew.h>
 #include <math.h>
-#include "../math/math.h"
 #include "FontManager.h"
+#include "../math/math.h"
 
 
 class Renderable2D;

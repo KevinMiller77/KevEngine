@@ -4,21 +4,18 @@
 #define FREEIMAGE_LIB
 #include <stb_image/stb_image.h>
 
-#include "GL/glew.h"
-
 #include "../utils/Logging.h"
 #include "../utils/FileIO.h"
-
 #include "../math/math.h"
 
 class Texture
 {
 private:
     char *imagePath;
-    GLint width, height;
-    GLint nrChannels;
+    int width, height;
+    int nrChannels;
 
-    GLuint texture;
+    unsigned int texture;
     void* heapLocOfTexture;
 
 public:
@@ -29,7 +26,7 @@ public:
     void Bind();
     void Unbind();
 
-    inline const GLuint GetTexID() const { return texture; }
+    inline const unsigned int GetTexID() const { return texture; }
 };
 
 #endif

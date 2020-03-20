@@ -1,6 +1,6 @@
 #include "OrthographicCameraController.h"
-#include <core/events/WindowsInputCodes.h>
-#include <core/Input.h>
+#include <core/events/InputCodes.h>
+#include <core/KevInput.h>
 
 OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
 	: AspectRatio(aspectRatio), Camera(-AspectRatio * Zoom, AspectRatio * Zoom, -Zoom, Zoom), m_Rotation(rotation)
@@ -11,23 +11,23 @@ OrthographicCameraController::OrthographicCameraController(float aspectRatio, bo
 void OrthographicCameraController::OnUpdate()
 {
 	double ts = time.GetTimePassed();
-	if (Input::IsKeyPressed(KEV_KEY_A))
+	if (KevInput::IsKeyPressed(KEV_KEY_A))
 	{
 		CamPos.x -= cos(CamRot) * CamTranslationSpeed * ts;
 		CamPos.y -= sin(CamRot) * CamTranslationSpeed * ts;
 	}
-	else if (Input::IsKeyPressed(KEV_KEY_D))
+	else if (KevInput::IsKeyPressed(KEV_KEY_D))
 	{
 		CamPos.x += cos(CamRot) * CamTranslationSpeed * ts;
 		CamPos.y += sin(CamRot) * CamTranslationSpeed * ts;
 	}
 
-	if (Input::IsKeyPressed(KEV_KEY_W))
+	if (KevInput::IsKeyPressed(KEV_KEY_W))
 	{
 		CamPos.x += -sin(CamRot) * CamTranslationSpeed * ts;
 		CamPos.y += cos(CamRot) * CamTranslationSpeed * ts;
 	}
-	else if (Input::IsKeyPressed(KEV_KEY_S))
+	else if (KevInput::IsKeyPressed(KEV_KEY_S))
 	{
 		CamPos.x -= -sin(CamRot) * CamTranslationSpeed * ts;
 		CamPos.y -= cos(CamRot) * CamTranslationSpeed * ts;
@@ -35,9 +35,9 @@ void OrthographicCameraController::OnUpdate()
 
 	if (m_Rotation)
 	{
-		if (Input::IsKeyPressed(KEV_KEY_Q))
+		if (KevInput::IsKeyPressed(KEV_KEY_Q))
 			CamRot += CamRotSpeed * ts;
-		if (Input::IsKeyPressed(KEV_KEY_E))
+		if (KevInput::IsKeyPressed(KEV_KEY_E))
 			CamRot -= CamRotSpeed * ts;
 
 		if (CamRot > 180.0f)
@@ -48,7 +48,7 @@ void OrthographicCameraController::OnUpdate()
 		Camera.SetRotation(CamRot);
 	}
 
-	if (Input::IsKeyPressed(KEV_KEY_R))
+	if (KevInput::IsKeyPressed(KEV_KEY_R))
 	{
 		CamPos = Vec3f(0.0f, 0.0f, 0.0f);
 		CamRot = 0;

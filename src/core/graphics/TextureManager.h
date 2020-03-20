@@ -11,7 +11,7 @@ class TextureManager
 {
 private:
     std::vector<Texture*> textures;
-    std::map<const char*, GLuint, StrCompare> textureMap;
+    std::map<const char*, unsigned int, StrCompare> textureMap;
 
 public:
     TextureManager() = default;
@@ -26,7 +26,7 @@ public:
 
     void ClearTextures();
 
-    GLuint GetNum(const char* ID);
+    unsigned int GetNum(const char* ID);
     Texture* GetTexture(const char* ID);
 };
 
