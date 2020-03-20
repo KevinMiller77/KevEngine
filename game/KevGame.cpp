@@ -21,6 +21,8 @@ public:
         ups.Start();
         keyPressTimeout.Start();
 
+        window->SetVSync(0);
+
         //Set shader info
         shaders.NewShader("basic", "resources/shaders/SimpleVertexShader.glsl", "resources/shaders/SimpleFragShader.glsl");
         shaders.Enable("basic");
@@ -30,7 +32,7 @@ public:
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
         shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
 
-        PushLayer(new GameLayer(shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
+        PushOverlay(new GameLayer(shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
         PushOverlay(new HUD(shaders.GetShader("basic").GetShaderID()));
     }
 
@@ -38,7 +40,7 @@ public:
 
     ~KevGame() override 
     {
-        for (Layer* layer : layers)
+        for (Layer* layer : LayerStack)
         {
             delete layer;
         }

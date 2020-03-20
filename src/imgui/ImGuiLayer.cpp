@@ -4,7 +4,7 @@
 #include <examples/imgui_impl_opengl3.h>
 #include <examples/imgui_impl_glfw.h>
 
-#include <KevEngine.h>
+#include <core/KevEngine.h>
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
@@ -79,4 +79,10 @@ void ImGuiLayer::End()
         ImGui::RenderPlatformWindowsDefault();
         glfwMakeContextCurrent(backup_current_context);
     }
+}
+
+void ImGuiLayer::OnImGuiRender()
+{
+    static bool show = true;
+    ImGui::ShowDemoWindow(&show);
 }

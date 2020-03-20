@@ -35,12 +35,13 @@ public:
     virtual inline unsigned int GetShader() { return Shader; }
     virtual inline void SetShader(unsigned int shader) { Shader = shader; }
 
-    virtual void OnAttach() = 0;
-    virtual void OnDetach() = 0;
+    virtual void OnAttach() {};
+    virtual void OnDetach() {};
 
-    virtual void OnUpdate() = 0;
-    virtual void OnDraw() = 0;
-    virtual void OnEvent(Event& e) = 0;
+    virtual void OnUpdate() {};
+    virtual void OnDraw() {};
+    virtual void OnImGuiRender() {}
+    virtual void OnEvent(Event& e) {};
 
     virtual inline unsigned int GetNumRenderables() { return renderables.size(); }
 

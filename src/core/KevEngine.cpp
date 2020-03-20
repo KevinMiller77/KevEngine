@@ -14,6 +14,9 @@ KevEngine::KevEngine(KevEngine* child)
     curEngine = this;
     window = Window::Create(WindowInfo());
 	window->SetEventCallback(KEV_BIND_EVENT_FN(KevEngine::OnEvent));
+
+    imGuiLayer = new ImGuiLayer();
+    PushOverlay(imGuiLayer);
 }
 
 bool KevEngine::OnWindowClose(WindowCloseEvent& e)
@@ -34,9 +37,20 @@ bool KevEngine::OnWindowResize(WindowResizeEvent& e)
     return false;
 }
 
+
+void KevEngine::OnImGuiRender()
+{
+    imGuiLayer->Begin();
+    for (Layer* layer : LayerStack)
+    {
+        layer->OnImGuiRender();
+    }  
+    imGuiLayer->End();
+}
+
 void KevEngine::OnUpdate()
 {
-    for (Layer* layer : layers)
+    for (Layer* layer : LayerStack)
     {
         layer->OnUpdate();
     }
@@ -49,7 +63,7 @@ void KevEngine::OnUpdate()
 
 void KevEngine::OnDraw()
 {
-    for (Layer* layer : layers)
+    for (Layer* layer : LayerStack)
     {
         layer->OnDraw();
     }
@@ -66,11 +80,11 @@ void KevEngine::OnEvent(Event& e)
     dispatch.Dispatch<WindowCloseEvent>(KEV_BIND_EVENT_FN(KevEngine::OnWindowClose));
     dispatch.Dispatch<WindowResizeEvent>(KEV_BIND_EVENT_FN(KevEngine::OnWindowResize));
 
-    for (Layer* layer: layers)
+    for (auto layer = LayerStack.rbegin(); layer != LayerStack.rend(); ++layer)
     {
         if (!e.IsHandled())
         {
-            layer->OnEvent(e);
+            (*layer)->OnEvent(e);
         }
     }
 
@@ -82,13 +96,13 @@ void KevEngine::OnEvent(Event& e)
 
 void KevEngine::PushLayer(Layer* layer)
 {
-    layers.insert(layers.begin(), layer);
+    LayerStack.PushLayer(layer);
     layer->OnAttach();
 }
 
 void KevEngine::PushOverlay(Layer* layer)
 {
-    layers.push_back(layer);
+    LayerStack.PushOverlay(layer);
     layer->OnAttach();
 }
 
@@ -111,6 +125,7 @@ void KevEngine::Run()
                 updatesThiscSec = 0;
                 timer.Reset();
             }
+            OnImGuiRender();
             OnDraw();
         }
 

@@ -15,7 +15,7 @@ Sprite::Sprite(float x, float y, float width, float height, Texture* inTexture)
 
 void Sprite::OnMouseHover()
 {
-    //LOG_INF("Hover\n");
+    // LOG_INF("Hover\n");
     if (KevInput::IsMouseButtonPressed(KEV_MOUSE_BUTTON_LEFT))
     {
         OnClick();

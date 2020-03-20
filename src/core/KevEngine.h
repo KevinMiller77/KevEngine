@@ -16,6 +16,7 @@
 #include "graphics/layers/Layer.h"
 #include "graphics/ShaderManager.h"
 #include "graphics/BetterGL2DRenderer.h"
+#include "imgui/ImGuiLayer.h"
 
 //#include "utils/MemoryTracker.h"
 #include "utils/Timer.h"
@@ -23,6 +24,7 @@
 #include "events/Event.h"
 #include "graphics/Window.h"
 #include "graphics/GLContext.h"
+#include "graphics/layers/LayerStack.h"
 
 //TODO: Move this to the input.h util
 #define KEY_DEBOUNCE_TIME 0.2f
@@ -33,10 +35,11 @@ class KevEngine
 {
 protected:
     std::unique_ptr<Window> window;
+    ImGuiLayer* imGuiLayer;
     bool running = true;
     bool minimized = false;
 
-    std::vector<Layer*> layers;
+    LayerStack LayerStack;
     int texIDs[MAX_TEXTURE_SLOTS];
     
     bool windowedMode;
@@ -65,6 +68,7 @@ public:
     void OnUpdate();
     void OnDraw();
     void OnEvent(Event& e);
+    void OnImGuiRender();
 
     virtual void OnChildUpdate() {};
     virtual void OnChildDraw()  {};
