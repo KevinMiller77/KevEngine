@@ -7,10 +7,10 @@ REM TOOD(Adin): Turn off _CRT_SECURE_NO_WARNINGS
 setlocal
 set COMPILE_FLAGS=/nologo /diagnostics:caret /Zi /W0 /WX /EHsc /MP /Ox
 set WARNS_DISABLE= /wd4201
-set DEFINES=/DGLEW_BUILD=GLEW_STATIC /D_CRT_SECURE_NO_WARNINGS /DFT2_BUILD_LIBRARY /DSDL_MAIN_HANDLED /D_GLFW_WIN32
+set DEFINES=/D_CRT_SECURE_NO_WARNINGS /DFT2_BUILD_LIBRARY /DSDL_MAIN_HANDLED /D_GLFW_WIN32
 set INCLUDE_PATH=/I..\include /I..\ext\freetype\include /I..\src
 set LIBRARY_PATH=/libpath:..\lib
-set LIBRARIES=glew32s.lib user32.lib gdi32.lib opengl32.lib shell32.lib
+set LIBRARIES=user32.lib gdi32.lib opengl32.lib shell32.lib
 
 rem EXT LIBRARIES TO BUILD
 set STB_IMAGE=..\ext\stb_image\stb_image.cpp

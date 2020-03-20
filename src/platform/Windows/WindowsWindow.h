@@ -56,6 +56,8 @@ public:
     bool IsWindowed() const;
 
     void* GetNativeWindow() override { return (void*)window; }
+    void* GetContext() override { return (void*)&context; }
+    void SetView(int W, int H) override { context.SetView(W, H); }
 
     void ShutDown();
     

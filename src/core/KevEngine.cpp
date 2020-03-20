@@ -30,7 +30,7 @@ bool KevEngine::OnWindowResize(WindowResizeEvent& e)
 		return false;
 	}
 
-    minimized = false;
+    window->SetView(e.getScreenSize().x, e.getScreenSize().y);
     return false;
 }
 

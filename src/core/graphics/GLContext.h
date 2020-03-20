@@ -11,6 +11,7 @@ public:
 
     virtual void Init();
     virtual void SwapBuffers();
+    virtual void SetView(int Width, int Height);
 
 private:
     GLFWwindow* window;

@@ -36,3 +36,8 @@ void OpenGLContext::SwapBuffers()
 {
     glfwSwapBuffers(window);
 }
+
+void OpenGLContext::SetView(int Width, int Height)
+{
+    glViewport(0, 0, Width, Height);
+}

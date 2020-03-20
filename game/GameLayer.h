@@ -26,6 +26,7 @@ class GameLayer : public Layer
     bool MouseScroll(MouseScrolledEvent& e);
     bool MouseMove(MouseMovedEvent& e);
     bool WindowResize(WindowResizeEvent& e);
+    bool KeyDown(KeyPressedEvent& e);
 
     FollowRenderableCamera camera;
     Renderable2D* player;

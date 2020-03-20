@@ -208,12 +208,19 @@ bool GameLayer::WindowResize(WindowResizeEvent& e)
     return false;
 }
 
+bool GameLayer::KeyDown(KeyPressedEvent& e)
+{
+    LOG_INF("Key pressed %d\n", (int)e.GetKeyCode());
+    return true;
+}
+
 void GameLayer::OnEvent(Event& e)
 {
     EventDispatcher dispatch(e);
     dispatch.Dispatch<MouseMovedEvent>(KEV_BIND_EVENT_FN(GameLayer::MouseMove));
     dispatch.Dispatch<WindowResizeEvent>(KEV_BIND_EVENT_FN(GameLayer::WindowResize));
     dispatch.Dispatch<MouseScrolledEvent>(KEV_BIND_EVENT_FN(GameLayer::MouseScroll));
+    dispatch.Dispatch<KeyPressedEvent>(KEV_BIND_EVENT_FN(GameLayer::KeyDown));
 
     camera.OnEvent(e);
 

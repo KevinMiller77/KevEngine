@@ -5,25 +5,22 @@ KevInput* KevInput::s_Input = new KevInput;
 
 bool KevInput::IsKeyPressedInt(KeyCode key) 
 {
-    Window* win = &(KevEngine::Get()->GetWindow());
-    GLFWwindow* window = (GLFWwindow*)(win->GetNativeWindow());
-    auto state = glfwGetKey(window, (int)key);
-    return state == GLFW_PRESS | GLFW_REPEAT;
+    auto win = (GLFWwindow*)(KevEngine::Get()->GetWindow().GetNativeWindow());
+    auto state = glfwGetKey(win, (int)key);
+    return state == GLFW_PRESS || state == GLFW_REPEAT;
 
 }
 bool KevInput::IsMouseButtonPressedInt(MouseCode key) 
 { 
-    Window* win = &(KevEngine::Get()->GetWindow());
-    GLFWwindow* window = (GLFWwindow*)(win->GetNativeWindow());
-    auto state = glfwGetMouseButton(window, (int)key);
-    return state == GLFW_PRESS | GLFW_REPEAT;
+    auto win = (GLFWwindow*)(KevEngine::Get()->GetWindow().GetNativeWindow());
+    auto state = glfwGetMouseButton(win, (int)key);
+    return state == GLFW_PRESS;
 }
 
 Vec2f KevInput::GetMousePosInt() 
 { 
-    Window* win = &(KevEngine::Get()->GetWindow());
-    GLFWwindow* window = (GLFWwindow*)(win->GetNativeWindow());
+    auto win = (GLFWwindow*)(KevEngine::Get()->GetWindow().GetNativeWindow());
     double x, y;
-    glfwGetCursorPos(window, &x, &y);
+    glfwGetCursorPos(win, &x, &y);
     return Vec2f(x, y);
 }

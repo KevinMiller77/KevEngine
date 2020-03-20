@@ -22,6 +22,7 @@
 #include "graphics/Window.h"
 #include "events/Event.h"
 #include "graphics/Window.h"
+#include "graphics/GLContext.h"
 
 //TODO: Move this to the input.h util
 #define KEY_DEBOUNCE_TIME 0.2f

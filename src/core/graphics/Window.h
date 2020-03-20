@@ -44,6 +44,9 @@ public:
 	virtual bool IsVSync() const = 0;
 
 	virtual void* GetNativeWindow() = 0;
+	virtual void* GetContext() = 0;
+
+	virtual void SetView(int W, int H) = 0;
 
 	virtual void ToggleFullscreen() = 0;
 

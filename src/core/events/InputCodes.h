@@ -9,10 +9,10 @@ enum class MouseCode
 	Button3                = 3,
 	Button4                = 4,
 	Button5                = 5,
-	Button16               = 16,
-	Button17               = 17,
-	ButtonNext			   = Button17,
-	ButtonLast             = Button16,
+	Button6               = 6,
+	Button7               = 7,
+	ButtonNext			   = Button6,
+	ButtonLast             = Button7,
 	ButtonLeft             = Button0,
 	ButtonRight            = Button1,
 	ButtonMiddle           = Button4
@@ -20,19 +20,14 @@ enum class MouseCode
 
 enum class KeyCode
 {
-	MouseLeft			= 0x01,
-	MouseRight			= 0x02,
-	MouseMiddle			= 0x04,
-	MouseX1				= 0x05,
-	MouseX2				= 0x06,
-	
-	//From windows
-	Space               = 0x20,
-	Apostrophe          = 0xDE, /* ' */
-	Comma               = 0xBC, /* , */
-	Minus               = 0xBD, /* - */
-	Period              = 0xBE, /* . */
-	Slash               = 0xBF, /* / */
+	// From glfw3.h
+	Space               = 32,
+	Apostrophe          = 39, /* ' */
+	Comma               = 44, /* , */
+	Minus               = 45, /* - */
+	Period              = 46, /* . */
+	Slash               = 47, /* / */
+
 	D0                  = 48, /* 0 */
 	D1                  = 49, /* 1 */
 	D2                  = 50, /* 2 */
@@ -43,8 +38,10 @@ enum class KeyCode
 	D7                  = 55, /* 7 */
 	D8                  = 56, /* 8 */
 	D9                  = 57, /* 9 */
-	Semicolon           = 0xBA, /* ; */
+
+	Semicolon           = 59, /* ; */
 	Equal               = 61, /* = */
+
 	A                   = 65,
 	B                   = 66,
 	C                   = 67,
@@ -71,76 +68,89 @@ enum class KeyCode
 	X                   = 88,
 	Y                   = 89,
 	Z                   = 90,
-	LeftBracket         = 0xDB,  /* [ */
-	Backslash           = 0xDC,  /* \ */
-	RightBracket        = 0xDD,  /* ] */
-	GraveAccent         = 0xC0,  /* ` */
+
+	LeftBracket         = 91,  /* [ */
+	Backslash           = 92,  /* \ */
+	RightBracket        = 93,  /* ] */
+	GraveAccent         = 96,  /* ` */
+
+	World1              = 161, /* non-US #1 */
+	World2              = 162, /* non-US #2 */
+
 	/* Function keys */
-	Escape              = 0x1B,
-	Enter               = 0x0D,
-	Tab                 = 0x09,
-	Backspace           = 0x08,
-	Insert              = 0x2D,
-	Delete              = 0x2E,
-	Right               = 0x27,
-	Left                = 0x25,
-	Down                = 0x28,
-	Up                  = 0x26,
-	PageUp              = 0x21,
-	PageDown            = 0x22,
-	Home                = 0x24,
-	End                 = 0x23,
-	CapsLock            = 0x14,
+	Escape              = 256,
+	Enter               = 257,
+	Tab                 = 258,
+	Backspace           = 259,
+	Insert              = 260,
+	Delete              = 261,
+	Right               = 262,
+	Left                = 263,
+	Down                = 264,
+	Up                  = 265,
+	PageUp              = 266,
+	PageDown            = 267,
+	Home                = 268,
+	End                 = 269,
+	CapsLock            = 280,
 	ScrollLock          = 281,
-	NumLock             = 0x90,
+	NumLock             = 282,
 	PrintScreen         = 283,
 	Pause               = 284,
-	F1                  = 0x70,
-	F2                  = 0x71,
-	F3                  = 0x72,
-	F4                  = 0x73,
-	F5                  = 0x74,
-	F6                  = 0x75,
-	F7                  = 0x76,
-	F8                  = 0x77,
-	F9                  = 0x78,
-	F10                 = 0x79,
-	F11                 = 0x7A,
-	F12                 = 0x7B,
-	F13                 = 0x7C,
-	F14                 = 0x7D,
-	F15                 = 0x7E,
-	F16                 = 0x7F,
-	F17                 = 0x80,
-	F18                 = 0x81,
-	F19                 = 0x82,
-	F20                 = 0x83,
-	F21                 = 0x84,
-	F22                 = 0x85,
-	F23                 = 0x86,
-	F24                 = 0x87,
+	F1                  = 290,
+	F2                  = 291,
+	F3                  = 292,
+	F4                  = 293,
+	F5                  = 294,
+	F6                  = 295,
+	F7                  = 296,
+	F8                  = 297,
+	F9                  = 298,
+	F10                 = 299,
+	F11                 = 300,
+	F12                 = 301,
+	F13                 = 302,
+	F14                 = 303,
+	F15                 = 304,
+	F16                 = 305,
+	F17                 = 306,
+	F18                 = 307,
+	F19                 = 308,
+	F20                 = 309,
+	F21                 = 310,
+	F22                 = 311,
+	F23                 = 312,
+	F24                 = 313,
+	F25                 = 314,
+
 	/* Keypad */
-	KP0                 = 0x60,
-	KP1                 = 0x61,
-	KP2                 = 0x62,
-	KP3                 = 0x63,
-	KP4                 = 0x64,
-	KP5                 = 0x65,
-	KP6                 = 0x66,
-	KP7                 = 0x67,
-	KP8                 = 0x68,
-	KP9                 = 0x69,
-	KPDecimal           = 0x6E,
-	KPDivide            = 0x6F,
-	KPMultiply          = 0x6A,
-	KPSubtract          = 0x6D,
-	KPAdd               = 0x6B,
-	KPEnter             = 0xD,
+	KP0                 = 320,
+	KP1                 = 321,
+	KP2                 = 322,
+	KP3                 = 323,
+	KP4                 = 324,
+	KP5                 = 325,
+	KP6                 = 326,
+	KP7                 = 327,
+	KP8                 = 328,
+	KP9                 = 329,
+	KPDecimal           = 330,
+	KPDivide            = 331,
+	KPMultiply          = 332,
+	KPSubtract          = 333,
+	KPAdd               = 334,
+	KPEnter             = 335,
 	KPEqual             = 336,
-	LeftShift           = 0x10,
-	LeftControl         = 0x11,
-	LeftAlt             = 0x12,
-	LeftSuper           = 0x14,
+
+	LeftShift           = 340,
+	LeftControl         = 341,
+	LeftAlt             = 342,
+	LeftSuper           = 343,
+	RightShift          = 344,
+	RightControl        = 345,
+	RightAlt            = 346,
+	RightSuper          = 347,
+	Menu                = 348
 };
 
 // From Windows
@@ -264,18 +274,18 @@ enum class KeyCode
 #define KEV_KEY_LEFT_ALT        KeyCode::LeftAlt
 #define KEV_KEY_LEFT_SUPER      KeyCode::LeftSuper
 
-#define KEV_MOUSE_BUTTON_0      KeyCode::MouseLeft
-#define KEV_MOUSE_BUTTON_1      KeyCode::MouseRight
+#define KEV_MOUSE_BUTTON_0      MouseCode::Button0
+#define KEV_MOUSE_BUTTON_1      MouseCode::Button1
 #define KEV_MOUSE_BUTTON_2      MouseCode::Button2
 #define KEV_MOUSE_BUTTON_3      MouseCode::Button3
-#define KEV_MOUSE_BUTTON_4      KeyCode::MouseMiddle
+#define KEV_MOUSE_BUTTON_4      MouseCode::Button4
 #define KEV_MOUSE_BUTTON_5      MouseCode::Button5
-#define KEV_MOUSE_BUTTON_16     KeyCode::MouseX1
-#define KEV_MOUSE_BUTTON_17     KeyCode::MouseX2
-#define KEV_MOUSE_BUTTON_NEXT	KeyCode::MouseX2
-#define KEV_MOUSE_BUTTON_LAST   KeyCode::MouseX1
-#define KEV_MOUSE_BUTTON_LEFT   KeyCode::MouseLeft
-#define KEV_MOUSE_BUTTON_RIGHT  KeyCode::MouseRight
-#define KEV_MOUSE_BUTTON_MIDDLE KeyCode::MouseMiddle
+#define KEV_MOUSE_BUTTON_6     	MouseCode::Button6
+#define KEV_MOUSE_BUTTON_7     	MouseCode::Button7
+#define KEV_MOUSE_BUTTON_NEXT	MouseCode::ButtonNext
+#define KEV_MOUSE_BUTTON_LAST   MouseCode::ButtonLast
+#define KEV_MOUSE_BUTTON_LEFT   MouseCode::ButtonLeft
+#define KEV_MOUSE_BUTTON_RIGHT  MouseCode::ButtonRight
+#define KEV_MOUSE_BUTTON_MIDDLE MouseCode::ButtonMiddle
 
 #endif
