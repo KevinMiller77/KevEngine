@@ -2,19 +2,18 @@
 #define __GAME_LAYER__
 
 
-#include <core/events/InputCodes.h>
-#include <core/events/MouseEvent.h>
-#include <core/events/KeyEvent.h>
-#include <core/events/WindowEvent.h>
-#include <core/graphics/layers/Layer.h>
-#include <core/graphics/renderables/Sprite2D.h>
-#include <core/graphics/layers/Group.h>
-#include "../src/core/graphics/layers/Layer.h"
-#include <core/graphics/BetterGL2DRenderer.h>
-#include <core/math/math.h>
-#include <core/utils/Logging.h>
-#include <core/utils/Timer.h>
-#include <core/graphics/cameras/FollowRenderableCamera.h>
+#include <events/InputCodes.h>
+#include <events/MouseEvent.h>
+#include <events/KeyEvent.h>
+#include <events/WindowEvent.h>
+#include <graphics/renderables/Sprite2D.h>
+#include <graphics/layers/Group.h>
+#include <graphics/layers/Layer.h>
+#include <graphics/BetterGL2DRenderer.h>
+#include <math/math.h>
+#include <utils/Logging.h>
+#include <utils/Timer.h>
+#include <graphics/cameras/FollowRenderableCamera.h>
 
 class GameLayer : public Layer
 {
@@ -50,7 +49,7 @@ public:
     ~GameLayer() override;
 
     void OnAttach() override;
-    void OnDetatch() override;
+    void OnDetach() override;
 
     void OnUpdate() override;
     void OnDraw() override;

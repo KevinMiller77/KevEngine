@@ -5,6 +5,10 @@ extern KevEngine* CreateApplication();
 
 int main(int argv, char** argc)
 {
+//Hot swappable game scripting
+#if 0
+    
+#else
     printf("Main\n");
     auto app = CreateApplication();
 
@@ -12,6 +16,7 @@ int main(int argv, char** argc)
     app->Run();
 
     delete app;
+#endif
 }
 
 #endif

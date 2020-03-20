@@ -7,11 +7,11 @@
 #include <stdlib.h>
 
 #include <time.h>
-#include <core/math/math.h>
+#include <math/math.h>
 
-#include <core/utils/commonTypes.h>
-#include <core/graphics/Window.h>
-#include <core/graphics/GLContext.h>
+#include <utils/commonTypes.h>
+#include <graphics/Window.h>
+#include <graphics/GLContext.h>
 
 #include <glfw/glfw3.h>
 

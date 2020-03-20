@@ -31,7 +31,7 @@ void HUD::OnAttach()
     Add(FrameCounterGroup);
 }
 
-void HUD::OnDetatch()
+void HUD::OnDetach()
 {
 
 }

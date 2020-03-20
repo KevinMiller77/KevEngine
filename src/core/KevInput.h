@@ -4,8 +4,8 @@
 #include <map>
 
 #include <core/Core.h>
-#include <core/math/math.h>
-#include <core/events/InputCodes.h>
+#include <math/math.h>
+#include <events/InputCodes.h>
 
 #include <GLFW/glfw3.h>
 

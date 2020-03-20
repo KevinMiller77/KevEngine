@@ -1,19 +1,16 @@
 #ifndef __HUD_LAYER__
 #define __HUD_LAYER__
 
-
-#include "../src/core/graphics/layers/Layer.h"
-
-#include <core/events/MouseEvent.h>
-#include <core/events/KeyEvent.h>
-#include <core/events/WindowEvent.h>
-#include <core/graphics/layers/Layer.h>
-#include <core/graphics/layers/Group.h>
-#include <core/graphics/renderables/Sprite2D.h>
-#include <core/graphics/renderables/Label.h>
-#include <core/graphics/BetterGL2DRenderer.h>
-#include <core/math/math.h>
-#include <core/utils/Logging.h>
+#include <events/MouseEvent.h>
+#include <events/KeyEvent.h>
+#include <events/WindowEvent.h>
+#include <graphics/layers/Layer.h>
+#include <graphics/layers/Group.h>
+#include <graphics/renderables/Sprite2D.h>
+#include <graphics/renderables/Label.h>
+#include <graphics/BetterGL2DRenderer.h>
+#include <math/math.h>
+#include <utils/Logging.h>
 
 class HUD : public Layer
 {
@@ -25,7 +22,7 @@ public:
     ~HUD() override;
 
     void OnAttach() override;
-    void OnDetatch() override;
+    void OnDetach() override;
 
     void OnUpdate() override;
     void OnDraw() override;

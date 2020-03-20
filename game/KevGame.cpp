@@ -11,6 +11,7 @@ class KevGame : public KevEngine
     Timer fps;
     Timer ups;
     Timer keyPressTimeout;
+
 public:
     KevGame()
         : KevEngine(this)
@@ -32,7 +33,16 @@ public:
         PushLayer(new GameLayer(shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
         PushOverlay(new HUD(shaders.GetShader("basic").GetShaderID()));
     }
-    ~KevGame() override {}
+
+
+
+    ~KevGame() override 
+    {
+        for (Layer* layer : layers)
+        {
+            delete layer;
+        }
+    }
 
     void OnChildDraw()
     {

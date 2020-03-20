@@ -55,7 +55,7 @@ void GameLayer::OnAttach()
     updateTime.Reset();
 }
 
-void GameLayer::OnDetatch()
+void GameLayer::OnDetach()
 {
 
 }
