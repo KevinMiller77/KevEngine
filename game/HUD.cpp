@@ -16,7 +16,7 @@ HUD::~HUD()
 void HUD::OnAttach()
 {
     fonts.Add("arial", "resources/fonts/arial.ttf", 32);
-    fonts.Add("inkfree", "resources/fonts/INKFREE.ttf", 28);
+    fonts.Add("inkfree", "resources/fonts/INKFREE.TTF", 28);
 
     Group* FrameCounterGroup = new Group(Mat4f::translation(Vec3f(-16, -9, 0)));
 

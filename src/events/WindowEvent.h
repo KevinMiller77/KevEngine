@@ -16,7 +16,7 @@ public:
 
     inline Vec2u getScreenSize() const { return screenSize; } 
 
-    EVENT_CLASS_TYPE(WindowResize)
+    EVENT_CLASS_TYPE(EventType::WindowResize)
     EVENT_CLASS_CATEGORY(EventCategoryWindow)
 };
 
@@ -25,7 +25,7 @@ class WindowFocusEvent : public Event
 public:
     WindowFocusEvent() {}
 
-    EVENT_CLASS_TYPE(WindowFocus)
+    EVENT_CLASS_TYPE(EventType::WindowFocus)
     EVENT_CLASS_CATEGORY(EventCategoryWindow)
 };
 
@@ -35,7 +35,7 @@ public:
     WindowLostFocusEvent() {}
 
     
-    EVENT_CLASS_TYPE(WindowFocus)
+    EVENT_CLASS_TYPE(EventType::WindowFocus)
     EVENT_CLASS_CATEGORY(EventCategoryWindow)
 };
 
@@ -45,7 +45,7 @@ class WindowCloseEvent : public Event
 public:
     WindowCloseEvent() = default;
 
-    EVENT_CLASS_TYPE(WindowClose)
+    EVENT_CLASS_TYPE(EventType::WindowClose)
     EVENT_CLASS_CATEGORY(EventCategoryWindow)
 };
 

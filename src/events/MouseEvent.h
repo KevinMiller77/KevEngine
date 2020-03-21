@@ -16,7 +16,7 @@ public:
 
     inline const Vec2f getPos() const { return position; }
 
-    EVENT_CLASS_TYPE(MouseMoved)
+    EVENT_CLASS_TYPE(EventType::MouseMoved)
     EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 };
 
@@ -32,7 +32,7 @@ public:
     inline const int getXOffset() const { return XOffset; }
     inline const int getYOffset() const { return YOffset;}
 
-    EVENT_CLASS_TYPE(MouseScrolled)
+    EVENT_CLASS_TYPE(EventType::MouseScrolled)
     EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 };
 
@@ -58,7 +58,7 @@ public:
     MouseButtonPressedEvent(MouseCode button)
         : MouseButtonEvent(button)  {}
     
-	EVENT_CLASS_TYPE(MouseButtonPressed);
+	EVENT_CLASS_TYPE(EventType::MouseButtonPressed);
 };
 
 class MouseButtonReleasedEvent : public MouseButtonEvent
@@ -68,7 +68,7 @@ public:
     MouseButtonReleasedEvent(MouseCode button)
         : MouseButtonEvent(button)  {}
     
-	EVENT_CLASS_TYPE(MouseButtonReleased);
+	EVENT_CLASS_TYPE(EventType::MouseButtonReleased);
 };
 
 #endif

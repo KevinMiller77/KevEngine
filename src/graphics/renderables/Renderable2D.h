@@ -77,7 +77,7 @@ public:
     inline virtual void Submit(GL2DRenderer* renderer) const { renderer->Submit(this); }
 
     inline virtual const Vec3f &GetPosition() const { return position; }
-    inline virtual const void SetPosition(Vec3f &newPosition) { position = newPosition; screenPos = GetScreenPos(); }
+    inline virtual const void SetPosition(Vec3f* newPosition) { position = *newPosition; screenPos = GetScreenPos(); }
     
     inline virtual const Vec2f &GetSize() const { return size; }
     inline virtual const void SetSize(Vec2f &newSize) { size = newSize; }

@@ -59,6 +59,8 @@ const struct {
 } FT_Errors[] =
 #include FT_ERRORS_H
 
+extern "C" { namespace ftgl {
+
 // ------------------------------------------------- texture_font_load_face ---
 static int
 texture_font_load_face(texture_font_t *self, float size,
@@ -84,14 +86,16 @@ texture_font_load_face(texture_font_t *self, float size,
 
     /* Load face */
     switch (self->location) {
-    case TEXTURE_FONT_FILE:
+    case 0:
         error = FT_New_Face(*library, self->filename, 0, face);
         break;
 
-    case TEXTURE_FONT_MEMORY:
-        error = FT_New_Memory_Face(*library,
-            self->memory.base, self->memory.size, 0, face);
-        break;
+    //KEVCHANGE!! DONT FORGET TO SEE IF THIS IS IMPORTANT
+
+    // case 0:
+    //     error = FT_New_Memory_Face(*library,
+    //         self->memory.base, self->memory.size, 0, face);
+    //     break;
     }
 
     if(error) {
@@ -263,8 +267,8 @@ texture_font_init(texture_font_t *self)
 
     assert(self->atlas);
     assert(self->size > 0);
-    assert((self->location == TEXTURE_FONT_FILE && self->filename)
-        || (self->location == TEXTURE_FONT_MEMORY
+    assert((self->location == 0 && self->filename)
+        || (self->location == 0
             && self->memory.base && self->memory.size));
 
     self->glyphs = vector_new(sizeof(texture_glyph_t *));
@@ -336,7 +340,7 @@ texture_font_new_from_file(texture_atlas_t *atlas, const float pt_size,
     self->atlas = atlas;
     self->size  = pt_size;
 
-    self->location = TEXTURE_FONT_FILE;
+    self->location = 0;
     self->filename = strdup(filename);
 
     if (texture_font_init(self)) {
@@ -367,7 +371,7 @@ texture_font_new_from_memory(texture_atlas_t *atlas, float pt_size,
     self->atlas = atlas;
     self->size  = pt_size;
 
-    self->location = TEXTURE_FONT_MEMORY;
+    self->location = 0;
     self->memory.base = memory_base;
     self->memory.size = memory_size;
 
@@ -388,7 +392,7 @@ texture_font_delete( texture_font_t *self )
 
     assert( self );
 
-    if(self->location == TEXTURE_FONT_FILE && self->filename)
+    if(self->location == 0 && self->filename)
         free( self->filename );
 
     for( i=0; i<vector_size( self->glyphs ); ++i)
@@ -689,10 +693,10 @@ texture_font_get_glyph( texture_font_t * self,
         size_t height = self->atlas->height;
         ivec4 region = texture_atlas_get_region( self->atlas, 5, 5 );
         texture_glyph_t * glyph = texture_glyph_new( );
-        static unsigned char data[4*4*3] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                                            -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                                            -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                                            -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+        static unsigned char data[4*4*3] = {255,255,255,255,255,255,255,255,255,255,255,255,
+                                            255,255,255,255,255,255,255,255,255,255,255,255,
+                                            255,255,255,255,255,255,255,255,255,255,255,255,
+                                            255,255,255,255,255,255,255,255,255,255,255,255};
         if ( region.x < 0 )
         {
             fprintf( stderr, "Texture atlas is full (line %d)\n",  __LINE__ );
@@ -716,3 +720,4 @@ texture_font_get_glyph( texture_font_t * self,
     }
     return NULL;
 }
+}}

@@ -29,9 +29,10 @@ struct WindowInfo
 class Window
 {
 public:
-	using EventCallbackFn = std::function<void(Event&)>;
+	Window() {};
+    ~Window() {};
 
-    virtual ~Window() = default;
+	using EventCallbackFn = std::function<void(Event&)>;
 
 	virtual void OnUpdate() = 0;
 

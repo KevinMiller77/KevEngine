@@ -29,7 +29,7 @@ void FollowRenderableCamera::OnUpdate()
     float difY = renPos.y - camPos.y;
 
     
-    Camera.SetPosition(Vec3f(-renPos.x, renPos.y, renPos.z)); 
+    Camera.SetPosition(new Vec3f(-renPos.x, renPos.y, renPos.z)); 
 
     // if (abs(difX) > 0.25f)
     // {

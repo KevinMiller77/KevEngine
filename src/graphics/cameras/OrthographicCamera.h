@@ -12,7 +12,7 @@ public:
 	void SetProjection(float left, float right, float bottom, float top);
 
 	const Vec3f& GetPosition() const { return position; }
-	void SetPosition(Vec3f& pos) { position = pos; RecalculateViewMatrix(); }
+	void SetPosition(Vec3f* pos) { position = *pos; RecalculateViewMatrix(); }
 
 	float GetRotation() const { return rotation; }
 	void SetRotation(float rot) { rotation = rot; RecalculateViewMatrix(); }

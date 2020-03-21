@@ -37,7 +37,7 @@
 /* Mandatory */
 #include "opengl.h"
 #include "vec234.h"
-#include "vector.h"
+#include "vec.h"
 #include "texture-atlas.h"
 #include "texture-font.h"
 

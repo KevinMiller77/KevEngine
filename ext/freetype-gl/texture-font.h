@@ -40,7 +40,7 @@
 extern "C" {
 #endif
 
-#include "vector.h"
+#include "vec.h"
 #include "texture-atlas.h"
 
 #ifdef __cplusplus

@@ -32,7 +32,7 @@ public:
 		return ss;
 	}
 
-	EVENT_CLASS_TYPE(KeyPressed);
+	EVENT_CLASS_TYPE(EventType::KeyPressed);
 };
 
 class KeyReleasedEvent : public KeyEvent
@@ -48,7 +48,7 @@ public:
 		return ss;
 	}
 
-	EVENT_CLASS_TYPE(KeyReleased);
+	EVENT_CLASS_TYPE(EventType::KeyReleased);
 };
 
 
@@ -65,7 +65,7 @@ public:
 		return ss;
 	}
 
-	EVENT_CLASS_TYPE(KeyHeld);
+	EVENT_CLASS_TYPE(EventType::KeyHeld);
 };
 
 class KeyTypedEvent : public KeyEvent
@@ -74,7 +74,7 @@ class KeyTypedEvent : public KeyEvent
 		KeyTypedEvent(int keycode)
 			: KeyEvent(keycode) {}
 
-		EVENT_CLASS_TYPE(KeyTyped)
+		EVENT_CLASS_TYPE(EventType::KeyTyped)
 	};
 
 #endif

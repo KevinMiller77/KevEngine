@@ -1,21 +1,15 @@
-#include "WindowsWindow.h"
+#include "LinuxWindow.h"
 
-// TODO(Adin): Switch to CreateWindowEx
-
-WindowsData WindowsWindow::data = WindowsData();
+WindowsData LinuxWindow::data = WindowsData();
 
 void GLFWErrorCallback(int error, const char* decsription)
 {
     LOG_ERR("GLFW ERR [%X]: %s\n", decsription);
 }
 
-WindowsWindow::~WindowsWindow()
-{
-    ShutDown();
-}
 
-WindowsWindow::WindowsWindow(WindowInfo inf)
-    : context(nullptr), GLFWWinCount(0)
+LinuxWindow::LinuxWindow(WindowInfo inf)
+    : Window(), context(nullptr), GLFWWinCount(0)
 {
     info = inf;
     data.height = info.Height; data.width = info.Width;
@@ -135,70 +129,35 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
     });
 }
 
-#ifdef KEV_PLATFORM_WINDOWS
-
-EXTERN_C IMAGE_DOS_HEADER __ImageBase;
-#define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
-
-
-int WindowsWindow::InitalizeConsole()
+Window::~Window()
 {
-    BOOL success = AllocConsole();
-    if (!success)
-    {
-        DebugBreak();
-        return 1;
-
-    }
-
-    FILE *newStdout;
-    FILE *newStdin;
-    FILE *newStderr;
-
-    freopen_s(&newStdout, "CONOUT$", "w", stdout);
-    freopen_s(&newStdin, "CONIN$", "r", stdin);
-    freopen_s(&newStderr, "CONOUT$", "w", stderr);
-
-    return 0;
+    LOG_INF("\n");
 }
-#else
-int WindowsWindow::InitalizeConsole()
+
+LinuxWindow::~LinuxWindow()
 {
-    return 0;
-}
-#endif
-
-
-void WindowsWindow::ToggleFullscreen()
-{    
-    //TODO: Fullscreen toggle
+    ShutDown();
 }
 
-void WindowsWindow::OnUpdate()
-{
-    glfwPollEvents();
-    context.SwapBuffers();
-}
-
-unsigned int WindowsWindow::GetWidth() const
+unsigned int LinuxWindow::GetWidth() const
 {
     return data.width;
 }
 
 
-unsigned int WindowsWindow::GetHeight() const
+unsigned int LinuxWindow::GetHeight() const
 {
     
     return data.height;
 }
 
-void WindowsWindow::ShutDown()
+void LinuxWindow::ShutDown()
 {
     glfwDestroyWindow(window);
     glfwTerminate();
 }
 
-void WindowsWindow::SetVSync(bool enabled)
+void LinuxWindow::SetVSync(bool enabled)
 {
     if (enabled)
     {
@@ -212,7 +171,7 @@ void WindowsWindow::SetVSync(bool enabled)
     data.VSync = enabled;
 }
 
-bool WindowsWindow::IsVSync() const
+bool LinuxWindow::IsVSync() const
 {
     return data.VSync;
 }

@@ -1,5 +1,5 @@
-#ifndef __WINDOWS_WINDOW__
-#define __WINDOWS_WINDOW__
+#ifndef __LINUX_WINDOW__
+#define __LINUX_WINDOW__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,7 +23,7 @@ struct WindowsData
     EventCallbackFn EventCallback;
 };
 
-class WindowsWindow : public Window
+class LinuxWindow : public Window
 {
 
     GLFWwindow* window;
@@ -31,13 +31,11 @@ class WindowsWindow : public Window
     unsigned int GLFWWinCount;
     WindowInfo info;
 
-    int InitalizeConsole();
-
 public:
     void ToggleFullscreen() override;
 
-    WindowsWindow(WindowInfo inf);
-    ~WindowsWindow();
+    LinuxWindow(WindowInfo inf);
+    ~LinuxWindow() override;
     
     void OnUpdate() override;
 

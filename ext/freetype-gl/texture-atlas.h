@@ -50,7 +50,7 @@
 extern "C" {
 #endif
 
-#include "vector.h"
+#include "vec.h"
 #include "vec234.h"
 
 #ifdef __cplusplus

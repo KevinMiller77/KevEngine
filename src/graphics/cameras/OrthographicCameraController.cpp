@@ -56,7 +56,7 @@ void OrthographicCameraController::OnUpdate()
 		Camera.SetProjection(-AspectRatio, AspectRatio, -Zoom, Zoom);
 	}
 
-	Camera.SetPosition(CamPos);
+	Camera.SetPosition(&CamPos);
 
 	time.Reset();
 }

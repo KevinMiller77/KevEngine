@@ -166,7 +166,7 @@ void GameLayer::OnUpdate()
         newY = 0.0f;
     }
 
-    player->SetPosition(Vec3f(newX, newY, 0.0f));
+    player->SetPosition(new Vec3f(newX, newY, 0.0f));
     
     updateTime.Reset();
 
