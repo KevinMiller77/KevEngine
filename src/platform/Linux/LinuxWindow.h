@@ -1,5 +1,5 @@
-#ifndef __LINUX_WINDOW__
-#define __LINUX_WINDOW__
+#ifndef __Linux_WINDOW__
+#define __Linux_WINDOW__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +13,7 @@
 
 #include <GLFW/glfw3.h>
 
-struct WindowsData
+struct LinuxData
 {
     using EventCallbackFn = std::function<void(Event&)>;
     unsigned int width, height;
@@ -31,11 +31,13 @@ class LinuxWindow : public Window
     unsigned int GLFWWinCount;
     WindowInfo info;
 
+    int InitalizeConsole();
+
 public:
     void ToggleFullscreen() override;
 
     LinuxWindow(WindowInfo inf);
-    ~LinuxWindow() override;
+    ~LinuxWindow();
     
     void OnUpdate() override;
 
@@ -54,7 +56,7 @@ public:
 
     void ShutDown();
     
-    static WindowsData data; 
+    static LinuxData data; 
 };
 
 #endif

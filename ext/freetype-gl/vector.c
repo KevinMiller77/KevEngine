@@ -35,8 +35,9 @@
 #include <string.h>
 #include <stdio.h>
 #include "vec.h"
-
+#ifndef _WIN32
 extern "C" { namespace ftgl {
+#endif
 // ------------------------------------------------------------- vector_new ---
 vector_t *
 vector_new( size_t item_size )
@@ -359,4 +360,6 @@ vector_sort( vector_t *self,
 
     qsort(self->items, self->size, self->item_size, cmp);
 }
+#ifndef _WIN32
 }   }
+#endif

@@ -1,5 +1,8 @@
 #include "WindowsWindow.h"
 
+#include <windows.h>
+EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+#define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
 // TODO(Adin): Switch to CreateWindowEx
 
 WindowsData WindowsWindow::data = WindowsData();
@@ -135,11 +138,6 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
     });
 }
 
-#ifdef KEV_PLATFORM_WINDOWS
-
-EXTERN_C IMAGE_DOS_HEADER __ImageBase;
-#define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
-
 
 int WindowsWindow::InitalizeConsole()
 {
@@ -161,13 +159,6 @@ int WindowsWindow::InitalizeConsole()
 
     return 0;
 }
-#else
-int WindowsWindow::InitalizeConsole()
-{
-    return 0;
-}
-#endif
-
 
 void WindowsWindow::ToggleFullscreen()
 {    

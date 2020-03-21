@@ -59,7 +59,9 @@ const struct {
 } FT_Errors[] =
 #include FT_ERRORS_H
 
+#ifndef _WIN32
 extern "C" { namespace ftgl {
+#endif
 
 // ------------------------------------------------- texture_font_load_face ---
 static int
@@ -720,4 +722,7 @@ texture_font_get_glyph( texture_font_t * self,
     }
     return NULL;
 }
+
+#ifndef _WIN32
 }}
+#endif

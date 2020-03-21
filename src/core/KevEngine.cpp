@@ -50,30 +50,23 @@ void KevEngine::OnImGuiRender()
 
 void KevEngine::OnUpdate()
 {
-    LOG_INF("LAy on\n");
-    for (int i = 0; i < LayerStack.GetSize(); i++)
+    for (Layer* layer : LayerStack)
     {
-        ("LAY DOO\n");
-        LayerStack[i]->OnUpdate();
-        ("LAY DONE\n");
+        layer->OnUpdate();
     }
 
-    LOG_INF("LAy off\n");
 
     if (childInstance != nullptr)
     {
         childInstance->OnChildUpdate();
     }
-    LOG_INF("Done\n");
 }
 
 void KevEngine::OnDraw()
 {
     for (Layer* layer : LayerStack)
     {
-        LOG_INF("Drawing layer\n");
         layer->OnDraw();
-        LOG_INF("Drew layer\n");
     }
     if (childInstance != nullptr)
     {
@@ -126,7 +119,6 @@ void KevEngine::Run()
             if (updatesThiscSec < 1)
             {
                 OnUpdate();
-                LOG_INF("UPDATED\n");
                 updatesThiscSec++;
             }
             else if (timer.GetTimePassed() >= c)
@@ -134,14 +126,10 @@ void KevEngine::Run()
                 updatesThiscSec = 0;
                 timer.Reset();
             }
-            OnImGuiRender();
-            LOG_INF("GUI\n");
             OnDraw();
-            LOG_INF("DREW\n");
+            OnImGuiRender();
         }
 
-        LOG_INF("B4\n");
         window->OnUpdate();
-        LOG_INF("A4\n");
     }
 }

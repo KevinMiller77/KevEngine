@@ -39,7 +39,10 @@
 #include "opengl.h"
 #include "texture-atlas.h"
 
+
+#ifndef _WIN32
 extern "C" { namespace ftgl {
+#endif
 // ------------------------------------------------------ texture_atlas_new ---
 texture_atlas_t *
 texture_atlas_new( const size_t width,
@@ -372,4 +375,7 @@ texture_atlas_upload( texture_atlas_t * self )
     }
 }
 
+
+#ifndef _WIN32
 }}
+#endif

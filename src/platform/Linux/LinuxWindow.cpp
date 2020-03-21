@@ -1,15 +1,21 @@
 #include "LinuxWindow.h"
 
-WindowsData LinuxWindow::data = WindowsData();
+// TODO(Adin): Switch to CreateWindowEx
+
+LinuxData LinuxWindow::data = LinuxData();
 
 void GLFWErrorCallback(int error, const char* decsription)
 {
     LOG_ERR("GLFW ERR [%X]: %s\n", decsription);
 }
 
+LinuxWindow::~LinuxWindow()
+{
+    ShutDown();
+}
 
 LinuxWindow::LinuxWindow(WindowInfo inf)
-    : Window(), context(nullptr), GLFWWinCount(0)
+    : context(nullptr), GLFWWinCount(0)
 {
     info = inf;
     data.height = info.Height; data.width = info.Width;
@@ -39,9 +45,9 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
     SetVSync(true);
 
     // Set GLFW callbacks
-    glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
+    glfwSetLinuxizeCallback(window, [](GLFWwindow* window, int width, int height)
     {
-        WindowsData& data = *(WindowsData*)glfwGetWindowUserPointer(window);
+        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
         data.width = width;
         data.height = height;
 
@@ -51,14 +57,14 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
     {
-        WindowsData& data = *(WindowsData*)glfwGetWindowUserPointer(window);
+        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
         WindowCloseEvent event;
         data.EventCallback(event);
     });
 
     glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
     {
-        WindowsData& data = *(WindowsData*)glfwGetWindowUserPointer(window);
+        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
 
         switch (action)
         {
@@ -85,7 +91,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int keycode)
     {
-        WindowsData& data = *(WindowsData*)glfwGetWindowUserPointer(window);
+        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
 
         KeyTypedEvent event((keycode));
         data.EventCallback(event);
@@ -93,7 +99,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
     {
-        WindowsData& data = *(WindowsData*)glfwGetWindowUserPointer(window);
+        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
 
         switch (action)
         {
@@ -114,7 +120,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
     {
-        WindowsData& data = *(WindowsData*)glfwGetWindowUserPointer(window);
+        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
 
         MouseScrolledEvent event((float)xOffset, (float)yOffset);
         data.EventCallback(event);
@@ -122,21 +128,22 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos)
     {
-        WindowsData& data = *(WindowsData*)glfwGetWindowUserPointer(window);
+        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
 
         MouseMovedEvent event(Vec2f((float)xPos, (float)yPos));
         data.EventCallback(event);
     });
 }
 
-Window::~Window()
-{
-    LOG_INF("\n");
+void LinuxWindow::ToggleFullscreen()
+{    
+    //TODO: Fullscreen toggle
 }
 
-LinuxWindow::~LinuxWindow()
+void LinuxWindow::OnUpdate()
 {
-    ShutDown();
+    glfwPollEvents();
+    context.SwapBuffers();
 }
 
 unsigned int LinuxWindow::GetWidth() const
