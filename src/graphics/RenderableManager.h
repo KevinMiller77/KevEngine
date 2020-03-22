@@ -28,7 +28,7 @@ public:
     void MouseCheck(Vec2f MousePos);
     void CollisionCheck();
 
-    inline static bool SortRenderablesByScreenX(const void* p1, const void* p2) { return ((Renderable2D*)p1)->GetWorldLeftBound() <= ((Renderable2D*)p2)->GetWorldLeftBound(); } 
+    inline static bool SortRenderablesByScreenX(const void* p1, const void* p2) { return ((Renderable2D*)p1)->GetWorldLeftBound() < ((Renderable2D*)p2)->GetWorldLeftBound(); } 
 };
 
 #endif

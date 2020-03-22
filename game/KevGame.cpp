@@ -21,7 +21,7 @@ public:
         ups.Start();
         keyPressTimeout.Start();
 
-        window->SetVSync(0);
+        window->SetVSync(1);
 
         //Set shader info
         shaders.NewShader("basic", "resources/shaders/SimpleVertexShader.glsl", "resources/shaders/SimpleFragShader.glsl");

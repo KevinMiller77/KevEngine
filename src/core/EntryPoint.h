@@ -17,6 +17,7 @@ int main(int argv, char** argc)
 
     delete app;
 #endif
+    return 0;
 }
 
 #endif

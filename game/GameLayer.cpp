@@ -73,6 +73,7 @@ void GameLayer::OnUpdate()
 
     Vec3f curPlayerPos = player->GetPosition();
 
+
     if (KevInput::IsKeyPressed(KEV_KEY_D))
     {
         if (playerVelocity.x < 0)
@@ -172,6 +173,17 @@ void GameLayer::OnUpdate()
 
     Manager.MouseCheck(mousePos);
     Manager.CollisionCheck();
+}
+
+void GameLayer::OnImGuiRender() 
+{
+    ImGui::SliderFloat("Gravity Constant", &gravityConstant, 0.1, 5.0);
+    ImGui::SliderFloat("Max Hori Accel", &maxAcceleration, 0.1, 5.0);
+    ImGui::SliderFloat("Player Hori Accel", &acceleration, 0.01, 1.0);
+    ImGui::SliderFloat("Max Jump Accel", &maxJumpAcceleration, 0.1, 5.0);
+    ImGui::SliderFloat("Jump Accel", &jumpAcceleration, 0.1, 5.0);
+    ImGui::SliderInt("Max Jump Presses", &maxJump, 0.1, 5.0);
+
 }
 
 void GameLayer::OnDraw()

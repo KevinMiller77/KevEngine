@@ -109,14 +109,14 @@ void KevEngine::PushOverlay(Layer* layer)
 
 void KevEngine::Run()
 {
-    double c = 1.0f / 60.0f;
+    double c = 1.0f / 120.0f;
     unsigned int updatesThiscSec = 0;
     timer.Reset();
     while (running)
     {
         if (!minimized)
         {
-            if (updatesThiscSec < 1)
+            if (updatesThiscSec < 1 || window->IsVSync())
             {
                 OnUpdate();
                 updatesThiscSec++;
