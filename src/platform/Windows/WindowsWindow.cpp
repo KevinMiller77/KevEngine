@@ -1,7 +1,10 @@
 #include "WindowsWindow.h"
+#include <core/Core.h>
 
+#ifdef KEV_PLATFORM_WINDOWS
 #include <windows.h>
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+
 #define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
 // TODO(Adin): Switch to CreateWindowEx
 
@@ -207,3 +210,4 @@ bool WindowsWindow::IsVSync() const
 {
     return data.VSync;
 }
+#endif

@@ -1,5 +1,7 @@
 #include "LinuxWindow.h"
+#include <core/Core.h>
 
+#ifdef KEV_PLATFORM_LINUX
 // TODO(Adin): Switch to CreateWindowEx
 
 LinuxData LinuxWindow::data = LinuxData();
@@ -37,7 +39,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
     window = glfwCreateWindow((int)data.width, (int)data.height, info.Title, nullptr, nullptr);
-
+    LOG_INF("Made window\n");
     context = OpenGLContext(window);
     context.Init();
 
@@ -45,7 +47,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
     SetVSync(true);
 
     // Set GLFW callbacks
-    glfwSetLinuxizeCallback(window, [](GLFWwindow* window, int width, int height)
+    glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
     {
         LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
         data.width = width;
@@ -182,3 +184,4 @@ bool LinuxWindow::IsVSync() const
 {
     return data.VSync;
 }
+#endif
