@@ -14,6 +14,7 @@
 #include <utils/Logging.h>
 #include <utils/Timer.h>
 #include <graphics/cameras/FollowRenderableCamera.h>
+#include <../ext/imgui/imgui.h>
 
 class GameLayer : public Layer
 {
@@ -48,12 +49,13 @@ public:
     GameLayer(unsigned int shader, Vec2u screensize, Vec2f screenextremes = Vec2f(16, 9));
     ~GameLayer() override;
 
-    void OnAttach() override;
-    void OnDetach() override;
+    virtual void OnAttach() override;
+    virtual void OnDetach() override;
 
-    void OnUpdate() override;
-    void OnDraw() override;
-    void OnEvent(Event& e);
+    virtual void OnUpdate() override;
+    virtual void OnDraw() override;
+    virtual void OnEvent(Event& e);
+    virtual void OnImGuiRender() override;
 };
 
 #endif

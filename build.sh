@@ -8,4 +8,4 @@ KEV_ENGINE_SRC="src/imgui/ImGuiLayer.cpp src/graphics/layers/LayerStack.cpp src/
 KEV_GAME_SRC="game/KevGame.cpp game/GameLayer.cpp game/HUD.cpp"
 TARGETS="$GLAD $GLFW $IMGUI $FREETYPE $FREETYPE_GL $STB_IMAGE $KEV_ENGINE_SRC $KEV_GAME_SRC"
 
-g++ -pthread -fno-diagnostics-show-caret -fpermissive -w -std=c++17 -Iinclude -Isrc -Iext/imgui -Iext/freetype/include -Iext/freetype-gl -D_GLFW_X11 -DFT2_BUILD_LIBRARY -DGLFW_SUPPLIED -D_LIBS_SUPPLIED -DD_CRT_SECURE_NO_WARNINGS $TARGETS -lX11 -lGL -lGLU -ldl
+g++ -pthread -fno-diagnostics-show-caret -fpermissive -std=c++17 -Iinclude -Isrc -Iext/imgui -Iext/freetype/include -Iext/freetype-gl -D_GLFW_X11 -DFT2_BUILD_LIBRARY -DGLFW_SUPPLIED -D_LIBS_SUPPLIED -DD_CRT_SECURE_NO_WARNINGS $TARGETS -lX11 -lGL -lGLU -ldl

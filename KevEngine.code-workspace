@@ -10,7 +10,9 @@
 			"memory": "cpp",
 			"opengl.h": "c",
 			"texture-atlas.h": "c",
-			"wchar.h": "c"
+			"wchar.h": "c",
+			"execution": "cpp",
+			"algorithm": "cpp"
 		}
 	}
 }

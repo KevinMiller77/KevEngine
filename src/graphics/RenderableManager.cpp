@@ -43,6 +43,7 @@ void RenderableManager::CollisionCheck()
         pos++;
     }
 
+
     std::sort(RenderablesToCheck.begin(), RenderablesToCheck.end(), RenderableManager::SortRenderablesByScreenX);
     // LOG_INF("Checking %d collisions\n", RenderablesToCheck.size());
     

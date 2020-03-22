@@ -44,7 +44,7 @@ protected:
 
     Vec3f* baseOrigin = nullptr;
 
-    bool SolidObject = false;
+    bool SolidObject = true;
     bool mouseHovering = false;
     bool singleItem = true;
 
