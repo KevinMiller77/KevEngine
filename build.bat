@@ -5,7 +5,7 @@ if not "%Platform%"=="x86" call scripts\setup_cl.bat x86
 REM TOOD(Adin): Turn off _CRT_SECURE_NO_WARNINGS
 
 setlocal
-set COMPILE_FLAGS=/nologo /diagnostics:caret /Zi /W0 /WX /EHsc /MP /Ox
+set COMPILE_FLAGS=/nologo /diagnostics:caret /Zi /W0 /WX /EHsc /MP /Ox /Y-
 set WARNS_DISABLE= /wd4201
 set DEFINES=/D_CRT_SECURE_NO_WARNINGS /DFT2_BUILD_LIBRARY /D_GLFW_WIN32
 set INCLUDE_PATH=/I..\include /I..\ext\freetype\include /I..\ext\imgui /I..\src

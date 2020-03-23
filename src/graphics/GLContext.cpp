@@ -1,5 +1,13 @@
+
+#include <core/Core.h>
 #include <glad/glad.h>
+
 #include <GLFW/glfw3.h>
+#ifdef KEV_PLATFORM_EM
+    <emscripten/emscripten.h>
+#else
+#endif
+
 #include <assert.h>
 #include "GLContext.h"
 
@@ -19,7 +27,11 @@ void OpenGLContext::Init()
         LOG_ERR("NO CONTEXT COULD BE CREATED\n");
     }
     
+#ifdef KEV_PLATFORM_EM
+    if (!gladLoadGLES2Loader((GLADloadproc)glfwGetProcAddress)))
+#else
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+#endif
     {
         LOG_ERR("Gl could not load!\n");
     }

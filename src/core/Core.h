@@ -45,6 +45,8 @@
 	#error "Android is not supported!"
 #elif defined(__linux__)
 	#define KEV_PLATFORM_LINUX
+#elif defined(__EMSCRIPTEN__)
+	#define KEV_PLATFORM_EM
 #else
 	/* Unknown compiler/platform */
 	#error "Unknown platform!"
