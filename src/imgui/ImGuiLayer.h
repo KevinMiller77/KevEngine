@@ -7,10 +7,12 @@
 #include <events/MouseEvent.h>
 #include <events/WindowEvent.h>
 
+#include <graphics/Window.h>
+
 class ImGuiLayer : public Layer
 {
 public:
-    ImGuiLayer();
+    ImGuiLayer(Window* Parent);
     ~ImGuiLayer() = default;
 
     virtual void OnAttach() override;

@@ -6,8 +6,8 @@
 #include <glad/glad.h>
 
 
-GameLayer::GameLayer(unsigned int shader, Vec2u screensize, Vec2f screenextremes)
-    : Layer(new BetterGL2DRenderer(), shader), screenSize(screensize), screenExtremes(screenextremes), camera(screenExtremes.x, screenExtremes.y)
+GameLayer::GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes)
+    : Layer(Parent, new Kev2DRenderer(), Shader), screenSize(ScreenSize), screenExtremes(ScreenExtremes), camera(ScreenExtremes.x, ScreenExtremes.y)
 {
     //Enable blending of the alpha channel
     glEnable(GL_BLEND);
@@ -68,8 +68,8 @@ void GameLayer::OnUpdate()
     double ts = updateTime.GetTimePassed();
 
     camera.OnUpdate();
-    ShaderProgram::EnableShaderProgram(Shader);
-    ShaderProgram::SetShaderUniformMat4(Shader, "pr_matrix", camera.GetCamera().GetViewProjectionMatrix());
+    ShaderProgram::EnableShaderProgram(shader);
+    ShaderProgram::SetShaderUniformMat4(shader, "pr_matrix", camera.GetCamera().GetViewProjectionMatrix());
 
     Vec3f curPlayerPos = player->GetPosition();
 
@@ -109,7 +109,7 @@ void GameLayer::OnUpdate()
     }
 
     //On ground
-    if (curPlayerPos.y + player->GetSize().y >= 17.95f)
+    if (curPlayerPos.y + player->GetSize().y >= 17.99f)
     {
         //Is the first time ive been here
         if (!onGround)
@@ -177,13 +177,17 @@ void GameLayer::OnUpdate()
 
 void GameLayer::OnImGuiRender() 
 {
+    if (!IsImGuiEnabled())
+    {
+        return;
+    }
     ImGui::SliderFloat("Gravity Constant", &gravityConstant, 0.1, 5.0);
     ImGui::SliderFloat("Max Hori Accel", &maxAcceleration, 0.1, 5.0);
-    ImGui::SliderFloat("Player Hori Accel", &acceleration, 0.01, 1.0);
+    ImGui::SliderFloat("Player Hori Accel", &acceleration, 0.1, 5.0);
     ImGui::SliderFloat("Max Jump Accel", &maxJumpAcceleration, 0.1, 5.0);
     ImGui::SliderFloat("Jump Accel", &jumpAcceleration, 0.1, 5.0);
-    ImGui::SliderInt("Max Jump Presses", &maxJump, 0.1, 5.0);
-
+    ImGui::SliderInt("Max Jump Presses", &maxJump, 1, 15);
+    ImGui::SliderFloat("Key debounce interval (s)", &keyDebounceInterval, 0.05, 0.5);
 }
 
 void GameLayer::OnDraw()
@@ -222,7 +226,71 @@ bool GameLayer::WindowResize(WindowResizeEvent& e)
 
 bool GameLayer::KeyDown(KeyPressedEvent& e)
 {
-    LOG_INF("Key pressed %d\n", (int)e.GetKeyCode());
+    if (keyDebounce.GetTimePassed() < keyDebounceInterval)
+    {
+        return false;
+    }
+    keyDebounce.Reset();
+
+    KeyCode key = (KeyCode)(e.GetKeyCode());
+
+    switch (key)
+    {
+        case(KEV_KEY_F3):
+        {
+            if (KevInput::IsKeyPressed(KEV_KEY_LEFT_CONTROL))
+            {
+                SetImGuiEnabled(!IsImGuiEnabled());
+            }
+            break;
+        }
+
+        case(KEV_KEY_F11):
+        {
+            if (parent != nullptr) 
+            { 
+                if(!parent->IsWindowed())
+                {
+                    int x, y, w, h;
+                    glfwGetWindowPos((GLFWwindow*)(parent->GetNativeWindow()), &x, &y);
+                    glfwGetWindowSize((GLFWwindow*)(parent->GetNativeWindow()), &w, &h);
+                    int gx = ImGui::GetWindowPos().x;
+                    LOG_INF("ELPESO\n");
+                    int gy = ImGui::GetWindowPos().y;
+                    LOG_INF("JIBUIB\n");
+                    int gw = ImGui::GetWindowSize().x;
+                    int gh = ImGui::GetWindowSize().y;
+                    if (!((gx > x && gy > y) && (gx + gw < x + w && gy + gh < y + h)))
+                    {
+                        LOG_INF("It was in\n");
+                    }
+                    ImGui::SetNextWindowPos(ImVec2(w, h));
+                }
+
+                parent->ToggleFullscreen();
+            }
+            break;
+        }
+
+        case(KEV_KEY_V):
+        {
+            if (parent->IsVSync())
+            {
+                LOG_INF("Turning VSync off\n");
+                parent->SetVSync(0);
+            }
+            else
+            {
+                LOG_INF("Turning VSync on\n");
+                parent->SetVSync(1);
+            }
+            break;
+        }
+
+        default:
+            break;
+    }
+
     return true;
 }
 

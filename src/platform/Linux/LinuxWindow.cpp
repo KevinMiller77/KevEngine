@@ -11,6 +11,11 @@ void GLFWErrorCallback(int error, const char* decsription)
     LOG_ERR("GLFW ERR [%X]: %s\n", decsription);
 }
 
+void LinuxWindow::CallWindowHints()
+{
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+}
+
 LinuxWindow::~LinuxWindow()
 {
     ShutDown();
@@ -36,7 +41,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
         }
         glfwSetErrorCallback(GLFWErrorCallback);
     }
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+    CallWindowHints();
 
     window = glfwCreateWindow((int)data.width, (int)data.height, info.Title, nullptr, nullptr);
     LOG_INF("Made window\n");
@@ -139,7 +144,23 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
 void LinuxWindow::ToggleFullscreen()
 {    
-    //TODO: Fullscreen toggle
+    if (glfwGetWindowMonitor(window))
+    {
+        glfwSetWindowMonitor(window, NULL, data.windowed_x, data.windowed_y, data.w_width, data.w_height, 0);
+        data.windowed = true;
+    }
+    else
+    {
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        if (monitor)
+        {
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+            glfwGetWindowPos(window, &(data.windowed_x), &(data.windowed_y));
+            glfwGetWindowSize(window, &(data.w_width), &(data.w_height));
+            glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+        data.windowed = false;
+    }
 }
 
 void LinuxWindow::OnUpdate()

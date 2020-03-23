@@ -9,7 +9,7 @@
 
 #include <utils/commonTypes.h>
 #include <graphics/Window.h>
-#include <graphics/GLContext.h>
+#include <graphics/renderer/GLContext.h>
 
 #include <GLFW/glfw3.h>
 
@@ -17,6 +17,8 @@ struct LinuxData
 {
     using EventCallbackFn = std::function<void(Event&)>;
     unsigned int width, height;
+    int w_width, w_height;
+    int windowed_x, windowed_y;
     bool windowed;
     bool VSync;
     bool callbackSet = false;
@@ -34,7 +36,10 @@ class LinuxWindow : public Window
     int InitalizeConsole();
 
 public:
+
+    inline bool IsWindowed() override { return data.windowed; }
     void ToggleFullscreen() override;
+    virtual void CallWindowHints() override;
 
     LinuxWindow(WindowInfo inf);
     ~LinuxWindow();
@@ -48,7 +53,6 @@ public:
 	inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallback = callback; data.callbackSet = true; }
 	void SetVSync(bool enabled) override;
 	bool IsVSync() const override;
-    bool IsWindowed() const;
 
     void* GetNativeWindow() override { return (void*)window; }
     void* GetContext() override { return (void*)&context; }

@@ -1,12 +1,12 @@
 
 #include <core/Core.h>
-#include <glad/glad.h>
 
-#include <GLFW/glfw3.h>
 #ifdef KEV_PLATFORM_EM
-    <emscripten/emscripten.h>
+    #include <emscripten/emscripten.h>
 #else
+    #include <glad/glad.h>
 #endif
+#include <GLFW/glfw3.h>
 
 #include <assert.h>
 #include "GLContext.h"

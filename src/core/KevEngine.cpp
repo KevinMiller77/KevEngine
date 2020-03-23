@@ -15,7 +15,7 @@ KevEngine::KevEngine(KevEngine* child)
     window = Window::Create(WindowInfo());
 	window->SetEventCallback(KEV_BIND_EVENT_FN(KevEngine::OnEvent));
 
-    imGuiLayer = new ImGuiLayer();
+    imGuiLayer = new ImGuiLayer(window.get());
     PushOverlay(imGuiLayer);
 }
 
@@ -116,7 +116,7 @@ void KevEngine::Run()
     {
         if (!minimized)
         {
-            if (updatesThiscSec < 1 || window->IsVSync())
+            if (updatesThiscSec < c || window->IsVSync())
             {
                 OnUpdate();
                 updatesThiscSec++;

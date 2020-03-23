@@ -1,7 +1,7 @@
 #include "HUD.h"
 
-HUD::HUD(unsigned int shader)
-    :   Layer(new BetterGL2DRenderer(), shader)
+HUD::HUD(Window* Parent, unsigned int shader)
+    :   Layer(Parent, new Kev2DRenderer(), shader)
 {
 }
 

@@ -8,7 +8,7 @@
 #include <graphics/layers/Group.h>
 #include <graphics/renderables/Sprite2D.h>
 #include <graphics/renderables/Label.h>
-#include <graphics/BetterGL2DRenderer.h>
+#include <graphics/renderer/Kev2DRenderer.h>
 #include <math/math.h>
 #include <utils/Logging.h>
 
@@ -18,7 +18,7 @@ class HUD : public Layer
     Label* UpdateCounter;
 
 public:
-    HUD(unsigned int shader);
+    HUD(Window* Parent, unsigned int shader);
     ~HUD() override;
 
     void OnAttach() override;

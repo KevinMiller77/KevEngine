@@ -9,12 +9,14 @@
 #include <graphics/renderables/Sprite2D.h>
 #include <graphics/layers/Group.h>
 #include <graphics/layers/Layer.h>
-#include <graphics/BetterGL2DRenderer.h>
+#include <graphics/renderer/Kev2DRenderer.h>
 #include <math/math.h>
 #include <utils/Logging.h>
 #include <utils/Timer.h>
 #include <graphics/cameras/FollowRenderableCamera.h>
 #include <../ext/imgui/imgui.h>
+
+#define GAME_KEY_DEBOUNCE_TIME 0.2f
 
 class GameLayer : public Layer
 {
@@ -27,6 +29,8 @@ class GameLayer : public Layer
     bool MouseMove(MouseMovedEvent& e);
     bool WindowResize(WindowResizeEvent& e);
     bool KeyDown(KeyPressedEvent& e);
+
+    bool ImGuiEnabled = true;
 
     FollowRenderableCamera camera;
     Renderable2D* player;
@@ -46,7 +50,7 @@ class GameLayer : public Layer
     Renderable2D* mouse[18];
 
 public:
-    GameLayer(unsigned int shader, Vec2u screensize, Vec2f screenextremes = Vec2f(16, 9));
+    GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes = Vec2f(16, 9));
     ~GameLayer() override;
 
     virtual void OnAttach() override;
@@ -56,6 +60,10 @@ public:
     virtual void OnDraw() override;
     virtual void OnEvent(Event& e);
     virtual void OnImGuiRender() override;
+
+    inline bool IsImGuiEnabled()   { return ImGuiEnabled; }
+    inline void SetImGuiEnabled(bool state) { ImGuiEnabled = state; }
+
 };
 
 #endif

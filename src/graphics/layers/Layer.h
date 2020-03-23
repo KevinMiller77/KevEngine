@@ -1,27 +1,36 @@
 #ifndef __KevEngine_LAYER__
 #define __KevEngine_LAYER__
 
-#include "../GL2DRenderer.h"
+#include<utils/Timer.h>
 
-#include "../TextureManager.h"
-#include "../FontManager.h"
-#include "../RenderableManager.h"
+#include <events/Event.h>
 
-#include "../../events/Event.h"
-#include "../cameras/OrthographicCameraController.h"
+#include <graphics/renderer/GL2DRenderer.h>
+#include <graphics/Window.h>
+
+#include <graphics/TextureManager.h>
+#include <graphics/FontManager.h>
+#include <graphics/RenderableManager.h>
+#include <graphics/cameras/OrthographicCameraController.h>
+
 
 class Layer
 {
 protected:
-    Layer(GL2DRenderer *renderer, unsigned int shader);
+    Layer(Window* Parent, GL2DRenderer *Renderer, unsigned int Shader);
 
-    GL2DRenderer *Renderer;
+    Window* parent;
+
+    GL2DRenderer *renderer;
     std::vector<Renderable2D *> renderables;
     RenderableManager Manager = RenderableManager(&renderables);
-    unsigned int Shader;
+    unsigned int shader;
 
     TextureManager textures;
     FontManager fonts;
+
+    Timer keyDebounce;
+    float keyDebounceInterval = 0.2f;
 
     bool enabled;
 
@@ -32,8 +41,8 @@ public:
     virtual void Add(Renderable2D *renderable);
     virtual void Render();
 
-    virtual inline unsigned int GetShader() { return Shader; }
-    virtual inline void SetShader(unsigned int shader) { Shader = shader; }
+    virtual inline unsigned int GetShader() { return shader; }
+    virtual inline void SetShader(unsigned int Shader) { shader = Shader; }
 
     virtual void OnAttach() {};
     virtual void OnDetach() {};
@@ -45,8 +54,8 @@ public:
 
     virtual inline unsigned int GetNumRenderables() { return renderables.size(); }
 
-    virtual inline void PushTransform(Mat4f *transform) { Renderer->Push(*transform); }
-    virtual inline void PopTransform() { Renderer->Pop(); }
+    virtual inline void PushTransform(Mat4f *transform) { renderer->Push(*transform); }
+    virtual inline void PopTransform() { renderer->Pop(); }
 
     inline void Enable() { enabled = true; }
     inline void Disable() { enabled = false; }

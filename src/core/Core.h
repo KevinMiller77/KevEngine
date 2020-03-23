@@ -13,7 +13,8 @@
 	/* Windows x64/x86 */
 	#ifdef _WIN64
 		/* Windows x64  */
-		#error "x64 Builds are not yet supported!"
+		#define KEV_PLATFORM_WINDOWS
+		#define KEV_PLATFORM_WIN64
 	#else
 		/* Windows x86 */
 		

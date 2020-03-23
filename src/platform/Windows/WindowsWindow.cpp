@@ -20,6 +20,11 @@ WindowsWindow::~WindowsWindow()
     ShutDown();
 }
 
+void WindowsWindow::CallWindowHints()
+{
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+}
+
 WindowsWindow::WindowsWindow(WindowInfo inf)
     : context(nullptr), GLFWWinCount(0)
 {
@@ -40,7 +45,7 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
         }
         glfwSetErrorCallback(GLFWErrorCallback);
     }
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+    CallWindowHints();
 
     window = glfwCreateWindow((int)data.width, (int)data.height, info.Title, nullptr, nullptr);
 
@@ -165,11 +170,32 @@ int WindowsWindow::InitalizeConsole()
 
 void WindowsWindow::ToggleFullscreen()
 {    
-    //TODO: Fullscreen toggle
+    if (glfwGetWindowMonitor(window))
+    {
+        glfwSetWindowMonitor(window, NULL, data.windowed_x, data.windowed_y, data.w_width, data.w_height, 0);
+        data.windowed = true;
+    }
+    else
+    {
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        if (monitor)
+        {
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+            glfwGetWindowPos(window, &(data.windowed_x), &(data.windowed_y));
+            glfwGetWindowSize(window, &(data.w_width), &(data.w_height));
+            glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+        data.windowed = false;
+    }
 }
 
 void WindowsWindow::OnUpdate()
 {
+    if (data.windowed)
+    {
+        data.w_width = data.width;
+        data.w_height = data.height;
+    }
     glfwPollEvents();
     context.SwapBuffers();
 }

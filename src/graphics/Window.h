@@ -48,8 +48,10 @@ public:
 	virtual void* GetContext() = 0;
 
 	virtual void SetView(int W, int H) = 0;
+    virtual inline bool IsWindowed() = 0;
 
 	virtual void ToggleFullscreen() = 0;
+	virtual void CallWindowHints() = 0;
 
 	static Scope<Window> Create(const WindowInfo& inf = WindowInfo());
 };

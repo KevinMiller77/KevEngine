@@ -10,8 +10,8 @@
 #include <glad/glad.h>
 
 
-ImGuiLayer::ImGuiLayer()
-    : Layer(nullptr, 0)
+ImGuiLayer::ImGuiLayer(Window* Parent)
+    : Layer(Parent, nullptr, 0)
 {
 }
 
@@ -24,7 +24,7 @@ void ImGuiLayer::OnAttach()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-#ifndef KEV_PLATFORM_LINUX
+#ifdef KEV_PLATFORM_WINDOWS
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 #endif
     //io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;

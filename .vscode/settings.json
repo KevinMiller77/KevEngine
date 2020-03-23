@@ -30,6 +30,7 @@
         "exception": "cpp",
         "tuple": "cpp",
         "utility": "cpp",
-        "*.rh": "cpp"
+        "*.rh": "cpp",
+        "glad.h": "c"
     }
 }

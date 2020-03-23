@@ -2,13 +2,14 @@
 #define __RENDERABLE_2D__
 
 #include <string>
-#include "../../math/math.h"
-#include "../buffers/IndexBuffer.h"
-#include "../buffers/VertexArray.h"
-#include "../TextureProgram.h"
-#include "../../utils/Logging.h"
-#include "../ShaderProgram.h"
-#include "../GL2DRenderer.h"
+
+#include <math/math.h>
+#include <graphics/buffers/IndexBuffer.h>
+#include <graphics/buffers/VertexArray.h>
+#include <graphics/renderer/TextureProgram.h>
+#include <utils/Logging.h>
+#include <graphics/renderer/ShaderProgram.h>
+#include <graphics/renderer/GL2DRenderer.h>
 
 
 enum RenderableType
@@ -44,7 +45,7 @@ protected:
 
     Vec3f* baseOrigin = nullptr;
 
-    bool SolidObject = true;
+    bool SolidObject = false;
     bool mouseHovering = false;
     bool singleItem = true;
 

@@ -1,22 +1,22 @@
-#include "BetterGL2DRenderer.h"
+#include "Kev2DRenderer.h"
 #include <graphics/renderables/Renderable2D.h>
 
 unsigned int Renderable2D::globalNumRenderables;
 
-BetterGL2DRenderer::BetterGL2DRenderer()
+Kev2DRenderer::Kev2DRenderer()
 {
     indexCount = 0;
     Init();
 }
 
-BetterGL2DRenderer::~BetterGL2DRenderer()
+Kev2DRenderer::~Kev2DRenderer()
 {
     delete IBO;
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 }
 
-void BetterGL2DRenderer::Init()
+void Kev2DRenderer::Init()
 {
     //Generate all of the necessary spaces in memory
     glGenVertexArrays(1, &VAO);
@@ -65,14 +65,14 @@ void BetterGL2DRenderer::Init()
     glBindVertexArray(0);    
 }
 
-void BetterGL2DRenderer::Begin()
+void Kev2DRenderer::Begin()
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     VDataBuffer = (VertexData *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     VDataHeapLoc = VDataHeapLoc ? VDataHeapLoc : VDataBuffer; 
 }
 
-void BetterGL2DRenderer::Submit(const Renderable2D *renderable)
+void Kev2DRenderer::Submit(const Renderable2D *renderable)
 {
     const Vec3f position = renderable->GetPosition();
     const Vec2f size = renderable->GetSize();
@@ -136,7 +136,7 @@ void BetterGL2DRenderer::Submit(const Renderable2D *renderable)
     indexCount += 6;
 }
 
-void BetterGL2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
+void Kev2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
 {
     using namespace ftgl;
 
@@ -220,13 +220,13 @@ void BetterGL2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* 
     }
 }
 
-void BetterGL2DRenderer::End()
+void Kev2DRenderer::End()
 {
     glUnmapBuffer(GL_ARRAY_BUFFER);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void BetterGL2DRenderer::Draw()
+void Kev2DRenderer::Draw()
 {
     for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
     {

@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-#include "TextureProgram.h"
+#include <graphics/renderer/TextureProgram.h>
 
 class TextureManager
 {

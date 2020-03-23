@@ -1,7 +1,7 @@
 #ifndef __SHADER_MANAGER__
 #define __SHADER_MANAGER__
 
-#include "ShaderProgram.h"
+#include <graphics/renderer/ShaderProgram.h>
 
 class ShaderManager
 {

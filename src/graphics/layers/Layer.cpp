@@ -1,13 +1,14 @@
 #include "Layer.h"
 
-Layer::Layer(GL2DRenderer *renderer, unsigned int shader)
-    : Renderer(renderer), Shader(shader), enabled(true)
+Layer::Layer(Window* Parent, GL2DRenderer *Renderer, unsigned int Shader)
+    : parent(Parent), renderer(Renderer), shader(Shader), enabled(true)
 {
+    keyDebounce.Start();
 }
 
 Layer::~Layer()
 {
-    delete Renderer;
+    delete renderer;
 
     for (Renderable2D* renderable : renderables)
     {
@@ -24,15 +25,15 @@ void Layer::Render()
 {
     if (enabled)
     {
-        ShaderProgram::EnableShaderProgram(Shader);
-        Renderer->Begin();
+        ShaderProgram::EnableShaderProgram(shader);
+        renderer->Begin();
 
         for (Renderable2D *renderable : renderables)
         {
-            renderable->Submit(Renderer);
+            renderable->Submit(renderer);
         }
         
-        Renderer->End();   
-        Renderer->Draw();
+        renderer->End();   
+        renderer->Draw();
     }
 }

@@ -32,8 +32,8 @@ public:
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
         shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
 
-        PushOverlay(new GameLayer(shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
-        PushOverlay(new HUD(shaders.GetShader("basic").GetShaderID()));
+        PushOverlay(new GameLayer(window.get(), shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
+        PushOverlay(new HUD(window.get(), shaders.GetShader("basic").GetShaderID()));
     }
 
 
@@ -57,20 +57,10 @@ public:
 
     void OnChildUpdate()
     {
-        //LOG_INF("Numrenderablesglobal: %d", Renderable2D::GetGlobalNumRenderables());
         unsigned int newUpdate = ups.FrameKeep();
         if ( newUpdate != 0)
         {
             LastUpdateKeep = newUpdate;
-        }
-
-        if (keyPressTimeout.GetTimePassed() > 0.6)
-        {
-            if (KevInput::IsKeyPressed(KEV_KEY_F))
-            {
-                window->ToggleFullscreen();
-                keyPressTimeout.Reset();
-            }
         }
     }
 };

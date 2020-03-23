@@ -9,22 +9,22 @@
 #include <vector>
 #include <map>
 
-#include "graphics/renderables/Renderable2D.h"
-#include "graphics/renderables/Sprite2D.h"
-#include "graphics/renderables/Label.h"
-#include "graphics/layers/Group.h"
-#include "graphics/layers/Layer.h"
-#include "graphics/ShaderManager.h"
-#include "graphics/BetterGL2DRenderer.h"
-#include "imgui/ImGuiLayer.h"
+#include <graphics/renderables/Renderable2D.h>
+#include <graphics/renderables/Sprite2D.h>
+#include <graphics/renderables/Label.h>
+#include <graphics/layers/Group.h>
+#include <graphics/layers/Layer.h>
+#include <graphics/ShaderManager.h>
+#include <graphics/renderer/Kev2DRenderer.h>
+#include <imgui/ImGuiLayer.h>
 
 //#include "utils/MemoryTracker.h"
-#include "utils/Timer.h"
-#include "graphics/Window.h"
-#include "events/Event.h"
-#include "graphics/Window.h"
-#include "graphics/GLContext.h"
-#include "graphics/layers/LayerStack.h"
+#include <utils/Timer.h>
+#include <graphics/Window.h>
+#include <events/Event.h>
+#include <graphics/Window.h>
+#include <graphics/renderer/GLContext.h>
+#include <graphics/layers/LayerStack.h>
 
 //TODO: Move this to the input.h util
 #define KEY_DEBOUNCE_TIME 0.2f

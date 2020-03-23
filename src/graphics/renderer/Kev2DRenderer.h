@@ -3,7 +3,7 @@
 
 #include <cstddef>
 
-#include <graphics/GL2DRenderer.h>
+#include <graphics/renderer/GL2DRenderer.h>
 #include <graphics/buffers/IndexBuffer.h>
 #include <graphics/buffers/VertexArray.h>
 
@@ -24,7 +24,7 @@
 
 class VertexData;
 
-class BetterGL2DRenderer : public GL2DRenderer
+class Kev2DRenderer : public GL2DRenderer
 {
 private:
     unsigned int VAO;
@@ -37,8 +37,8 @@ private:
     std::vector<unsigned int> TextureSlots;
 
 public:
-    BetterGL2DRenderer();
-    ~BetterGL2DRenderer() override;
+    Kev2DRenderer();
+    ~Kev2DRenderer() override;
 
     void Submit(const Renderable2D *renderable) override;
     void Draw() override;
