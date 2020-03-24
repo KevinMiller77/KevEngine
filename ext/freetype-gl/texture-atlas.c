@@ -39,8 +39,8 @@
 #include "opengl.h"
 #include "texture-atlas.h"
 
-
-#ifndef _WIN32
+#ifdef __linux__
+#else 
 extern "C" { namespace ftgl {
 #endif
 // ------------------------------------------------------ texture_atlas_new ---
@@ -376,6 +376,7 @@ texture_atlas_upload( texture_atlas_t * self )
 }
 
 
-#ifndef _WIN32
+#ifdef __linux__
+#else 
 }}
 #endif

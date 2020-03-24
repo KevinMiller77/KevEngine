@@ -39,7 +39,7 @@ protected:
     bool running = true;
     bool minimized = false;
 
-    LayerStack LayerStack;
+    LayerStack EngLayerStack;
     int texIDs[MAX_TEXTURE_SLOTS];
     
     bool windowedMode;

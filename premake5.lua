@@ -6,6 +6,11 @@ workspace "KevEngine"
         "Release"
     }
 
+    flags
+    {
+        "MultiProcessorCompile"
+    }
+
     outputdir = "%{cfg.buildcfg}/%{cfg.system}%{cfg.architecture}"
 
     
@@ -14,7 +19,6 @@ workspace "KevEngine"
         include "ext/glad"
         include "ext/imgui"
         include "ext/freetype"
-        include "ext/freetype-gl"
     group ""
     
 project "Engine"
@@ -54,16 +58,14 @@ project "Engine"
         "ext/glad/include",
         "ext/imgui",
         "ext/freetype/include",
-        "ext/freetype-gl"
     }
 
     links
     {
-        "imgui",
-        "glfw",
         "glad",
-        "freetype",
-        "freetype-gl"
+        "glfw",
+        "imgui",
+        "freetype"
     }
 
     filter "system:windows"
@@ -77,6 +79,11 @@ project "Engine"
         }
     filter "system:linux"
         systemversion "latest"
+        defines
+        {
+            "GLFW_SUPPLIED",
+            "_LIBS_SUPPLIED"
+        }
         links
         {
             "X11",
@@ -102,7 +109,8 @@ project "Game"
         cppdialect "C++17"
         staticruntime "on"
 
-        targetdir ("./")
+        targetname("KevGame")
+        targetdir("")
 	    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
         files
@@ -114,8 +122,37 @@ project "Game"
         includedirs
         {
             "src",
-            "include"
+            "include",
+            "ext/glfw/include",
+            "ext/glad/include",
+            "ext/imgui",
+            "ext/freetype/include"
         }
+
+
+        filter "system:linux"
+            files
+            {
+                "ext/freetype-gl/vector.c",
+                "ext/freetype-gl/texture-atlas.c",
+                "ext/freetype-gl/texture-font.c"
+            }
+            links
+            {
+                "X11",
+                "GL",
+                "GLU",
+                "dl",
+                "glad",
+                "glfw",
+                "imgui",
+                "freetype",
+                "pthread"
+            }
+            defines
+            {
+                "_GLFW_X11"
+            }
 
         links
         {

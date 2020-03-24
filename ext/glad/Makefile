@@ -35,17 +35,17 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),debug)
-TARGETDIR = bin/Debug/windows/glad
-TARGET = $(TARGETDIR)/glad.lib
-OBJDIR = bin-int/Debug/windows/glad
+TARGETDIR = bin/Debug/linux/glad
+TARGET = $(TARGETDIR)/libglad.a
+OBJDIR = bin-int/Debug/linux/glad
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g
 ALL_LDFLAGS += $(LDFLAGS)
 
 else ifeq ($(config),release)
-TARGETDIR = bin/Release/windows/glad
-TARGET = $(TARGETDIR)/glad.lib
-OBJDIR = bin-int/Release/windows/glad
+TARGETDIR = bin/Release/linux/glad
+TARGET = $(TARGETDIR)/libglad.a
+OBJDIR = bin-int/Release/linux/glad
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O2
 ALL_LDFLAGS += $(LDFLAGS) -s

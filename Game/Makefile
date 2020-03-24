@@ -19,14 +19,17 @@ endif
 # #############################################
 
 RESCOMP = windres
-DEFINES +=
-INCLUDES += -Iinclude -I../freetype/include -I../../include
+TARGETDIR = ..
+TARGET = $(TARGETDIR)/KevGame
+DEFINES += -D_GLFW_X11
+INCLUDES += -I../src -I../include -I../ext/glfw/include -I../ext/glad/include -I../ext/imgui -I../ext/freetype/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -std=c++17
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LIBS +=
-LDDEPS +=
-LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
+ALL_LDFLAGS += $(LDFLAGS) -s
+LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
 define PREBUILDCMDS
 endef
 define PRELINKCMDS
@@ -35,20 +38,14 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),debug)
-TARGETDIR = bin/Debug/linux/freetype-gl
-TARGET = $(TARGETDIR)/libfreetype-gl.a
-OBJDIR = bin-int/Debug/linux/freetype-gl
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g
-ALL_LDFLAGS += $(LDFLAGS)
+OBJDIR = ../bin-int/Debug/linux/Game
+LIBS += ../ext/glad/bin/Debug/linux/glad/libglad.a ../ext/glfw/bin/Debug/linux/glfw/libglfw.a ../ext/imgui/bin/Debug/linux/imgui/libimgui.a ../ext/freetype/bin/Debug/linux/freetype/libfreetype.a ../bin/Debug/linux/Engine/libEngine.a -lX11 -lGL -lGLU -ldl -lpthread
+LDDEPS += ../ext/glad/bin/Debug/linux/glad/libglad.a ../ext/glfw/bin/Debug/linux/glfw/libglfw.a ../ext/imgui/bin/Debug/linux/imgui/libimgui.a ../ext/freetype/bin/Debug/linux/freetype/libfreetype.a ../bin/Debug/linux/Engine/libEngine.a
 
 else ifeq ($(config),release)
-TARGETDIR = bin/Release/linux/freetype-gl
-TARGET = $(TARGETDIR)/libfreetype-gl.a
-OBJDIR = bin-int/Release/linux/freetype-gl
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O2
-ALL_LDFLAGS += $(LDFLAGS) -s
+OBJDIR = ../bin-int/Release/linux/Game
+LIBS += ../ext/glad/bin/Release/linux/glad/libglad.a ../ext/glfw/bin/Release/linux/glfw/libglfw.a ../ext/imgui/bin/Release/linux/imgui/libimgui.a ../ext/freetype/bin/Release/linux/freetype/libfreetype.a ../bin/Release/linux/Engine/libEngine.a -lX11 -lGL -lGLU -ldl -lpthread
+LDDEPS += ../ext/glad/bin/Release/linux/glad/libglad.a ../ext/glfw/bin/Release/linux/glfw/libglfw.a ../ext/imgui/bin/Release/linux/imgui/libimgui.a ../ext/freetype/bin/Release/linux/freetype/libfreetype.a ../bin/Release/linux/Engine/libEngine.a
 
 else
   $(error "invalid configuration $(config)")
@@ -63,6 +60,9 @@ endif
 
 OBJECTS :=
 
+OBJECTS += $(OBJDIR)/GameLayer.o
+OBJECTS += $(OBJDIR)/HUD.o
+OBJECTS += $(OBJDIR)/KevGame.o
 OBJECTS += $(OBJDIR)/texture-atlas.o
 OBJECTS += $(OBJDIR)/texture-font.o
 OBJECTS += $(OBJDIR)/vector.o
@@ -75,7 +75,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
 	$(PRELINKCMDS)
-	@echo Linking freetype-gl
+	@echo Linking Game
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -96,7 +96,7 @@ else
 endif
 
 clean:
-	@echo Cleaning freetype-gl
+	@echo Cleaning Game
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -112,7 +112,7 @@ ifneq (,$(PCH))
 $(OBJECTS): $(GCH) | $(PCH_PLACEHOLDER)
 $(GCH): $(PCH) | prebuild
 	@echo $(notdir $<)
-	$(SILENT) $(CC) -x c-header $(ALL_CFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
+	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 $(PCH_PLACEHOLDER): $(GCH) | $(OBJDIR)
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) touch "$@"
@@ -127,15 +127,24 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/texture-atlas.o: texture-atlas.c
+$(OBJDIR)/texture-atlas.o: ../ext/freetype-gl/texture-atlas.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/texture-font.o: texture-font.c
+$(OBJDIR)/texture-font.o: ../ext/freetype-gl/texture-font.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/vector.o: vector.c
+$(OBJDIR)/vector.o: ../ext/freetype-gl/vector.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/GameLayer.o: ../game/GameLayer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/HUD.o: ../game/HUD.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/KevGame.o: ../game/KevGame.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
 -include $(OBJECTS:%.o=%.d)
 ifneq (,$(PCH))

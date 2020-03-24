@@ -19,7 +19,7 @@ endif
 # #############################################
 
 RESCOMP = windres
-DEFINES += -DFT2_BUILD_LIBRARY
+DEFINES += -DFT2_BUILD_LIBRARY -D_LIBS_SUPPLIED
 INCLUDES += -Iinclude
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
@@ -35,17 +35,17 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),debug)
-TARGETDIR = bin/Debug/windows/freetype
-TARGET = $(TARGETDIR)/freetype.lib
-OBJDIR = bin-int/Debug/windows/freetype
+TARGETDIR = bin/Debug/linux/freetype
+TARGET = $(TARGETDIR)/libfreetype.a
+OBJDIR = bin-int/Debug/linux/freetype
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -g
 ALL_LDFLAGS += $(LDFLAGS)
 
 else ifeq ($(config),release)
-TARGETDIR = bin/Release/windows/freetype
-TARGET = $(TARGETDIR)/freetype.lib
-OBJDIR = bin-int/Release/windows/freetype
+TARGETDIR = bin/Release/linux/freetype
+TARGET = $(TARGETDIR)/libfreetype.a
+OBJDIR = bin-int/Release/linux/freetype
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
 ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -O2
 ALL_LDFLAGS += $(LDFLAGS) -s

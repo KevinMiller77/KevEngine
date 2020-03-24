@@ -26,7 +26,8 @@ project "freetype"
 
     defines
     {
-        "FT2_BUILD_LIBRARY"
+        "FT2_BUILD_LIBRARY",
+        "_LIBS_SUPPLIED"
     }
 
     includedirs

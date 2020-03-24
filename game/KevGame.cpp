@@ -40,7 +40,7 @@ public:
 
     ~KevGame() override 
     {
-        for (Layer* layer : LayerStack)
+        for (Layer* layer : EngLayerStack)
         {
             delete layer;
         }
