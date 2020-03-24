@@ -1,33 +1,123 @@
 workspace "KevEngine"
+    startproject "Game"
     configurations 
     { 
         "Debug",
         "Release"
     }
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+    outputdir = "%{cfg.buildcfg}/%{cfg.system}%{cfg.architecture}"
 
-IncludeDir = {}
-IncludeDir["GLFW"] = "ext/glfw/include"
-IncludeDir["Glad"] = "ext/glad/include"
-IncludeDir["ImGui"] = "ext/imgui"
-IncludeDir["Freetype"] = "ext/freetype/include"
-IncludeDir["Freetype-GL"] = "ext/freetype-gl" 
-IncludeDir["stb_image"] = "ext/stb_image/"
+    
+    group "Dependencies"
+        include "ext/glfw"
+        include "ext/glad"
+        include "ext/imgui"
+        include "ext/freetype"
+        include "ext/freetype-gl"
+    group ""
+    
+project "Engine"
+    kind "StaticLib"
+    language "C++"
+    cppdialect "C++14"
+    staticruntime "on"
+    
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+    
 
-    platforms { "Win32", "Linux"}
+    files
+    {
+        "src/**.h",
+        "src/**.cpp",
+        "ext/stb_image/**.cpp"
+    }
 
-    filter { "platforms:Win32"}
-        system "windows"
-        architecture "x86"
-        defines { "KEV_PLATFORM_WINDOWS" }
+    removefiles
+    {
+        "src/utils/Memorytracker.cpp",
+        "src/utils/Memorytracker.h"
+    }
 
-    filter { "platforms:Linux" }
-        system "linux"
-        architecture "x86"
+    defines
+    {
+        "_CRT_SECURE_NO_WARNINGS",
+        "FT2_BUILD_LIBRARY"
+    }
 
-    project "Engine"
-        kind "WindowedApp"
+    includedirs
+    {
+        "src",
+        "include",
+		"ext/glfw/include",
+        "ext/glad/include",
+        "ext/imgui",
+        "ext/freetype/include",
+        "ext/freetype-gl"
+    }
+
+    links
+    {
+        "imgui",
+        "glfw",
+        "glad",
+        "freetype",
+        "freetype-gl"
+    }
+
+    filter "system:windows"
+        systemversion "latest"
+        links
+        {
+            "user32", 
+            "gdi32", 
+            "opengl32", 
+            "shell32"
+        }
+    filter "system:linux"
+        systemversion "latest"
+        links
+        {
+            "X11",
+            "GL",
+            "GLU",
+            "dl"
+        }
+
+    filter "configurations:Debug"
+        defines "KEV_DEBUG"
+        runtime "Debug"
+        symbols "on"
+
+    filter "configurations:Release"
+        defines "KEV_RELEASE"
+        runtime "Release"
+        optimize "on"
+
+project "Game"
+        location "Game"
+        kind "ConsoleApp"
         language "C++"
-        location "build/KevEngine"
+        cppdialect "C++17"
+        staticruntime "on"
 
+        targetdir ("./")
+	    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+        files
+        {
+            "game/**.h",
+            "game/**.cpp"
+        }
+
+        includedirs
+        {
+            "src",
+            "include"
+        }
+
+        links
+        {
+            "Engine"
+        }

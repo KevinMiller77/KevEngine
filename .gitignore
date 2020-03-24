@@ -1,10 +1,9 @@
-*.txt
-*.sln
-*.vcxproj.
-*.vcxproj.*
-*.exe
-*.ilk
-*.pdb
+**/.txt
+**/.sln
+**/.vcxproj.**
+**/.exe
+**/.ilk
+**/.pdb
 
 x64/*
 Debug/*

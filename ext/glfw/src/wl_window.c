@@ -1641,7 +1641,7 @@ static void dataSourceHandleSend(void* data,
         return;
     }
 
-    if (strcmp(mimeType, "text/plain;charset=utf-8") != 0)
+    if (strcmp(mimeType, "tplain;charset=utf-8") != 0)
     {
         _glfwInputError(GLFW_PLATFORM_ERROR,
                         "Wayland: Wrong MIME type asked from clipboard");

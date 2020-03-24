@@ -1,0 +1,32 @@
+﻿  ftbase.c
+C:\Users\kevin\Dev\kevengine\ext\freetype\src\base\ftrfork.c(798,3): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(338): message : see declaration of 'strncpy'
+C:\Users\kevin\Dev\kevengine\ext\freetype\src\base\ftrfork.c(808,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(90): message : see declaration of 'strcat'
+C:\Users\kevin\Dev\kevengine\ext\freetype\src\base\ftrfork.c(809,3): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(90): message : see declaration of 'strcat'
+  ftbbox.c
+  ftbitmap.c
+  ftdebug.c
+  ftglyph.c
+  ftinit.c
+  ftlcdfil.c
+  ftstroke.c
+  ftsystem.c
+C:\Users\kevin\Dev\kevengine\ext\freetype\src\base\ftsystem.c(240,3): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
+  bdf.c
+C:\Users\kevin\Dev\kevengine\ext\freetype\src\bdf\bdflib.c(1982,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+C:\Users\kevin\Dev\kevengine\ext\freetype\src\bdf\bdflib.c(1995,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+C:\Users\kevin\Dev\kevengine\ext\freetype\src\bdf\bdflib.c(2317,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+C:\Users\kevin\Dev\kevengine\ext\freetype\src\bdf\bdflib.c(2325,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+  sfnt.c
+  smooth.c
+  truetype.c
+  winfnt.c
+  Generating Code...
+  freetype.vcxproj -> C:\Users\kevin\Dev\kevengine\ext\freetype\bin\Debug\windows\freetype\freetype.lib
