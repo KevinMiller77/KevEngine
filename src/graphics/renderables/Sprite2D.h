@@ -12,6 +12,7 @@ private:
 public:
     Sprite(float x, float y, float width, float height, const Vec4f color);
     Sprite(float x, float y, float width, float height, Texture* inTexture);
+    Sprite(float x, float y, float width, float height, unsigned int inTexture);
 
     virtual void OnMouseHover() override;
     virtual void OnMouseLeave() override;

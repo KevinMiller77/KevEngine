@@ -20,6 +20,7 @@ private:
 
 public:
     Texture();
+    inline Texture(unsigned int tex)    { texture = tex; };
     Texture(const char *inImagePath, Vec2f flip = Vec2f(0.0f, 0.0f));
     ~Texture();
     void Init(Vec2f flip = Vec2f(0.0f, 0.0f));

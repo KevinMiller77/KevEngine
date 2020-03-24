@@ -13,6 +13,12 @@ Sprite::Sprite(float x, float y, float width, float height, Texture* inTexture)
     texID = inTexture->GetTexID();
 }
 
+Sprite::Sprite(float x, float y, float width, float height, unsigned int inTexture)
+    : Renderable2D(Vec3f(x, y, 0), Vec2f(width, height), Vec4f(1.0f, 1.0f, 1.0f, 1.0f))
+{
+    texture = new Texture(inTexture);
+}
+
 void Sprite::OnMouseHover()
 {
     // LOG_INF("Hover\n");

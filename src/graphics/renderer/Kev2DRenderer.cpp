@@ -229,6 +229,13 @@ void Kev2DRenderer::End()
 
 unsigned int Kev2DRenderer::DrawToBuffer()
 {
+
+    for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
+    {
+        glActiveTexture(GL_TEXTURE0 + tex);
+        glBindTexture(GL_TEXTURE_2D, TextureSlots[tex]);
+    }
+    
     glBindVertexArray(VAO);
     IBO->Bind();
     FBO->Bind(*scr_w, *scr_h);
