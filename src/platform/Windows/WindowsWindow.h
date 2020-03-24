@@ -48,6 +48,10 @@ public:
     unsigned int GetWidth() const override;
 	unsigned int GetHeight() const override;
 
+    
+    unsigned int* GetWidthPtr() const override;
+	unsigned int* GetHeightPtr() const override;
+
     // Window attributes
 	inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallback = callback; data.callbackSet = true; }
 	void SetVSync(bool enabled) override;

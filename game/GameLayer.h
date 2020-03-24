@@ -15,6 +15,7 @@
 #include <utils/Timer.h>
 #include <graphics/cameras/FollowRenderableCamera.h>
 #include <../ext/imgui/imgui.h>
+#include <imgui/KevImGuiLog.h>
 
 #define GAME_KEY_DEBOUNCE_TIME 0.2f
 
@@ -31,6 +32,11 @@ class GameLayer : public Layer
     bool KeyDown(KeyPressedEvent& e);
 
     bool ImGuiEnabled = true;
+    bool KevImGuiLogOpen = true;
+
+    unsigned int vpTexture;
+
+    KevImGuiLog log;
 
     FollowRenderableCamera camera;
     Renderable2D* player;
@@ -58,6 +64,7 @@ public:
 
     virtual void OnUpdate() override;
     virtual void OnDraw() override;
+    // virtual void Render() override;
     virtual void OnEvent(Event& e);
     virtual void OnImGuiRender() override;
 

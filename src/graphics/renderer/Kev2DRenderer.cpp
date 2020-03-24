@@ -3,7 +3,8 @@
 
 unsigned int Renderable2D::globalNumRenderables;
 
-Kev2DRenderer::Kev2DRenderer()
+Kev2DRenderer::Kev2DRenderer(int* width, int* height)
+    : scr_w(width), scr_h(height), FBO(new FrameBuffer(*width, *height))
 {
     indexCount = 0;
     Init();
@@ -62,7 +63,7 @@ void Kev2DRenderer::Init()
     IBO = new IndexBuffer(indicies, RENDERER_INDICIES_SIZE);
 
     //Unbind VAO
-    glBindVertexArray(0);    
+    glBindVertexArray(0);
 }
 
 void Kev2DRenderer::Begin()
@@ -226,6 +227,21 @@ void Kev2DRenderer::End()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+unsigned int Kev2DRenderer::DrawToBuffer()
+{
+    glBindVertexArray(VAO);
+    IBO->Bind();
+    FBO->Bind(*scr_w, *scr_h);
+    
+    glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
+
+    FBO->Unbind();
+    IBO->Unbind();
+    glBindVertexArray(0);
+
+    return FBO->GetTexture();
+}
+
 void Kev2DRenderer::Draw()
 {
     for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
@@ -236,7 +252,7 @@ void Kev2DRenderer::Draw()
 
     glBindVertexArray(VAO);
     IBO->Bind();
-
+    
     glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
 
     IBO->Unbind();

@@ -113,6 +113,7 @@
     <ClInclude Include="src\graphics\TextureManager.h" />
     <ClInclude Include="src\graphics\Window.h" />
     <ClInclude Include="src\graphics\buffers\Buffer.h" />
+    <ClInclude Include="src\graphics\buffers\FrameBuffer.h" />
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h" />
     <ClInclude Include="src\graphics\buffers\VertexArray.h" />
     <ClInclude Include="src\graphics\cameras\FollowRenderableCamera.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="src\graphics\renderer\ShaderProgram.h" />
     <ClInclude Include="src\graphics\renderer\TextureProgram.h" />
     <ClInclude Include="src\imgui\ImGuiLayer.h" />
+    <ClInclude Include="src\imgui\KevImGuiLog.h" />
     <ClInclude Include="src\math\mat2.h" />
     <ClInclude Include="src\math\mat2f.h" />
     <ClInclude Include="src\math\mat4.h" />
@@ -161,6 +163,7 @@
     <ClCompile Include="src\graphics\TextureManager.cpp" />
     <ClCompile Include="src\graphics\Window.cpp" />
     <ClCompile Include="src\graphics\buffers\Buffer.cpp" />
+    <ClCompile Include="src\graphics\buffers\FrameBuffer.cpp" />
     <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp" />
     <ClCompile Include="src\graphics\buffers\VertexArray.cpp" />
     <ClCompile Include="src\graphics\cameras\FollowRenderableCamera.cpp" />
@@ -177,6 +180,7 @@
     <ClCompile Include="src\graphics\renderer\TextureProgram.cpp" />
     <ClCompile Include="src\imgui\ImGuiBuild.cpp" />
     <ClCompile Include="src\imgui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\imgui\KevImGuiLog.cpp" />
     <ClCompile Include="src\math\mat2.cpp" />
     <ClCompile Include="src\math\mat2f.cpp" />
     <ClCompile Include="src\math\mat4.cpp" />

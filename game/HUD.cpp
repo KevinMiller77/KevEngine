@@ -1,7 +1,7 @@
 #include "HUD.h"
 
 HUD::HUD(Window* Parent, unsigned int shader)
-    :   Layer(Parent, new Kev2DRenderer(), shader)
+    :   Layer(Parent, new Kev2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), shader)
 {
 }
 

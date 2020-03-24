@@ -9,6 +9,8 @@
 
 #include <graphics/Window.h>
 
+#include <../ext/imgui/imgui.h>
+
 class ImGuiLayer : public Layer
 {
 public:
@@ -18,10 +20,16 @@ public:
     virtual void OnAttach() override;
     virtual void OnDetach() override;
 
+    void ShowDockSpace();
+
     void Begin();
     void End();
 private:
     float time = 0.0f;
+    
+    //Dock props
+    ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+    bool DockspaceEnabled = true;
 };
 
 #endif

@@ -38,6 +38,9 @@ public:
 
 	virtual unsigned int GetWidth() const = 0;
 	virtual unsigned int GetHeight() const = 0;
+	
+	virtual unsigned int* GetWidthPtr() const = 0;
+	virtual unsigned int* GetHeightPtr() const = 0;
 
 	// Window attributes
 	virtual void SetEventCallback(const EventCallbackFn& callback) = 0;

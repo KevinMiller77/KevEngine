@@ -6,6 +6,7 @@
 #include <graphics/renderer/GL2DRenderer.h>
 #include <graphics/buffers/IndexBuffer.h>
 #include <graphics/buffers/VertexArray.h>
+#include <graphics/buffers/FrameBuffer.h>
 
 #include <../ext/freetype-gl/freetype-gl.h>
 
@@ -27,21 +28,26 @@ class VertexData;
 class Kev2DRenderer : public GL2DRenderer
 {
 private:
+    int *scr_w;
+    int *scr_h;
+
     unsigned int VAO;
     unsigned int VBO;
     IndexBuffer *IBO;
     int indexCount;
     VertexData *VDataBuffer;
     VertexData *VDataHeapLoc = nullptr;
+    FrameBuffer* FBO;
 
     std::vector<unsigned int> TextureSlots;
 
 public:
-    Kev2DRenderer();
+    Kev2DRenderer(int* width, int* height);
     ~Kev2DRenderer() override;
 
     void Submit(const Renderable2D *renderable) override;
     void Draw() override;
+    unsigned int DrawToBuffer() override;
     void DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) override;
     void Begin();
     void End();

@@ -54,6 +54,7 @@ public:
 
 
     virtual void DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) = 0;
+    virtual unsigned int DrawToBuffer() = 0;
     virtual void Submit(const Renderable2D *renderable) = 0;
     virtual void Draw() = 0;
     virtual void Begin() = 0;

@@ -99,6 +99,9 @@
     <ClInclude Include="src\graphics\buffers\Buffer.h">
       <Filter>src\graphics\buffers</Filter>
     </ClInclude>
+    <ClInclude Include="src\graphics\buffers\FrameBuffer.h">
+      <Filter>src\graphics\buffers</Filter>
+    </ClInclude>
     <ClInclude Include="src\graphics\buffers\IndexBuffer.h">
       <Filter>src\graphics\buffers</Filter>
     </ClInclude>
@@ -148,6 +151,9 @@
       <Filter>src\graphics\renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\imgui\ImGuiLayer.h">
+      <Filter>src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imgui\KevImGuiLog.h">
       <Filter>src\imgui</Filter>
     </ClInclude>
     <ClInclude Include="src\math\mat2.h">
@@ -239,6 +245,9 @@
     <ClCompile Include="src\graphics\buffers\Buffer.cpp">
       <Filter>src\graphics\buffers</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics\buffers\FrameBuffer.cpp">
+      <Filter>src\graphics\buffers</Filter>
+    </ClCompile>
     <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp">
       <Filter>src\graphics\buffers</Filter>
     </ClCompile>
@@ -285,6 +294,9 @@
       <Filter>src\imgui</Filter>
     </ClCompile>
     <ClCompile Include="src\imgui\ImGuiLayer.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\KevImGuiLog.cpp">
       <Filter>src\imgui</Filter>
     </ClCompile>
     <ClCompile Include="src\math\mat2.cpp">

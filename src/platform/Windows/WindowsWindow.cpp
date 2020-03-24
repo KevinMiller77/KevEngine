@@ -212,6 +212,15 @@ unsigned int WindowsWindow::GetHeight() const
     return data.height;
 }
 
+unsigned int* WindowsWindow::GetWidthPtr() const 
+{
+    return &(data.width);
+}
+unsigned int* WindowsWindow::GetHeightPtr() const
+{
+    return &(data.height);
+}
+
 void WindowsWindow::ShutDown()
 {
     glfwDestroyWindow(window);

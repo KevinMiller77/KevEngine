@@ -1,5 +1,6 @@
 #include "GameLayer.h"
 #include <algorithm>
+#include <fstream>
 #include <iostream> 
 #include <core/KevInput.h>
 
@@ -7,7 +8,7 @@
 
 
 GameLayer::GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes)
-    : Layer(Parent, new Kev2DRenderer(), Shader), screenSize(ScreenSize), screenExtremes(ScreenExtremes), camera(ScreenExtremes.x, ScreenExtremes.y)
+    : Layer(Parent, new Kev2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader), screenSize(ScreenSize), screenExtremes(ScreenExtremes), camera(ScreenExtremes.x, ScreenExtremes.y)
 {
     //Enable blending of the alpha channel
     glEnable(GL_BLEND);
@@ -51,6 +52,10 @@ void GameLayer::OnAttach()
     background->Add(player);
     //camera.SetRenderable(player);
     Add(background);
+
+
+    // We set the same viewport size (plus margin) to the next window (if first use)
+    // ImGui::SetNextWindowSize(ImVec2(screenSize.x + 10, screenSize.y + 10));
 
     updateTime.Reset();
 }
@@ -135,6 +140,7 @@ void GameLayer::OnUpdate()
     {
         if (!jumping)
         {
+            log.AddLog("Player jumped!\n");
             jumping = true;
         }
 
@@ -181,19 +187,65 @@ void GameLayer::OnImGuiRender()
     {
         return;
     }
+
+    // ImGui::Begin("Game rendering");
+    // ImVec2 pos = ImGui::GetCursorScreenPos();
+    // ImGui::GetWindowDrawList()->AddImage(
+    //     (void *)vpTexture, ImVec2(ImGui::GetItemRectMin().x + pos.x,
+    //                         ImGui::GetItemRectMin().y + pos.y),
+    //     ImVec2(pos.x + screenSize.x / 2, pos.y + screenSize.y / 2), ImVec2(0, 1), ImVec2(1, 0));
+    // ImGui::End();
+
+    ImGui::Begin("Player Params");
     ImGui::SliderFloat("Gravity Constant", &gravityConstant, 0.1, 5.0);
     ImGui::SliderFloat("Max Hori Accel", &maxAcceleration, 0.1, 5.0);
     ImGui::SliderFloat("Player Hori Accel", &acceleration, 0.1, 5.0);
     ImGui::SliderFloat("Max Jump Accel", &maxJumpAcceleration, 0.1, 5.0);
     ImGui::SliderFloat("Jump Accel", &jumpAcceleration, 0.1, 5.0);
-    ImGui::SliderInt("Max Jump Presses", &maxJump, 1, 15);
+    ImGui::SliderInt(  "Max Jump Presses", &maxJump, 1, 15);
     ImGui::SliderFloat("Key debounce interval (s)", &keyDebounceInterval, 0.05, 0.5);
+    if (ImGui::Button( "Save player config\n"))
+    {
+        log.AddLog("Logging player settings\n");
+
+        ofstream playerSettings;
+        playerSettings.open("PlayerSettings.txt");
+
+        playerSettings << "Gravity Constant " << gravityConstant << std::endl;
+        playerSettings << "Max Hori Accel " << maxAcceleration << std::endl;
+        playerSettings << "Player Hori Accel " << acceleration << std::endl;
+        playerSettings << "Max Jump Accel " << maxJumpAcceleration << std::endl;
+        playerSettings << "Jump Accel " << jumpAcceleration << std::endl;
+        playerSettings << "Max Jump Presses " << maxJump << std::endl;
+    
+        playerSettings.close();
+    }
+    ImGui::End();
+
+    log.Update(KevImGuiLogOpen);
 }
 
 void GameLayer::OnDraw()
 {
     Render();
 }
+
+// void GameLayer::Render()
+// {
+//     if (enabled)
+//     {
+//         ShaderProgram::EnableShaderProgram(shader);
+//         renderer->Begin();
+
+//         for (Renderable2D *renderable : renderables)
+//         {
+//             renderable->Submit(renderer);
+//         }
+        
+//         renderer->End();   
+//         vpTexture = renderer->DrawToBuffer();
+//     }
+// }
 
 bool GameLayer::MouseScroll(MouseScrolledEvent& e)
 {
@@ -245,25 +297,7 @@ bool GameLayer::KeyDown(KeyPressedEvent& e)
         case(KEV_KEY_F11):
         {
             if (parent != nullptr) 
-            { 
-                if(!parent->IsWindowed())
-                {
-                    ImVec2 pos;
-                    int x, y, w, h;
-                    glfwGetWindowPos((GLFWwindow*)(parent->GetNativeWindow()), &x, &y);
-                    glfwGetWindowSize((GLFWwindow*)(parent->GetNativeWindow()), &w, &h);
-                    int gx = ImGui::GetWindowPos().x;
-                    LOG_INF("ELPESO\n");
-                    int gy = ImGui::GetWindowPos().y;
-                    LOG_INF("JIBUIB\n");
-                    int gw = ImGui::GetWindowSize().x;
-                    int gh = ImGui::GetWindowSize().y;
-                    if (!((gx > x && gy > y) && (gx + gw < x + w && gy + gh < y + h)))
-                    {
-                        LOG_INF("It was in\n");
-                    }
-                    ImGui::SetNextWindowPos(ImVec2(w, h));
-                }
+            {
 
                 parent->ToggleFullscreen();
             }
