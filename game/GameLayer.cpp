@@ -238,10 +238,7 @@ bool GameLayer::KeyDown(KeyPressedEvent& e)
     {
         case(KEV_KEY_F3):
         {
-            if (KevInput::IsKeyPressed(KEV_KEY_LEFT_CONTROL))
-            {
-                SetImGuiEnabled(!IsImGuiEnabled());
-            }
+            SetImGuiEnabled(!IsImGuiEnabled());
             break;
         }
 
@@ -251,6 +248,7 @@ bool GameLayer::KeyDown(KeyPressedEvent& e)
             { 
                 if(!parent->IsWindowed())
                 {
+                    ImVec2 pos;
                     int x, y, w, h;
                     glfwGetWindowPos((GLFWwindow*)(parent->GetNativeWindow()), &x, &y);
                     glfwGetWindowSize((GLFWwindow*)(parent->GetNativeWindow()), &w, &h);
