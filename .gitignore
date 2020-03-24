@@ -5,6 +5,7 @@
 **/.ilk
 **/.pdb
 **/.obj
+**/.o
 
 x64/*
 Debug/*
