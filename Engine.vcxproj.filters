@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ext">
+      <UniqueIdentifier>{7670880B-E279-887C-6BF5-9E7CD7FD937C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ext\stb_image">
+      <UniqueIdentifier>{90AC4A9A-FC6C-C6D0-C5A7-0F4E31270BAD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{C55F2ECF-B12C-89DA-DA45-7782C671BE68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\events">
+      <UniqueIdentifier>{91766759-7D2E-A9A6-E635-8202D20C4497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics">
+      <UniqueIdentifier>{2DF282EC-1955-1291-C2DA-4A47AE1CDE13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\buffers">
+      <UniqueIdentifier>{C926715B-B5B5-FA24-5ED4-0E204A420BCB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\cameras">
+      <UniqueIdentifier>{388B427A-241A-CC43-CD38-E03EB9A6DCE9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\layers">
+      <UniqueIdentifier>{6CC80E6E-D829-EC7B-6197-322ECDF7223B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\renderables">
+      <UniqueIdentifier>{83603D49-6F85-8CC9-98D0-715984548BE7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\renderer">
+      <UniqueIdentifier>{939494D0-FF00-50CB-C8F4-E72834207233}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\imgui">
+      <UniqueIdentifier>{57A665B5-C310-1A2C-0C4F-CBD178F8F780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\math">
+      <UniqueIdentifier>{46A033CF-326D-8EDA-5B86-7C8247B2C368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform">
+      <UniqueIdentifier>{41663D6D-2DC9-CC11-D64E-05C8C2909894}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\Linux">
+      <UniqueIdentifier>{2086F859-0C6A-B9AF-75CA-B30261CDA331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\Windows">
+      <UniqueIdentifier>{7BC1E908-6750-73D2-106F-87CDFCDC8378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{6DAA42B6-D914-F72C-2253-A8D28EFCD481}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\core\Core.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\EntryPoint.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\KevEngine.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\KevInput.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\Event.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\InputCodes.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\KeyEvent.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\MouseEvent.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\WindowEvent.h">
+      <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\FontManager.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\RenderableManager.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\ShaderManager.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\TextureManager.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\Window.h">
+      <Filter>src\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\buffers\Buffer.h">
+      <Filter>src\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\buffers\IndexBuffer.h">
+      <Filter>src\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\buffers\VertexArray.h">
+      <Filter>src\graphics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\cameras\FollowRenderableCamera.h">
+      <Filter>src\graphics\cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\cameras\OrthographicCamera.h">
+      <Filter>src\graphics\cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\cameras\OrthographicCameraController.h">
+      <Filter>src\graphics\cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\layers\Group.h">
+      <Filter>src\graphics\layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\layers\Layer.h">
+      <Filter>src\graphics\layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\layers\LayerStack.h">
+      <Filter>src\graphics\layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\renderables\Label.h">
+      <Filter>src\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\renderables\Renderable2D.h">
+      <Filter>src\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\renderables\Sprite2D.h">
+      <Filter>src\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\renderer\GL2DRenderer.h">
+      <Filter>src\graphics\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\renderer\GLContext.h">
+      <Filter>src\graphics\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\renderer\Kev2DRenderer.h">
+      <Filter>src\graphics\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\renderer\ShaderProgram.h">
+      <Filter>src\graphics\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\renderer\TextureProgram.h">
+      <Filter>src\graphics\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imgui\ImGuiLayer.h">
+      <Filter>src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\mat2.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\mat2f.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\mat4.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\mat4f.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\math.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vec2.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vec2f.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vec2u.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vec3.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vec3f.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vec4.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\math\vec4f.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\platform\Linux\LinuxWindow.h">
+      <Filter>src\platform\Linux</Filter>
+    </ClInclude>
+    <ClInclude Include="src\platform\Windows\HotSwapInterface.h">
+      <Filter>src\platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\platform\Windows\WindowsWindow.h">
+      <Filter>src\platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\test.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\FileIO.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Logging.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Timer.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\commonTypes.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ext\stb_image\stb_image.cpp">
+      <Filter>ext\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\KevEngine.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\KevInput.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\FontManager.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\RenderableManager.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\ShaderManager.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\TextureManager.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\Window.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\buffers\Buffer.cpp">
+      <Filter>src\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\buffers\IndexBuffer.cpp">
+      <Filter>src\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\buffers\VertexArray.cpp">
+      <Filter>src\graphics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\cameras\FollowRenderableCamera.cpp">
+      <Filter>src\graphics\cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\cameras\OrthographicCamera.cpp">
+      <Filter>src\graphics\cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\cameras\OrthographicCameraController.cpp">
+      <Filter>src\graphics\cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\layers\Group.cpp">
+      <Filter>src\graphics\layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\layers\Layer.cpp">
+      <Filter>src\graphics\layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\layers\LayerStack.cpp">
+      <Filter>src\graphics\layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderables\Label.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderables\Sprite2D.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderer\GLContext.cpp">
+      <Filter>src\graphics\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderer\Kev2DRenderer.cpp">
+      <Filter>src\graphics\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderer\ShaderProgram.cpp">
+      <Filter>src\graphics\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderer\TextureProgram.cpp">
+      <Filter>src\graphics\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\ImGuiBuild.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\ImGuiLayer.cpp">
+      <Filter>src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\mat2.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\mat2f.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\mat4.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\mat4f.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec2.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec2f.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec2u.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec3.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec3f.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec4.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\math\vec4f.cpp">
+      <Filter>src\math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\platform\Linux\LinuxWindow.cpp">
+      <Filter>src\platform\Linux</Filter>
+    </ClCompile>
+    <ClCompile Include="src\platform\Windows\WindowsWindow.cpp">
+      <Filter>src\platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\FileIO.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

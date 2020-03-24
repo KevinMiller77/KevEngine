@@ -110,13 +110,15 @@ project "Game"
         staticruntime "on"
 
         targetname("KevGame")
-        targetdir("")
 	    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
         files
         {
             "game/**.h",
-            "game/**.cpp"
+            "game/**.cpp",
+            "ext/freetype-gl/vector.c",
+            "ext/freetype-gl/texture-atlas.c",
+            "ext/freetype-gl/texture-font.c"
         }
 
         includedirs
@@ -129,14 +131,16 @@ project "Game"
             "ext/freetype/include"
         }
 
+        links
+        {
+            "Engine"
+        }
+
+        filter "system:windows"
+            targetdir("./")
 
         filter "system:linux"
-            files
-            {
-                "ext/freetype-gl/vector.c",
-                "ext/freetype-gl/texture-atlas.c",
-                "ext/freetype-gl/texture-font.c"
-            }
+            targetdir("")
             links
             {
                 "X11",
@@ -153,8 +157,3 @@ project "Game"
             {
                 "_GLFW_X11"
             }
-
-        links
-        {
-            "Engine"
-        }

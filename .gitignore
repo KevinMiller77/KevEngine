@@ -1,11 +1,11 @@
-**/.txt
-**/.sln
-**/.vcxproj.**
-**/.exe
-**/.ilk
-**/.pdb
-**/.obj
-**/.o
+*/.txt
+*/.sln
+*/.vcxproj
+*/.exe
+*/.ilk
+*/.pdb
+*/.obj
+*/.o
 
 **/bin*/*
 x64/*

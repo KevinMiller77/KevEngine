@@ -59,10 +59,6 @@ const struct {
 } FT_Errors[] =
 #include FT_ERRORS_H
 
-#ifdef __linux__
-#else 
-extern "C" { namespace ftgl {
-#endif
 
 // ------------------------------------------------- texture_font_load_face ---
 static int
@@ -723,8 +719,3 @@ texture_font_get_glyph( texture_font_t * self,
     }
     return NULL;
 }
-
-#ifdef __linux__
-#else 
-}}
-#endif
