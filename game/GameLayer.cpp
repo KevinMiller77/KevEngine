@@ -43,19 +43,20 @@ void GameLayer::OnAttach()
     {
         for (float y = 0.0f; y < 18.0f; y++)
         {
+            if (y > 16.0f)
+            {
+                background->Add(new PhysicsSprite(x, y, 1, 1, textures.GetTexture("morty"), true));
+                continue;
+            }
             background->Add(new Sprite(x, y, 1, 1, textures.GetTexture("morty")));
         }
     }
 
-
-    player = new Sprite(0, 0, 2.0f, 4.0f, textures.GetTexture("dude")); 
+    player = new PhysicsSprite(8, 0, 2.0f, 4.0f, textures.GetTexture("dude"), true);
+    LOG_INF("Player pos: %f, %f\n", player->GetScreenPos().x, player->GetScreenPos().y); 
     background->Add(player);
-    //camera.SetRenderable(player);
+    camera.SetRenderable(player);
     Add(background);
-
-
-    // We set the same viewport size (plus margin) to the next window (if first use)
-    // ImGui::SetNextWindowSize(ImVec2(screenSize.x + 10, screenSize.y + 10));
 
     updateTime.Reset();
 }
@@ -67,6 +68,11 @@ void GameLayer::OnDetach()
 
 void GameLayer::OnUpdate()
 {
+    if (paused)
+    {
+        return;
+        updateTime.Reset();
+    }
     //Begin frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -76,109 +82,36 @@ void GameLayer::OnUpdate()
     ShaderProgram::EnableShaderProgram(shader);
     ShaderProgram::SetShaderUniformMat4(shader, "pr_matrix", camera.GetCamera().GetViewProjectionMatrix());
 
-    Vec3f curPlayerPos = player->GetPosition();
-
+    //G ravity
+    player->AddMomentum(Vec3f(0.0f, 10.0f * ts, 0.0f));
 
     if (KevInput::IsKeyPressed(KEV_KEY_D))
     {
-        if (playerVelocity.x < 0)
-        {
-            playerVelocity.x += 2.0f * acceleration * ts;
-        }
-        else
-        {
-            playerVelocity.x = playerVelocity.x  + acceleration * ts <= maxAcceleration ? playerVelocity.x + acceleration * ts: playerVelocity.x;
-        }  
+        player->AddMomentum(Vec3f(5.0f * ts, 0.0f, 0.0f));
     }
-    else if (KevInput::IsKeyPressed(KEV_KEY_A))
+    if (KevInput::IsKeyPressed(KEV_KEY_A))
     {
-        if (playerVelocity.x > 0)
-        {
-            playerVelocity.x -= 2.0f * acceleration * ts;
-        }
-        else
-        {
-            playerVelocity.x = playerVelocity.x - acceleration * ts >= -maxAcceleration ? playerVelocity.x - acceleration * ts: playerVelocity.x;
-        }
+        player->AddMomentum(Vec3f(-5.0f * ts, 0.0f, 0.0f));
     }
-    else
-    {
-        if (playerVelocity.x > 0)
-        {
-            playerVelocity.x = playerVelocity.x - 2 * acceleration * ts < 0 ? 0.0f : playerVelocity.x - 4 * acceleration * ts;
-        }
-        else
-        {
-            playerVelocity.x = playerVelocity.x + 2 * acceleration * ts > 0 ? 0.0f : playerVelocity.x + 4 * acceleration * ts;
-        }
-    }
+    // if (KevInput::IsKeyPressed(KEV_KEY_W))
+    // {
+    //     player->AddMomentum(Vec3f(0.0f, -5.0f, 0.0f));
+    // }
+    // if (KevInput::IsKeyPressed(KEV_KEY_S))
+    // {
+    //     player->AddMomentum(Vec3f(0.0f, 5.0f, 0.0f));
+    // }
 
-    //On ground
-    if (curPlayerPos.y + player->GetSize().y >= 17.99f)
-    {
-        //Is the first time ive been here
-        if (!onGround)
-        {
-            playerVelocity.y = 0;
-            onGround = true;
-            jumping = false;
-            jumpCount = 0;
-        }
-    }
-    else
-    {
-        if (onGround)
-        {
-            onGround = false;
+    // LOG_INF("\n\tPlayer rel pos: %f, %f\n", player->GetPosition().x, player->GetPosition().y);
+    // LOG_INF("\tPlayer base: %f, %f\n", player->GetBase()->x, player->GetBase()->y);
+    // LOG_INF("\tPlayer screen  pos: %f, %f\n\n", player->GetScreenPos().x, player->GetScreenPos().y);
 
-        }
 
-        playerVelocity.y += gravityConstant * ts;
-    }
-
-    if (KevInput::IsKeyPressed(KEV_KEY_SPACE))
-    {
-        if (!jumping)
-        {
-            log.AddLog("Player jumped!\n");
-            jumping = true;
-        }
-
-        if (jumping)
-        {
-            jumpCount++;
-        }
-
-        if (jumpCount < maxJump)
-        {
-            playerVelocity.y = playerVelocity.y - jumpAcceleration  < -maxJumpAcceleration ? 0 : playerVelocity.y - jumpAcceleration ;
-        }
-    }
-
-    float newX = curPlayerPos.x + playerVelocity.x;
-    float newY = curPlayerPos.y + playerVelocity.y;
-
-    if (newX > 32.0f - player->GetSize().x)
-    {
-        newX = 32.0f - player->GetSize().x;
-    } else if (newX < 0.0f)
-    {
-        newX = 0.0f;
-    }
-    if (newY > 18.0f - player->GetSize().y)
-    {
-        newY = 18.0f - player->GetSize().y;
-    } else if (newY < 0.0f)
-    {
-        newY = 0.0f;
-    }
-
-    player->SetPosition(new Vec3f(newX, newY, 0.0f));
-    
     updateTime.Reset();
 
     Manager.MouseCheck(mousePos);
     Manager.CollisionCheck();
+    Manager.OnUpdate();
 }
 
 void GameLayer::OnImGuiRender() 
@@ -188,38 +121,19 @@ void GameLayer::OnImGuiRender()
         return;
     }
 
-    // ImGui::Begin("Game rendering");
-    // ImVec2 pos = ImGui::GetCursorScreenPos();
-    // ImGui::GetWindowDrawList()->AddImage(
-    //     (void *)vpTexture, ImVec2(ImGui::GetItemRectMin().x + pos.x,
-    //                         ImGui::GetItemRectMin().y + pos.y),
-    //     ImVec2(pos.x + screenSize.x / 2, pos.y + screenSize.y / 2), ImVec2(0, 1), ImVec2(1, 0));
-    // ImGui::End();
-
-    ImGui::Begin("Player Params");
-    ImGui::SliderFloat("Gravity Constant", &gravityConstant, 0.1, 5.0);
-    ImGui::SliderFloat("Max Hori Accel", &maxAcceleration, 0.1, 5.0);
-    ImGui::SliderFloat("Player Hori Accel", &acceleration, 0.1, 5.0);
-    ImGui::SliderFloat("Max Jump Accel", &maxJumpAcceleration, 0.1, 5.0);
-    ImGui::SliderFloat("Jump Accel", &jumpAcceleration, 0.1, 5.0);
-    ImGui::SliderInt(  "Max Jump Presses", &maxJump, 1, 15);
-    ImGui::SliderFloat("Key debounce interval (s)", &keyDebounceInterval, 0.05, 0.5);
-    if (ImGui::Button( "Save player config\n"))
-    {
-        log.AddLog("Logging player settings\n");
-
-        ofstream playerSettings;
-        playerSettings.open("PlayerSettings.txt");
-
-        playerSettings << "Gravity Constant " << gravityConstant << std::endl;
-        playerSettings << "Max Hori Accel " << maxAcceleration << std::endl;
-        playerSettings << "Player Hori Accel " << acceleration << std::endl;
-        playerSettings << "Max Jump Accel " << maxJumpAcceleration << std::endl;
-        playerSettings << "Jump Accel " << jumpAcceleration << std::endl;
-        playerSettings << "Max Jump Presses " << maxJump << std::endl;
-    
-        playerSettings.close();
-    }
+    ImGui::Begin("Hello!");
+    ImGui::Text("\t\tWelcome to the wonderful KevEngine!\n \
+                The player has basic left and right movement controlled with A and D\n \
+                He may also jump if you press SPACE\n \
+                He is currently not a solid object but if you click him, he will turn pink and be solid\n \
+                The above is also tru for the background tiles, you may make them solid by clicking them.\n \
+                Now, when the player collides with the solid objects you will see them collide by turning blue.\n\n\n \
+                That player ... he doesn't control so well. So, change it!!!\n \
+                There is another tab in the gui block that will allow you to tune\n \
+                the players movement parameters. Make it what you like, then save it with the button!\n \
+                \n\n\n \
+                Now, to the gui. It can dock an auto tab into other windows. It can leave the game window and everything.\n \
+                Simply hold shift and drag around the windows!\n");
     ImGui::End();
 
     log.Update(KevImGuiLogOpen);
@@ -317,6 +231,21 @@ bool GameLayer::KeyDown(KeyPressedEvent& e)
                 parent->SetVSync(1);
             }
             break;
+        }
+
+        case(KEV_KEY_P):
+        {
+            paused = !paused;
+            LOG_INF("Game ");
+            if (paused)
+            {
+                printf("unpaused\n");
+            }
+            else
+            {
+                printf("paused\n");
+            }
+            
         }
 
         default:

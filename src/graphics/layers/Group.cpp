@@ -3,7 +3,7 @@
 Group::Group(const Mat4f transform)
 : ModelMatrix(transform)
 {
-    type = GroupType;
+    type = RenderableType::Group;
     SolidObject = false;
     singleItem = false;
     baseOrigin = new Vec3f(ModelMatrix[3].x, ModelMatrix[3].y, ModelMatrix[3].z);

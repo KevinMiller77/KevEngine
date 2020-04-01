@@ -71,9 +71,9 @@ void OrthographicCameraController::OnEvent(Event& e)
 
 bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 {
-	Zoom -= ((float)e.getYOffset() / 65536.0f) * 0.1f;
-	Zoom = Zoom > 0.1f ? Zoom : 0.1f;
-	Camera.SetProjection(-AspectRatio * Zoom, AspectRatio * Zoom, -Zoom, Zoom);
+	Zoom -= e.getYOffset() * 0.25f;
+	Zoom = Zoom > 0.25f ? Zoom : 0.25;
+	Camera.SetProjection(-AspectRatio * AspectRatio, AspectRatio * Zoom, -Zoom, Zoom);
 	return false;
 }
 

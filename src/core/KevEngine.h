@@ -10,7 +10,7 @@
 #include <map>
 
 #include <graphics/renderables/Renderable2D.h>
-#include <graphics/renderables/Sprite2D.h>
+#include <graphics/renderables/Sprite.h>
 #include <graphics/renderables/Label.h>
 #include <graphics/layers/Group.h>
 #include <graphics/layers/Layer.h>

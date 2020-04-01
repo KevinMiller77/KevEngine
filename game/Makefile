@@ -19,8 +19,10 @@ endif
 # #############################################
 
 RESCOMP = windres
-DEFINES +=
-INCLUDES += -I../src -I../include
+TARGETDIR = ..
+TARGET = $(TARGETDIR)/KevGame
+DEFINES += -D_GLFW_X11
+INCLUDES += -I../src -I../include -I../ext/glfw/include -I../ext/glad/include -I../ext/imgui -I../ext/freetype/include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS)
@@ -36,18 +38,14 @@ define POSTBUILDCMDS
 endef
 
 ifeq ($(config),debug)
-TARGETDIR = ../bin/Debug/windows/Game
-TARGET = $(TARGETDIR)/Game.exe
-OBJDIR = ../bin-int/Debug/windows/Game
-LIBS += ../bin/Debug/windows/Engine/Engine.lib
-LDDEPS += ../bin/Debug/windows/Engine/Engine.lib
+OBJDIR = ../bin-int/Debug/linux/Game
+LIBS += ../ext/glad/bin/Debug/linux/glad/libglad.a ../ext/glfw/bin/Debug/linux/glfw/libglfw.a ../ext/imgui/bin/Debug/linux/imgui/libimgui.a ../ext/freetype/bin/Debug/linux/freetype/libfreetype.a ../bin/Debug/linux/Engine/libEngine.a -lX11 -lGL -lGLU -ldl -lpthread
+LDDEPS += ../ext/glad/bin/Debug/linux/glad/libglad.a ../ext/glfw/bin/Debug/linux/glfw/libglfw.a ../ext/imgui/bin/Debug/linux/imgui/libimgui.a ../ext/freetype/bin/Debug/linux/freetype/libfreetype.a ../bin/Debug/linux/Engine/libEngine.a
 
 else ifeq ($(config),release)
-TARGETDIR = ../bin/Release/windows/Game
-TARGET = $(TARGETDIR)/Game.exe
-OBJDIR = ../bin-int/Release/windows/Game
-LIBS += ../bin/Release/windows/Engine/Engine.lib
-LDDEPS += ../bin/Release/windows/Engine/Engine.lib
+OBJDIR = ../bin-int/Release/linux/Game
+LIBS += ../ext/glad/bin/Release/linux/glad/libglad.a ../ext/glfw/bin/Release/linux/glfw/libglfw.a ../ext/imgui/bin/Release/linux/imgui/libimgui.a ../ext/freetype/bin/Release/linux/freetype/libfreetype.a ../bin/Release/linux/Engine/libEngine.a -lX11 -lGL -lGLU -ldl -lpthread
+LDDEPS += ../ext/glad/bin/Release/linux/glad/libglad.a ../ext/glfw/bin/Release/linux/glfw/libglfw.a ../ext/imgui/bin/Release/linux/imgui/libimgui.a ../ext/freetype/bin/Release/linux/freetype/libfreetype.a ../bin/Release/linux/Engine/libEngine.a
 
 else
   $(error "invalid configuration $(config)")
@@ -65,6 +63,9 @@ OBJECTS :=
 OBJECTS += $(OBJDIR)/GameLayer.o
 OBJECTS += $(OBJDIR)/HUD.o
 OBJECTS += $(OBJDIR)/KevGame.o
+OBJECTS += $(OBJDIR)/texture-atlas.o
+OBJECTS += $(OBJDIR)/texture-font.o
+OBJECTS += $(OBJDIR)/vector.o
 
 # Rules
 # #############################################
@@ -126,13 +127,22 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/GameLayer.o: GameLayer.cpp
+$(OBJDIR)/texture-atlas.o: ../ext/freetype-gl/texture-atlas.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/texture-font.o: ../ext/freetype-gl/texture-font.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/vector.o: ../ext/freetype-gl/vector.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/GameLayer.o: ../game/GameLayer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/HUD.o: HUD.cpp
+$(OBJDIR)/HUD.o: ../game/HUD.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/KevGame.o: KevGame.cpp
+$(OBJDIR)/KevGame.o: ../game/KevGame.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

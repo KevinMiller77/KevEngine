@@ -33,7 +33,7 @@ void RenderableManager::CollisionCheck()
             continue;
         }
 
-        if (!Renderables[i]->IsSolid())
+        if (Renderables[i]->GetType() != RenderableType::Physics)
         {
             pos++;
             continue;
@@ -64,18 +64,42 @@ void RenderableManager::CollisionCheck()
             //Collision already happened
             if (detectedCollisions[RigidBody] == second)
             {
+                // LOG_INF("already happened\n");
                 continue;
             }
 
+            bool sideDir = false; // false is left, true is right
 
-            // LOG_INF("Looking at %d and %d", RigidBody->GetUID(), second->GetUID());
+            if (RigidBody->GetWorldRightBound() > second->GetWorldRightBound())
+            {
+                sideDir = true;
+            }
+            
+            // LOG_INF("Looking at %f %f, and %f %f\n", RigidBody->GetWorldLeftBound(), RigidBody->GetWorldUpBound(), second->GetWorldLeftBound(), second->GetWorldUpBound());
             //Collision
-            if ((RigidBody->GetWorldUpBound() <= second->GetWorldUpBound() && RigidBody->GetWorldDownBound() >= second->GetWorldDownBound()) || (RigidBody->GetWorldUpBound() >= second->GetWorldUpBound() && RigidBody->GetWorldDownBound() <= second->GetWorldDownBound()))
+            if ((RigidBody->GetWorldUpBound() <= second->GetWorldUpBound() && RigidBody->GetWorldDownBound() >= second->GetWorldDownBound()))
             {
                 detectedCollisions[RigidBody] = second; detectedCollisions[second] = RigidBody;
-                RigidBody->OnCollision(second);
-                second->OnCollision(RigidBody);
+                
+                // LOG_INF("Up collide\n");
+                RigidBody->OnCollision(second, sideDir, true);
+                if (second->GetType() == RenderableType::Physics)
+                {
+                    second->OnCollision(RigidBody, !sideDir, false);
+                }
             }
+            if (RigidBody->GetWorldUpBound() >= second->GetWorldUpBound() && RigidBody->GetWorldDownBound() <= second->GetWorldDownBound())
+            {
+                detectedCollisions[RigidBody] = second; detectedCollisions[second] = RigidBody;
+                
+                // LOG_INF("Down collide\n");
+                RigidBody->OnCollision(second, sideDir, false);
+                if (second->GetType() == RenderableType::Physics)
+                {
+                    second->OnCollision(RigidBody, !sideDir, true);
+                }
+            }
+        
         }
         
         CurrentlyViewing.push_back(RigidBody);

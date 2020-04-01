@@ -6,7 +6,8 @@
 #include <events/MouseEvent.h>
 #include <events/KeyEvent.h>
 #include <events/WindowEvent.h>
-#include <graphics/renderables/Sprite2D.h>
+#include <graphics/renderables/Sprite.h>
+#include <graphics/renderables/PhysicsSprite.h>
 #include <graphics/layers/Group.h>
 #include <graphics/layers/Layer.h>
 #include <graphics/renderer/Kev2DRenderer.h>
@@ -34,26 +35,15 @@ class GameLayer : public Layer
     bool ImGuiEnabled = true;
     bool KevImGuiLogOpen = true;
 
+    bool paused = false;
+
     unsigned int vpTexture;
 
     KevImGuiLog log;
 
     FollowRenderableCamera camera;
     Renderable2D* player;
-    Vec2f playerVelocity = Vec2f(0, 0);
-    float acceleration = 0.1f;
-    float maxAcceleration = 0.5f;
-    float maxJumpAcceleration = 2;
-    float jumpAcceleration = 0.8;
-    float gravityConstant = 0.5;
-    bool jumping = false;
-    int jumpCount = 0;
-    int maxJump = 15;
-    bool onGround = false;
     Timer updateTime;
-
-    Renderable2D* keys[0xff + 1];
-    Renderable2D* mouse[18];
 
 public:
     GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes = Vec2f(16, 9));

@@ -23,6 +23,14 @@ public:
     void Add(Renderable2D* renderable);
     void Submit(GL2DRenderer* renderer) const override;
 
+    virtual void OnUpdate() override
+    {
+        for (Renderable2D* child : children)
+        {
+            child->OnUpdate();
+        }
+    }
+
     inline Texture* GetTextureFromChild(unsigned int index) const { return children[index]->GetTexturePtr(); }
     inline unsigned int GetNumChildren() { return children.size(); }
 

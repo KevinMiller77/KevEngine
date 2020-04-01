@@ -20,9 +20,13 @@ public:
 	const Mat4f& GetProjectionMatrix() const { return projectionMatrix; }
 	const Mat4f& GetViewMatrix() const { return viewMatrix; }
 	const Mat4f& GetViewProjectionMatrix() const { return viewProjMatrix; }
+	const float& GetWidth() { return extremesDifference.x; }
+	const float& GetHeight() { return extremesDifference.y; }
+
 private:
 	void RecalculateViewMatrix();
 private:
+	Vec2f extremesDifference;
 	Mat4f projectionMatrix;
 	Mat4f viewMatrix;
 	Mat4f viewProjMatrix;

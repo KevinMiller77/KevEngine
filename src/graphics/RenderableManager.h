@@ -8,6 +8,8 @@
 #include <math/math.h>
 #include <events/Event.h>
 #include <graphics/renderables/Renderable2D.h>
+#include <graphics/renderables/Sprite.h>
+#include <graphics/renderables/PhysicsSprite.h>
 
 enum class Attributes
 {
@@ -22,7 +24,13 @@ protected:
 public:
     RenderableManager(std::vector<Renderable2D*>* Renderables);
 
-    void OnUpdate();
+    void OnUpdate()
+    {
+        for (Renderable2D* renderable : *(ManagedRenderables))
+        {
+            renderable->OnUpdate();
+        }
+    }
     void OnEvent(Event& e);
 
     void MouseCheck(Vec2f MousePos);

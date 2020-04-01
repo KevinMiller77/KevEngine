@@ -129,10 +129,13 @@
     <ClInclude Include="src\graphics\renderables\Label.h">
       <Filter>src\graphics\renderables</Filter>
     </ClInclude>
+    <ClInclude Include="src\graphics\renderables\PhysicsSprite.h">
+      <Filter>src\graphics\renderables</Filter>
+    </ClInclude>
     <ClInclude Include="src\graphics\renderables\Renderable2D.h">
       <Filter>src\graphics\renderables</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\renderables\Sprite2D.h">
+    <ClInclude Include="src\graphics\renderables\Sprite.h">
       <Filter>src\graphics\renderables</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\renderer\GL2DRenderer.h">
@@ -275,7 +278,10 @@
     <ClCompile Include="src\graphics\renderables\Label.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\renderables\Sprite2D.cpp">
+    <ClCompile Include="src\graphics\renderables\PhysicsSprite.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\renderables\Sprite.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\renderer\GLContext.cpp">

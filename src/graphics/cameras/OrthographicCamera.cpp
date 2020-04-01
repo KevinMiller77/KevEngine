@@ -3,7 +3,7 @@
 OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top)
 	: projectionMatrix(Mat4f::orthographic(left, right, bottom, top, -1.0f, 1.0f)), viewMatrix(1.0f)
 {
-
+	projectionMatrix.printMatrix();
 	viewProjMatrix = projectionMatrix * viewMatrix;
 }
 

@@ -4,6 +4,7 @@
 #include "OrthographicCamera.h"
 #include <graphics/renderables/Renderable2D.h>
 #include <events/Event.h>
+#include <events/KeyEvent.h>
 #include <utils/Timer.h>
 
 class FollowRenderableCamera
@@ -24,6 +25,8 @@ public:
 
     void SetRenderable(Renderable2D* renderable) { renderableToFollow = renderable; }
     Renderable2D* GetRenderable() const { return renderableToFollow; }
+
+	bool func (KeyPressedEvent& e);
 
 private:
     float vertical, horizontal;

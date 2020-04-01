@@ -6,7 +6,7 @@
 #include <events/WindowEvent.h>
 #include <graphics/layers/Layer.h>
 #include <graphics/layers/Group.h>
-#include <graphics/renderables/Sprite2D.h>
+#include <graphics/renderables/Sprite.h>
 #include <graphics/renderables/Label.h>
 #include <graphics/renderer/Kev2DRenderer.h>
 #include <math/math.h>

@@ -19,6 +19,8 @@ struct Vec3f {
     void operator-=(const Vec3f& other);
     void operator*=(const Vec3f& other);
     void operator/=(const Vec3f& other);
+
+    bool operator==(const Vec3f& other);
     
     friend Vec3f operator+(Vec3f left, Vec3f right);
     friend Vec3f operator-(Vec3f left, Vec3f right);

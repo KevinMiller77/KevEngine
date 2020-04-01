@@ -68,6 +68,12 @@ void Vec3f::operator/=(const Vec3f& other) {
     divide(other);
 }
 
+bool Vec3f::operator==(const Vec3f& other)
+{
+    return (x == other.x && (y == other.y && z == other.z));
+}
+
+
 Vec3f operator+(Vec3f left, Vec3f right) {
     Vec3f result(left);
     result.add(right);

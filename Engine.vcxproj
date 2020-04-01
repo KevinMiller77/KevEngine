@@ -123,8 +123,9 @@
     <ClInclude Include="src\graphics\layers\Layer.h" />
     <ClInclude Include="src\graphics\layers\LayerStack.h" />
     <ClInclude Include="src\graphics\renderables\Label.h" />
+    <ClInclude Include="src\graphics\renderables\PhysicsSprite.h" />
     <ClInclude Include="src\graphics\renderables\Renderable2D.h" />
-    <ClInclude Include="src\graphics\renderables\Sprite2D.h" />
+    <ClInclude Include="src\graphics\renderables\Sprite.h" />
     <ClInclude Include="src\graphics\renderer\GL2DRenderer.h" />
     <ClInclude Include="src\graphics\renderer\GLContext.h" />
     <ClInclude Include="src\graphics\renderer\Kev2DRenderer.h" />
@@ -173,7 +174,8 @@
     <ClCompile Include="src\graphics\layers\Layer.cpp" />
     <ClCompile Include="src\graphics\layers\LayerStack.cpp" />
     <ClCompile Include="src\graphics\renderables\Label.cpp" />
-    <ClCompile Include="src\graphics\renderables\Sprite2D.cpp" />
+    <ClCompile Include="src\graphics\renderables\PhysicsSprite.cpp" />
+    <ClCompile Include="src\graphics\renderables\Sprite.cpp" />
     <ClCompile Include="src\graphics\renderer\GLContext.cpp" />
     <ClCompile Include="src\graphics\renderer\Kev2DRenderer.cpp" />
     <ClCompile Include="src\graphics\renderer\ShaderProgram.cpp" />
