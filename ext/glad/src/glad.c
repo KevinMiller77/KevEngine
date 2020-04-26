@@ -12,7 +12,6 @@
     Local files: False
     Omit khrplatform: False
     Reproducible: False
-
     Commandline:
         --profile="core" --api="gl=4.6" --generator="c" --spec="gl" --extensions=""
     Online:
@@ -22,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 static void* get_proc(const char *namez);
 

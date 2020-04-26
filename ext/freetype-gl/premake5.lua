@@ -6,7 +6,7 @@ project "freetype-gl"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-    includedirs
+    sysincludedirs
     {
         "include",
         "../freetype/include",

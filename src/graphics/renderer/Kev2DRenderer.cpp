@@ -4,7 +4,7 @@
 unsigned int Renderable2D::globalNumRenderables;
 
 Kev2DRenderer::Kev2DRenderer(int* width, int* height)
-    : scr_w(width), scr_h(height), FBO(new FrameBuffer(*width, *height))
+    : scr_w(width), scr_h(height), FBO(nullptr)
 {
     indexCount = 0;
     Init();
@@ -35,10 +35,10 @@ void Kev2DRenderer::Init()
     glEnableVertexAttribArray(SHADER_TEXTURE_ID_INDEX);
 
     //Describe our memory map
-    glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)offsetof(VertexData, VertexData::vertex));
-    glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::color)));
-    glVertexAttribPointer(SHADER_TEXTURE_INDEX, 2, GL_FLOAT, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(offsetof(VertexData, VertexData::texture)));
-    glVertexAttribPointer(SHADER_TEXTURE_ID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(offsetof(VertexData, VertexData::texID))); 
+    glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(0));
+    glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)((const GLvoid *)(24)));
+    glVertexAttribPointer(SHADER_TEXTURE_INDEX, 2, GL_FLOAT, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(12));
+    glVertexAttribPointer(SHADER_TEXTURE_ID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(16)); 
 
     //Unbind VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -231,15 +231,15 @@ unsigned int Kev2DRenderer::DrawToBuffer()
 {
     glBindVertexArray(VAO);
     IBO->Bind();
-    FBO->Bind(*scr_w, *scr_h);
+//    FBO->Bind(*scr_w, *scr_h);
     
     glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);
 
-    FBO->Unbind();
+//    FBO->Unbind();
     IBO->Unbind();
     glBindVertexArray(0);
 
-    return FBO->GetTexture();
+    return 0;
 }
 
 void Kev2DRenderer::Draw()

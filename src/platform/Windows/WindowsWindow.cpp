@@ -1,9 +1,6 @@
 #include "WindowsWindow.h"
 #include <core/Core.h>
 
-#ifdef KEV_PLATFORM_WINDOWS
-#include <windows.h>
-EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
 #define HINST_THISCOMPONENT ((HINSTANCE)&__ImageBase)
 // TODO(Adin): Switch to CreateWindowEx
@@ -23,6 +20,10 @@ WindowsWindow::~WindowsWindow()
 void WindowsWindow::CallWindowHints()
 {
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 }
 
 WindowsWindow::WindowsWindow(WindowInfo inf)
@@ -147,26 +148,26 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
 }
 
 
-int WindowsWindow::InitalizeConsole()
-{
-    BOOL success = AllocConsole();
-    if (!success)
-    {
-        DebugBreak();
-        return 1;
-
-    }
-
-    FILE *newStdout;
-    FILE *newStdin;
-    FILE *newStderr;
-
-    freopen_s(&newStdout, "CONOUT$", "w", stdout);
-    freopen_s(&newStdin, "CONIN$", "r", stdin);
-    freopen_s(&newStderr, "CONOUT$", "w", stderr);
-
-    return 0;
-}
+//int WindowsWindow::InitalizeConsole()
+//{
+//    BOOL success = AllocConsole();
+//    if (!success)
+//    {
+//        DebugBreak();
+//        return 1;
+//
+//    }
+//
+//    FILE *newStdout;
+//    FILE *newStdin;
+//    FILE *newStderr;
+//
+//    freopen_s(&newStdout, "CONOUT$", "w", stdout);
+//    freopen_s(&newStdin, "CONIN$", "r", stdin);
+//    freopen_s(&newStderr, "CONOUT$", "w", stderr);
+//
+//    return 0;
+//}
 
 void WindowsWindow::ToggleFullscreen()
 {    
@@ -245,4 +246,3 @@ bool WindowsWindow::IsVSync() const
 {
     return data.VSync;
 }
-#endif

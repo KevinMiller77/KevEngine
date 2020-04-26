@@ -34,9 +34,6 @@
 		#error "IOS is not supported!"
 	#elif TARGET_OS_MAC == 1
 		#define KEV_PLATFORM_MACOS
-		#error "MacOS is not supported!"
-	#else
-		#error "Unknown Apple platform!"
 	#endif
 /* We also have to check __ANDROID__ before __linux__
  * since android is based on the linux kernel

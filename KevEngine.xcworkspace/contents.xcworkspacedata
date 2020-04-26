@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+	version = "1.0">
+	<FileRef
+		location = "group:Game/Game.xcodeproj">
+	</FileRef>
+	<Group
+		location = "container:"
+		name = "Dependencies">
+		<FileRef
+			location = "group:ext/freetype/freetype.xcodeproj">
+		</FileRef>
+		<FileRef
+			location = "group:ext/glad/glad.xcodeproj">
+		</FileRef>
+		<FileRef
+			location = "group:ext/glfw/glfw.xcodeproj">
+		</FileRef>
+		<FileRef
+			location = "group:ext/imgui/imgui.xcodeproj">
+		</FileRef>
+	</Group>
+	<FileRef
+		location = "group:Engine.xcodeproj">
+	</FileRef>
+</Workspace>

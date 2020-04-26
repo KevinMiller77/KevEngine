@@ -76,7 +76,7 @@ public:
         globalNumRenderables++;
     }
     
-    Renderable2D::Renderable2D(Vec3f Position, Vec2f Size, Texture* inTexture, const char* Name = ("REND_" + std::to_string(GetGlobalNumRenderables())).c_str())
+    Renderable2D(Vec3f Position, Vec2f Size, Texture* inTexture, const char* Name = ("REND_" + std::to_string(GetGlobalNumRenderables())).c_str())
         : size(Size), uid(globalNumRenderables)
     {
         position = Position;

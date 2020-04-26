@@ -50,7 +50,7 @@ project "Engine"
         "FT2_BUILD_LIBRARY"
     }
 
-    includedirs
+    sysincludedirs
     {
         "src",
         "include",
@@ -77,6 +77,18 @@ project "Engine"
             "opengl32", 
             "shell32"
         }
+
+    filter "system:macosx"
+        systemversion "latest"
+        links
+        {
+            "IOKit.framework", 
+            "OpenGL.framework",
+            "Cocoa.framework",
+            "CoreVideo.framework"
+        }
+
+
     filter "system:linux"
         systemversion "latest"
         defines
@@ -121,7 +133,7 @@ project "Game"
             "ext/freetype-gl/texture-font.c"
         }
 
-        includedirs
+        sysincludedirs
         {
             "src",
             "include",
@@ -156,4 +168,13 @@ project "Game"
             defines
             {
                 "_GLFW_X11"
+            }
+        filter "system:macosx"
+            systemversion "latest"
+            links
+            {
+                "IOKit.framework", 
+                "OpenGL.framework",
+                "Cocoa.framework",
+                "CoreVideo.framework"
             }

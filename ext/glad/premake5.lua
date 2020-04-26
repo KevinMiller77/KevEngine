@@ -13,7 +13,7 @@ project "glad"
         "src/glad.c"
     }
 
-    includedirs
+    sysincludedirs
     {
         "../../include"
     }

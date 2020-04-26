@@ -30,7 +30,7 @@ project "freetype"
         "_LIBS_SUPPLIED"
     }
 
-    includedirs
+    sysincludedirs
     {
         "include"
     }

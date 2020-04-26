@@ -14,4 +14,7 @@ Scope<Window> Window::Create(const WindowInfo& inf)
 #ifdef KEV_PLATFORM_LINUX
 	return CreateScope<LinuxWindow>(inf);
 #endif
+#ifdef KEV_PLATFORM_MACOS
+    return CreateScope<WindowsWindow>(inf);
+#endif
 }
