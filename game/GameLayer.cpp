@@ -76,7 +76,7 @@ void GameLayer::OnUpdate()
     //Begin frame
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    double ts = updateTime.GetTimePassed();
+    double ts = 100 * updateTime.GetTimePassed();
 
     camera.OnUpdate();
     ShaderProgram::EnableShaderProgram(shader);
@@ -87,11 +87,11 @@ void GameLayer::OnUpdate()
 
     if (KevInput::IsKeyPressed(KEV_KEY_D))
     {
-        player->AddMomentum(Vec3f(5.0f * ts, 0.0f, 0.0f));
+        player->AddMomentum(Vec3f(25.0f * ts, 0.0f, 0.0f));
     }
     if (KevInput::IsKeyPressed(KEV_KEY_A))
     {
-        player->AddMomentum(Vec3f(-5.0f * ts, 0.0f, 0.0f));
+        player->AddMomentum(Vec3f(-25.0f * ts, 0.0f, 0.0f));
     }
     // if (KevInput::IsKeyPressed(KEV_KEY_W))
     // {

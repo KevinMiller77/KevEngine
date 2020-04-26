@@ -16,7 +16,13 @@ Kev2DRenderer::~Kev2DRenderer()
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 }
-
+// struct VertexData
+// {
+//     Vec3f vertex;    0
+//     Vec2f texture;   12
+//     float texID;     20
+//     uint32_t color;  24
+// };
 void Kev2DRenderer::Init()
 {
     //Generate all of the necessary spaces in memory
@@ -38,7 +44,7 @@ void Kev2DRenderer::Init()
     glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(0));
     glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)((const GLvoid *)(24)));
     glVertexAttribPointer(SHADER_TEXTURE_INDEX, 2, GL_FLOAT, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(12));
-    glVertexAttribPointer(SHADER_TEXTURE_ID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(16)); 
+    glVertexAttribPointer(SHADER_TEXTURE_ID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(20)); 
 
     //Unbind VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);

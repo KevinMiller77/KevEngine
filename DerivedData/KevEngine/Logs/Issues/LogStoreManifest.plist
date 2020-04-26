@@ -6,6 +6,62 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
+		<key>0D4AFB7E-337C-4776-AE2F-8D65FDB6C5AA</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.library.static</string>
+			<key>fileName</key>
+			<string>0D4AFB7E-337C-4776-AE2F-8D65FDB6C5AA.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>signature</key>
+			<string>Engine-fkoqcdbkqhigxjfyxuracfowyheq</string>
+			<key>timeStartedRecording</key>
+			<real>609577541.620579</real>
+			<key>timeStoppedRecording</key>
+			<real>609577541.62077606</real>
+			<key>title</key>
+			<string>Build target Engine</string>
+			<key>uniqueIdentifier</key>
+			<string>0D4AFB7E-337C-4776-AE2F-8D65FDB6C5AA</string>
+		</dict>
+		<key>666EB879-F762-46E3-B81E-189780CE4890</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.tool</string>
+			<key>fileName</key>
+			<string>666EB879-F762-46E3-B81E-189780CE4890.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>signature</key>
+			<string>Game-donqhltirycimxhbkefmdsrzzbss</string>
+			<key>timeStartedRecording</key>
+			<real>609577540.39434803</real>
+			<key>timeStoppedRecording</key>
+			<real>609577541.61921406</real>
+			<key>title</key>
+			<string>Build target Game</string>
+			<key>uniqueIdentifier</key>
+			<string>666EB879-F762-46E3-B81E-189780CE4890</string>
+		</dict>
 		<key>83E01A30-C7AB-4057-BD6D-4D013438EBBF</key>
 		<dict>
 			<key>className</key>
@@ -34,34 +90,6 @@
 			<key>uniqueIdentifier</key>
 			<string>83E01A30-C7AB-4057-BD6D-4D013438EBBF</string>
 		</dict>
-		<key>83FE9C7B-3218-4BC3-AFF9-062EB003DE26</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogMajorGroupSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.target.product-type.library.static</string>
-			<key>fileName</key>
-			<string>83FE9C7B-3218-4BC3-AFF9-062EB003DE26.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>W</string>
-			</dict>
-			<key>signature</key>
-			<string>Engine-fkoqcdbkqhigxjfyxuracfowyheq</string>
-			<key>timeStartedRecording</key>
-			<real>609576901.03500795</real>
-			<key>timeStoppedRecording</key>
-			<real>609576901.26887703</real>
-			<key>title</key>
-			<string>Build target Engine</string>
-			<key>uniqueIdentifier</key>
-			<string>83FE9C7B-3218-4BC3-AFF9-062EB003DE26</string>
-		</dict>
 		<key>978D71E9-74CE-4BE2-84EA-7F8A56433662</key>
 		<dict>
 			<key>className</key>
@@ -89,34 +117,6 @@
 			<string>Build target glad</string>
 			<key>uniqueIdentifier</key>
 			<string>978D71E9-74CE-4BE2-84EA-7F8A56433662</string>
-		</dict>
-		<key>D8244915-9D4D-4245-8888-84800C910CA6</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogMajorGroupSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.target.product-type.tool</string>
-			<key>fileName</key>
-			<string>D8244915-9D4D-4245-8888-84800C910CA6.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>W</string>
-			</dict>
-			<key>signature</key>
-			<string>Game-donqhltirycimxhbkefmdsrzzbss</string>
-			<key>timeStartedRecording</key>
-			<real>609576901.27172196</real>
-			<key>timeStoppedRecording</key>
-			<real>609576901.70538998</real>
-			<key>title</key>
-			<string>Build target Game</string>
-			<key>uniqueIdentifier</key>
-			<string>D8244915-9D4D-4245-8888-84800C910CA6</string>
 		</dict>
 		<key>DE551CF7-D248-4CFD-AF8D-1D32AD5441F3</key>
 		<dict>

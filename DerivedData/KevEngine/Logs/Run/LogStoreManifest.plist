@@ -74,6 +74,40 @@
 			<key>uniqueIdentifier</key>
 			<string>0F2D4222-F147-4498-898B-E458FC034BF2</string>
 		</dict>
+		<key>13487CD6-2237-4A6A-9BB7-EFB86F53759E</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>13487CD6-2237-4A6A-9BB7-EFB86F53759E.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Game project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Game</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run KevGame</string>
+			<key>timeStartedRecording</key>
+			<real>609577460.22584498</real>
+			<key>timeStoppedRecording</key>
+			<real>609577508.58934796</real>
+			<key>title</key>
+			<string>Run KevGame</string>
+			<key>uniqueIdentifier</key>
+			<string>13487CD6-2237-4A6A-9BB7-EFB86F53759E</string>
+		</dict>
 		<key>16903C59-DA2A-4C04-AD18-83301A2673F8</key>
 		<dict>
 			<key>className</key>
@@ -243,6 +277,40 @@
 			<string>Run KevGame</string>
 			<key>uniqueIdentifier</key>
 			<string>4100AE32-62C9-40D2-82BE-9BBA5572111E</string>
+		</dict>
+		<key>431EBA68-E2A0-4F7A-9399-B3513DB8EEE2</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>431EBA68-E2A0-4F7A-9399-B3513DB8EEE2.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Game project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Game</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run KevGame</string>
+			<key>timeStartedRecording</key>
+			<real>609577211.04035294</real>
+			<key>timeStoppedRecording</key>
+			<real>609577240.14464796</real>
+			<key>title</key>
+			<string>Run KevGame</string>
+			<key>uniqueIdentifier</key>
+			<string>431EBA68-E2A0-4F7A-9399-B3513DB8EEE2</string>
 		</dict>
 		<key>47E61F10-2BDB-4464-BEDC-3EE02C7F0C20</key>
 		<dict>
@@ -448,6 +516,40 @@
 			<key>uniqueIdentifier</key>
 			<string>7B9C4135-899D-4F2B-AEB5-57AFCF84D486</string>
 		</dict>
+		<key>8A0C8943-56FC-4F57-B5FD-EEDB99AA278B</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>8A0C8943-56FC-4F57-B5FD-EEDB99AA278B.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Game project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Game</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run KevGame</string>
+			<key>timeStartedRecording</key>
+			<real>609577396.91952097</real>
+			<key>timeStoppedRecording</key>
+			<real>609577425.71400201</real>
+			<key>title</key>
+			<string>Run KevGame</string>
+			<key>uniqueIdentifier</key>
+			<string>8A0C8943-56FC-4F57-B5FD-EEDB99AA278B</string>
+		</dict>
 		<key>92B7301E-798E-4B3E-9672-4CE84BE1EB49</key>
 		<dict>
 			<key>className</key>
@@ -583,6 +685,40 @@
 			<string>Run KevGame</string>
 			<key>uniqueIdentifier</key>
 			<string>A1B9E15C-9A97-41E1-8BCF-0E9745FD8545</string>
+		</dict>
+		<key>A29EA906-7200-4B92-8EC3-A484706218FB</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>A29EA906-7200-4B92-8EC3-A484706218FB.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Game project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Game</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run KevGame</string>
+			<key>timeStartedRecording</key>
+			<real>609576901.71794999</real>
+			<key>timeStoppedRecording</key>
+			<real>609577210.24573505</real>
+			<key>title</key>
+			<string>Run KevGame</string>
+			<key>uniqueIdentifier</key>
+			<string>A29EA906-7200-4B92-8EC3-A484706218FB</string>
 		</dict>
 		<key>A45987A9-B565-416D-8098-31DAA50FE5D6</key>
 		<dict>
@@ -754,6 +890,40 @@
 			<key>uniqueIdentifier</key>
 			<string>CC2FCC1A-93BA-4B5A-A0A3-0A33271EBD59</string>
 		</dict>
+		<key>E1B97A51-9B9B-44B5-80C3-D81B7542C924</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>E1B97A51-9B9B-44B5-80C3-D81B7542C924.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Game project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Game</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run KevGame</string>
+			<key>timeStartedRecording</key>
+			<real>609577426.42754698</real>
+			<key>timeStoppedRecording</key>
+			<real>609577459.50843799</real>
+			<key>title</key>
+			<string>Run KevGame</string>
+			<key>uniqueIdentifier</key>
+			<string>E1B97A51-9B9B-44B5-80C3-D81B7542C924</string>
+		</dict>
 		<key>E1CC6EF6-0A98-4F73-A1AB-B86287F3FF63</key>
 		<dict>
 			<key>className</key>
@@ -821,6 +991,40 @@
 			<string>Run KevGame</string>
 			<key>uniqueIdentifier</key>
 			<string>E3EEFFCB-212B-4948-9BF2-8545CACF148A</string>
+		</dict>
+		<key>E706231A-4C3E-4540-B8EF-4A595F9DBB4B</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>E706231A-4C3E-4540-B8EF-4A595F9DBB4B.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Game project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Game</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run KevGame</string>
+			<key>timeStartedRecording</key>
+			<real>609577509.61649597</real>
+			<key>timeStoppedRecording</key>
+			<real>609577540.61581397</real>
+			<key>title</key>
+			<string>Run KevGame</string>
+			<key>uniqueIdentifier</key>
+			<string>E706231A-4C3E-4540-B8EF-4A595F9DBB4B</string>
 		</dict>
 		<key>F25FBC86-0630-4508-9A36-C1C533ED17BB</key>
 		<dict>
