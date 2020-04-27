@@ -1,6 +1,0 @@
-Gravity Constant 0.5
-Max Hori Accel 0.5
-Player Hori Accel 0.1
-Max Jump Accel 2
-Jump Accel 0.8
-Max Jump Presses 15
