@@ -21,6 +21,13 @@ enum class RenderableType
     Group
 };
 
+enum class CollisionDirection {
+    DOWN,
+    RIGHT,
+    UP,
+    LEFT
+};
+
 struct VertexData
 {
     Vec3f vertex;
@@ -41,15 +48,19 @@ protected:
     Vec3f screenPos;
     Vec2f size;
     uint32_t color = 0;
-
+    
     Texture* texture;
     unsigned int texID;
 
     Vec3f* baseOrigin = nullptr;
 
     bool SolidObject = false;
+    bool stable = false;
     bool mouseHovering = false;
     bool singleItem = true;
+    bool childItem = false;
+    Renderable2D* parent = nullptr;
+    
 
     RenderableType type = RenderableType::None;
 
@@ -109,7 +120,7 @@ public:
     inline virtual const Vec3f &GetPosition() const { return position; }
     inline virtual const void SetPosition(Vec3f* newPosition) { position = *newPosition; }
 
-    inline virtual const void AddMomentum(Vec3f Momentum) {}; 
+    inline virtual const void AddMomentum(Vec3f Momentum) {};
     
     inline virtual const Vec2f &GetSize() const { return size; }
     inline virtual const void SetSize(Vec2f &newSize) { size = newSize; }
@@ -122,13 +133,18 @@ public:
     
     inline virtual const char* GetName()    { return name; }
     inline virtual const void SetName(const char* Name) { name = Name; }
+    inline virtual const bool IsName(const char* Name) { if (name == nullptr) return 0; return strncmp(Name, name, 100) == 0; }
     
     inline virtual const unsigned int GetUID() { return uid; }
     inline virtual const unsigned int GetTextureID() const { return texID; }
 
     inline virtual const void SetBase(Vec3f* origin) { baseOrigin = origin; screenPos = GetScreenPos(); }
     inline virtual const Vec3f* GetBase() { return baseOrigin; }
-
+    
+    inline virtual const void SetParent(Renderable2D* Parent) { parent = (Parent == nullptr) ? nullptr : Parent; childItem = true; }
+    inline virtual const Renderable2D* GetParent() { return (parent != nullptr) ? parent : nullptr; }
+    inline virtual const bool IsChild() { return childItem; }
+    
     inline float GetLeftBound() { return position.x; }
     inline float GetRightBound() { return position.x + size.x; }
     inline float GetUpBound() { return position.y; }
@@ -154,7 +170,9 @@ public:
 
 
     inline bool IsSolid()   {return SolidObject; }
-    inline void SetSolid(bool isSolid)   {SolidObject = isSolid; }
+    inline void SetSolid(bool isSolid)   {SolidObject = isSolid; isSolid ? type = RenderableType::Physics : RenderableType::Static;}
+    
+    inline bool IsStable() {return stable; }
 
     inline bool IsSingleRenderable() { return singleItem; }
     inline virtual void* GetChildren() { return (void*)this; }
@@ -167,17 +185,17 @@ public:
     }
 
     //Checks if the mouse is hovering over any renderables, if so it will return a vector of them
-    virtual void MouseCheck(Vec2f& mousePos, std::vector<Renderable2D*>& underMouse) 
+    virtual void MouseCheck(Vec2f& mousePos, std::vector<Renderable2D*>& underMouse)
     {
         if ((mousePos.x > GetScreenPos().x && mousePos.x < GetScreenPos().x + size.x) && (mousePos.y > GetScreenPos().y && mousePos.y < GetScreenPos().y + size.y))
         {
             if (underMouse.size() == 0)
             {
                 OnMouseHover();
-                if (KevInput::IsMouseButtonPressed(KEV_MOUSE_BUTTON_LEFT))
-                    {
-                        OnClick();
-                    }
+                if (KevInput::IsMouseButtonPressed(KEV_MOUSE_BUTTON_LEFT) || KevInput::IsMouseButtonPressed(KEV_MOUSE_BUTTON_RIGHT))
+                {
+                    OnClick();
+                }
                 mouseHovering = true;
             } else if (mouseHovering)
             {
@@ -200,14 +218,27 @@ public:
 
     inline virtual void OnMouseHover() {}
     inline virtual void OnMouseLeave() {}
-    inline virtual void OnCollision(Renderable2D* collidedWith, bool SideDir, bool VertDir) {}
+    inline virtual void AddCollision(Renderable2D* collidedWith) {}
+    inline virtual const void AddCollision(CollisionDirection Dir) {}
+    inline virtual void ProcCollision() {}
     inline virtual void NoCollision() {}
-    inline virtual void OnClick() {}
+    inline virtual void OnClick() {};
 
     Vec3f GetScreenPos()
     {
-        if (baseOrigin == nullptr) return Vec3f(position.x, -position.y, 0);
-        return Vec3f(position.x + baseOrigin->x, position.y + baseOrigin->y, position.z + baseOrigin->z);
+        try
+        {
+            if (!childItem || baseOrigin == nullptr)
+            {
+                return Vec3f(position.x, -position.y, 0);
+            }
+            return Vec3f(position.x + baseOrigin->x, position.y + baseOrigin->y, 0);
+        }
+        catch(int e)
+        {
+            LOG_ERR("GET SCREEN POS FAILED: CODE %d", e);
+            return Vec3f(position.x, -position.y, 0);
+        }
     }
 
     inline static void GameStart() { globalNumRenderables = 0; }

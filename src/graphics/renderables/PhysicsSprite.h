@@ -4,6 +4,8 @@
 #include "Renderable2D.h"
 #include <utils/Timer.h>
 
+#include <math.h>
+
 #define GRAVITY_CONSTANT 10.0f
 
 class PhysicsSprite : public  Renderable2D
@@ -13,9 +15,8 @@ private:
 
     bool activated = false;
     Timer debounce;
-    Timer movement;
-
-    bool stable = false;
+    Timer movement; 
+    
     double mass = 1.0f;
     bool gravityAffects = false;
     Vec3f acceleration = Vec3f(0, 0, 0);
@@ -27,7 +28,16 @@ private:
     //during updates
     Vec3f nextMove = Vec3f(0, 0, 0);
 
+    
+    //Collision information
+    vector<CollisionDirection> collisionMagnitude;
+    float collisionAngle = 0.0f;
     bool hadCollision = false;
+    Vec2f correctColliderOverlap;
+    
+    bool peggedX = false; //In between a solid object
+    bool peggedY = false;
+    
 
 public:
 
@@ -39,7 +49,8 @@ public:
 
     virtual void OnUpdate() override;
     
-    virtual void OnCollision(Renderable2D* collidedWith, bool SideDir, bool VertDir) override;
+    virtual void AddCollision(Renderable2D* collidedWith) override;
+    virtual void ProcCollision() override;
     virtual void NoCollision() override;
     virtual void OnClick() override;
 

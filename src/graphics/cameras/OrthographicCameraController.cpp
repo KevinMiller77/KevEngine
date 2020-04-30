@@ -3,7 +3,7 @@
 #include <events/InputCodes.h>
 
 OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
-	: AspectRatio(aspectRatio), Camera(-AspectRatio * Zoom, AspectRatio * Zoom, -Zoom, Zoom), m_Rotation(rotation)
+	: AspectRatio(aspectRatio), Camera(-AspectRatio * Zoom, AspectRatio * Zoom, -Zoom, Zoom), m_Rotation(rotation), movingCamera(false), savedMousePos(Vec2u(0, 0))
 {
 	time.Reset();
 }
@@ -11,27 +11,61 @@ OrthographicCameraController::OrthographicCameraController(float aspectRatio, bo
 void OrthographicCameraController::OnUpdate()
 {
 	double ts = time.GetTimePassed();
-	if (KevInput::IsKeyPressed(KEV_KEY_A))
-	{
-		CamPos.x -= cos(CamRot) * CamTranslationSpeed * ts;
-		CamPos.y -= sin(CamRot) * CamTranslationSpeed * ts;
-	}
-	else if (KevInput::IsKeyPressed(KEV_KEY_D))
-	{
-		CamPos.x += cos(CamRot) * CamTranslationSpeed * ts;
-		CamPos.y += sin(CamRot) * CamTranslationSpeed * ts;
-	}
-
-	if (KevInput::IsKeyPressed(KEV_KEY_W))
-	{
-		CamPos.x += -sin(CamRot) * CamTranslationSpeed * ts;
-		CamPos.y += cos(CamRot) * CamTranslationSpeed * ts;
-	}
-	else if (KevInput::IsKeyPressed(KEV_KEY_S))
-	{
-		CamPos.x -= -sin(CamRot) * CamTranslationSpeed * ts;
-		CamPos.y -= cos(CamRot) * CamTranslationSpeed * ts;
-	}
+    
+    if(KevInput::IsMouseButtonPressed(MouseCode::Button2))
+    {
+        if (savedMousePos.x == 0 && savedMousePos.y == 0)
+        {
+            
+            savedMousePos.x = KevInput::GetMousePos().x;
+            savedMousePos.y = KevInput::GetMousePos().y;
+        }
+        int diffX = 0;
+        int diffY = 0;
+        if (movingCamera)
+        {
+            int x = KevInput::GetMousePos().x;
+            int y = KevInput::GetMousePos().y;
+            
+            if (savedMousePos.x - x == 0 && savedMousePos.y - y == 0)
+            {
+            }
+            else
+            {
+                diffX = (int)(savedMousePos.x - x);
+                
+                if (diffX < 0)
+                {
+                    CamPos.x += cos(CamRot) * CamTranslationSpeed * ts * ((float)diffX / max(Zoom, 5.0f));
+                }
+                else
+                {
+                    CamPos.x += cos(CamRot) * CamTranslationSpeed * ts * ((float)diffX / max(Zoom, 5.0f));
+                }
+                
+                diffY = (int)(savedMousePos.y - y);
+                if (diffY < 0)
+                {
+                    CamPos.y -= cos(CamRot) * CamTranslationSpeed * ts * ((float)diffY / max(Zoom, 5.0f));
+                }
+                else
+                {
+                    CamPos.y -= cos(CamRot) * CamTranslationSpeed * ts * ((float)diffY / max(Zoom, 5.0f));
+                }
+            }
+                        
+            savedMousePos.x = x;
+            savedMousePos.y = y;
+        }
+        movingCamera = true;
+    }
+    else
+    {
+        savedMousePos.x = 0;
+        savedMousePos.y = 0;
+        movingCamera = false;
+    }
+    
 
 	if (m_Rotation)
 	{
@@ -71,8 +105,8 @@ void OrthographicCameraController::OnEvent(Event& e)
 
 bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 {
-	Zoom -= e.getYOffset() * 0.25f;
-	Zoom = Zoom > 0.25f ? Zoom : 0.25;
+	Zoom -= e.getYOffset() * 0.1f;
+	Zoom = Zoom > 0.1f ? Zoom : 0.1;
 	Camera.SetProjection(-AspectRatio * AspectRatio, AspectRatio * Zoom, -Zoom, Zoom);
 	return false;
 }

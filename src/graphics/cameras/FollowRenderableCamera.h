@@ -34,6 +34,8 @@ private:
 	Timer time;
 	OrthographicCamera Camera;
     Renderable2D* renderableToFollow = nullptr;
+    bool movingCamera;
+    Vec2u savedMousePos;
 
 	float CamTranslationSpeed = 1.0f;
 };

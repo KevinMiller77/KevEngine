@@ -80,6 +80,7 @@ void KevEngine::OnEvent(Event& e)
     EventDispatcher dispatch(e);
     dispatch.Dispatch<WindowCloseEvent>(KEV_BIND_EVENT_FN(KevEngine::OnWindowClose));
     dispatch.Dispatch<WindowResizeEvent>(KEV_BIND_EVENT_FN(KevEngine::OnWindowResize));
+    
 
     for (auto layer = EngLayerStack.rbegin(); layer != EngLayerStack.rend(); ++layer)
     {

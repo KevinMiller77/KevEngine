@@ -15,11 +15,13 @@ void Group::Add(Renderable2D* renderable)
     if (renderable->GetBase() == nullptr)
     {
         renderable->SetBase(baseOrigin);
+        renderable->SetParent((Renderable2D*)this);
     }
     else
     {
         Vec3f curBase = *renderable->GetBase();
         renderable->SetBase(new Vec3f(curBase.x + baseOrigin->x, curBase.y + baseOrigin->y, curBase.z + baseOrigin->z));
+        renderable->SetParent((Renderable2D*)this);
     }
 }
 

@@ -19,6 +19,9 @@
 #include <imgui/KevImGuiLog.h>
 
 #define GAME_KEY_DEBOUNCE_TIME 0.2f
+#define GAMESPACE_X 16.0f
+#define GAMESPACE_Y 9.0f
+
 
 class GameLayer : public Layer
 {
@@ -42,11 +45,12 @@ class GameLayer : public Layer
     KevImGuiLog log;
 
     FollowRenderableCamera camera;
+    Group* scene;
     Renderable2D* player;
     Timer updateTime;
 
 public:
-    GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes = Vec2f(16, 9));
+    GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes = Vec2f(GAMESPACE_X, GAMESPACE_Y));
     ~GameLayer() override;
 
     virtual void OnAttach() override;

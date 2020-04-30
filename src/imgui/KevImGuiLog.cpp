@@ -1,9 +1,31 @@
 #include "KevImGuiLog.h"
 
+FILE* KevImGuiLog::stdoutFile = (FILE*)nullptr;
+
 KevImGuiLog::KevImGuiLog()
 {
+    LOG_INF("Moving stdout to ImGui\n");
+    
+    stdoutFile = fopen(LOG_FILE_PATH, "w");
+        
+    if (stdoutFile)
+    {
+        stdoutFile = freopen(LOG_FILE_PATH, "r+a", stdout);
+    }
+    filePlace = 0;
+    
+    
+    Buf.clear();
     AutoScroll = true;
     Clear();
+}
+
+KevImGuiLog::~KevImGuiLog()
+{
+    if (stdoutFile)
+    {
+        fclose(stdoutFile);
+    }
 }
 
 void  KevImGuiLog::Clear()
@@ -13,7 +35,7 @@ void  KevImGuiLog::Clear()
     LineOffsets.push_back(0);
 }
 
-void    KevImGuiLog::AddLog(const char* fmt, ...) IM_FMTARGS(2)
+void KevImGuiLog::AddLog(const char* fmt, ...) IM_FMTARGS(2)
 {
     int old_size = Buf.size();
     va_list args;
@@ -32,7 +54,48 @@ void KevImGuiLog::Update(bool& LogOpen)
     
     ImGui::End();
     
+    UpdateBuffer();
     Draw("Game Log", &LogOpen);
+}
+
+//NOTE: Do not print to stdout from this function!! It will infinite loop
+void KevImGuiLog::UpdateBuffer(FILE* InFile)
+{
+    const unsigned int TIMEOUT_TIME = 500; //MS
+    Timer timeout;
+    timeout.Reset();
+    
+    if (InFile)
+    {
+        fseek(InFile, filePlace, SEEK_SET);
+        while(!feof(InFile))
+        {
+            int oldSize = Buf.size();
+            
+            //Grab line
+            char curLine[256];
+            fgets(curLine, 256, InFile);
+            Buf.append(curLine);
+            
+            //Increase base read index
+            int new_size = Buf.size();
+            filePlace += new_size - oldSize;
+            
+            for (new_size; oldSize < new_size; oldSize++)
+            {
+                if (Buf[oldSize] == '\n')
+                {
+                    LineOffsets.push_back(oldSize + 1);
+                }
+            }
+            
+            
+            if (timeout.getTimeMS() > TIMEOUT_TIME)
+            {
+                break;
+            }
+        }
+    }
 }
 
 void    KevImGuiLog::Draw(const char* title, bool* p_open)

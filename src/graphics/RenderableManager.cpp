@@ -1,5 +1,6 @@
 #include "RenderableManager.h"
 
+
 RenderableManager::RenderableManager(std::vector<Renderable2D*>* Renderables)
     : ManagedRenderables(Renderables)   
 {
@@ -33,6 +34,12 @@ void RenderableManager::CollisionCheck()
             continue;
         }
 
+        if (Renderables[i]->GetType() == RenderableType::Group)
+        {
+            pos++;
+            continue;
+        }
+        
         if (Renderables[i]->GetType() != RenderableType::Physics)
         {
             pos++;
@@ -54,9 +61,14 @@ void RenderableManager::CollisionCheck()
         RigidBody->NoCollision();
         // LOG_INF("\n%d was solid and possibly collides\n", RigidBody->GetUID());
         for (Renderable2D* second : CurrentlyViewing)
-        {   
+        {
+            if (RigidBody == second)
+            {
+                continue;
+            }
+            
             //New renderable passed old
-            if (RigidBody->GetWorldLeftBound() >= second->GetWorldRightBound())
+            if ((RigidBody->GetWorldLeftBound() > second->GetWorldRightBound()))
             {
                 continue;
             }
@@ -67,41 +79,46 @@ void RenderableManager::CollisionCheck()
                 // LOG_INF("already happened\n");
                 continue;
             }
-
-            bool sideDir = false; // false is left, true is right
-
-            if (RigidBody->GetWorldRightBound() > second->GetWorldRightBound())
-            {
-                sideDir = true;
-            }
             
-            // LOG_INF("Looking at %f %f, and %f %f\n", RigidBody->GetWorldLeftBound(), RigidBody->GetWorldUpBound(), second->GetWorldLeftBound(), second->GetWorldUpBound());
             //Collision
-            if ((RigidBody->GetWorldUpBound() <= second->GetWorldUpBound() && RigidBody->GetWorldDownBound() >= second->GetWorldDownBound()))
+            if ((RigidBody->GetWorldUpBound() > second->GetWorldUpBound() && RigidBody->GetWorldUpBound() < second->GetWorldDownBound()))
             {
                 detectedCollisions[RigidBody] = second; detectedCollisions[second] = RigidBody;
-                
-                // LOG_INF("Up collide\n");
-                RigidBody->OnCollision(second, sideDir, true);
-                if (second->GetType() == RenderableType::Physics)
-                {
-                    second->OnCollision(RigidBody, !sideDir, false);
-                }
+                SendCollision(RigidBody, second);
             }
-            if (RigidBody->GetWorldUpBound() >= second->GetWorldUpBound() && RigidBody->GetWorldDownBound() <= second->GetWorldDownBound())
+            if (RigidBody->GetWorldDownBound() > second->GetWorldUpBound() && RigidBody->GetWorldDownBound() < second->GetWorldDownBound())
             {
                 detectedCollisions[RigidBody] = second; detectedCollisions[second] = RigidBody;
-                
-                // LOG_INF("Down collide\n");
-                RigidBody->OnCollision(second, sideDir, false);
-                if (second->GetType() == RenderableType::Physics)
-                {
-                    second->OnCollision(RigidBody, !sideDir, true);
-                }
+                SendCollision(RigidBody, second);
+            }
+            if ((second->GetWorldUpBound() > RigidBody->GetWorldUpBound() && second->GetWorldUpBound() < RigidBody->GetWorldDownBound()))
+            {
+                detectedCollisions[second] = RigidBody; detectedCollisions[RigidBody] = second;
+                SendCollision(second, RigidBody);
+            }
+            if (second->GetWorldDownBound() > RigidBody->GetWorldUpBound() && second->GetWorldDownBound() < RigidBody->GetWorldDownBound())
+            {
+                detectedCollisions[second] = RigidBody; detectedCollisions[RigidBody] = second;
+                SendCollision(second, RigidBody);
             }
         
         }
         
         CurrentlyViewing.push_back(RigidBody);
+    }
+}
+
+void RenderableManager::SendCollision(Renderable2D* Renderable)
+{
+    Renderable->AddCollision((Renderable2D*)nullptr);
+}
+
+void RenderableManager::SendCollision(Renderable2D* Renderable, Renderable2D* Affected)
+{
+    Renderable->AddCollision(Affected);
+    
+    if (Affected->GetType() == RenderableType::Physics)
+    {
+        Affected->AddCollision(Renderable);
     }
 }

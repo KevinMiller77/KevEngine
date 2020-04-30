@@ -23,9 +23,16 @@ Sprite::Sprite(Renderable2D* newMe)
 void Sprite::OnMouseHover()
 {
     // LOG_INF("Hover\n");
-    if (activated)
+    if (SolidObject)
     {
-        color = 0xFFFF00FF;
+        if (IsName("watch"))
+        {
+            color = 0xFFFF00FF;
+        }
+        else
+        {
+            color = 0xFFF000FF;
+        }
         return;
     }
     color = 0xFFFFFF00;
@@ -33,9 +40,16 @@ void Sprite::OnMouseHover()
 
 void Sprite::OnMouseLeave()
 {
-    if (activated)
+    if (SolidObject)
     {
-        color = 0xFFFF00FF;
+        if (IsName("watch"))
+        {
+            color = 0xFFFFF000;
+        }
+        else
+        {
+            color = 0xFFFFFF00;
+        }
         return;
     }
     color = 0xFFFFFFFF;
@@ -45,7 +59,19 @@ void Sprite::OnClick()
 {
     if (debounce.GetTimePassed() > 0.5f)
     {
-        activated = !activated;
+        if (SolidObject)
+        {
+            name = nullptr;
+        }
+        else
+        {
+            if (KevInput::IsMouseButtonPressed(KEV_MOUSE_BUTTON_RIGHT))
+            {
+                name = "watch";
+            }
+        }
+        
+        SolidObject = !SolidObject;
         if (type == RenderableType::Static)
         {
             type = RenderableType::Physics;
@@ -59,12 +85,22 @@ void Sprite::OnClick()
     }
 }
 
-void Sprite::OnCollision(Renderable2D* collidedWith, bool SideDir, bool VertDir)
+void Sprite::AddCollision(Renderable2D* collidedWith)
 {
     color = 0xFFFF0000;
 }
 
+void Sprite::ProcCollision()
+{
+    
+}
+
 void Sprite::NoCollision()
 {
+    if (SolidObject)
+    {
+        color = 0xFFFFFF00;
+        return;
+    }
     color = 0xFFFFFFFF;
 }

@@ -30,8 +30,10 @@ class Window
 {
 public:
 	Window() {};
+#ifdef KEV_PLATFORM_MACOS
+#else
     ~Window() {};
-
+#endif
 	using EventCallbackFn = std::function<void(Event&)>;
 
 	virtual void OnUpdate() = 0;

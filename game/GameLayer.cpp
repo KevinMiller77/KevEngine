@@ -28,35 +28,26 @@ void GameLayer::OnAttach()
 {
     updateTime.Reset();
 
-    //Setup textures
-    //textures.newTexture("crate", "resources/textures/container.jpg");
-    //textures.NewTexture("sponge","resources/textures/spongebob.jpg");
+    //Setup textures, can't be used without them
     textures.NewTexture("morty", "resources/textures/morty.jpg");
     textures.NewTexture("dude", "resources/textures/KevDude.png");
 
-    Group* background = new Group(Mat4f::translation(Vec3f(-16.0f, -9.0f, 0.0f)));
-    Group* text = new Group(Mat4f::translation(Vec3f(-16.0f, -9.0f, 0.0f)));
-    Group* swirly = new Group(Mat4f::translation(Vec3f(-16.0f, 9.0f, 0.0f)));
-
+    scene = new Group(Mat4f::translation(Vec3f(-screenExtremes.x, -screenExtremes.y, 0.0f)));
     
-    for (float x = 0.0f; x < 32.0f; x++)
+    for (float x = 0; x < GAMESPACE_X * 2; x += 1)
     {
-        for (float y = 0.0f; y < 18.0f; y++)
+        for (float y = 0; y < GAMESPACE_Y * 2; y += 1)
         {
-            if (y > 16.0f)
-            {
-                background->Add(new PhysicsSprite(x, y, 1, 1, textures.GetTexture("morty"), true));
-                continue;
-            }
-            background->Add(new Sprite(x, y, 1, 1, textures.GetTexture("morty")));
+            scene->Add(new Sprite(x, y, 1, 1, textures.GetTexture("morty")));
         }
     }
 
-    player = new PhysicsSprite(8, 0, 2.0f, 4.0f, textures.GetTexture("dude"), true);
+    player = new PhysicsSprite(8, 0, 1.0f, 2.0f, textures.GetTexture("dude"), true);
+    player->SetName("Kev");
     LOG_INF("Player pos: %f, %f\n", player->GetScreenPos().x, player->GetScreenPos().y); 
-    background->Add(player);
-    camera.SetRenderable(player);
-    Add(background);
+    scene->Add(player);
+//    camera.SetRenderable(player);
+    Add(scene);
 
     updateTime.Reset();
 }
@@ -79,39 +70,36 @@ void GameLayer::OnUpdate()
     double ts = 100 * updateTime.GetTimePassed();
 
     camera.OnUpdate();
+    
     ShaderProgram::EnableShaderProgram(shader);
     ShaderProgram::SetShaderUniformMat4(shader, "pr_matrix", camera.GetCamera().GetViewProjectionMatrix());
-
-    //G ravity
-    player->AddMomentum(Vec3f(0.0f, 10.0f * ts, 0.0f));
-
-    if (KevInput::IsKeyPressed(KEV_KEY_D))
-    {
-        player->AddMomentum(Vec3f(25.0f * ts, 0.0f, 0.0f));
-    }
-    if (KevInput::IsKeyPressed(KEV_KEY_A))
-    {
-        player->AddMomentum(Vec3f(-25.0f * ts, 0.0f, 0.0f));
-    }
-    // if (KevInput::IsKeyPressed(KEV_KEY_W))
-    // {
-    //     player->AddMomentum(Vec3f(0.0f, -5.0f, 0.0f));
-    // }
-    // if (KevInput::IsKeyPressed(KEV_KEY_S))
-    // {
-    //     player->AddMomentum(Vec3f(0.0f, 5.0f, 0.0f));
-    // }
-
-    // LOG_INF("\n\tPlayer rel pos: %f, %f\n", player->GetPosition().x, player->GetPosition().y);
-    // LOG_INF("\tPlayer base: %f, %f\n", player->GetBase()->x, player->GetBase()->y);
-    // LOG_INF("\tPlayer screen  pos: %f, %f\n\n", player->GetScreenPos().x, player->GetScreenPos().y);
-
-
-    updateTime.Reset();
-
+    
     Manager.MouseCheck(mousePos);
     Manager.CollisionCheck();
     Manager.OnUpdate();
+    
+    //G ravity
+    if (!player->IsStable())
+    {
+        player->AddMomentum(Vec3f(0.0f, 3.5f * ts, 0.0f));
+    }
+    else
+    {
+        if (KevInput::IsKeyPressed(KEV_KEY_SPACE))
+        {
+            player->AddMomentum(Vec3f(0.0f, -200, 0.0f));
+        }
+    }
+    if (KevInput::IsKeyPressed(KEV_KEY_D))
+    {
+        player->AddMomentum(Vec3f(5.0f * ts, 0.0f, 0.0f));
+    }
+    if (KevInput::IsKeyPressed(KEV_KEY_A))
+    {
+        player->AddMomentum(Vec3f(-5.0f * ts, 0.0f, 0.0f));
+    }
+
+    updateTime.Reset();
 }
 
 void GameLayer::OnImGuiRender() 
@@ -135,7 +123,7 @@ void GameLayer::OnImGuiRender()
                 Now, to the gui. It can dock an auto tab into other windows. It can leave the game window and everything.\n \
                 Simply hold shift and drag around the windows!\n");
     ImGui::End();
-
+    
     log.Update(KevImGuiLogOpen);
 }
 
@@ -143,23 +131,6 @@ void GameLayer::OnDraw()
 {
     Render();
 }
-
-// void GameLayer::Render()
-// {
-//     if (enabled)
-//     {
-//         ShaderProgram::EnableShaderProgram(shader);
-//         renderer->Begin();
-
-//         for (Renderable2D *renderable : renderables)
-//         {
-//             renderable->Submit(renderer);
-//         }
-        
-//         renderer->End();   
-//         vpTexture = renderer->DrawToBuffer();
-//     }
-// }
 
 bool GameLayer::MouseScroll(MouseScrolledEvent& e)
 {

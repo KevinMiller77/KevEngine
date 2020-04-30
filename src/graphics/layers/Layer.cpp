@@ -12,7 +12,11 @@ Layer::~Layer()
 
     for (Renderable2D* renderable : renderables)
     {
+#ifdef KEV_PLATFORM_MACOS
+        
+#else
         delete renderable;
+#endif
     }
 }
 

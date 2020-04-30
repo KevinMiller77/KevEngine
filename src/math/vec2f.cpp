@@ -2,6 +2,8 @@
 
 #include <string.h>
 #include <assert.h>
+#include <math.h>
+#include <utils/Logging.h>
 
 Vec2f::Vec2f() {
     memset(elements, 0, 2 * sizeof(float));
@@ -45,6 +47,34 @@ float& Vec2f::operator[](int index) {
     assert(index >= 0 && index < 2);
     
     return elements[index];
+}
+
+
+float Vec2f::dot(const Vec2f& other)
+{
+    return x * other.x + y * other.y;
+}
+
+Vec2f Vec2f::normal()
+{
+    float mag = sqrt(x * x + y * y);
+    if (mag == 0)
+    {
+        LOG_ERR("Empty vec normalized!\n");
+        return Vec2f(0, 0);
+    }
+    return Vec2f(x / mag, y / mag);
+}
+
+float Vec2f::dot(const Vec2f& vec, const Vec2f& other)
+{
+    return vec.x * other.x + vec.y * other.y;
+}
+
+Vec2f Vec2f::normal(const Vec2f& vec)
+{
+    float mag = sqrt(vec.x * vec.x + vec.y * vec.y);
+    return Vec2f(vec.x / mag, vec.y / mag);
 }
 
 void Vec2f::operator+=(const Vec2f& other) {

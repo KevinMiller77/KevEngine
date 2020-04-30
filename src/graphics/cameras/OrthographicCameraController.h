@@ -29,6 +29,8 @@ private:
 	OrthographicCamera Camera;
 
 	bool m_Rotation;
+    bool movingCamera;
+    Vec2u savedMousePos;
 
 	Vec3f CamPos = { 0.0f, 0.0f, 0.0f };
 	float CamRot = 0.0f; //In degrees, in the anti-clockwise direction

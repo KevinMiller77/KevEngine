@@ -49,8 +49,8 @@ public:
     void Draw() override;
     unsigned int DrawToBuffer() override;
     void DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) override;
-    void Begin();
-    void End();
+    void Begin() override;
+    void End() override;
 
 private:
     void Init();

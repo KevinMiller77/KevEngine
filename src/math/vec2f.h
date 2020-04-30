@@ -12,6 +12,12 @@ struct Vec2f {
     Vec2f(float x, float y);
     ~Vec2f();
     
+    float dot(const Vec2f& other);
+    static float dot(const Vec2f& vec, const Vec2f& other);
+
+    Vec2f normal();
+    static Vec2f normal(const Vec2f& vec);
+
     const float& operator[](int index) const;
     float& operator[](int index);
     

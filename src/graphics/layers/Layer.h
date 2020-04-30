@@ -20,7 +20,8 @@ protected:
     Layer(Window* Parent, GL2DRenderer *Renderer, unsigned int Shader);
 
     Window* parent;
-
+    
+    
     GL2DRenderer *renderer;
     std::vector<Renderable2D *> renderables;
     RenderableManager Manager = RenderableManager(&renderables);

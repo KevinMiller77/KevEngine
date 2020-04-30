@@ -4,6 +4,8 @@
 #include <utils/Timer.h>
 #include <graphics/renderables/Renderable2D.h>
 
+
+
 class Sprite : public Renderable2D
 {
 private:
@@ -17,7 +19,8 @@ public:
     virtual void OnMouseHover() override;
     virtual void OnMouseLeave() override;
     virtual void OnClick() override;
-    virtual void OnCollision(Renderable2D* collidedWith, bool SideDir, bool VertDir) override;
+    virtual void AddCollision(Renderable2D* collidedWith) override;
+    virtual void ProcCollision() override;
     virtual void NoCollision() override;
 };
 

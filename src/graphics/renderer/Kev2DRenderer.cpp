@@ -42,10 +42,11 @@ void Kev2DRenderer::Init()
 
     //Describe our memory map
     glVertexAttribPointer(SHADER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid *)(0));
-    glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)((const GLvoid *)(24)));
     glVertexAttribPointer(SHADER_TEXTURE_INDEX, 2, GL_FLOAT, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(12));
-    glVertexAttribPointer(SHADER_TEXTURE_ID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(20)); 
-
+    glVertexAttribPointer(SHADER_TEXTURE_ID_INDEX, 1, GL_FLOAT, GL_FALSE, RENDERER_VERTEX_SIZE, (const GLvoid*)(20));
+    glVertexAttribPointer(SHADER_COLOR_INDEX, 4, GL_UNSIGNED_BYTE, GL_TRUE, RENDERER_VERTEX_SIZE, (const GLvoid *)(24));
+    
+    
     //Unbind VBO
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -85,7 +86,7 @@ void Kev2DRenderer::Submit(const Renderable2D *renderable)
     const Vec2f size = renderable->GetSize();
     const uint32_t color = renderable->GetColor();
     const unsigned int texID = renderable->GetTextureID();
-
+    
     float ts = 0.0f;
     if (texID > 0)
     {
@@ -138,7 +139,6 @@ void Kev2DRenderer::Submit(const Renderable2D *renderable)
     VDataBuffer->texture = Vec2f(0.0f, 1.0f);
     VDataBuffer->texID = ts;
     VDataBuffer++;
-
 
     indexCount += 6;
 }

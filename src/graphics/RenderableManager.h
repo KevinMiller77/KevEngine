@@ -28,6 +28,7 @@ public:
     {
         for (Renderable2D* renderable : *(ManagedRenderables))
         {
+            if (renderable->IsName("watch")) LOG_INF("Sprite pos: %f, %f\n", renderable->GetScreenPos().x, renderable->GetScreenPos().y);
             renderable->OnUpdate();
         }
     }
@@ -35,6 +36,11 @@ public:
 
     void MouseCheck(Vec2f MousePos);
     void CollisionCheck();
+    void SendCollision(Renderable2D* Renderable);
+    void SendCollision(Renderable2D* Renderable, Renderable2D* Affected);
+    
+    Renderable2D* GetRenderable(const char* Name);
+    Renderable2D* GetRenderable(unsigned int uid);
 
     inline static bool SortRenderablesByScreenX(const void* p1, const void* p2) { return ((Renderable2D*)p1)->GetWorldLeftBound() < ((Renderable2D*)p2)->GetWorldLeftBound(); } 
 };

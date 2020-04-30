@@ -2,11 +2,14 @@
 
 LayerStack::~LayerStack()
 {
+#ifdef KEV_PLATFORM_MACOS
+#else
     for (Layer* layer : layers)
     {
         layer->OnDetach();
         delete layer;
     }
+#endif
 }
 
 void LayerStack::PushLayer(Layer* layer)
