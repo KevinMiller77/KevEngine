@@ -1,4 +1,5 @@
 #include "HUD.h"
+#include <core/KevEngine.h>
 
 HUD::HUD(Window* Parent, unsigned int shader)
     :   Layer(Parent, new Kev2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), shader)
@@ -41,8 +42,8 @@ extern unsigned int LastUpdateKeep;
 void HUD::OnUpdate()
 {
     //char* text; sprintf(text, "FPS: %d", LastFrameKeep);
-    FrameCounter->SetText("FPS: " + to_string(LastFrameKeep));
-    UpdateCounter->SetText("UPS: " + to_string(LastUpdateKeep));
+    FrameCounter->SetText("FPS: " + to_string(KevEngine::LastFrameKeep));
+    UpdateCounter->SetText("UPS: " + to_string(KevEngine::LastUpdateKeep));
 }
 
 void HUD::OnDraw()

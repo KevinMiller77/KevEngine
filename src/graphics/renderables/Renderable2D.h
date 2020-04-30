@@ -9,7 +9,7 @@
 #include <utils/Logging.h>
 #include <graphics/renderer/ShaderProgram.h>
 //Has to be included last
-#include <graphics/renderer/GL2DRenderer.h>
+#include <graphics/renderer/KevRenderer.h>
 #include <core/KevInput.h>
 
 enum class RenderableType
@@ -115,7 +115,7 @@ public:
 
     virtual ~Renderable2D() = default;
 
-    inline virtual void Submit(GL2DRenderer* renderer) const { renderer->Submit(this); }
+    inline virtual void Submit(KevRenderer* renderer) const { renderer->Submit(this); }
 
     inline virtual const Vec3f &GetPosition() const { return position; }
     inline virtual const void SetPosition(Vec3f* newPosition) { position = *newPosition; }

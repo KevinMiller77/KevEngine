@@ -3,7 +3,7 @@
 
 #include <cstddef>
 
-#include <graphics/renderer/GL2DRenderer.h>
+#include <graphics/renderer/KevRenderer.h>
 #include <graphics/buffers/IndexBuffer.h>
 #include <graphics/buffers/VertexArray.h>
 #include <graphics/buffers/FrameBuffer.h>
@@ -25,7 +25,7 @@
 
 class VertexData;
 
-class Kev2DRenderer : public GL2DRenderer
+class Kev2DRenderer : public KevRenderer
 {
 private:
     int *scr_w;

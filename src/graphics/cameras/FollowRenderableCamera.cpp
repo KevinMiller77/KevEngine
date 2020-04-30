@@ -24,7 +24,7 @@ void FollowRenderableCamera::OnUpdate()
 	double ts = time.GetTimePassed();
     Vec3f camPos = Camera.GetPosition();
     
-    if(KevInput::IsMouseButtonPressed(MouseCode::Button2))
+    if(KevInput::IsMouseButtonPressed(MouseCode::Button2) || (KevInput::IsKeyPressed(KeyCode::LeftControl) && KevInput::IsMouseButtonPressed(MouseCode::ButtonLeft)))
     {
         if (savedMousePos.x == 0 && savedMousePos.y == 0)
         {
@@ -49,24 +49,20 @@ void FollowRenderableCamera::OnUpdate()
                 
                 if (diffX < 0)
                 {
-                    LOG_INF("Moving\n");
                     newCamPos.x += ts * ((float)diffX / max(Zoom, 5.0f));
                 }
                 else
                 {
-                    LOG_INF("Moving\n");
                     newCamPos.x += ts * ((float)diffX / max(Zoom, 5.0f));
                 }
                 
                 diffY = (int)(savedMousePos.y - y);
                 if (diffY < 0)
                 {
-                    LOG_INF("Moving\n");
                     newCamPos.y -= ts * ((float)diffY / max(Zoom, 5.0f));
                 }
                 else
                 {
-                    LOG_INF("Moving\n");
                     newCamPos.y -= ts * ((float)diffY / max(Zoom, 5.0f));
                 }
                 Camera.SetPosition(&newCamPos);

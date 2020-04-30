@@ -3,24 +3,18 @@
 #include "HUD.h"
 #include <core/KevInput.h>
 
-unsigned int LastFrameKeep = 0;
-unsigned int LastUpdateKeep = 0;
-
 class KevGame : public KevEngine
 {
-    Timer fps;
-    Timer ups;
-    Timer keyPressTimeout;
 
 public:
+    
+    bool ReloadingShaders = false;
+    
     KevGame()
         : KevEngine(this)
     {
         Renderable2D::GameStart();
-        fps.Start();
-        ups.Start();
-        keyPressTimeout.Start();
-
+        
         window->SetVSync(1);
 
         //Set shader info
@@ -32,35 +26,40 @@ public:
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
         shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
 
-        PushOverlay(new GameLayer(window.get(), shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
-//        PushOverlay(new HUD(window.get(), shaders.GetShader("basic").GetShaderID()));
+        PushLayer(new GameLayer(window.get(), shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
+        PushOverlay(new HUD(window.get(), shaders.GetShader("basic").GetShaderID()));
     }
 
 
 
     ~KevGame() override 
     {
-        for (Layer* layer : EngLayerStack)
-        {
-            delete layer;
-        }
+        
     }
 
-    void OnChildDraw()
+    void OnGameDraw() override
     {
-        unsigned int newFrames = fps.FrameKeep();
-        if ( newFrames != 0)
-        {
-            LastFrameKeep = newFrames;
-        }
+        
     }
 
-    void OnChildUpdate()
+    void OnGameUpdate() override
     {
-        unsigned int newUpdate = ups.FrameKeep();
-        if ( newUpdate != 0)
+        if (KevInput::IsKeyPressed(KEV_KEY_R) && !ReloadingShaders)
         {
-            LastUpdateKeep = newUpdate;
+            LOG_INF("Resetting Shaders\n");
+            shaders.Disable("basic");
+            shaders.Refresh("basic", "resources/shaders/SimpleVertexShader.glsl", "resources/shaders/SimpleFragShader.glsl");
+            shaders.Enable("basic");
+            
+            int slots[MAX_TEXTURE_SLOTS];
+            for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
+            shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
+            
+            ReloadingShaders = true;
+        }
+        if (!KevInput::IsKeyPressed(KEV_KEY_R) && ReloadingShaders)
+        {
+            ReloadingShaders = false;
         }
     }
 };

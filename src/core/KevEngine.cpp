@@ -3,6 +3,11 @@
 
 KevEngine* KevEngine::curEngine = nullptr;
 
+extern KevEngine* CreateApplication();
+
+unsigned int KevEngine::LastFrameKeep = 0;
+unsigned int KevEngine::LastUpdateKeep = 0;
+
 KevEngine::KevEngine(KevEngine* child)
     : childInstance(child)
 {
@@ -17,6 +22,34 @@ KevEngine::KevEngine(KevEngine* child)
 
     imGuiLayer = new ImGuiLayer(window.get());
     PushOverlay(imGuiLayer);
+    
+    fps.Start();
+    ups.Start();
+}
+
+KevEngine::~KevEngine()
+{
+    for (int i = 0; i < EngLayerStack.GetSize(); i++)
+    {
+        if (EngLayerStack[i] == imGuiLayer)
+        {
+            continue;
+        }
+        delete EngLayerStack[i];
+    }
+    
+//    delete childInstance;
+}
+
+void KevEngine::EngineSwap()
+{
+    if (curEngine == nullptr)
+    {
+        return;
+    }
+    
+    delete curEngine;
+    curEngine = CreateApplication();
 }
 
 bool KevEngine::OnWindowClose(WindowCloseEvent& e)
@@ -50,6 +83,12 @@ void KevEngine::OnImGuiRender()
 
 void KevEngine::OnUpdate()
 {
+    unsigned int newUpdate = ups.FrameKeep();
+    if ( newUpdate != 0)
+    {
+        LastUpdateKeep = newUpdate;
+    }
+    
     for (Layer* layer : EngLayerStack)
     {
         layer->OnUpdate();
@@ -58,19 +97,25 @@ void KevEngine::OnUpdate()
 
     if (childInstance != nullptr)
     {
-        childInstance->OnChildUpdate();
+        childInstance->OnGameUpdate();
     }
 }
 
 void KevEngine::OnDraw()
 {
+    unsigned int newFrames = fps.FrameKeep();
+    if ( newFrames != 0)
+    {
+        LastFrameKeep = newFrames;
+    }
+    
     for (Layer* layer : EngLayerStack)
     {
         layer->OnDraw();
     }
     if (childInstance != nullptr)
     {
-        childInstance->OnChildDraw();
+        childInstance->OnGameDraw();
     }
 }
 

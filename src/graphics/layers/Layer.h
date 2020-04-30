@@ -5,7 +5,7 @@
 
 #include <events/Event.h>
 
-#include <graphics/renderer/GL2DRenderer.h>
+#include <graphics/renderer/KevRenderer.h>
 #include <graphics/Window.h>
 
 #include <graphics/TextureManager.h>
@@ -17,12 +17,12 @@
 class Layer
 {
 protected:
-    Layer(Window* Parent, GL2DRenderer *Renderer, unsigned int Shader);
+    Layer(Window* Parent, KevRenderer *Renderer, unsigned int Shader);
 
     Window* parent;
     
     
-    GL2DRenderer *renderer;
+    KevRenderer *renderer;
     std::vector<Renderable2D *> renderables;
     RenderableManager Manager = RenderableManager(&renderables);
     unsigned int shader;

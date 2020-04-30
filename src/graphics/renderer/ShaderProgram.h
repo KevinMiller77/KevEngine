@@ -20,6 +20,7 @@ public:
 
 
     static unsigned int CreateGLProgram(const char* vertex_file_path, const char* fragment_file_path);
+    unsigned int RefreshGLProgram(const char* vertex_file_path, const char* fragment_file_path);
     inline const unsigned int GetShaderID() const { return programID; }
 
     //There are two copies of all functions. We will want both static and non-static member functions to deal with shaders.

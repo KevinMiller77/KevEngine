@@ -1,6 +1,6 @@
 #include "Layer.h"
 
-Layer::Layer(Window* Parent, GL2DRenderer *Renderer, unsigned int Shader)
+Layer::Layer(Window* Parent, KevRenderer *Renderer, unsigned int Shader)
     : parent(Parent), renderer(Renderer), shader(Shader), enabled(true)
 {
     keyDebounce.Start();

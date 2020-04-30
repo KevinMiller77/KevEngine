@@ -5,7 +5,7 @@ Label::Label(std::string Text, float x, float y, FontInfo* font, Vec4f col)
 {
 }
 
-void Label::Submit(GL2DRenderer* renderer) const
+void Label::Submit(KevRenderer* renderer) const
 {
 
     renderer->DrawString(text, position, font, color);

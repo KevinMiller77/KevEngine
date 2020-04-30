@@ -25,7 +25,7 @@ void Group::Add(Renderable2D* renderable)
     }
 }
 
-void Group::Submit(GL2DRenderer* renderer) const
+void Group::Submit(KevRenderer* renderer) const
 {
     renderer->Push(ModelMatrix);
     for (const Renderable2D* renderable : children)

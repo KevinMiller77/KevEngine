@@ -11,10 +11,10 @@
 
 class Renderable2D;
 
-class GL2DRenderer
+class KevRenderer
 {
 protected:
-    GL2DRenderer()
+    KevRenderer()
     {  
         TransformationStack.push_back(Mat4f(1.0f));
         curTransformationBack = &TransformationStack.back();
@@ -25,7 +25,7 @@ protected:
     const Mat4f* curTransformationBack;
 
 public:
-    virtual ~GL2DRenderer() = default;
+    virtual ~KevRenderer() = default;
     
     void Push(const Mat4f &matrix, bool override = false)
     {

@@ -29,6 +29,8 @@ public:
 
     inline void Enable(const char* ID) { if (!shaders.empty()) shaders[shaderMap[ID]]->Enable(); }
     inline void Disable(const char* ID) { if (!shaders.empty()) shaders[shaderMap[ID]]->Disable(); }
+    //TODO: Fix the hardcoded paths
+    inline void Refresh(const char* ID, const char* vertex_file_path, const char* fragment_file_path) { if (!shaders.empty()) shaders[shaderMap[ID]]->RefreshGLProgram(vertex_file_path, fragment_file_path); }
 
 
     inline void SetUniform1f(const char * ID, const char* name, float value)                      { shaders[shaderMap[ID]]->SetUniform1f(name, value); }

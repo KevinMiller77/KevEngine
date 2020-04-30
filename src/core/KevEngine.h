@@ -48,6 +48,10 @@ protected:
     Vec2f screenSize;
 
     Timer timer;
+    
+    Timer fps;
+    Timer ups;
+
 
     ShaderManager shaders;
 
@@ -55,11 +59,14 @@ protected:
 
     void Run();
     bool OnWindowClose(WindowCloseEvent& e);
-	bool OnWindowResize(WindowResizeEvent& e);
+    bool OnWindowResize(WindowResizeEvent& e);
 
 public:
     KevEngine(KevEngine* child);
-    virtual ~KevEngine() {}
+    virtual ~KevEngine();
+
+    static unsigned int LastFrameKeep;
+    static unsigned int LastUpdateKeep;
 
     inline static KevEngine* Get() { return curEngine; }
     inline Window& GetWindow() { return *window; }
@@ -70,14 +77,14 @@ public:
     void OnEvent(Event& e);
     void OnImGuiRender();
 
-    virtual void OnChildUpdate() {};
-    virtual void OnChildDraw()  {};
+    virtual void OnGameUpdate() {};
+    virtual void OnGameDraw()  {};
 
     void PushLayer(Layer* layer);
     void PushOverlay(Layer* layer);
 
     //TODO: Reset engine
-    virtual void ResetEngine() {};
+    virtual void ResetEngine() { EngineSwap(); };
 
     inline void SetScreenResolution(Vec2u in) { screenResolution = in; }
     inline Vec2u GetScreenResolution() const { return screenResolution; }
@@ -89,6 +96,8 @@ public:
 
 private:
     static KevEngine* curEngine;
+    
+    static void EngineSwap();
     friend int ::main(int argv, char** argc);
 };
 
