@@ -7,8 +7,9 @@
 **/.obj
 **/.o
 **/Makefile
-**/.xcodeproj
+**/*.xcworkspace
 
+**/*.xcodeproj/*
 **/bin/*
 **/bin-int/*
 x64/*
