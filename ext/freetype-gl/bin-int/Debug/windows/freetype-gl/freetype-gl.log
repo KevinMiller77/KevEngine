@@ -1,9 +1,0 @@
-﻿  texture-atlas.c
-C:\Users\kevin\Dev\kevengine\ext\freetype-gl\texture-atlas.c(135,40): warning C4090: '=': different 'const' qualifiers
-C:\Users\kevin\Dev\kevengine\ext\freetype-gl\texture-atlas.c(239,23): warning C4018: '<': signed/unsigned mismatch
-  texture-font.c
-C:\Users\kevin\Dev\kevengine\ext\freetype-gl\texture-font.c(346,1): warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strdup. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(536): message : see declaration of 'strdup'
-  vector.c
-  Generating Code...
-  freetype-gl.vcxproj -> C:\Users\kevin\Dev\kevengine\ext\freetype-gl\bin\Debug\windows\freetype-gl\freetype-gl.lib
