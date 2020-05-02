@@ -35,7 +35,8 @@ project "Engine"
     {
         "src/**.h",
         "src/**.cpp",
-        "ext/stb_image/**.cpp"
+        "ext/stb_image/**.cpp",
+        "ext/freetype-gl/**.c"
     }
 
     removefiles
@@ -128,9 +129,6 @@ project "Game"
         {
             "game/**.h",
             "game/**.cpp",
-            "ext/freetype-gl/vector.c",
-            "ext/freetype-gl/texture-atlas.c",
-            "ext/freetype-gl/texture-font.c"
         }
 
         sysincludedirs

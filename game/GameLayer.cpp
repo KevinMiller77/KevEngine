@@ -21,7 +21,6 @@ GameLayer::~GameLayer()
     {
         delete renderable;
     }
-
 }
 
 void GameLayer::OnAttach()
@@ -42,7 +41,7 @@ void GameLayer::OnAttach()
         }
     }
 
-    player = new PhysicsSprite(8, 0, 1.0f, 2.0f, textures.GetTexture("dude"), true);
+    player = new PhysicsSprite(9, 16, 1.0f, 2.0f, textures.GetTexture("dude"), true);
     player->SetName("Kev");
     LOG_INF("Player pos: %f, %f\n", player->GetScreenPos().x, player->GetScreenPos().y); 
     scene->Add(player);
@@ -74,7 +73,12 @@ void GameLayer::OnUpdate()
     ShaderProgram::EnableShaderProgram(shader);
     ShaderProgram::SetShaderUniformMat4(shader, "pr_matrix", camera.GetCamera().GetViewProjectionMatrix());
     
-    Manager.MouseCheck(mousePos);
+    ImGuiIO io = ImGui::GetIO();
+    
+    if(!io.WantCaptureMouse)
+    {
+        Manager.MouseCheck(mousePos);
+    }
     Manager.CollisionCheck();
     Manager.OnUpdate();
     
@@ -125,6 +129,7 @@ void GameLayer::OnImGuiRender()
     ImGui::End();
     
     log.Update(KevImGuiLogOpen);
+    
 }
 
 void GameLayer::OnDraw()
