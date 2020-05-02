@@ -10,13 +10,14 @@
 **/*.xcworkspace
 **/*.plist
 **/*.DS_Store
+**/.DS_Store
 
 
 console.txt
 **/*.xcodeproj/*
 **/bin/*
 **/bin-int/*
-Products/*
+**/Products/*
 x64/*
 Debug/*
 Release/*
