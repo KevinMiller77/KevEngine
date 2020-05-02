@@ -9,7 +9,8 @@
 **/Makefile
 **/*.xcworkspace
 **/*.plist
-**/.DS_Store
+**/*.DS_Store
+
 
 console.txt
 **/*.xcodeproj/*
