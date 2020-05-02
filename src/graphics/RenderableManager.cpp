@@ -21,7 +21,6 @@ void RenderableManager::CollisionCheck()
 {
     std::vector<Renderable2D*> Renderables = *ManagedRenderables;
     std::vector<Renderable2D*> RenderablesToCheck;
-    std::vector<Renderable2D*>::iterator pos = Renderables.begin();
 
     unsigned int sizeOfRenderables = Renderables.size(); 
     for (unsigned int i = 0; i < sizeOfRenderables; i++)
@@ -29,25 +28,22 @@ void RenderableManager::CollisionCheck()
         if (!Renderables[i]->IsSingleRenderable())
         {
             std::vector<Renderable2D*> curGroup = *(std::vector<Renderable2D*>*)(Renderables[i]->GetChildren());
-            Renderables.insert(++pos, curGroup.begin(), curGroup.end());
+            Renderables.insert(Renderables.begin() + i + 1, curGroup.begin(), curGroup.end());
             sizeOfRenderables = Renderables.size();
             continue;
         }
 
         if (Renderables[i]->GetType() == RenderableType::Group)
         {
-            pos++;
             continue;
         }
         
         if (Renderables[i]->GetType() != RenderableType::Physics)
         {
-            pos++;
             continue;
         }
 
         RenderablesToCheck.push_back(Renderables[i]);
-        pos++;
     }
 
 

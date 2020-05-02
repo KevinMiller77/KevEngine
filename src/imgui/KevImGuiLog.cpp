@@ -10,7 +10,7 @@ KevImGuiLog::KevImGuiLog()
         
     if (stdoutFile)
     {
-        stdoutFile = freopen(LOG_FILE_PATH, "r+a", stdout);
+        freopen_s(&stdoutFile, LOG_FILE_PATH, "w+", stdout);
     }
     filePlace = 0;
     
