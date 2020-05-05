@@ -21,7 +21,7 @@ public:
     }
 
     void Add(Renderable2D* renderable);
-    void Submit(KevRenderer* renderer) const override;
+    void Submit(KevRenderer* renderer) override;
 
     virtual void OnUpdate() override
     {

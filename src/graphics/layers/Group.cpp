@@ -25,10 +25,10 @@ void Group::Add(Renderable2D* renderable)
     }
 }
 
-void Group::Submit(KevRenderer* renderer) const
+void Group::Submit(KevRenderer* renderer)
 {
     renderer->Push(ModelMatrix);
-    for (const Renderable2D* renderable : children)
+    for (Renderable2D* renderable : children)
     {
         renderable->Submit(renderer);
     }

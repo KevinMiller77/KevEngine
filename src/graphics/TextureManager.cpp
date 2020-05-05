@@ -7,9 +7,9 @@ void TextureManager::AddTexture(const char* ID, Texture* Texture)
     LOG_INF("New texture in array. Key: %s Value: %d\n", ID, textures.size());
 }
 
-void TextureManager::NewTexture(const char* ID, const char* image_path, Vec2f flip)
+void TextureManager::NewTexture(const char* ID, const char* image_path, int tileSize, Vec2f flip)
 {
-    Texture* texture = new Texture(image_path, flip);
+    Texture* texture = new Texture(image_path, tileSize, flip);
     textures.push_back(texture);
     textureMap.insert({ ID, textures.size() - 1 });
     LOG_INF("New texture in array. Key: %s Value: %d unsigned int %d\n", ID, textures.size() - 1, texture->GetTexID());

@@ -13,20 +13,28 @@ class Texture
 private:
     char *imagePath;
     int width, height;
+    int tileSize;
     int nrChannels;
+
+    bool tileSheet;
 
     unsigned int texture;
     void* heapLocOfTexture;
 
 public:
     Texture();
-    Texture(const char *inImagePath, Vec2f flip = Vec2f(0.0f, 0.0f));
+    Texture(const char *inImagePath, unsigned int TileSize = 0, Vec2f flip = Vec2f(0.0f, 0.0f));
     ~Texture();
     void Init(Vec2f flip = Vec2f(0.0f, 0.0f));
     void Bind();
     void Unbind();
 
     inline const unsigned int GetTexID() const { return texture; }
+    inline const bool IsTilesheet() { return tileSheet; }
+    inline const int GetTileSize() { return tileSize; }
+    inline const int GetWidth() { return width; }
+    inline const int GetHeight() { return height; }
+    inline const Vec2u GetSize() { return Vec2u(width, height); }
 };
 
 #endif

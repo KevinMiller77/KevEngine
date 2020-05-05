@@ -13,8 +13,10 @@ Texture::Texture()
     heapLocOfTexture = nullptr;
 }
 
-Texture::Texture(const char *inImagePath, Vec2f flip)
+Texture::Texture(const char *inImagePath, unsigned int TileSize, Vec2f flip)
 {
+    tileSheet = (bool)TileSize;
+    tileSize = TileSize;
     imagePath = (char*) inImagePath;
     Init(flip);
 }

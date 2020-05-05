@@ -7,6 +7,7 @@
 #include <graphics/buffers/IndexBuffer.h>
 #include <graphics/buffers/VertexArray.h>
 #include <graphics/buffers/FrameBuffer.h>
+#include <graphics/renderer/TextureProgram.h>
 
 #include <../ext/freetype-gl/freetype-gl.h>
 
@@ -45,7 +46,7 @@ public:
     Kev2DRenderer(int* width, int* height);
     ~Kev2DRenderer() override;
 
-    void Submit(const Renderable2D *renderable) override;
+    void Submit(Renderable2D *Renderable, const Vec2u TilesheetPos = Vec2u(0, 0)) override;
     void Draw() override;
     unsigned int DrawToBuffer() override;
     void DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color) override;

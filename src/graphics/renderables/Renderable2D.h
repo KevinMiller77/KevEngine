@@ -51,6 +51,7 @@ protected:
     
     Texture* texture;
     unsigned int texID;
+    Vec2u tilesheetPos = Vec2u(0, 0);
 
     Vec3f* baseOrigin = nullptr;
 
@@ -97,6 +98,17 @@ public:
         globalNumRenderables++;
     }
 
+    Renderable2D(Vec3f Position, Vec2f Size, Texture* inTexture, Vec2u TilesheetPos, const char* Name = ("REND_" + std::to_string(GetGlobalNumRenderables())).c_str())
+        : size(Size), uid(globalNumRenderables)
+    {
+        position = Position;
+        color = 0xFFFFFFFF;
+        texture = inTexture;
+        texID = inTexture->GetTexID();
+        tilesheetPos = TilesheetPos;
+        globalNumRenderables++;
+    }
+
     Renderable2D(Renderable2D* newMe)
     {
         if (newMe->GetType() == RenderableType::Group)
@@ -115,7 +127,7 @@ public:
 
     virtual ~Renderable2D() = default;
 
-    inline virtual void Submit(KevRenderer* renderer) const { renderer->Submit(this); }
+    inline virtual void Submit(KevRenderer* renderer) { renderer->Submit(this, Vec2u(0, 0)); }
 
     inline virtual const Vec3f &GetPosition() const { return position; }
     inline virtual const void SetPosition(Vec3f* newPosition) { position = *newPosition; }
@@ -130,6 +142,7 @@ public:
     inline virtual const void SetColor(uint32_t newColor) { color = newColor; }
     
     inline virtual Texture* GetTexturePtr() { return texture; }
+    inline virtual Vec2u GetTilesheetPos() { return tilesheetPos; }
     
     inline virtual const char* GetName()    { return name; }
     inline virtual const void SetName(const char* Name) { name = Name; }

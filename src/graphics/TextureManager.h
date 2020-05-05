@@ -22,7 +22,7 @@ public:
     }
 
     void AddTexture(const char* ID, Texture* Texture);
-    void NewTexture(const char* ID, const char* image_path, Vec2f flip = Vec2f(0.0f, 0.0f));
+    void NewTexture(const char* ID, const char* image_path, int tileSize = 0, Vec2f flip = Vec2f(0.0f, 0.0f));
 
     void ClearTextures();
 

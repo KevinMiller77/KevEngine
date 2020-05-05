@@ -28,7 +28,7 @@ void GameLayer::OnAttach()
     updateTime.Reset();
 
     //Setup textures, can't be used without them
-    textures.NewTexture("morty", "resources/textures/morty.jpg");
+    textures.NewTexture("tilemap", "resources/tilesheets/towerDefense_tilesheet@2.png", 128);
     textures.NewTexture("dude", "resources/textures/KevDude.png");
 
     scene = new Group(Mat4f::translation(Vec3f(-screenExtremes.x, -screenExtremes.y, 0.0f)));
@@ -37,11 +37,10 @@ void GameLayer::OnAttach()
     {
         for (float y = 0; y < GAMESPACE_Y * 2; y += 1)
         {
-            scene->Add(new Sprite(x, y, 1, 1, textures.GetTexture("morty")));
+            scene->Add(new Sprite(x, y, 1, 1, textures.GetTexture("tilemap"), Vec2u(5, 0)));
         }
     }
-
-    player = new PhysicsSprite(9, 16, 1.0f, 2.0f, textures.GetTexture("dude"), true);
+    
     player->SetName("Kev");
     LOG_INF("Player pos: %f, %f\n", player->GetScreenPos().x, player->GetScreenPos().y); 
     scene->Add(player);

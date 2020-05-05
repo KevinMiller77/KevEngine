@@ -1,5 +1,5 @@
 #include "Kev2DRenderer.h"
-#include <graphics/renderables/Renderable2D.h>
+#include <graphics/Renderables/Renderable2D.h>
 
 unsigned int Renderable2D::globalNumRenderables;
 
@@ -80,12 +80,19 @@ void Kev2DRenderer::Begin()
     VDataHeapLoc = VDataHeapLoc ? VDataHeapLoc : VDataBuffer; 
 }
 
-void Kev2DRenderer::Submit(const Renderable2D *renderable)
+void Kev2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
 {
-    const Vec3f position = renderable->GetPosition();
-    const Vec2f size = renderable->GetSize();
-    const uint32_t color = renderable->GetColor();
-    const unsigned int texID = renderable->GetTextureID();
+    const Vec3f position = Renderable->GetPosition();
+    const Vec2f size = Renderable->GetSize();
+    const uint32_t color = Renderable->GetColor();
+    const unsigned int texID = Renderable->GetTextureID();
+
+    bool texExists = false;
+
+    if (Renderable->GetTexturePtr() != nullptr)
+    {
+       texExists = true;
+    }
     
     float ts = 0.0f;
     if (texID > 0)
@@ -116,27 +123,45 @@ void Kev2DRenderer::Submit(const Renderable2D *renderable)
         }
     }
 
+    Vec2f tex_BL = Vec2f(1.0f, 1.0f), tex_BR = Vec2f(1.0f, 0.0f), tex_TR = Vec2f(0.0f, 0.0f), tex_TL = Vec2f(0.0f, 1.0f);
+
+    if (texExists)
+    {
+        Texture* tex = Renderable->GetTexturePtr();
+        if (tex->IsTilesheet())
+        {
+            Vec2u pos = Renderable->GetTilesheetPos();
+            float sheetWidth = tex->GetWidth(), sheetHeight = tex->GetHeight();
+            float tileSize = tex->GetTileSize();
+
+            tex_TR = Vec2f((pos.x * tileSize) / sheetWidth, ((pos.y * tileSize) / sheetHeight));
+            tex_BR = Vec2f(((pos.x + 1) * tileSize) / sheetWidth, ((pos.y * tileSize) / sheetHeight));
+            tex_BL = Vec2f(((pos.x + 1) * tileSize) / sheetWidth, (((pos.y + 1) * tileSize) / sheetHeight));
+            tex_TL = Vec2f((pos.x * tileSize) / sheetWidth, (((pos.y + 1) * tileSize) / sheetHeight));
+        }
+    }
+
     VDataBuffer->vertex = *curTransformationBack * position;
     VDataBuffer->color = color;
-    VDataBuffer->texture = Vec2f(1.0f, 1.0f);
+    VDataBuffer->texture = tex_BL;
     VDataBuffer->texID = ts;
     VDataBuffer++;
 
     VDataBuffer->vertex = *curTransformationBack * Vec3f(position.x, position.y + size.y, position.z);
     VDataBuffer->color = color;
-    VDataBuffer->texture = Vec2f(1.0f, 0.0f);
+    VDataBuffer->texture = tex_BR;
     VDataBuffer->texID = ts;
     VDataBuffer++;
 
     VDataBuffer->vertex = *curTransformationBack * Vec3f(position.x + size.x, position.y + size.y, position.z);
     VDataBuffer->color = color;
-    VDataBuffer->texture = Vec2f(0.0f, 0.0f);
+    VDataBuffer->texture = tex_TR;
     VDataBuffer->texID = ts;
     VDataBuffer++;
 
     VDataBuffer->vertex = *curTransformationBack * Vec3f(position.x + size.x, position.y, position.z);
     VDataBuffer->color = color;
-    VDataBuffer->texture = Vec2f(0.0f, 1.0f);
+    VDataBuffer->texture = tex_TL;
     VDataBuffer->texID = ts;
     VDataBuffer++;
 
