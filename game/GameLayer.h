@@ -22,6 +22,16 @@
 #define GAMESPACE_X 16.0f
 #define GAMESPACE_Y 9.0f
 
+struct Move
+{
+    Move(Renderable2D* Renderable, Vec2u OldTile)
+    {
+        renderable = Renderable;
+        oldTile = OldTile;
+    }
+    Renderable2D* renderable;
+    Vec2u oldTile;
+};
 
 class GameLayer : public Layer
 {
@@ -34,6 +44,7 @@ class GameLayer : public Layer
     bool MouseMove(MouseMovedEvent& e);
     bool WindowResize(WindowResizeEvent& e);
     bool KeyDown(KeyPressedEvent& e);
+    bool MouseButton(MouseButtonPressedEvent& e);
 
     bool ImGuiEnabled = true;
     bool KevImGuiLogOpen = true;
@@ -46,8 +57,23 @@ class GameLayer : public Layer
 
     FollowRenderableCamera camera;
     Group* scene;
+    
+    Group* tilemap[32][18];
+    
+    Renderable2D* selectedTile = nullptr;
+    Renderable2D* cursor = nullptr;
+    int selectedTilesTilePos[2] = {0, 0};
+    int brushTilesheetPos[2] = {1, 11};
+    Vec2u brushPos = Vec2u(0, 0);
+    int copiedTilePos[2] = {0, 0};
+    bool painting = false;
+    bool addingLayer = false;
+    
+    std::vector<Move> undoCache;
+    
     Renderable2D* player;
     Timer updateTime;
+    Timer keyTimeout;
 
 public:
     GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes = Vec2f(GAMESPACE_X, GAMESPACE_Y));
@@ -64,6 +90,19 @@ public:
 
     inline bool IsImGuiEnabled()   { return ImGuiEnabled; }
     inline void SetImGuiEnabled(bool state) { ImGuiEnabled = state; }
+    
+    void SaveTilemap();
+    void LoadTilemap();
+    
+    void BuildTilemapSelector();
+    void BuildCurrentPaintbrush();
+    void BuildTileLayerSelector();
+    
+    void StartSelecting();
+    void StopSelecting();
+    
+    void PaintMousedTile(bool force = false);
+    void PaintSelectedTile();
 
 };
 

@@ -134,10 +134,10 @@ void Kev2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
             float sheetWidth = tex->GetWidth(), sheetHeight = tex->GetHeight();
             float tileSize = tex->GetTileSize();
 
-            tex_TR = Vec2f((pos.x * tileSize) / sheetWidth, ((pos.y * tileSize) / sheetHeight));
-            tex_BR = Vec2f(((pos.x + 1) * tileSize) / sheetWidth, ((pos.y * tileSize) / sheetHeight));
-            tex_BL = Vec2f(((pos.x + 1) * tileSize) / sheetWidth, (((pos.y + 1) * tileSize) / sheetHeight));
-            tex_TL = Vec2f((pos.x * tileSize) / sheetWidth, (((pos.y + 1) * tileSize) / sheetHeight));
+            tex_BR = Vec2f((pos.x * tileSize) / sheetWidth, ((pos.y * tileSize) / sheetHeight));
+            tex_TR = Vec2f(((pos.x + 1) * tileSize) / sheetWidth, ((pos.y * tileSize) / sheetHeight));
+            tex_TL = Vec2f(((pos.x + 1) * tileSize) / sheetWidth, (((pos.y + 1) * tileSize) / sheetHeight));
+            tex_BL = Vec2f((pos.x * tileSize) / sheetWidth, (((pos.y + 1) * tileSize) / sheetHeight));
         }
     }
 

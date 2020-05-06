@@ -37,6 +37,18 @@ public:
     //bool IsColliding(Renderable2D* other) override;
     virtual void CheckCollision(Renderable2D* other) override;
     virtual void MouseCheck(Vec2f& mousePos, std::vector<Renderable2D*>& underMouse) override;
+    
+    inline void Delete(Renderable2D* Renderable)
+    {
+        for (int i = 0; i < children.size(); i++)
+        {
+            if (children[i] == Renderable)
+            {
+                children.erase(children.begin() + i);
+            }
+        }
+    }
+//        std::remove(children.begin(), children.end(), Renderable); }
 
     inline virtual void* GetChildren() override { return (void*)&children; }
 };

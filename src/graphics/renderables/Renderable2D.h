@@ -143,6 +143,8 @@ public:
     
     inline virtual Texture* GetTexturePtr() { return texture; }
     inline virtual Vec2u GetTilesheetPos() { return tilesheetPos; }
+    inline virtual void SetTilesheetPos(unsigned int x, unsigned int y) { tilesheetPos = Vec2u(x, y); }
+    inline virtual unsigned int* GetTilesheetPosPtr() { return tilesheetPos.elements; }
     
     inline virtual const char* GetName()    { return name; }
     inline virtual const void SetName(const char* Name) { name = Name; }
@@ -155,7 +157,7 @@ public:
     inline virtual const Vec3f* GetBase() { return baseOrigin; }
     
     inline virtual const void SetParent(Renderable2D* Parent) { parent = (Parent == nullptr) ? nullptr : Parent; childItem = true; }
-    inline virtual const Renderable2D* GetParent() { return (parent != nullptr) ? parent : nullptr; }
+    inline virtual Renderable2D* GetParent() { return (parent != nullptr) ? parent : nullptr; }
     inline virtual const bool IsChild() { return childItem; }
     
     inline float GetLeftBound() { return position.x; }

@@ -27,7 +27,7 @@ public:
         shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
 
         PushLayer(new GameLayer(window.get(), shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y)));
-        PushOverlay(new HUD(window.get(), shaders.GetShader("basic").GetShaderID()));
+//        PushOverlay(new HUD(window.get(), shaders.GetShader("basic").GetShaderID()));
     }
 
 

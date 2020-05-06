@@ -31,7 +31,7 @@ protected:
     FontManager fonts;
 
     Timer keyDebounce;
-    float keyDebounceInterval = 0.2f;
+    float keyDebounceInterval = 0.05f;
 
     bool enabled;
 
