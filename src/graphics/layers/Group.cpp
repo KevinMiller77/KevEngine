@@ -27,12 +27,15 @@ void Group::Add(Renderable2D* renderable)
 
 void Group::Submit(KevRenderer* renderer)
 {
-    renderer->Push(ModelMatrix);
-    for (Renderable2D* renderable : children)
+    if (enabled)
     {
-        renderable->Submit(renderer);
+        renderer->Push(ModelMatrix);
+        for (Renderable2D* renderable : children)
+        {
+            renderable->Submit(renderer);
+        }
+        renderer->Pop();
     }
-    renderer->Pop();
 }
 
 void Group::CheckCollision(Renderable2D* other)

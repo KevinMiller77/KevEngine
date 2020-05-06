@@ -35,12 +35,22 @@ void GameLayer::OnAttach()
 
     cursor = new Sprite(0, 0, 1, 1, textures.GetTexture("cursor"));
     
+    guideGrids = new Group(Mat4f::translation(Vec3f(-screenExtremes.x, -screenExtremes.y, 0.0f)));
     scene = new Group(Mat4f::translation(Vec3f(-screenExtremes.x, -screenExtremes.y, 0.0f)));
     
     for (float x = 0; x < GAMESPACE_X * 2; x += 1)
     {
         for (float y = 0; y < GAMESPACE_Y * 2; y += 1)
         {
+            if (x == 0)
+            {
+                guideGrids->Add(new Sprite(0, y - 0.025, GAMESPACE_X * 2, 0.05f, Vec4f(1.0f, 1.0f, 1.0f, 0.4f)));
+            }
+            if (y == 0)
+            {
+                guideGrids->Add(new Sprite(x - 0.025, 0, 0.05f, GAMESPACE_Y * 2, Vec4f(1.0f, 1.0f, 1.0f, 0.4f)));
+            }
+
             Group* newGroup = new Group(Mat4f::translation(Vec3f((float)x, (float)y, 0)));
             newGroup->Add(new Sprite(0, 0, 1, 1, textures.GetTexture("tilemap"), Vec2u(1, 11)));
             if (x == 0 && y == 0)
@@ -53,6 +63,7 @@ void GameLayer::OnAttach()
     }
     
     Add(scene);
+    Add(guideGrids);
 
     updateTime.Reset();
 }
@@ -449,6 +460,19 @@ bool GameLayer::KeyDown(KeyPressedEvent& e)
             {
                 LOG_INF("Turning VSync on\n");
                 parent->SetVSync(1);
+            }
+            break;
+        }
+
+        case(KEV_KEY_G):
+        {
+            if (guideGrids->IsEnabled())
+            {
+                guideGrids->Disable();
+            }
+            else
+            {
+                guideGrids->Enable();
             }
             break;
         }

@@ -6,6 +6,7 @@
 class Group : public Renderable2D
 {
 private:
+    bool enabled = true;
     std::vector<Renderable2D*> children;
     Mat4f ModelMatrix;
 
@@ -51,6 +52,10 @@ public:
 //        std::remove(children.begin(), children.end(), Renderable); }
 
     inline virtual void* GetChildren() override { return (void*)&children; }
+
+    inline virtual void Enable() { enabled = true; }
+    inline virtual void Disable() { enabled = false; }
+    inline virtual bool IsEnabled() { return enabled; }
 };
 
 #endif

@@ -14,7 +14,7 @@ project "glfw"
         "src/context.c",
         "src/monitor.c",
         "src/glfw_window.c",
-        -- "src/egl_context.c"
+        "src/egl_context.c"
     }
     
     sysincludedirs

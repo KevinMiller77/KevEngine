@@ -56,6 +56,7 @@ class GameLayer : public Layer
     KevImGuiLog log;
 
     FollowRenderableCamera camera;
+    Group* guideGrids;
     Group* scene;
     
     Group* tilemap[32][18];
