@@ -139,10 +139,20 @@ void GameLayer::BuildTilemapSelector()
                 {
                     brushTilesheetPos[0] = x;
                     brushTilesheetPos[1] = y;
-                    if (painting)
-                    {
-//                        PaintSelectedTile();
-                    }
+                }
+                if (ImGui::IsItemHovered())
+                {
+                    LOG_INF("Hovering over %d, %d\n", x, y);
+                    if (KevInput::IsKeyPressed(KEV_KEY_1)) hotbarItems[0] = Vec2u(x, y);
+                    else if (KevInput::IsKeyPressed(KEV_KEY_2)) hotbarItems[1] = Vec2u(x, y);
+                    else if (KevInput::IsKeyPressed(KEV_KEY_3)) hotbarItems[2] = Vec2u(x, y);
+                    else if (KevInput::IsKeyPressed(KEV_KEY_4)) hotbarItems[3] = Vec2u(x, y);
+                    else if (KevInput::IsKeyPressed(KEV_KEY_5)) hotbarItems[4] = Vec2u(x, y);
+                    else if (KevInput::IsKeyPressed(KEV_KEY_6)) hotbarItems[5] = Vec2u(x, y);
+                    else if (KevInput::IsKeyPressed(KEV_KEY_7)) hotbarItems[6] = Vec2u(x, y);
+                    else if (KevInput::IsKeyPressed(KEV_KEY_8)) hotbarItems[7] = Vec2u(x, y);
+                    else if (KevInput::IsKeyPressed(KEV_KEY_9)) hotbarItems[8] = Vec2u(x, y);
+                    else if (KevInput::IsKeyPressed(KEV_KEY_0)) hotbarItems[9] = Vec2u(x, y);
                 }
                 ImGui::PopID();
                 ImGui::SameLine();
@@ -175,8 +185,8 @@ void ToggleButton(const char* str_id, bool* v)
 
 void GameLayer::BuildCurrentPaintbrush()
 {
-    ImGui::Begin("Selected Renderable");
-    ImGui::Text("Currently selected %d, %d", brushTilesheetPos[0], brushTilesheetPos[1]);
+    ImGui::Begin("Paintbrush selection");
+    ImGui::Text("Current Tile %d, %d", brushTilesheetPos[0], brushTilesheetPos[1]);
     int sheetWidth = 23 * 128;
     int sheetHeight = 13 * 128;
     int tileSize = 128;
@@ -188,18 +198,32 @@ void GameLayer::BuildCurrentPaintbrush()
     
     ImGui::Image((void*)(intptr_t)textures.GetTexture("tilemap")->GetTexID(), ImVec2(64, 64), u1, u0);
     ImGui::Spacing();
-    ImGui::Text("Painting");
-    ImGui::SameLine();
-    ToggleButton("Painting", &painting);
-    ImGui::Text("Adding Layers");
-    ImGui::SameLine();
-    ToggleButton("AddLayer", &addingLayer);
+    ImGui::Text("Hotbar");
+    ImGui::Spacing();
     
-    
-    if (ImGui::Button("Save Map"))
+    for (int i = 0; i < 10; i++)
     {
-        SaveTilemap();
+        x = hotbarItems[i].x;
+        y = hotbarItems[i].y;
+        
+        u0 = ImVec2((((float)x + 1) * (float)tileSize) / (float)sheetWidth, ((float)y * (float)tileSize) / (float)sheetHeight);
+        u1 = ImVec2(((float)x * (float)tileSize) / (float)sheetWidth, (((float)y + 1) * (float)tileSize) / (float)sheetHeight);
+        ImGui::Image((void*)(intptr_t)textures.GetTexture("tilemap")->GetTexID(), ImVec2(24, 24), u1, u0);
+        ImGui::SameLine();
     }
+    ImGui::NewLine();
+    for (int i = 1; i < 11; i++)
+    {
+        x = i < 10 ? i : 0;
+        y = 0;
+        
+        u0 = ImVec2((((float)x + 1) * (float)tileSize) / (float)sheetWidth, ((float)y * (float)tileSize) / (float)sheetHeight);
+        u1 = ImVec2(((float)x * (float)tileSize) / (float)sheetWidth, (((float)y + 1) * (float)tileSize) / (float)sheetHeight);
+        
+        ImGui::Image((void*)(intptr_t)textures.GetTexture("tilemap")->GetTexID(), ImVec2(24, 24), u1, u0);
+        ImGui::SameLine();
+    }
+    
     
     ImGui::End();
 }
@@ -231,7 +255,7 @@ void GameLayer::BuildTileLayerSelector()
         Children = (std::vector<Renderable2D*>*)(((Group*)selectedTile)->GetChildren());
     }
     
-    ImGui::Text("Group @ %d, %d", selectedTilesTilePos[0], selectedTilesTilePos[1]);
+    ImGui::Text("Group @ %f, %f", GetTopLevelParent(selectedTile)->GetPosition().x, GetTopLevelParent(selectedTile)->GetPosition().y);
     
     for (int i = 0; i < Children->size(); i++)
     {
@@ -251,7 +275,7 @@ void GameLayer::BuildTileLayerSelector()
         {
             selectedTile = (*Children)[i];
             
-            if (painting)
+            if (brushMode == BrushFunction::PAINT)
             {
                 PaintSelectedTile();
             }
@@ -362,7 +386,7 @@ void GameLayer::PaintMousedTile(bool force)
                 tilemap[x][y]->Add(cursor);
             }
 
-            if (painting && KevInput::IsMouseButtonPressed(MouseCode::ButtonLeft))
+            if (brushMode == BrushFunction::PAINT && KevInput::IsMouseButtonPressed(MouseCode::ButtonLeft))
             {
                 PaintSelectedTile();
             }
@@ -445,6 +469,17 @@ bool GameLayer::KeyDown(KeyPressedEvent& e)
 
     switch (key)
     {
+        case(KEV_KEY_1):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[0].x == 22 && hotbarItems[0].y == 12)) break; brushTilesheetPos = hotbarItems[0]; break; }
+        case(KEV_KEY_2):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[1].x == 22 && hotbarItems[1].y == 12)) break; brushTilesheetPos = hotbarItems[1]; break; }
+        case(KEV_KEY_3):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[2].x == 22 && hotbarItems[2].y == 12)) break; brushTilesheetPos = hotbarItems[2]; break; }
+        case(KEV_KEY_4):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[3].x == 22 && hotbarItems[3].y == 12)) break; brushTilesheetPos = hotbarItems[3]; break; }
+        case(KEV_KEY_5):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[4].x == 22 && hotbarItems[4].y == 12)) break; brushTilesheetPos = hotbarItems[4]; break; }
+        case(KEV_KEY_6):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[5].x == 22 && hotbarItems[5].y == 12)) break; brushTilesheetPos = hotbarItems[5]; break; }
+        case(KEV_KEY_7):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[6].x == 22 && hotbarItems[6].y == 12)) break; brushTilesheetPos = hotbarItems[6]; break; }
+        case(KEV_KEY_8):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[7].x == 22 && hotbarItems[7].y == 12)) break; brushTilesheetPos = hotbarItems[7]; break; }
+        case(KEV_KEY_9):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[8].x == 22 && hotbarItems[8].y == 12)) break; brushTilesheetPos = hotbarItems[8]; break; }
+        case(KEV_KEY_0):{ ImGuiIO io = ImGui::GetIO(); if(io.WantCaptureMouse || (hotbarItems[9].x == 22 && hotbarItems[9].y == 12)) break; brushTilesheetPos = hotbarItems[9]; break; }
+            
         case(KEV_KEY_F3):
         {
             SetImGuiEnabled(!IsImGuiEnabled());
@@ -506,18 +541,24 @@ bool GameLayer::KeyDown(KeyPressedEvent& e)
             
         case(KEV_KEY_C):
         {
-            if (selectedTile != nullptr)
+            if (KevInput::IsKeyPressed(KeyCode::LeftControl))
             {
-                copiedTilePos[0] = selectedTile->GetTilesheetPos().x;
-                copiedTilePos[1] = selectedTile->GetTilesheetPos().y;
+                if (selectedTile != nullptr)
+                {
+                    copiedTilePos[0] = selectedTile->GetTilesheetPos().x;
+                    copiedTilePos[1] = selectedTile->GetTilesheetPos().y;
+                }
             }
             break;
         }
         case(KEV_KEY_V):
         {
-            if (selectedTile != nullptr && KevInput::IsKeyPressed(KeyCode::LeftControl))
+            if (KevInput::IsKeyPressed(KeyCode::LeftControl))
             {
-                selectedTile->SetTilesheetPos(copiedTilePos[0], copiedTilePos[1]);
+                if (selectedTile != nullptr && KevInput::IsKeyPressed(KeyCode::LeftControl))
+                {
+                    selectedTile->SetTilesheetPos(copiedTilePos[0], copiedTilePos[1]);
+                }
             }
             break;
         }
@@ -556,7 +597,14 @@ bool GameLayer::KeyDown(KeyPressedEvent& e)
             
         case(KEV_KEY_B):
         {
-            painting = !painting;
+            if ((int)brushMode == 3)
+            {
+                brushMode = (BrushFunction)(0);
+            }
+            else
+            {
+                brushMode = (BrushFunction)((int)brushMode + 1);
+            }
             break;
         }
             

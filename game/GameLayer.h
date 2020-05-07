@@ -33,6 +33,14 @@ struct Move
     Vec2u oldTile;
 };
 
+enum class BrushFunction
+{
+    NONE,
+    PAINT,
+    REMOVE,
+    SELECT
+};
+
 class GameLayer : public Layer
 {
     Vec2u screenSize;
@@ -63,11 +71,14 @@ class GameLayer : public Layer
     
     Renderable2D* selectedTile = nullptr;
     Renderable2D* cursor = nullptr;
-    int selectedTilesTilePos[2] = {0, 0};
-    int brushTilesheetPos[2] = {1, 11};
+    Vec2u selectedTilesTilePos = Vec2u(0, 0);
+    Vec2u brushTilesheetPos = Vec2u(1, 11);
     Vec2u brushPos = Vec2u(0, 0);
-    int copiedTilePos[2] = {0, 0};
-    bool painting = false;
+    Vec2u brushSize = Vec2u(0, 0);
+    Vec2u copiedTilePos = Vec2u(0, 0);
+    
+    BrushFunction brushMode = BrushFunction::NONE;
+    Vec2u hotbarItems[10] = {Vec2u(22, 12), Vec2u(22, 12), Vec2u(22, 12), Vec2u(22, 12), Vec2u(22, 12), Vec2u(22, 12), Vec2u(22, 12), Vec2u(22, 12), Vec2u(22, 12), Vec2u(22, 12)};
     bool addingLayer = false;
     
     std::vector<Move> undoCache;
@@ -91,6 +102,19 @@ public:
 
     inline bool IsImGuiEnabled()   { return ImGuiEnabled; }
     inline void SetImGuiEnabled(bool state) { ImGuiEnabled = state; }
+    
+    inline Renderable2D* GetTopLevelParent(Renderable2D* child)
+    {
+        Renderable2D* lastRenderable = child;
+        Renderable2D* curRenderable = child;
+        while (curRenderable->GetParent() != nullptr)
+        {
+            lastRenderable = curRenderable;
+            curRenderable = curRenderable->GetParent();
+        }
+        
+        return curRenderable;
+    }
     
     void SaveTilemap();
     void LoadTilemap();

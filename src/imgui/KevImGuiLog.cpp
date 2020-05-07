@@ -12,9 +12,9 @@ KevImGuiLog::KevImGuiLog()
     if (stdoutFile)
     {
 #if KEV_PLATFORM_WINDOWS
-        freopen_s(&stdoutFile, LOG_FILE_PATH, "w+", stdout);
+        freopen_s(&stdoutFile, LOG_FILE_PATH, "r+", stdout);
 #else
-        stdoutFile = freopen(LOG_FILE_PATH, "w+", stdout);
+        stdoutFile = freopen(LOG_FILE_PATH, "r+", stdout);
 #endif
     }
     filePlace = 0;
@@ -79,7 +79,10 @@ void KevImGuiLog::UpdateBuffer(FILE* InFile)
             
             //Grab line
             char curLine[256];
-            fgets(curLine, 256, InFile);
+            if (fgets(curLine, 256, InFile) == nullptr)
+            {
+                return;
+            }
             Buf.append(curLine);
             
             //Increase base read index

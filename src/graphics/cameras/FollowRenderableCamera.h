@@ -30,7 +30,6 @@ public:
 	inline Vec2f GetWorldPos(float Width, float Height)
 	{
 		Vec2f pos = Vec2f(Camera.GetPosition().x / 2, Camera.GetPosition().y / 2);
-		LOG_INF("%f, %f\n", pos.x * Width, pos.y * Height);
 		return Vec2f(pos.x * Width, pos.y * Height);
 	}
 
