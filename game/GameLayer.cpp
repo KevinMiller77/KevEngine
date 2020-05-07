@@ -91,7 +91,7 @@ void GameLayer::OnUpdate()
     ImGuiIO io = ImGui::GetIO();
     if(!io.WantCaptureMouse)
     {
-        Manager.MouseCheck(mousePos);
+        Manager.MouseCheck(mousePos, camera.GetWorldPos(GAMESPACE_X * 2, GAMESPACE_Y * 2));
     }
     Manager.CollisionCheck();
     Manager.OnUpdate();
@@ -269,7 +269,10 @@ void GameLayer::OnDraw()
 
 bool GameLayer::MouseScroll(MouseScrolledEvent& e)
 {
-    e.Handle();
+    // const int scale = e.getYOffset();
+    // LOG_INF("Zoom %d", scale);
+    // camera.SetZoomLevel(camera.GetZoomLevel() + ((float)scale * 0.1f));
+    
     return false;
 }
 
@@ -303,21 +306,23 @@ void GameLayer::PaintMousedTile(bool force)
     if (keyTimeout.getTimeMS() >= 500 && select)
     {
             keyTimeout.Reset();
-            int x = (int)(mousePos.x + GAMESPACE_X);
-            int y = (int)(mousePos.y + GAMESPACE_Y);
-            if (abs(mousePos.x) > GAMESPACE_X)
+            Vec2f camOff = camera.GetWorldPos(GAMESPACE_X * 2, GAMESPACE_Y * 2);
+
+            int x = (int)(mousePos.x + camOff.x + GAMESPACE_X);
+            int y = (int)(mousePos.y - camOff.y + GAMESPACE_Y);
+            if (abs(mousePos.x + camOff.x) > GAMESPACE_X)
             {//WARN: Unbracked if
-                if (mousePos.x < 0)
-                    x++;
+                if (mousePos.x + camOff.x < 0)
+                    x = 0;
                 else
-                    x--;
+                    x = (int)(GAMESPACE_X * 2) - 1;
             }
-            else if (abs(mousePos.y) > GAMESPACE_Y)
+            else if (abs(mousePos.y - camOff.y) > GAMESPACE_Y)
             {//WARN: Unbracked if
-                if (mousePos.y < 0)
-                    y++;
+                if (mousePos.y - camOff.y < 0)
+                    y = 0;
                 else
-                    y--;
+                    y = (int)(GAMESPACE_Y * 2) - 1;
             }
         if (cursor != nullptr && cursor->GetParent() != nullptr)
         {
@@ -341,7 +346,14 @@ void GameLayer::PaintMousedTile(bool force)
                 }
                 else
                 {
-                    selectedTile = (*children)[0];
+                    if (children->size() == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        selectedTile = (*children)[0];
+                    }
                 }
             }
             

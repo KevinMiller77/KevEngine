@@ -34,7 +34,7 @@ public:
     }
     void OnEvent(Event& e);
 
-    void MouseCheck(Vec2f MousePos);
+    void MouseCheck(Vec2f MousePos, Vec2f CamOffset);
     void CollisionCheck();
     void SendCollision(Renderable2D* Renderable);
     void SendCollision(Renderable2D* Renderable, Renderable2D* Affected);

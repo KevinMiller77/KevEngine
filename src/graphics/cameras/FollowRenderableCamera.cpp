@@ -98,7 +98,15 @@ bool FollowRenderableCamera::func (KeyPressedEvent& e)
 
 void FollowRenderableCamera::OnEvent(Event& e)
 {
-
     EventDispatcher dispatch(e);
     dispatch.Dispatch<KeyPressedEvent>(KEV_BIND_EVENT_FN(FollowRenderableCamera::func));
+    dispatch.Dispatch<MouseScrolledEvent>(KEV_BIND_EVENT_FN(FollowRenderableCamera::OnMouseScrolled));
+}
+
+bool FollowRenderableCamera::OnMouseScrolled(MouseScrolledEvent& e)
+{
+	// Zoom -= e.getYOffset() * 0.1f;
+	// Zoom = Zoom > 0.1f ? Zoom : 0.1;
+	// Camera.SetProjection(0, 32 * Zoom, 0, 19 * Zoom);
+	return false;
 }

@@ -4,6 +4,7 @@ FILE* KevImGuiLog::stdoutFile = (FILE*)nullptr;
 
 KevImGuiLog::KevImGuiLog()
 {
+#if 0
     LOG_INF("Moving stdout to ImGui\n");
     
     stdoutFile = fopen(LOG_FILE_PATH, "w");
@@ -18,7 +19,7 @@ KevImGuiLog::KevImGuiLog()
     }
     filePlace = 0;
     
-    
+#endif
     Buf.clear();
     AutoScroll = true;
     Clear();

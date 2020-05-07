@@ -7,13 +7,13 @@ RenderableManager::RenderableManager(std::vector<Renderable2D*>* Renderables)
     
 }
 
-void RenderableManager::MouseCheck(Vec2f MousePos)
+void RenderableManager::MouseCheck(Vec2f MousePos, Vec2f CamOffset)
 {
     // printf("Player Pos: %f, %f\t World Pos: %f, %f\n", player->getPosition().x, player->getPosition().y, player->GetScreenPos().x, player->GetScreenPos().y);
     std::vector<Renderable2D*> underMouse;
     for (int rend = ManagedRenderables->size() - 1; rend >= 0; rend--)
     {
-        (*ManagedRenderables)[rend]->MouseCheck(MousePos, underMouse);
+        (*ManagedRenderables)[rend]->MouseCheck(MousePos + CamOffset, underMouse);
     }
 }
 
