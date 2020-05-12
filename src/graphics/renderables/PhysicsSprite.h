@@ -42,7 +42,7 @@ private:
 public:
 
     PhysicsSprite(float x, float y, float width, float height, const Vec4f color);
-    PhysicsSprite(float x, float y, float width, float height, Texture* inTexture, bool GravityAffects = false);
+    PhysicsSprite(float x, float y, float width, float height, GLTextureProgram* inTexture, bool GravityAffects = false);
     PhysicsSprite(Renderable2D* newMe);
 
     virtual const void AddMomentum(Vec3f Momentum) override;

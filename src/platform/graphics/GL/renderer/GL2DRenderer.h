@@ -3,11 +3,11 @@
 
 #include <cstddef>
 
-#include <graphics/renderer/KevRenderer.h>
-#include <graphics/buffers/IndexBuffer.h>
-#include <graphics/buffers/VertexArray.h>
-#include <graphics/buffers/FrameBuffer.h>
-#include <graphics/renderer/TextureProgram.h>
+#include <graphics/KevRenderer.h>
+#include <platform/graphics/GL/buffers/GLIndexBuffer.h>
+#include <platform/graphics/GL/buffers/GLVertexArray.h>
+#include <platform/graphics/GL/buffers/GLFrameBuffer.h>
+#include <platform/graphics/GL/renderer/GLTextureProgram.h>
 
 #include <../ext/freetype-gl/freetype-gl.h>
 
@@ -26,7 +26,7 @@
 
 class VertexData;
 
-class Kev2DRenderer : public KevRenderer
+class GL2DRenderer : public KevRenderer
 {
 private:
     int *scr_w;
@@ -34,17 +34,17 @@ private:
 
     unsigned int VAO;
     unsigned int VBO;
-    IndexBuffer *IBO;
+    GLIndexBuffer *IBO;
     int indexCount;
     VertexData *VDataBuffer;
     VertexData *VDataHeapLoc = nullptr;
-    FrameBuffer* FBO;
+    GLFrameBuffer* FBO;
 
     std::vector<unsigned int> TextureSlots;
 
 public:
-    Kev2DRenderer(int* width, int* height);
-    ~Kev2DRenderer() override;
+    GL2DRenderer(int* width, int* height);
+    ~GL2DRenderer() override;
 
     void Submit(Renderable2D *Renderable, const Vec2u TilesheetPos = Vec2u(0, 0)) override;
     void Draw() override;

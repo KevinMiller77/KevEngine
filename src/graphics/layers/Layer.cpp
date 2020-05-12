@@ -29,7 +29,7 @@ void Layer::Render()
 {
     if (enabled)
     {
-        ShaderProgram::EnableShaderProgram(shader);
+        GLShaderProgram::EnableShaderProgram(shader);
         renderer->Begin();
 
         for (Renderable2D *renderable : renderables)

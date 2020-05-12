@@ -2,8 +2,8 @@
 
 #include <core/KevInput.h>
 
-#include <platform/Windows/WindowsWindow.h>
-#include <platform/Linux/LinuxWindow.h>
+#include <platform/OS/Windows/WindowsWindow.h>
+#include <platform/OS/Linux/LinuxWindow.h>
 
 
 Scope<Window> Window::Create(const WindowInfo& inf)

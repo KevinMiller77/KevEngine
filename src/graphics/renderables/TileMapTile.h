@@ -10,7 +10,7 @@ class TileMapTile : public Group
     Vec2u textureIndex = Vec2u(0, 0);
     
 public:
-    TileMapTile(Vec2u& MapPos, Texture* TileMap, Vec2u& TextureIndex);
+    TileMapTile(Vec2u& MapPos, GLTextureProgram* TileMap, Vec2u& TextureIndex);
     
     inline void Rotate(float angle) { AddTransform(Mat4f::rotation(angle, Vec3f(0, 0, 1))); }
   

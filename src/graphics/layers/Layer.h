@@ -5,7 +5,7 @@
 
 #include <events/Event.h>
 
-#include <graphics/renderer/KevRenderer.h>
+#include <graphics/KevRenderer.h>
 #include <graphics/Window.h>
 
 #include <graphics/cameras/Kev2DCamera.h>

@@ -3,7 +3,7 @@
 
 #include <utils/Logging.h>
 
-class FrameBuffer
+class GLFrameBuffer
 {
 private:
     unsigned int FBO;
@@ -11,7 +11,7 @@ private:
     unsigned int texture;
 
 public:
-    FrameBuffer(int scr_width, int scr_height);
+    GLFrameBuffer(int scr_width, int scr_height);
 
     void Bind(int scr_width, int scr_height);
     void Unbind();

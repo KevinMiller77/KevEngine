@@ -11,7 +11,7 @@ public:
     bool ReloadingShaders = false;
     Kev2DCamera* PlayerCam;
     Kev2DCamera* EditorCam;
-    GameLayer* gameLayer;
+    GameLayer* gameLayerInst;
     Timer keyTimer;
     
     KevGame()
@@ -35,9 +35,9 @@ public:
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
         
         shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
-        gameLayer = new GameLayer(window.get(), shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y), PlayerCam);
+        gameLayerInst = new GameLayer(window.get(), shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y), PlayerCam);
     
-        PushLayer(gameLayer);
+        PushLayer(gameLayerInst);
         PushOverlay(new HUD(window.get(), shaders.GetShader("basic").GetShaderID(), PlayerCam));
     }
 
@@ -75,9 +75,9 @@ public:
         
         if (KevInput::IsKeyPressed(KeyCode::LeftBracket) && keyTimer.GetTimePassed() >= 0.5f)
         {
-            if (gameLayer->IsPlaying())
+            if (gameLayerInst->IsPlaying())
             {
-                gameLayer->SetPlaying(false);
+                gameLayerInst->SetPlaying(false);
                 for (Layer* lay : EngLayerStack)
                 {
                     lay->SetCamera(EditorCam);
@@ -85,7 +85,7 @@ public:
             }
             else
             {
-                gameLayer->SetPlaying(true);
+                gameLayerInst->SetPlaying(true);
                 for (Layer* lay : EngLayerStack)
                 {
                     lay->SetCamera(PlayerCam);

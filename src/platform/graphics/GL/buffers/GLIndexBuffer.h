@@ -3,7 +3,7 @@
 #include <cstdlib>
 // #include <GLFW/glfw3.h>
 
-class IndexBuffer
+class GLIndexBuffer
 {
 private:
     unsigned int BufferID;
@@ -11,8 +11,8 @@ private:
     unsigned int* HeapLoc;
 
 public:
-    IndexBuffer(unsigned int *data, int count);
-    ~IndexBuffer();
+    GLIndexBuffer(unsigned int *data, int count);
+    ~GLIndexBuffer();
 
     void Bind() const;
     void Unbind() const;

@@ -1,16 +1,16 @@
-#include "Kev2DRenderer.h"
+#include "GL2DRenderer.h"
 #include <graphics/Renderables/Renderable2D.h>
 
 unsigned int Renderable2D::globalNumRenderables;
 
-Kev2DRenderer::Kev2DRenderer(int* width, int* height)
+GL2DRenderer::GL2DRenderer(int* width, int* height)
     : scr_w(width), scr_h(height), FBO(nullptr)
 {
     indexCount = 0;
     Init();
 }
 
-Kev2DRenderer::~Kev2DRenderer()
+GL2DRenderer::~GL2DRenderer()
 {
     delete IBO;
     glDeleteVertexArrays(1, &VAO);
@@ -23,7 +23,7 @@ Kev2DRenderer::~Kev2DRenderer()
 //     float texID;     20
 //     uint32_t color;  24
 // };
-void Kev2DRenderer::Init()
+void GL2DRenderer::Init()
 {
     //Generate all of the necessary spaces in memory
     glGenVertexArrays(1, &VAO);
@@ -67,20 +67,20 @@ void Kev2DRenderer::Init()
     }
 
     //Fill an Index buffer with the generated data
-    IBO = new IndexBuffer(indicies, RENDERER_INDICIES_SIZE);
+    IBO = new GLIndexBuffer(indicies, RENDERER_INDICIES_SIZE);
 
     //Unbind VAO
     glBindVertexArray(0);
 }
 
-void Kev2DRenderer::Begin()
+void GL2DRenderer::Begin()
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     VDataBuffer = (VertexData *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     VDataHeapLoc = VDataHeapLoc ? VDataHeapLoc : VDataBuffer; 
 }
 
-void Kev2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
+void GL2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
 {
     const Vec3f position = Renderable->GetPosition();
     const Vec2f size = Renderable->GetSize();
@@ -127,7 +127,7 @@ void Kev2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
 
     if (texExists)
     {
-        Texture* tex = Renderable->GetTexturePtr();
+        GLTextureProgram* tex = Renderable->GetTexturePtr();
         if (tex->IsTilesheet())
         {
             Vec2u pos = Renderable->GetTilesheetPos();
@@ -168,7 +168,7 @@ void Kev2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
     indexCount += 6;
 }
 
-void Kev2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
+void GL2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
 {
     using namespace ftgl;
 
@@ -252,13 +252,13 @@ void Kev2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font,
     }
 }
 
-void Kev2DRenderer::End()
+void GL2DRenderer::End()
 {
     glUnmapBuffer(GL_ARRAY_BUFFER);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-unsigned int Kev2DRenderer::DrawToBuffer()
+unsigned int GL2DRenderer::DrawToBuffer()
 {
     glBindVertexArray(VAO);
     IBO->Bind();
@@ -273,7 +273,7 @@ unsigned int Kev2DRenderer::DrawToBuffer()
     return 0;
 }
 
-void Kev2DRenderer::Draw()
+void GL2DRenderer::Draw()
 {
     for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
     {

@@ -1,19 +1,19 @@
 #ifndef __SHADER_MANAGER__
 #define __SHADER_MANAGER__
 
-#include <graphics/renderer/ShaderProgram.h>
+#include <platform/graphics/GL/renderer/GLShaderProgram.h>
 
 class ShaderManager
 {
 private:
     std::map<const char*, unsigned int, StrCompare> shaderMap;
-    std::vector<ShaderProgram*> shaders;
+    std::vector<GLShaderProgram*> shaders;
 
 public:
     ShaderManager() = default;
     ~ShaderManager()
     {
-        for (ShaderProgram* shader : shaders)
+        for (GLShaderProgram* shader : shaders)
         {
             delete shader;
         }
@@ -21,11 +21,11 @@ public:
         shaderMap.clear();
     }
 
-    void AddShader(const char* ID, ShaderProgram* shader);
+    void AddShader(const char* ID, GLShaderProgram* shader);
     void ClearShaders();
     void NewShader(const char* ID, const char* vertex_file_path, const char* fragment_file_path);
-    inline ShaderProgram GetShader(const char* ID) { return *(shaders[shaderMap[ID]]);}
-    inline ShaderProgram* GetShaderPtr(const char* ID) { return shaders[shaderMap[ID]]; }
+    inline GLShaderProgram GetShader(const char* ID) { return *(shaders[shaderMap[ID]]);}
+    inline GLShaderProgram* GetShaderPtr(const char* ID) { return shaders[shaderMap[ID]]; }
 
     inline void Enable(const char* ID) { if (!shaders.empty()) shaders[shaderMap[ID]]->Enable(); }
     inline void Disable(const char* ID) { if (!shaders.empty()) shaders[shaderMap[ID]]->Disable(); }
@@ -45,7 +45,7 @@ public:
     inline unsigned int GetUniformLocation(const char* ID, const char* name) { return shaders[shaderMap[ID]]->GetUniformLocation(name); }
 
     void _delete() {
-        for (ShaderProgram* shader : shaders)
+        for (GLShaderProgram* shader : shaders)
             delete shader;
         shaderMap = std::map<const char*, unsigned int, StrCompare>();
     }

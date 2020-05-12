@@ -8,7 +8,7 @@
 #include <utils/FileIO.h>
 #include <math/math.h>
 
-class Texture
+class GLTextureProgram
 {
 private:
     char *imagePath;
@@ -22,9 +22,9 @@ private:
     void* heapLocOfTexture;
 
 public:
-    Texture();
-    Texture(const char *inImagePath, unsigned int TileSize = 0, Vec2f flip = Vec2f(0.0f, 0.0f));
-    ~Texture();
+    GLTextureProgram();
+    GLTextureProgram(const char *inImagePath, unsigned int TileSize = 0, Vec2f flip = Vec2f(0.0f, 0.0f));
+    ~GLTextureProgram();
     void Init(Vec2f flip = Vec2f(0.0f, 0.0f));
     void Bind();
     void Unbind();

@@ -1,13 +1,13 @@
 #ifndef __GENERAL_BUFFER__
 #define __GENERAL_BUFFER__
 
-class Buffer {
+class GLBuffer {
     unsigned int BufferID;
     unsigned int ComponentCount;
 
 public:
-    Buffer(float* data, int count, unsigned int compCount);
-    ~Buffer();
+    GLBuffer(float* data, int count, unsigned int compCount);
+    ~GLBuffer();
 
     void Bind();
     void Unbind();

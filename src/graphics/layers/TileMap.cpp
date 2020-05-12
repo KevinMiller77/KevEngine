@@ -1,6 +1,6 @@
 #include "TileMap.h"
 
-TileMap::TileMap(Vec2f GamespaceExtremes, Texture* Tilesheet) : Group(Mat4f::translation(Vec3f(-GamespaceExtremes.x, -GamespaceExtremes.y, 0)))
+TileMap::TileMap(Vec2f GamespaceExtremes, GLTextureProgram* Tilesheet) : Group(Mat4f::translation(Vec3f(-GamespaceExtremes.x, -GamespaceExtremes.y, 0)))
 {
     sceneSize = Vec2u((int)GamespaceExtremes.x * 2, (int)GamespaceExtremes.y * 2);
     tilesheet = Tilesheet;

@@ -1,8 +1,8 @@
-#include "FrameBuffer.h"
+#include "GLFrameBuffer.h"
 
 #include <glad/glad.h>
 
-FrameBuffer::FrameBuffer(int scr_width, int scr_height)
+GLFrameBuffer::GLFrameBuffer(int scr_width, int scr_height)
     : m_W(scr_width), m_H(scr_height)
 {
     glGenFramebuffers(1, &FBO);
@@ -23,7 +23,7 @@ FrameBuffer::FrameBuffer(int scr_width, int scr_height)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void FrameBuffer::Bind(int scr_width, int scr_height)
+void GLFrameBuffer::Bind(int scr_width, int scr_height)
 {
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
@@ -41,7 +41,7 @@ void FrameBuffer::Bind(int scr_width, int scr_height)
     }
 }
 
-void FrameBuffer::Unbind()
+void GLFrameBuffer::Unbind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

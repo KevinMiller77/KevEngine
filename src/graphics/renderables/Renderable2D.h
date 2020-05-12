@@ -3,13 +3,13 @@
 
 #include <string>
 #include <math/math.h>
-#include <graphics/buffers/IndexBuffer.h>
-#include <graphics/buffers/VertexArray.h>
-#include <graphics/renderer/TextureProgram.h>
+#include <platform/graphics/GL/buffers/GLIndexBuffer.h>
+#include <platform/graphics/GL/buffers/GLVertexArray.h>
+#include <platform/graphics/GL/renderer/GLTextureProgram.h>
 #include <utils/Logging.h>
-#include <graphics/renderer/ShaderProgram.h>
+#include <platform/graphics/GL/renderer/GLShaderProgram.h>
 //Has to be included last
-#include <graphics/renderer/KevRenderer.h>
+#include <graphics/KevRenderer.h>
 #include <core/KevInput.h>
 
 enum class RenderableType
@@ -50,7 +50,7 @@ protected:
     Vec2f size;
     uint32_t color = 0;
     
-    Texture* texture;
+    GLTextureProgram* texture;
     unsigned int texID;
     Vec2u tilesheetPos = Vec2u(0, 0);
 
@@ -90,7 +90,7 @@ public:
         globalNumRenderables++;
     }
     
-    Renderable2D(Vec3f Position, Vec2f Size, Texture* inTexture, const char* Name = ("REND_" + std::to_string(GetGlobalNumRenderables())).c_str())
+    Renderable2D(Vec3f Position, Vec2f Size, GLTextureProgram* inTexture, const char* Name = ("REND_" + std::to_string(GetGlobalNumRenderables())).c_str())
         : size(Size), uid(globalNumRenderables)
     {
         position = Position;
@@ -100,7 +100,7 @@ public:
         globalNumRenderables++;
     }
 
-    Renderable2D(Vec3f Position, Vec2f Size, Texture* inTexture, Vec2u TilesheetPos, const char* Name = ("REND_" + std::to_string(GetGlobalNumRenderables())).c_str())
+    Renderable2D(Vec3f Position, Vec2f Size, GLTextureProgram* inTexture, Vec2u TilesheetPos, const char* Name = ("REND_" + std::to_string(GetGlobalNumRenderables())).c_str())
         : size(Size), uid(globalNumRenderables)
     {
         position = Position;
@@ -143,7 +143,7 @@ public:
     inline virtual const void SetColor(Vec4f newColor) {color = newColor.ColorAsInt(); }
     inline virtual const void SetColor(uint32_t newColor) { color = newColor; }
     
-    inline virtual Texture* GetTexturePtr() { return texture; }
+    inline virtual GLTextureProgram* GetTexturePtr() { return texture; }
     inline virtual Vec2u GetTilesheetPos() { return tilesheetPos; }
     inline virtual void SetTilesheetPos(unsigned int x, unsigned int y) { tilesheetPos = Vec2u(x, y); }
     inline virtual unsigned int* GetTilesheetPosPtr() { return tilesheetPos.elements; }

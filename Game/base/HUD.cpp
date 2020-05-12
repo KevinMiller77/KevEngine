@@ -2,7 +2,7 @@
 #include <core/KevEngine.h>
 
 HUD::HUD(Window* Parent, unsigned int shader, Kev2DCamera* Camera)
-    :   Layer(Parent, new Kev2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), shader, Camera)
+    :   Layer(Parent, new GL2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), shader, Camera)
 {
 }
 

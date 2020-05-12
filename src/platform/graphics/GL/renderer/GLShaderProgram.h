@@ -9,14 +9,14 @@
 
 #include <math/math.h>
 
-class ShaderProgram {
+class GLShaderProgram {
 
 private:
     unsigned int programID;
 
 public:
-    ShaderProgram() = default;
-    ShaderProgram(const char* vertex_file_path, const char* fragment_file_path);
+    GLShaderProgram() = default;
+    GLShaderProgram(const char* vertex_file_path, const char* fragment_file_path);
 
 
     static unsigned int CreateGLProgram(const char* vertex_file_path, const char* fragment_file_path);

@@ -1,9 +1,9 @@
-#include "TextureProgram.h"
+#include "GLTextureProgram.h"
 
 #include <assert.h>
 #include <glad/glad.h>
 
-Texture::Texture() 
+GLTextureProgram::GLTextureProgram() 
 {
     texture = 0;
     nrChannels = 0;
@@ -13,7 +13,7 @@ Texture::Texture()
     heapLocOfTexture = nullptr;
 }
 
-Texture::Texture(const char *inImagePath, unsigned int TileSize, Vec2f flip)
+GLTextureProgram::GLTextureProgram(const char *inImagePath, unsigned int TileSize, Vec2f flip)
 {
     tileSheet = (bool)TileSize;
     tileSize = TileSize;
@@ -21,13 +21,13 @@ Texture::Texture(const char *inImagePath, unsigned int TileSize, Vec2f flip)
     Init(flip);
 }
 
-Texture::~Texture()
+GLTextureProgram::~GLTextureProgram()
 {
     glDeleteTextures(1, &texture);
     delete heapLocOfTexture;
 }
 
-void Texture::Init(Vec2f flip)
+void GLTextureProgram::Init(Vec2f flip)
 {
     stbi_set_flip_vertically_on_load(1);
 
@@ -61,12 +61,12 @@ void Texture::Init(Vec2f flip)
     stbi_image_free(image);
 
 }
-void Texture::Bind()
+void GLTextureProgram::Bind()
 {
     glBindTexture(GL_TEXTURE_2D, texture);
 }
 
-void Texture::Unbind()
+void GLTextureProgram::Unbind()
 {
     glBindTexture(GL_TEXTURE_2D, 0);
 }

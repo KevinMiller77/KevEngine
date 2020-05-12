@@ -1,18 +1,18 @@
 #ifndef __VERTEX_ARRAY__
 #define __VERTEX_ARRAY__
-#include "VertexArray.h"
-#include "../../utils/Logging.h"
+#include "GLVertexArray.h"
+#include <utils/Logging.h>
 #include <glad/glad.h>
 
 using namespace std;
 
-VertexArray::VertexArray()
+GLVertexArray::GLVertexArray()
     : Buffers()
 {
     glGenVertexArrays(1, &BufferID);
 }
 
-VertexArray::~VertexArray()
+GLVertexArray::~GLVertexArray()
 {
     for (uint32_t i = 0; i < Buffers.size(); i++)
     {
@@ -20,7 +20,7 @@ VertexArray::~VertexArray()
     }
 }
 
-void VertexArray::AddBuffer(Buffer *buf, unsigned int idx)
+void GLVertexArray::AddBuffer(GLBuffer *buf, unsigned int idx)
 {
     Bind();
     buf->Bind();
@@ -32,13 +32,13 @@ void VertexArray::AddBuffer(Buffer *buf, unsigned int idx)
     Unbind();
 }
 
-void VertexArray::Bind() const
+void GLVertexArray::Bind() const
 {
     LOG_INF("Binding VAO: %d\n", BufferID);
     glBindVertexArray(BufferID);
 }
 
-void VertexArray::Unbind() const
+void GLVertexArray::Unbind() const
 {
 
     LOG_INF("Unbinding VAO: %d\n", BufferID);

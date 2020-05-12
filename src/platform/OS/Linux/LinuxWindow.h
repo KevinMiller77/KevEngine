@@ -1,5 +1,5 @@
-#ifndef __WINDOWS_WINDOW__
-#define __WINDOWS_WINDOW__
+#ifndef __Linux_WINDOW__
+#define __Linux_WINDOW__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,11 +9,11 @@
 
 #include <utils/commonTypes.h>
 #include <graphics/Window.h>
-#include <graphics/renderer/GLContext.h>
+#include <platform/graphics/GL/renderer/GLContext.h>
 
 #include <GLFW/glfw3.h>
 
-struct WindowsData
+struct LinuxData
 {
     using EventCallbackFn = std::function<void(Event&)>;
     unsigned int width, height;
@@ -25,7 +25,7 @@ struct WindowsData
     EventCallbackFn EventCallback;
 };
 
-class WindowsWindow : public Window
+class LinuxWindow : public Window
 {
 
     GLFWwindow* window;
@@ -36,21 +36,18 @@ class WindowsWindow : public Window
     int InitalizeConsole();
 
 public:
+
     inline bool IsWindowed() override { return data.windowed; }
     void ToggleFullscreen() override;
-	virtual void CallWindowHints() override;
-    
-    WindowsWindow(WindowInfo inf);
-    ~WindowsWindow();
+    virtual void CallWindowHints() override;
+
+    LinuxWindow(WindowInfo inf);
+    ~LinuxWindow();
     
     void OnUpdate() override;
 
     unsigned int GetWidth() const override;
 	unsigned int GetHeight() const override;
-
-    
-    unsigned int* GetWidthPtr() const override;
-	unsigned int* GetHeightPtr() const override;
 
     // Window attributes
 	inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallback = callback; data.callbackSet = true; }
@@ -61,10 +58,9 @@ public:
     void* GetContext() override { return (void*)&context; }
     void SetView(int W, int H) override { context.SetView(W, H); }
 
-
     void ShutDown();
     
-    static WindowsData data; 
+    static LinuxData data; 
 };
 
 #endif

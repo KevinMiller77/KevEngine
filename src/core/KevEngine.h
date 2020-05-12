@@ -15,7 +15,6 @@
 #include <graphics/layers/Group.h>
 #include <graphics/layers/Layer.h>
 #include <graphics/ShaderManager.h>
-#include <graphics/renderer/Kev2DRenderer.h>
 #include <imgui/ImGuiLayer.h>
 
 //#include "utils/MemoryTracker.h"
@@ -23,7 +22,10 @@
 #include <graphics/Window.h>
 #include <events/Event.h>
 #include <graphics/Window.h>
-#include <graphics/renderer/GLContext.h>
+
+//TODO: Add metal here
+#include <platform/graphics/GL/renderer/GL2DRenderer.h>
+#include <platform/graphics/GL/renderer/GLContext.h>
 #include <graphics/layers/LayerStack.h>
 
 //TODO: Move this to the input.h util

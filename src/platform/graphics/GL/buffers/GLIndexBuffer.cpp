@@ -1,7 +1,7 @@
-#include "IndexBuffer.h"
+#include "GLIndexBuffer.h"
 #include <glad/glad.h>
 
-IndexBuffer::IndexBuffer(unsigned int *data, int count)
+GLIndexBuffer::GLIndexBuffer(unsigned int *data, int count)
     : Count(count), HeapLoc(data)
 {
 
@@ -11,18 +11,18 @@ IndexBuffer::IndexBuffer(unsigned int *data, int count)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-IndexBuffer::~IndexBuffer()
+GLIndexBuffer::~GLIndexBuffer()
 {
     glDeleteBuffers(1, &BufferID);
     free(HeapLoc);
 }
 
-void IndexBuffer::Bind() const
+void GLIndexBuffer::Bind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BufferID);
 }
 
-void IndexBuffer::Unbind() const
+void GLIndexBuffer::Unbind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

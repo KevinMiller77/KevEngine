@@ -1,6 +1,6 @@
 #include "TextureManager.h"
 
-void TextureManager::AddTexture(const char* ID, Texture* Texture)
+void TextureManager::AddTexture(const char* ID, GLTextureProgram* Texture)
 {
     textures.push_back(Texture);
     textureMap.insert({ ID, textures.size() - 1});
@@ -9,7 +9,7 @@ void TextureManager::AddTexture(const char* ID, Texture* Texture)
 
 void TextureManager::NewTexture(const char* ID, const char* image_path, int tileSize, Vec2f flip)
 {
-    Texture* texture = new Texture(image_path, tileSize, flip);
+    GLTextureProgram* texture = new GLTextureProgram(image_path, tileSize, flip);
     textures.push_back(texture);
     textureMap.insert({ ID, textures.size() - 1 });
     LOG_INF("New texture in array. Key: %s Value: %d unsigned int %d\n", ID, textures.size() - 1, texture->GetTexID());
@@ -17,7 +17,7 @@ void TextureManager::NewTexture(const char* ID, const char* image_path, int tile
 
 void TextureManager::ClearTextures()
 {
-     for (Texture* texture : textures)
+     for (GLTextureProgram* texture : textures)
      {
          delete texture;
      }
@@ -25,9 +25,9 @@ void TextureManager::ClearTextures()
      textureMap.clear();
 }
 
-Texture* TextureManager::GetTexture(const char* ID)
+GLTextureProgram* TextureManager::GetTexture(const char* ID)
 {
-    Texture* wantedTex = textures[textureMap[ID]];
+    GLTextureProgram* wantedTex = textures[textureMap[ID]];
     return wantedTex;
 }
 

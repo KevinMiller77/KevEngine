@@ -8,7 +8,7 @@
 #include <graphics/layers/Group.h>
 #include <graphics/renderables/Sprite.h>
 #include <graphics/renderables/Label.h>
-#include <graphics/renderer/Kev2DRenderer.h>
+#include <platform/graphics/GL/renderer/GL2DRenderer.h>
 #include <graphics/cameras/Kev2DCamera.h>
 #include <math/math.h>
 #include <utils/Logging.h>
@@ -28,7 +28,7 @@ public:
 
     void OnUpdate() override;
     void OnDraw() override;
-    void OnEvent(Event& e);
+    void OnEvent(Event& e) override;
 };
 
 #endif

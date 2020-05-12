@@ -8,7 +8,7 @@ PhysicsSprite::PhysicsSprite(float x, float y, float width, float height, const 
     centerOfMass = Vec3f(width / 2, height / 2, 0);
     Init();
 }
-PhysicsSprite::PhysicsSprite(float x, float y, float width, float height, Texture* inTexture, bool GravityAffects)
+PhysicsSprite::PhysicsSprite(float x, float y, float width, float height, GLTextureProgram* inTexture, bool GravityAffects)
     : Renderable2D(Vec3f(x, y, 0), Vec2f(width, height), inTexture)
 {
     gravityAffects = GravityAffects;
