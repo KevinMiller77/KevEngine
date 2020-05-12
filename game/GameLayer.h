@@ -9,12 +9,13 @@
 #include <graphics/renderables/Sprite.h>
 #include <graphics/renderables/PhysicsSprite.h>
 #include <graphics/layers/Group.h>
+#include <graphics/layers/TileMap.h>
 #include <graphics/layers/Layer.h>
 #include <graphics/renderer/Kev2DRenderer.h>
 #include <math/math.h>
 #include <utils/Logging.h>
 #include <utils/Timer.h>
-#include <graphics/cameras/FollowRenderableCamera.h>
+#include <graphics/cameras/Kev2DCamera.h>
 #include <../ext/imgui/imgui.h>
 #include <imgui/KevImGuiLog.h>
 
@@ -38,6 +39,7 @@ enum class BrushFunction
     NONE,
     PAINT,
     REMOVE,
+    ADD,
     SELECT
 };
 
@@ -58,16 +60,16 @@ class GameLayer : public Layer
     bool KevImGuiLogOpen = true;
 
     bool paused = false;
+    
+    bool playing = true;
 
     unsigned int vpTexture;
 
     KevImGuiLog log;
 
-    FollowRenderableCamera camera;
+    //Editor things
     Group* guideGrids;
-    Group* scene;
-    
-    Group* tilemap[32][18];
+    TileMap* tilemap;
     
     Renderable2D* selectedTile = nullptr;
     Renderable2D* cursor = nullptr;
@@ -83,12 +85,17 @@ class GameLayer : public Layer
     
     std::vector<Move> undoCache;
     
-    Renderable2D* player;
     Timer updateTime;
     Timer keyTimeout;
+    
+    //Game things
+    void StartGame();
+    void GameFrame();
 
+    
 public:
     GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes = Vec2f(GAMESPACE_X, GAMESPACE_Y));
+    GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Kev2DCamera* Camera, Vec2f ScreenExtremes = Vec2f(GAMESPACE_X, GAMESPACE_Y));
     ~GameLayer() override;
 
     virtual void OnAttach() override;
@@ -99,6 +106,9 @@ public:
     // virtual void Render() override;
     virtual void OnEvent(Event& e);
     virtual void OnImGuiRender() override;
+    
+    void SetPlaying(bool Playing) { playing = Playing; }
+    bool IsPlaying() { return playing; }
 
     inline bool IsImGuiEnabled()   { return ImGuiEnabled; }
     inline void SetImGuiEnabled(bool state) { ImGuiEnabled = state; }
@@ -113,7 +123,7 @@ public:
             curRenderable = curRenderable->GetParent();
         }
         
-        return curRenderable;
+        return lastRenderable;
     }
     
     void SaveTilemap();
@@ -128,6 +138,8 @@ public:
     
     void PaintMousedTile(bool force = false);
     void PaintSelectedTile();
+    void DeleteSelectedTile();
+    
 
 };
 

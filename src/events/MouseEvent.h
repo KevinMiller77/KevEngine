@@ -23,14 +23,14 @@ public:
 class MouseScrolledEvent : public Event
 {
 protected:
-    int XOffset, YOffset;
+    float XOffset, YOffset;
 
 public:
-    MouseScrolledEvent(int X, int Y)
+    MouseScrolledEvent(float X, float Y)
         :   XOffset(X), YOffset(Y)  {}
 
-    inline const int getXOffset() const { return XOffset; }
-    inline const int getYOffset() const { return YOffset;}
+    inline const float getXOffset() const { return XOffset; }
+    inline const float getYOffset() const { return YOffset;}
 
     EVENT_CLASS_TYPE(EventType::MouseScrolled)
     EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)

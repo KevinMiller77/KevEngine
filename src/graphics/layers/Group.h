@@ -39,7 +39,7 @@ public:
     virtual void CheckCollision(Renderable2D* other) override;
     virtual void MouseCheck(Vec2f& mousePos, std::vector<Renderable2D*>& underMouse) override;
     
-    inline void Delete(Renderable2D* Renderable)
+    virtual inline void Delete(Renderable2D* Renderable)
     {
         for (int i = 0; i < children.size(); i++)
         {
@@ -50,6 +50,8 @@ public:
         }
     }
 //        std::remove(children.begin(), children.end(), Renderable); }
+    
+    inline virtual void AddTransform(Mat4f Transform) { ModelMatrix = ModelMatrix * Transform; }
 
     inline virtual void* GetChildren() override { return (void*)&children; }
 

@@ -1,24 +1,25 @@
-#include "FollowRenderableCamera.h"
+#include "Kev2DCamera.h"
 
-FollowRenderableCamera::FollowRenderableCamera(float horizontalMax, float verticalMax)
+Kev2DCamera::Kev2DCamera(float horizontalMax, float verticalMax)
     : Camera(-horizontalMax, horizontalMax, -verticalMax, verticalMax)
 {
     movingCamera = false;
     time.Reset();
 }
 
-FollowRenderableCamera::FollowRenderableCamera(float horizontalMax, float verticalMax, Renderable2D* renderable)
+Kev2DCamera::Kev2DCamera(float horizontalMax, float verticalMax, Renderable2D* renderable)
     : Camera(-horizontalMax, horizontalMax, -verticalMax, verticalMax), renderableToFollow(renderable), savedMousePos(0, 0)
 {
     movingCamera = false;
     time.Reset();
 }
     
-void FollowRenderableCamera::OnUpdate()
+void Kev2DCamera::OnUpdate()
 {
-    if (renderableToFollow == nullptr)
+    if (!movable)
     {
-//        return;
+        time.Reset();
+        return;
     }
     
 	double ts = time.GetTimePassed();
@@ -85,7 +86,7 @@ void FollowRenderableCamera::OnUpdate()
     time.Reset();
 }
 
-bool FollowRenderableCamera::func (KeyPressedEvent& e)
+bool Kev2DCamera::func (KeyPressedEvent& e)
 {
     // if (e.GetKeyCode() == (int)KEV_KEY_D)
     //     Camera.SetPosition(new Vec3f(Camera.GetPosition().x + 0.5f, Camera.GetPosition().y, Camera.GetPosition().z));
@@ -96,17 +97,22 @@ bool FollowRenderableCamera::func (KeyPressedEvent& e)
     return false;
 }
 
-void FollowRenderableCamera::OnEvent(Event& e)
+void Kev2DCamera::OnEvent(Event& e)
 {
     EventDispatcher dispatch(e);
-    dispatch.Dispatch<KeyPressedEvent>(KEV_BIND_EVENT_FN(FollowRenderableCamera::func));
-    dispatch.Dispatch<MouseScrolledEvent>(KEV_BIND_EVENT_FN(FollowRenderableCamera::OnMouseScrolled));
+    dispatch.Dispatch<KeyPressedEvent>(KEV_BIND_EVENT_FN(Kev2DCamera::func));
+    dispatch.Dispatch<MouseScrolledEvent>(KEV_BIND_EVENT_FN(Kev2DCamera::OnMouseScrolled));
 }
 
-bool FollowRenderableCamera::OnMouseScrolled(MouseScrolledEvent& e)
+bool Kev2DCamera::OnMouseScrolled(MouseScrolledEvent& e)
 {
-	// Zoom -= e.getYOffset() * 0.1f;
-	// Zoom = Zoom > 0.1f ? Zoom : 0.1;
-	// Camera.SetProjection(0, 32 * Zoom, 0, 19 * Zoom);
-	return false;
+    if (!movable)
+    {
+        return false;
+    }
+    Zoom -= e.getYOffset() * 0.01f;
+    Zoom = Zoom > 0.1f ? Zoom : 0.1f;
+    Zoom = Zoom > 2.8f ? 2.8f : Zoom;
+    Camera.SetProjection(-16 * Zoom, 16 * Zoom, -9 * Zoom, 9 * Zoom);
+    return false;
 }

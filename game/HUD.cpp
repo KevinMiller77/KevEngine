@@ -1,8 +1,8 @@
 #include "HUD.h"
 #include <core/KevEngine.h>
 
-HUD::HUD(Window* Parent, unsigned int shader)
-    :   Layer(Parent, new Kev2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), shader)
+HUD::HUD(Window* Parent, unsigned int shader, Kev2DCamera* Camera)
+    :   Layer(Parent, new Kev2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), shader, Camera)
 {
 }
 
@@ -19,7 +19,7 @@ void HUD::OnAttach()
     fonts.Add("arial", "resources/fonts/arial.ttf", 32);
     fonts.Add("inkfree", "resources/fonts/INKFREE.TTF", 28);
 
-    Group* FrameCounterGroup = new Group(Mat4f::translation(Vec3f(-16, -9, 0)));
+    FrameCounterGroup = new Group(Mat4f::translation(Vec3f(-16, -9, 0)));
 
     FrameCounterGroup->Add(new Sprite(0.2, 0.3, 5.0, 1.5, Vec4f(0.3f, 0.3f, 0.3f, 1.0f)));
     FrameCounter = new Label("", 0.3f, 1.3, fonts.Get("inkfree"), Vec4f(0, 0, 0, 1));
@@ -41,6 +41,9 @@ extern unsigned int LastFrameKeep;
 extern unsigned int LastUpdateKeep;
 void HUD::OnUpdate()
 {
+    Vec2f camPos = camera->GetWorldPos(16.0f, 9.0f);
+    float curZoom = camera->GetZoomLevel();
+    FrameCounterGroup->SetPosition(new Vec3f(camPos.x - (16.0f * curZoom), camPos.y - (9.0f * curZoom), 0));
     //char* text; sprintf(text, "FPS: %d", LastFrameKeep);
     FrameCounter->SetText("FPS: " + to_string(KevEngine::LastFrameKeep));
     UpdateCounter->SetText("UPS: " + to_string(KevEngine::LastUpdateKeep));

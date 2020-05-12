@@ -8,6 +8,7 @@
 #include <graphics/renderer/KevRenderer.h>
 #include <graphics/Window.h>
 
+#include <graphics/cameras/Kev2DCamera.h>
 #include <graphics/TextureManager.h>
 #include <graphics/FontManager.h>
 #include <graphics/RenderableManager.h>
@@ -17,7 +18,7 @@
 class Layer
 {
 protected:
-    Layer(Window* Parent, KevRenderer *Renderer, unsigned int Shader);
+    Layer(Window* Parent, KevRenderer *Renderer, unsigned int Shader, Kev2DCamera* Camera);
 
     Window* parent;
     
@@ -25,6 +26,7 @@ protected:
     KevRenderer *renderer;
     std::vector<Renderable2D *> renderables;
     RenderableManager Manager = RenderableManager(&renderables);
+    Kev2DCamera* camera;
     unsigned int shader;
 
     TextureManager textures;
@@ -57,6 +59,8 @@ public:
 
     virtual inline void PushTransform(Mat4f *transform) { renderer->Push(*transform); }
     virtual inline void PopTransform() { renderer->Pop(); }
+    
+    virtual inline void SetCamera(Kev2DCamera* Camera) { if (Camera != nullptr) camera = Camera; }
 
     inline void Enable() { enabled = true; }
     inline void Disable() { enabled = false; }

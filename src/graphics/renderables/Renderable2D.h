@@ -18,7 +18,8 @@ enum class RenderableType
     Static,
     Physics,
     Terrain,
-    Group
+    Group,
+    Tile
 };
 
 enum class CollisionDirection {
@@ -55,6 +56,7 @@ protected:
 
     Vec3f* baseOrigin = nullptr;
 
+    bool enabled = true;
     bool SolidObject = false;
     bool stable = false;
     bool mouseHovering = false;
@@ -127,7 +129,7 @@ public:
 
     virtual ~Renderable2D() = default;
 
-    inline virtual void Submit(KevRenderer* renderer) { renderer->Submit(this, Vec2u(0, 0)); }
+    inline virtual void Submit(KevRenderer* renderer) { if (enabled) renderer->Submit(this, Vec2u(0, 0)); }
 
     inline virtual const Vec3f &GetPosition() const { return position; }
     inline virtual const void SetPosition(Vec3f* newPosition) { position = *newPosition; }
@@ -183,7 +185,10 @@ public:
         return Vec3f(xOut, yOut, zOut);
     }
 
-
+    inline bool IsEnabled() { return enabled; }
+    inline void Enable() { enabled = true; }
+    inline void Disable() { enabled = false; }
+    
     inline bool IsSolid()   {return SolidObject; }
     inline void SetSolid(bool isSolid)   {SolidObject = isSolid; isSolid ? type = RenderableType::Physics : RenderableType::Static;}
     

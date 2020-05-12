@@ -9,6 +9,7 @@
 #include <graphics/renderables/Sprite.h>
 #include <graphics/renderables/Label.h>
 #include <graphics/renderer/Kev2DRenderer.h>
+#include <graphics/cameras/Kev2DCamera.h>
 #include <math/math.h>
 #include <utils/Logging.h>
 
@@ -16,9 +17,10 @@ class HUD : public Layer
 {
     Label* FrameCounter;
     Label* UpdateCounter;
+    Group* FrameCounterGroup;
 
 public:
-    HUD(Window* Parent, unsigned int shader);
+    HUD(Window* Parent, unsigned int shader, Kev2DCamera* Camera);
     ~HUD() override;
 
     void OnAttach() override;

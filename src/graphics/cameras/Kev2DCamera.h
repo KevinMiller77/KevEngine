@@ -8,12 +8,12 @@
 #include <events/KeyEvent.h>
 #include <utils/Timer.h>
 
-class FollowRenderableCamera
+class Kev2DCamera
 {
 public:
 
-    FollowRenderableCamera(float horizontalMax, float verticalMax);
-    FollowRenderableCamera(float horizontalMax, float verticalMax, Renderable2D* renderable);
+    Kev2DCamera(float horizontalMax, float verticalMax);
+    Kev2DCamera(float horizontalMax, float verticalMax, Renderable2D* renderable);
     
 	void OnUpdate();
 	void OnEvent(Event& e);
@@ -21,6 +21,9 @@ public:
 	OrthographicCamera& GetCamera() { return Camera; }
 	const OrthographicCamera& GetCamera() const { return Camera; }
 
+    bool IsMovable() { return movable; }
+    void SetMovable (bool Movable) { movable = Movable; }
+    
 	float GetZoomLevel() const { return Zoom; }
 	void SetZoomLevel(float level) { Zoom = level; }
 
@@ -37,6 +40,7 @@ public:
 	bool OnMouseScrolled(MouseScrolledEvent& e);
 
 private:
+    bool movable = true;
     float vertical, horizontal;
 	float Zoom = 1.0f;
 	Timer time;

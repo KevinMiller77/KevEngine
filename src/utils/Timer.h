@@ -61,8 +61,8 @@ public:
         return time;
     }
 
-    uint64_t getTimeMS() {
-        return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count(); 
+    uint64_t GetTimeMS() {
+        return (uint64_t)(GetTimePassed() * 1000.0f);
     }
 };
 

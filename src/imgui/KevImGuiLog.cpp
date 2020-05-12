@@ -98,7 +98,7 @@ void KevImGuiLog::UpdateBuffer(FILE* InFile)
             }
             
             
-            if (timeout.getTimeMS() > TIMEOUT_TIME)
+            if (timeout.GetTimeMS() > TIMEOUT_TIME)
             {
                 break;
             }

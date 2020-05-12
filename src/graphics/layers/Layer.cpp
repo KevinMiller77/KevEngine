@@ -1,7 +1,7 @@
 #include "Layer.h"
 
-Layer::Layer(Window* Parent, KevRenderer *Renderer, unsigned int Shader)
-    : parent(Parent), renderer(Renderer), shader(Shader), enabled(true)
+Layer::Layer(Window* Parent, KevRenderer *Renderer, unsigned int Shader, Kev2DCamera* Camera)
+    : parent(Parent), renderer(Renderer), shader(Shader), enabled(true), camera(Camera)
 {
     keyDebounce.Start();
 }

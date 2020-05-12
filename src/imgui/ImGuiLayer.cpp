@@ -11,7 +11,7 @@
 
 
 ImGuiLayer::ImGuiLayer(Window* Parent)
-    : Layer(Parent, nullptr, 0)
+    : Layer(Parent, nullptr, 0, nullptr)
 {
 }
 
