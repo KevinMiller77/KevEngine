@@ -29,7 +29,7 @@ class WindowsWindow : public Window
 {
 
     GLFWwindow* window;
-    OpenGLContext context;
+    GLContext context;
     unsigned int GLFWWinCount;
     WindowInfo info;
 

@@ -11,12 +11,12 @@
 #include <assert.h>
 #include "GLContext.h"
 
-OpenGLContext::OpenGLContext(GLFWwindow* windowHandle)
+GLContext::GLContext(GLFWwindow* windowHandle)
     : window(windowHandle)
 {
 }
 
-void OpenGLContext::Init()
+void GLContext::Init()
 {
     if (window != nullptr)
     {
@@ -44,12 +44,12 @@ void OpenGLContext::Init()
     LOG_INF("GL Init. MAJOR: %d\tMINOR: %d\n", versionMajor, versionMinor);
 }
 
-void OpenGLContext::SwapBuffers()
+void GLContext::SwapBuffers()
 {
     glfwSwapBuffers(window);
 }
 
-void OpenGLContext::SetView(int Width, int Height)
+void GLContext::SetView(int Width, int Height)
 {
     glViewport(0, 0, Width, Height);
 }

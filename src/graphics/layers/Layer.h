@@ -13,6 +13,7 @@
 #include <graphics/FontManager.h>
 #include <graphics/RenderableManager.h>
 #include <graphics/cameras/OrthographicCameraController.h>
+#include <platform/graphics/GL/renderer/GLShaderProgram.h>
 
 
 class Layer

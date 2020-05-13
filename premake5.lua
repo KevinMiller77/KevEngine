@@ -172,7 +172,9 @@ project "Game"
             links
             {
                 "IOKit.framework", 
-                "OpenGL.framework",
+                "AppKit.framework",
                 "Cocoa.framework",
-                "CoreVideo.framework"
+                "CoreVideo.framework",
+                "Metal.framework",
+                "QuartzCore.framework"
             }

@@ -2,7 +2,7 @@
 #include <core/KevEngine.h>
 
 HUD::HUD(Window* Parent, unsigned int shader, Kev2DCamera* Camera)
-    :   Layer(Parent, new GL2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), shader, Camera)
+    :   Layer(Parent, new GLRenderer2D((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), shader, Camera)
 {
 }
 
@@ -16,8 +16,8 @@ HUD::~HUD()
 
 void HUD::OnAttach()
 {
-    fonts.Add("arial", "resources/fonts/arial.ttf", 32);
-    fonts.Add("inkfree", "resources/fonts/INKFREE.TTF", 28);
+    fonts.Add("arial", "/Users/kevinmiller/dev/kevengine/resources/fonts/arial.ttf", 32);
+    fonts.Add("inkfree", "/Users/kevinmiller/dev/kevengine/resources/fonts/INKFREE.TTF", 28);
 
     FrameCounterGroup = new Group(Mat4f::translation(Vec3f(-16, -9, 0)));
 

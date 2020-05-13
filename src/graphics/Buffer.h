@@ -1,5 +1,5 @@
-#ifndef __GENERAL_BUFFER__
-#define __GENERAL_BUFFER__
+#ifndef __GL_GENERAL_BUFFER__
+#define __GL_GENERAL_BUFFER__
 
 class GLBuffer {
     unsigned int BufferID;

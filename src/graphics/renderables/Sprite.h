@@ -13,7 +13,7 @@ private:
     Timer debounce;
 public:
     Sprite(float x, float y, float width, float height, const Vec4f color);
-    Sprite(float x, float y, float width, float height, GLTextureProgram* inTexture, Vec2u TilesheetPos = Vec2u(0, 0));
+    Sprite(float x, float y, float width, float height, TextureProgram* inTexture, Vec2u TilesheetPos = Vec2u(0, 0));
     Sprite(Renderable2D* newMe);
 
     virtual void OnMouseHover() override;

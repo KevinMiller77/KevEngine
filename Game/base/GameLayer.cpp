@@ -13,7 +13,7 @@
 
 
 GameLayer::GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes)
-    : Layer(Parent, new GL2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, new Kev2DCamera(ScreenExtremes.x, ScreenExtremes.y)), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
+    : Layer(Parent, new GLRenderer2D((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, new Kev2DCamera(ScreenExtremes.x, ScreenExtremes.y)), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
 {
     //Enable blending of the alpha channel
     glEnable(GL_BLEND);
@@ -22,7 +22,7 @@ GameLayer::GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2
 }
 
 GameLayer::GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Kev2DCamera* Camera, Vec2f ScreenExtremes)
-: Layer(Parent, new GL2DRenderer((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, Camera), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
+: Layer(Parent, new GLRenderer2D((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, Camera), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
 {
     //Enable blending of the alpha channel
     glEnable(GL_BLEND);
@@ -44,10 +44,10 @@ void GameLayer::OnAttach()
     updateTime.Reset();
     undoCache.clear();
     //Setup textures, can't be used without them
-    textures.NewTexture("tilemap", "resources/tilesheets/towerDefense_tilesheet@2.png", 128, Vec2f(1.0f, 0.0f));
-    textures.NewTexture("dude", "resources/textures/KevDude.png");
-    textures.NewTexture("cursor", "resources/textures/EditorCursor.png");
-    textures.NewTexture("base-grid", "resources/textures/BaseGrid.jpg");
+    textures.NewTexture("tilemap", "/Users/kevinmiller/dev/kevengine/resources/tilesheets/towerDefense_tilesheet@2.png", 128, Vec2f(1.0f, 0.0f));
+    textures.NewTexture("dude", "/Users/kevinmiller/dev/kevengine/resources/textures/KevDude.png");
+    textures.NewTexture("cursor", "/Users/kevinmiller/dev/kevengine/resources/textures/EditorCursor.png");
+    textures.NewTexture("base-grid", "/Users/kevinmiller/dev/kevengine/resources/textures/BaseGrid.jpg");
 
 //    Group* backgroundLayer = new Group(Mat4f::translation(Vec3f(-32.0f, -18.0f, 0.0f)));
 //    backgroundLayer->Add();

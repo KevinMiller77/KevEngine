@@ -1,7 +1,8 @@
-#ifndef __GENERAL_BUFFER__
-#define __GENERAL_BUFFER__
+#ifndef __GL_GENERAL_BUFFER__
+#define __GL_GENERAL_BUFFER__
+#include <graphics/api/Buffer.h>
 
-class GLBuffer {
+class GLBuffer : public Buffer {
     unsigned int BufferID;
     unsigned int ComponentCount;
 
@@ -9,10 +10,10 @@ public:
     GLBuffer(float* data, int count, unsigned int compCount);
     ~GLBuffer();
 
-    void Bind();
-    void Unbind();
+    virtual void Bind() override;
+    virtual void Unbind() override;
 
-    inline unsigned int GetComponentCount() const { return ComponentCount; }
+    virtual unsigned int GetComponentCount() override { return ComponentCount; }
 };
 
 #endif

@@ -11,15 +11,15 @@
 // Platform detection using predefined macros
 #ifdef _WIN32
 	/* Windows x64/x86 */
+	#define KEV_PLATFORM_WINDOWS
+	#define KEV_RENDERAPI_GL
+	#include <windows.h>
 	#ifdef _WIN64
 		/* Windows x64  */
-		#define KEV_PLATFORM_WINDOWS
 		#define KEV_PLATFORM_WIN64
 	#else
 		/* Windows x86 */
-		
-		#include <windows.h>
-		#define KEV_PLATFORM_WINDOWS
+		#define KEV_PLATFORM_WIN32
 	#endif
 #elif defined(__APPLE__) || defined(__MACH__)
 	#include <TargetConditionals.h>
@@ -27,11 +27,16 @@
 	 * so we must check all of them (in this order)
 	 * to ensure that we're running on MAC
 	 * and not some other Apple platform */
+	#define KEV_PLATFORM_APPLE
+	// TODO: Go to metal
+	// #define KEV_RENDERAPI_METAL
+	#define KEV_RENDERAPI_GL
 	#if TARGET_IPHONE_SIMULATOR == 1
-		#error "IOS simulator is not supported!"
+		#define KEV_PLATFORM_IOS_SIM
+		#error "iOS sim is not supported!"
 	#elif TARGET_OS_IPHONE == 1
 		#define KEV_PLATFORM_IOS
-		#error "IOS is not supported!"
+		#error "iOS is not supported!"
 	#elif TARGET_OS_MAC == 1
 		#define KEV_PLATFORM_MACOS
 	#endif
@@ -40,10 +45,13 @@
  * it has __linux__ defined */
 #elif defined(__ANDROID__)
 	#define KEV_PLATFORM_ANDROID
+	#define KEV_RENDERAPI_GLES
 	#error "Android is not supported!"
 #elif defined(__linux__)
 	#define KEV_PLATFORM_LINUX
+	#define KEV_RENDERAPI_GL
 #elif defined(__EMSCRIPTEN__)
+	#define KEV_RENDERAPI_GLES
 	#define KEV_PLATFORM_EM
 #else
 	/* Unknown compiler/platform */

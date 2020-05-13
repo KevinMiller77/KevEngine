@@ -24,7 +24,7 @@
 #include <graphics/Window.h>
 
 //TODO: Add metal here
-#include <platform/graphics/GL/renderer/GL2DRenderer.h>
+#include <graphics/KevRenderer.h>
 #include <platform/graphics/GL/renderer/GLContext.h>
 #include <graphics/layers/LayerStack.h>
 
@@ -42,7 +42,7 @@ protected:
     bool minimized = false;
 
     LayerStack EngLayerStack;
-    int texIDs[MAX_TEXTURE_SLOTS];
+    int texIDs[16]; //Max texture slots
     
     bool windowedMode;
     Vec2u screenResolution;

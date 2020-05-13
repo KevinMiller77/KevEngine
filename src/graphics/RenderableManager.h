@@ -9,7 +9,6 @@
 #include <events/Event.h>
 #include <graphics/renderables/Renderable2D.h>
 #include <graphics/renderables/Sprite.h>
-#include <graphics/renderables/PhysicsSprite.h>
 
 enum class Attributes
 {

@@ -5,6 +5,7 @@ layout (location = 1) in vec4 color;
 layout (location = 2) in vec2 texture;
 layout (location = 3) in float tid;
 
+
 uniform mat4 pr_matrix;
 uniform mat4 vw_matrix = mat4(1.0);
 uniform mat4 ml_matrix = mat4(1.0);

@@ -1,5 +1,5 @@
-#ifndef __Linux_WINDOW__
-#define __Linux_WINDOW__
+#ifndef __MAC_WINDOW__
+#define __MAC_WINDOW__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +13,7 @@
 
 #include <GLFW/glfw3.h>
 
-struct LinuxData
+struct MacData
 {
     using EventCallbackFn = std::function<void(Event&)>;
     unsigned int width, height;
@@ -25,11 +25,11 @@ struct LinuxData
     EventCallbackFn EventCallback;
 };
 
-class LinuxWindow : public Window
+class MacWindow : public Window
 {
 
     GLFWwindow* window;
-    OpenGLContext context;
+    GLContext context;
     unsigned int GLFWWinCount;
     WindowInfo info;
 
@@ -41,10 +41,13 @@ public:
     void ToggleFullscreen() override;
     virtual void CallWindowHints() override;
 
-    LinuxWindow(WindowInfo inf);
-    ~LinuxWindow();
+    MacWindow(WindowInfo inf);
+    ~MacWindow();
     
     void OnUpdate() override;
+    
+    unsigned int* GetWidthPtr() const override;
+    unsigned int* GetHeightPtr() const override;
 
     unsigned int GetWidth() const override;
 	unsigned int GetHeight() const override;
@@ -60,7 +63,7 @@ public:
 
     void ShutDown();
     
-    static LinuxData data; 
+    static MacData data; 
 };
 
 #endif

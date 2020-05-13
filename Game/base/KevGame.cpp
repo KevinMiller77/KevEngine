@@ -27,7 +27,7 @@ public:
         EditorCam = new Kev2DCamera(GAMESPACE_X, GAMESPACE_Y);
 
         //Set shader info
-        shaders.NewShader("basic", "resources/shaders/SimpleVertexShader.glsl", "resources/shaders/SimpleFragShader.glsl");
+        shaders.NewShader("basic", "/Users/kevinmiller/dev/kevengine/resources/shaders/GLSL/SimpleVertexShader.glsl", "/Users/kevinmiller/dev/kevengine/resources/shaders/GLSL/SimpleFragShader.glsl");
         shaders.Enable("basic");        
         
         //Load in the texture coords for the shader

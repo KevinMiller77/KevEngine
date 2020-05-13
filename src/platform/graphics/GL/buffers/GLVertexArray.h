@@ -1,10 +1,11 @@
-#ifndef __VERT_ARRAY__
-#define __VERT_ARRAY__
-
+#ifndef __GL_VERT_ARRAY__
+#define __GL_VERT_ARRAY__
 #include <vector>
 #include "GLBuffer.h"
 
-class GLVertexArray
+#include <graphics/api/VertexArray.h>
+
+class GLVertexArray : public VertexArray
 {
 private:
     unsigned int BufferID;
@@ -14,8 +15,8 @@ public:
     GLVertexArray();
     ~GLVertexArray();
 
-    void AddBuffer(GLBuffer* buf, unsigned int idx);
-    void Bind() const;
-    void Unbind() const;
+    virtual void AddBuffer(Buffer* buf, unsigned int idx) override;
+    virtual void Bind() const override;
+    virtual void Unbind() const override;
 };
 #endif

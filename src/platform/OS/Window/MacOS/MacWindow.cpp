@@ -1,27 +1,31 @@
-#include "LinuxWindow.h"
+#include "MacWindow.h"
 #include <core/Core.h>
 
-#ifdef KEV_PLATFORM_LINUX
-// TODO(Adin): Switch to CreateWindowEx
+#ifdef KEV_PLATFORM_MACOS
 
-LinuxData LinuxWindow::data = LinuxData();
+MacData MacWindow::data = MacData();
 
 void GLFWErrorCallback(int error, const char* decsription)
 {
-    LOG_ERR("GLFW ERR [%X]: %s\n", decsription);
+    LOG_ERR("GLFW ERR [%X]: %s\n", error, decsription);
 }
 
-void LinuxWindow::CallWindowHints()
+void MacWindow::CallWindowHints()
 {
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    
 }
 
-LinuxWindow::~LinuxWindow()
+MacWindow::~MacWindow()
 {
     ShutDown();
 }
 
-LinuxWindow::LinuxWindow(WindowInfo inf)
+MacWindow::MacWindow(WindowInfo inf)
     : context(nullptr), GLFWWinCount(0)
 {
     info = inf;
@@ -45,7 +49,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     window = glfwCreateWindow((int)data.width, (int)data.height, info.Title, nullptr, nullptr);
     LOG_INF("Made window\n");
-    context = OpenGLContext(window);
+    context = GLContext(window);
     context.Init();
 
     glfwSetWindowUserPointer(window, &data);
@@ -54,7 +58,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
     // Set GLFW callbacks
     glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
     {
-        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
+        MacData& data = *(MacData*)glfwGetWindowUserPointer(window);
         data.width = width;
         data.height = height;
 
@@ -64,14 +68,14 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
     {
-        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
+        MacData& data = *(MacData*)glfwGetWindowUserPointer(window);
         WindowCloseEvent event;
         data.EventCallback(event);
     });
 
     glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
     {
-        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
+        MacData& data = *(MacData*)glfwGetWindowUserPointer(window);
 
         switch (action)
         {
@@ -98,7 +102,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int keycode)
     {
-        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
+        MacData& data = *(MacData*)glfwGetWindowUserPointer(window);
 
         KeyTypedEvent event((keycode));
         data.EventCallback(event);
@@ -106,7 +110,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
     {
-        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
+        MacData& data = *(MacData*)glfwGetWindowUserPointer(window);
 
         switch (action)
         {
@@ -127,7 +131,7 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
     {
-        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
+        MacData& data = *(MacData*)glfwGetWindowUserPointer(window);
 
         MouseScrolledEvent event((float)xOffset, (float)yOffset);
         data.EventCallback(event);
@@ -135,14 +139,14 @@ LinuxWindow::LinuxWindow(WindowInfo inf)
 
     glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos)
     {
-        LinuxData& data = *(LinuxData*)glfwGetWindowUserPointer(window);
+        MacData& data = *(MacData*)glfwGetWindowUserPointer(window);
 
         MouseMovedEvent event(Vec2f((float)xPos, (float)yPos));
         data.EventCallback(event);
     });
 }
 
-void LinuxWindow::ToggleFullscreen()
+void MacWindow::ToggleFullscreen()
 {    
     if (glfwGetWindowMonitor(window))
     {
@@ -163,31 +167,40 @@ void LinuxWindow::ToggleFullscreen()
     }
 }
 
-void LinuxWindow::OnUpdate()
+void MacWindow::OnUpdate()
 {
     glfwPollEvents();
     context.SwapBuffers();
 }
 
-unsigned int LinuxWindow::GetWidth() const
+unsigned int* MacWindow::GetWidthPtr() const
+{
+    return &(data.width);
+}
+unsigned int* MacWindow::GetHeightPtr() const
+{
+    return &(data.height);
+}
+
+unsigned int MacWindow::GetWidth() const
 {
     return data.width;
 }
 
 
-unsigned int LinuxWindow::GetHeight() const
+unsigned int MacWindow::GetHeight() const
 {
     
     return data.height;
 }
 
-void LinuxWindow::ShutDown()
+void MacWindow::ShutDown()
 {
     glfwDestroyWindow(window);
     glfwTerminate();
 }
 
-void LinuxWindow::SetVSync(bool enabled)
+void MacWindow::SetVSync(bool enabled)
 {
     if (enabled)
     {
@@ -201,7 +214,7 @@ void LinuxWindow::SetVSync(bool enabled)
     data.VSync = enabled;
 }
 
-bool LinuxWindow::IsVSync() const
+bool MacWindow::IsVSync() const
 {
     return data.VSync;
 }

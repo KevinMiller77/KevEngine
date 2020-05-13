@@ -7,13 +7,12 @@
 #include <events/KeyEvent.h>
 #include <events/WindowEvent.h>
 #include <graphics/renderables/Sprite.h>
-#include <graphics/renderables/PhysicsSprite.h>
 #include <graphics/layers/Group.h>
 #include <graphics/layers/TileMap.h>
 #include <graphics/layers/Layer.h>
 
 //TODO: REMOVE
-#include <platform/graphics/GL/renderer/GL2DRenderer.h>
+#include <platform/graphics/GL/renderer/GLRenderer2D.h>
 #include <math/math.h>
 #include <utils/Logging.h>
 #include <utils/Timer.h>

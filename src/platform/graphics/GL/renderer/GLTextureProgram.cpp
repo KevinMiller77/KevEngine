@@ -3,16 +3,6 @@
 #include <assert.h>
 #include <glad/glad.h>
 
-GLTextureProgram::GLTextureProgram() 
-{
-    texture = 0;
-    nrChannels = 0;
-    width = 0;
-    height = 0;
-    imagePath = nullptr;
-    heapLocOfTexture = nullptr;
-}
-
 GLTextureProgram::GLTextureProgram(const char *inImagePath, unsigned int TileSize, Vec2f flip)
 {
     tileSheet = (bool)TileSize;

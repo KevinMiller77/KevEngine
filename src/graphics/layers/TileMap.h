@@ -8,10 +8,10 @@ class TileMap : public Group
 {
     Vec2u sceneSize;
     std::map<int, TileMapTile*> tiles;
-    GLTextureProgram* tilesheet;
+    TextureProgram* tilesheet;
     
 public:
-    TileMap(Vec2f GamespaceExtremes, GLTextureProgram* Tilesheet);
+    TileMap(Vec2f GamespaceExtremes, TextureProgram* Tilesheet);
     
     void NewTile(Vec2u Pos, Vec2u Atlas);
     inline TileMapTile* GetTile(Vec2u Pos) { return tiles[Pos.x * sceneSize.y + Pos.y]; }

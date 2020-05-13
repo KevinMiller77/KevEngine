@@ -32,7 +32,7 @@ public:
         }
     }
 
-    inline GLTextureProgram* GetTextureFromChild(unsigned int index) const { return children[index]->GetTexturePtr(); }
+    inline TextureProgram* GetTextureFromChild(unsigned int index) const { return children[index]->GetTexturePtr(); }
     inline unsigned int GetNumChildren() { return children.size(); }
 
     //bool IsColliding(Renderable2D* other) override;

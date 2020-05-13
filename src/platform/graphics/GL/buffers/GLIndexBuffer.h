@@ -1,9 +1,10 @@
-#ifndef __INDEX_BUFFER__
-#define __INDEX_BUFFER__
+#ifndef __GL_INDEX_BUFFER__
+#define __GL_INDEX_BUFFER__
 #include <cstdlib>
-// #include <GLFW/glfw3.h>
 
-class GLIndexBuffer
+#include <graphics/api/IndexBuffer.h>
+
+class GLIndexBuffer : public IndexBuffer
 {
 private:
     unsigned int BufferID;
@@ -14,10 +15,10 @@ public:
     GLIndexBuffer(unsigned int *data, int count);
     ~GLIndexBuffer();
 
-    void Bind() const;
-    void Unbind() const;
+    virtual void Bind() const override;
+    virtual void Unbind() const override;
 
-    inline unsigned int GetCount() const { return Count; }
+    inline unsigned int GetCount() const override { return Count; }
 };
 
 #endif

@@ -1,5 +1,4 @@
 #include "Sprite.h"
-#include "PhysicsSprite.h"
 #include <core/KevInput.h>
 
 Sprite::Sprite(float x, float y, float width, float height, const Vec4f color)
@@ -8,7 +7,7 @@ Sprite::Sprite(float x, float y, float width, float height, const Vec4f color)
     type = RenderableType::Static;
 }
 
-Sprite::Sprite(float x, float y, float width, float height, GLTextureProgram* inTexture, Vec2u TilesheetPos)
+Sprite::Sprite(float x, float y, float width, float height, TextureProgram* inTexture, Vec2u TilesheetPos)
     : Renderable2D(Vec3f(x, y, 0), Vec2f(width, height), inTexture, TilesheetPos)
 {
     type = RenderableType::Static;

@@ -20,7 +20,7 @@ GLVertexArray::~GLVertexArray()
     }
 }
 
-void GLVertexArray::AddBuffer(GLBuffer *buf, unsigned int idx)
+void GLVertexArray::AddBuffer(Buffer *buf, unsigned int idx)
 {
     Bind();
     buf->Bind();

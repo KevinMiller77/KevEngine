@@ -1,16 +1,18 @@
-#include "GL2DRenderer.h"
-#include <graphics/Renderables/Renderable2D.h>
+#include "GLRenderer2D.h"
+#include <graphics/renderables/Renderable2D.h>
+#include "GLShaderProgram.h"
 
 unsigned int Renderable2D::globalNumRenderables;
 
-GL2DRenderer::GL2DRenderer(int* width, int* height)
+GLRenderer2D::GLRenderer2D(int* width, int* height)
     : scr_w(width), scr_h(height), FBO(nullptr)
 {
+    curShader = 0;
     indexCount = 0;
     Init();
 }
 
-GL2DRenderer::~GL2DRenderer()
+GLRenderer2D::~GLRenderer2D()
 {
     delete IBO;
     glDeleteVertexArrays(1, &VAO);
@@ -23,7 +25,7 @@ GL2DRenderer::~GL2DRenderer()
 //     float texID;     20
 //     uint32_t color;  24
 // };
-void GL2DRenderer::Init()
+void GLRenderer2D::Init()
 {
     //Generate all of the necessary spaces in memory
     glGenVertexArrays(1, &VAO);
@@ -73,14 +75,15 @@ void GL2DRenderer::Init()
     glBindVertexArray(0);
 }
 
-void GL2DRenderer::Begin()
+void GLRenderer2D::Begin(unsigned int Shader)
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     VDataBuffer = (VertexData *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-    VDataHeapLoc = VDataHeapLoc ? VDataHeapLoc : VDataBuffer; 
+    VDataHeapLoc = VDataHeapLoc ? VDataHeapLoc : VDataBuffer;
+    curShader = Shader;
 }
 
-void GL2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
+void GLRenderer2D::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
 {
     const Vec3f position = Renderable->GetPosition();
     const Vec2f size = Renderable->GetSize();
@@ -115,7 +118,7 @@ void GL2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
             {
                 End();
                 Draw();
-                Begin();
+                Begin(curShader);
             }
             TextureSlots.push_back(texID);
             ts = (float)(TextureSlots.size());
@@ -127,7 +130,7 @@ void GL2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
 
     if (texExists)
     {
-        GLTextureProgram* tex = Renderable->GetTexturePtr();
+        TextureProgram* tex = Renderable->GetTexturePtr();
         if (tex->IsTilesheet())
         {
             Vec2u pos = Renderable->GetTilesheetPos();
@@ -140,7 +143,8 @@ void GL2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
             tex_BL = Vec2f((pos.x * tileSize) / sheetWidth, (((pos.y + 1) * tileSize) / sheetHeight));
         }
     }
-
+    
+    
     VDataBuffer->vertex = *curTransformationBack * position;
     VDataBuffer->color = color;
     VDataBuffer->texture = tex_BL;
@@ -168,7 +172,7 @@ void GL2DRenderer::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
     indexCount += 6;
 }
 
-void GL2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
+void GLRenderer2D::DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
 {
     using namespace ftgl;
 
@@ -190,7 +194,7 @@ void GL2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font, 
         {
             End();
             Draw();
-            Begin();
+            Begin(curShader);
         }
         TextureSlots.push_back(font->atlas->id);
         ts = (float)(TextureSlots.size());
@@ -217,9 +221,7 @@ void GL2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font, 
             float v0 = glyph->t1;
             float u1 = glyph->s1;
             float v1 = glyph->t0;
-
             
-
             VDataBuffer->vertex = *curTransformationBack * Vec3f(x0, y0, 0);
             VDataBuffer->texture = Vec2f(u0, v0);
             VDataBuffer->texID = ts;
@@ -252,13 +254,14 @@ void GL2DRenderer::DrawString(std::string text, Vec3f position, FontInfo* font, 
     }
 }
 
-void GL2DRenderer::End()
+void GLRenderer2D::End()
 {
     glUnmapBuffer(GL_ARRAY_BUFFER);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    curShader = 0;
 }
 
-unsigned int GL2DRenderer::DrawToBuffer()
+unsigned int GLRenderer2D::DrawToBuffer()
 {
     glBindVertexArray(VAO);
     IBO->Bind();
@@ -273,7 +276,7 @@ unsigned int GL2DRenderer::DrawToBuffer()
     return 0;
 }
 
-void GL2DRenderer::Draw()
+void GLRenderer2D::Draw()
 {
     for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
     {

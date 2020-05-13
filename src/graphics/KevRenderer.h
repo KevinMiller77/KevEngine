@@ -57,7 +57,7 @@ public:
     virtual unsigned int DrawToBuffer() = 0;
     virtual void Submit(Renderable2D *Renderable, const Vec2u TilesheetPos = Vec2u(0, 0)) = 0;
     virtual void Draw() = 0;
-    virtual void Begin() = 0;
+    virtual void Begin(unsigned int Shader = 0) = 0;
     virtual void End() = 0;
 };
 
