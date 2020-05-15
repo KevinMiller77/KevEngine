@@ -1,6 +1,8 @@
 #include "KevEngine.h"
 #include "EntryPoint.h"
 
+unsigned int Renderable2D::globalNumRenderables;
+
 KevEngine* KevEngine::curEngine = nullptr;
 
 extern KevEngine* CreateApplication();
@@ -17,10 +19,10 @@ KevEngine::KevEngine(KevEngine* child)
         LOG_ERR("Engine already exists!!\n");
     }
     curEngine = this;
-    window = Window::Create(WindowInfo());
-	window->SetEventCallback(KEV_BIND_EVENT_FN(KevEngine::OnEvent));
+    m_Window = Window::Create(WindowInfo());
+	m_Window->SetEventCallback(KEV_BIND_EVENT_FN(KevEngine::OnEvent));
 
-    imGuiLayer = new ImGuiLayer(window.get());
+    imGuiLayer = ImGuiLayer::Create(m_Window);
     PushOverlay(imGuiLayer);
     
     fps.Start();
@@ -66,7 +68,7 @@ bool KevEngine::OnWindowResize(WindowResizeEvent& e)
 		return false;
 	}
 
-    window->SetView(e.getScreenSize().x, e.getScreenSize().y);
+    m_Window->SetView(e.getScreenSize().x, e.getScreenSize().y);
     return false;
 }
 
@@ -162,7 +164,7 @@ void KevEngine::Run()
     {
         if (!minimized)
         {
-            if (updatesThiscSec < c || window->IsVSync())
+            if (updatesThiscSec < c || m_Window->IsVSync())
             {
                 OnUpdate();
                 updatesThiscSec++;
@@ -176,6 +178,6 @@ void KevEngine::Run()
             OnImGuiRender();
         }
 
-        window->OnUpdate();
+        m_Window->OnUpdate();
     }
 }

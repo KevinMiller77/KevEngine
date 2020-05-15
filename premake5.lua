@@ -81,6 +81,20 @@ project "Engine"
 
     filter "system:macosx"
         systemversion "latest"
+        files
+        {
+            "src/**.m",
+            "src/**.mm",
+            "resources/**.metal"
+        }
+        removefiles
+        {
+            "ext/freetype-gl/**.c"
+        }
+        buildoptions
+        {
+            "-x objective-c++"
+        }
         links
         {
             "IOKit.framework", 
@@ -169,6 +183,11 @@ project "Game"
             }
         filter "system:macosx"
             systemversion "latest"
+            
+            buildoptions
+            {
+                "-x objective-c++"
+            }
             links
             {
                 "IOKit.framework", 

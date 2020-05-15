@@ -6,14 +6,17 @@
 #include <platform/OS/Window/Linux/LinuxWindow.h>
 #include <platform/OS/Window/MacOS/MacWindow.h>
 
-
-Scope<Window> Window::Create(const WindowInfo& inf)
+Window* Window::Create(const WindowInfo& inf)
 {
 #ifdef KEV_PLATFORM_WINDOWS
-	return CreateScope<WindowsWindow>(inf);
+	return new WindowsWindow(inf);
 #elif defined KEV_PLATFORM_LINUX
-	return CreateScope<LinuxWindow>(inf);
+	return new LinuxWindow(inf);
 #elif defined KEV_PLATFORM_MACOS
-    return CreateScope<MacWindow>(inf);
+    #if defined KEV_RENDERAPI_METAL
+        return new MacWindow(inf);
+    #else
+        return new WindowsWindow(inf);
+    #endif
 #endif
 }

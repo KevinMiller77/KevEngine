@@ -148,28 +148,6 @@ WindowsWindow::WindowsWindow(WindowInfo inf)
     });
 }
 
-
-//int WindowsWindow::InitalizeConsole()
-//{
-//    BOOL success = AllocConsole();
-//    if (!success)
-//    {
-//        DebugBreak();
-//        return 1;
-//
-//    }
-//
-//    FILE *newStdout;
-//    FILE *newStdin;
-//    FILE *newStderr;
-//
-//    freopen_s(&newStdout, "CONOUT$", "w", stdout);
-//    freopen_s(&newStdin, "CONIN$", "r", stdin);
-//    freopen_s(&newStderr, "CONOUT$", "w", stderr);
-//
-//    return 0;
-//}
-
 void WindowsWindow::ToggleFullscreen()
 {    
     if (glfwGetWindowMonitor(window))

@@ -8,7 +8,11 @@ Layer::Layer(Window* Parent, KevRenderer *Renderer, unsigned int Shader, Kev2DCa
 
 Layer::~Layer()
 {
+    
+#ifdef KEV_PLATFORM_MACOS
+#else
     delete renderer;
+#endif
 
     for (Renderable2D* renderable : renderables)
     {
@@ -29,7 +33,7 @@ void Layer::Render()
 {
     if (enabled)
     {
-        GLShaderProgram::EnableShaderProgram(shader);
+//        ShaderProgram::Cre(shader);
         renderer->Begin();
 
         for (Renderable2D *renderable : renderables)

@@ -12,7 +12,7 @@
 #include <graphics/layers/Layer.h>
 
 //TODO: REMOVE
-#include <platform/graphics/GL/renderer/GLRenderer2D.h>
+#include <graphics/api/Renderer2D.h>
 #include <math/math.h>
 #include <utils/Logging.h>
 #include <utils/Timer.h>

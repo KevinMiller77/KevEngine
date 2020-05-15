@@ -20,6 +20,12 @@ project "glad"
     
     filter "system:windows"
         systemversion "latest"
+    filter "system:macosx"
+        systemversion "latest"
+        buildoptions
+        {
+            "-x objective-c++"
+        }
 
     filter "configurations:Debug"
         runtime "Debug"

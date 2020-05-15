@@ -7,9 +7,9 @@
 class GLIndexBuffer : public IndexBuffer
 {
 private:
-    unsigned int BufferID;
-    unsigned int Count;
-    unsigned int* HeapLoc;
+    unsigned int m_BufferID;
+    unsigned int m_Count;
+    unsigned int* m_HeapLoc;
 
 public:
     GLIndexBuffer(unsigned int *data, int count);
@@ -17,8 +17,10 @@ public:
 
     virtual void Bind() const override;
     virtual void Unbind() const override;
+    
+    inline virtual void* GetBuffer() override { return (void*)&m_BufferID; }
 
-    inline unsigned int GetCount() const override { return Count; }
+    inline unsigned int GetCount() const override { return m_Count; }
 };
 
 #endif

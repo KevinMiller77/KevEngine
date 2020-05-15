@@ -1,9 +1,6 @@
 #ifndef __KevEngine_TYPES__
 #define __KevEngine_TYPES__
 
-#define local static
-#define global static
-
 //Common type defs
 typedef char                i8_t;
 typedef short               i16_t;

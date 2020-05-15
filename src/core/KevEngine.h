@@ -25,7 +25,6 @@
 
 //TODO: Add metal here
 #include <graphics/KevRenderer.h>
-#include <platform/graphics/GL/renderer/GLContext.h>
 #include <graphics/layers/LayerStack.h>
 
 //TODO: Move this to the input.h util
@@ -36,7 +35,7 @@ int main(int argv, char** argc);
 class KevEngine
 {
 protected:
-    std::unique_ptr<Window> window;
+    Window* m_Window;
     ImGuiLayer* imGuiLayer;
     bool running = true;
     bool minimized = false;
@@ -71,7 +70,7 @@ public:
     static unsigned int LastUpdateKeep;
 
     inline static KevEngine* Get() { return curEngine; }
-    inline Window& GetWindow() { return *window; }
+    inline Window* GetWindow() { return m_Window; }
 
     //60 times a second
     void OnUpdate();
@@ -103,4 +102,5 @@ private:
     friend int ::main(int argv, char** argc);
 };
 
+#include <graphics/renderables/Renderable2D.h>
 #endif

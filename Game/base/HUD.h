@@ -8,7 +8,7 @@
 #include <graphics/layers/Group.h>
 #include <graphics/renderables/Sprite.h>
 #include <graphics/renderables/Label.h>
-#include <platform/graphics/GL/renderer/GLRenderer2D.h>
+#include <graphics/api/Renderer2D.h>
 #include <graphics/cameras/Kev2DCamera.h>
 #include <math/math.h>
 #include <utils/Logging.h>

@@ -8,6 +8,8 @@ public:
     virtual void Unbind() const = 0;
 
     virtual unsigned int GetCount() const = 0;
+    
+    virtual void* GetBuffer() = 0;
 
     static IndexBuffer* Create(unsigned int *data, int count);
 };

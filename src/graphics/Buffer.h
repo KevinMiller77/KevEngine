@@ -6,7 +6,7 @@ class GLBuffer {
     unsigned int ComponentCount;
 
 public:
-    GLBuffer(float* data, int count, unsigned int compCount);
+    GLBuffer(float* Data, int NumComponents);
     ~GLBuffer();
 
     void Bind();

@@ -55,7 +55,7 @@ public:
 	virtual void ToggleFullscreen() = 0;
 	virtual void CallWindowHints() = 0;
 
-	static Scope<Window> Create(const WindowInfo& inf = WindowInfo());
+	static Window* Create(const WindowInfo& inf = WindowInfo());
 };
 
 #endif

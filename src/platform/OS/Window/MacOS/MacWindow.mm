@@ -1,7 +1,4 @@
 #include "MacWindow.h"
-#include <core/Core.h>
-
-#ifdef KEV_PLATFORM_MACOS
 
 MacData MacWindow::data = MacData();
 
@@ -12,12 +9,7 @@ void GLFWErrorCallback(int error, const char* decsription)
 
 void MacWindow::CallWindowHints()
 {
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 }
 
 MacWindow::~MacWindow()
@@ -26,7 +18,7 @@ MacWindow::~MacWindow()
 }
 
 MacWindow::MacWindow(WindowInfo inf)
-    : context(nullptr), GLFWWinCount(0)
+    : m_Context(nullptr), GLFWWinCount(0)
 {
     info = inf;
     data.height = info.Height; data.width = info.Width;
@@ -49,8 +41,12 @@ MacWindow::MacWindow(WindowInfo inf)
 
     window = glfwCreateWindow((int)data.width, (int)data.height, info.Title, nullptr, nullptr);
     LOG_INF("Made window\n");
-    context = GLContext(window);
-    context.Init();
+    
+    device = MTLCreateSystemDefaultDevice();
+    queue = [device newCommandQueue];
+    
+    m_Context = (MetalContextLayer*)Context::Create(window);
+    m_Context->Init(device, window);
 
     glfwSetWindowUserPointer(window, &data);
     SetVSync(true);
@@ -170,7 +166,7 @@ void MacWindow::ToggleFullscreen()
 void MacWindow::OnUpdate()
 {
     glfwPollEvents();
-    context.SwapBuffers();
+    m_Context->SwapBuffers();
 }
 
 unsigned int* MacWindow::GetWidthPtr() const
@@ -218,4 +214,3 @@ bool MacWindow::IsVSync() const
 {
     return data.VSync;
 }
-#endif

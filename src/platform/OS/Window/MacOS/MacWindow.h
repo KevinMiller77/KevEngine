@@ -9,9 +9,22 @@
 
 #include <utils/commonTypes.h>
 #include <graphics/Window.h>
-#include <platform/graphics/GL/renderer/GLContext.h>
 
-#include <GLFW/glfw3.h>
+#include <core/Core.h>
+#include <core/KevEngine.h>
+
+#ifdef KEV_RENDERAPI_METAL
+    #define GLFW_INCLUDE_NONE
+    #define GLFW_EXPOSE_NATIVE_COCOA
+    #include <GLFW/glfw3.h>
+    #include <GLFW/glfw3native.h>
+    #import <Metal/Metal.h>
+    #import <QuartzCore/QuartzCore.h>
+#endif
+
+#include <platform/graphics/Metal/renderer/MetalContext.h>
+
+class GLFWWindow;
 
 struct MacData
 {
@@ -29,9 +42,12 @@ class MacWindow : public Window
 {
 
     GLFWwindow* window;
-    GLContext context;
+    
+    MetalContextLayer* m_Context;
     unsigned int GLFWWinCount;
     WindowInfo info;
+    id <MTLDevice> device;
+    id <MTLCommandQueue> queue;
 
     int InitalizeConsole();
 
@@ -44,6 +60,7 @@ public:
     MacWindow(WindowInfo inf);
     ~MacWindow();
     
+    void Init();
     void OnUpdate() override;
     
     unsigned int* GetWidthPtr() const override;
@@ -58,10 +75,14 @@ public:
 	bool IsVSync() const override;
 
     void* GetNativeWindow() override { return (void*)window; }
-    void* GetContext() override { return (void*)&context; }
-    void SetView(int W, int H) override { context.SetView(W, H); }
+    void* GetContext() override { return (void*)m_Context; }
+    void SetView(int W, int H) override { m_Context->SetView(W, H); }
 
     void ShutDown();
+    
+    inline id <MTLDevice> GetDevice() { return device; }
+    inline id <MTLCommandQueue> GetQueue() { return queue; }
+    inline CAMetalLayer* GetLayer() { return m_Context->GetIntLayer(); }
     
     static MacData data; 
 };

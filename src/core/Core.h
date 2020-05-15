@@ -29,8 +29,8 @@
 	 * and not some other Apple platform */
 	#define KEV_PLATFORM_APPLE
 	// TODO: Go to metal
-	// #define KEV_RENDERAPI_METAL
-	#define KEV_RENDERAPI_GL
+	 #define KEV_RENDERAPI_METAL
+//	#define KEV_RENDERAPI_GL
 	#if TARGET_IPHONE_SIMULATOR == 1
 		#define KEV_PLATFORM_IOS_SIM
 		#error "iOS sim is not supported!"
@@ -57,6 +57,13 @@
 	/* Unknown compiler/platform */
 	#error "Unknown platform!"
 #endif // End of platform detection
+
+//Make sure that GL is included when using GLES
+#ifdef KEV_RENDERAPI_GLES
+    #define KEV_RENDERAPI_GL
+#endif
+
+//#undef KEV_RENDERAPI_GL
 
 #define BIT(x) (1 << x)
 

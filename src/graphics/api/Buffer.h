@@ -3,13 +3,13 @@
 
 class Buffer {
 public:
+    virtual void Bind() = 0;
+    virtual void Unbind() = 0;
 
-    virtual void Bind();
-    virtual void Unbind();
-
+    virtual void* GetBuffer() = 0;
     virtual unsigned int GetComponentCount() = 0;
 
-    static Buffer* Create(float *data, int count, unsigned int compCount);
+    static Buffer* Create(float *Data, int Count, unsigned int NumComponents);
 };
 
 #endif

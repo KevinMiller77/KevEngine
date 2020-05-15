@@ -14,22 +14,23 @@
 class ImGuiLayer : public Layer
 {
 public:
-    ImGuiLayer(Window* Parent);
+    ImGuiLayer(Window* Parent)
+    : Layer(Parent, nullptr, 0, nullptr)
+    {}
+    
     ~ImGuiLayer() = default;
 
-    virtual void OnAttach() override;
-    virtual void OnDetach() override;
+    virtual void OnAttach() = 0;
+    virtual void OnDetach() = 0;
 
-    void ShowDockSpace();
+    virtual void ShowDockSpace() = 0;
 
-    void Begin();
-    void End();
-private:
-    float time = 0.0f;
+    virtual void Begin() = 0;
+    virtual void End() = 0;
     
-    //Dock props
-    ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
-    bool DockspaceEnabled = true;
+    virtual void OnUpdate() = 0;
+    
+    static ImGuiLayer* Create(Window* Parent);
 };
 
 #endif

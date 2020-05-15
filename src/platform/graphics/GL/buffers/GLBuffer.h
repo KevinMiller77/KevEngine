@@ -3,17 +3,18 @@
 #include <graphics/api/Buffer.h>
 
 class GLBuffer : public Buffer {
-    unsigned int BufferID;
-    unsigned int ComponentCount;
+    unsigned int m_BufferID;
+    unsigned int m_ComponentCount;
 
 public:
-    GLBuffer(float* data, int count, unsigned int compCount);
+    GLBuffer(float* Data, int NumComponents);
     ~GLBuffer();
 
     virtual void Bind() override;
     virtual void Unbind() override;
+    inline virtual void* GetBuffer() override { return (void*)&m_BufferID; }
 
-    virtual unsigned int GetComponentCount() override { return ComponentCount; }
+    virtual unsigned int GetComponentCount() override { return m_ComponentCount; }
 };
 
 #endif

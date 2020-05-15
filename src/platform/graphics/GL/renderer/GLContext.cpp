@@ -27,7 +27,7 @@ void GLContext::Init()
         LOG_ERR("NO CONTEXT COULD BE CREATED\n");
     }
     
-#ifdef KEV_PLATFORM_EM
+#ifdef KEV_RENDERAPI_GLES
     if (!gladLoadGLES2Loader((GLADloadproc)glfwGetProcAddress)))
 #else
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -42,6 +42,10 @@ void GLContext::Init()
     glGetIntegerv(GL_MINOR_VERSION, &versionMinor);
 
     LOG_INF("GL Init. MAJOR: %d\tMINOR: %d\n", versionMajor, versionMinor);
+    
+    //Enable blending of the alpha channel
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void GLContext::SwapBuffers()

@@ -8,14 +8,14 @@
 #include <math/math.h>
 #include <utils/Logging.h>
 
-#include <../ext/freetype-gl/freetype-gl.h>
+//#include <../ext/freetype-gl/freetype-gl.h>
 
-struct FontInfo 
+struct KevFontInfo 
 {
     const char* name;
     const char* location;
-    ftgl::texture_atlas_t* atlas;
-	ftgl::texture_font_t* font;
+//    ftgl::texture_atlas_t* atlas;
+//	ftgl::texture_font_t* font;
 
 };
 
@@ -23,13 +23,13 @@ class FontManager
 {
 private:
 
-    std::vector<FontInfo*> fonts;
+    std::vector<KevFontInfo*> fonts;
 
 public:
     FontManager() = default;
     ~FontManager()
     {
-        for (FontInfo* font : fonts)
+        for (KevFontInfo* font : fonts)
         {
             delete font;
         }
@@ -38,7 +38,7 @@ public:
     }
 
     void Add(const char* ID, const char* location, uint16_t size);
-    FontInfo* Get(const char* ID);
+    KevFontInfo* Get(const char* ID);
 
     void ClearFonts();
     

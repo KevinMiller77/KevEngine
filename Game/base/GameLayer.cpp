@@ -4,29 +4,16 @@
 #include <iostream> 
 #include <core/KevInput.h>
 
-#ifdef KEV_PLATFORM_EM
-	#define GLFW_INCLUDE_ES3
-	#include <GLFW/glfw3.h>
-#else
-	#include <glad/glad.h>
-#endif
-
 
 GameLayer::GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes)
-    : Layer(Parent, new GLRenderer2D((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, new Kev2DCamera(ScreenExtremes.x, ScreenExtremes.y)), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
+    : Layer(Parent, Renderer2D::Create((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, new Kev2DCamera(ScreenExtremes.x, ScreenExtremes.y)), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
 {
-    //Enable blending of the alpha channel
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     keyTimeout.Start();
 }
 
 GameLayer::GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Kev2DCamera* Camera, Vec2f ScreenExtremes)
-: Layer(Parent, new GLRenderer2D((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, Camera), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
+: Layer(Parent, Renderer2D::Create((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, Camera), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
 {
-    //Enable blending of the alpha channel
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     keyTimeout.Start();
 }
 
@@ -40,7 +27,6 @@ GameLayer::~GameLayer()
 
 void GameLayer::OnAttach()
 {
-    glClearColor(0.0, 0.0, 0.0, 0.0);
     updateTime.Reset();
     undoCache.clear();
     //Setup textures, can't be used without them
@@ -118,13 +104,11 @@ void GameLayer::OnUpdate()
         updateTime.Reset();
         return;
     }
-    //Begin frame
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     camera->OnUpdate();
     
-    GLShaderProgram::EnableShaderProgram(shader);
-    GLShaderProgram::SetShaderUniformMat4(shader, "pr_matrix", camera->GetCamera().GetViewProjectionMatrix());
+//    GLShaderProgram::EnableShaderProgram(shader);
+//    GLShaderProgram::SetShaderUniformMat4(shader, "pr_matrix", camera->GetCamera().GetViewProjectionMatrix());
     
     ImGuiIO io = ImGui::GetIO();
     if(!io.WantCaptureMouse)

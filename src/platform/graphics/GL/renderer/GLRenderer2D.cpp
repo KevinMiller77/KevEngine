@@ -2,7 +2,6 @@
 #include <graphics/renderables/Renderable2D.h>
 #include "GLShaderProgram.h"
 
-unsigned int Renderable2D::globalNumRenderables;
 
 GLRenderer2D::GLRenderer2D(int* width, int* height)
     : scr_w(width), scr_h(height), FBO(nullptr)
@@ -73,14 +72,19 @@ void GLRenderer2D::Init()
 
     //Unbind VAO
     glBindVertexArray(0);
+    
+    
+    //Enable blending of the alpha channel
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void GLRenderer2D::Begin(unsigned int Shader)
+void GLRenderer2D::Begin(void* Shader)
 {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     VDataBuffer = (VertexData *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
     VDataHeapLoc = VDataHeapLoc ? VDataHeapLoc : VDataBuffer;
-    curShader = Shader;
+    curShader = *((int*)Shader);
 }
 
 void GLRenderer2D::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
@@ -108,7 +112,7 @@ void GLRenderer2D::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
                 
                 ts = (float)(i + 1);
                 found = true;
-                break;           
+                break;
             }
         }
 
@@ -118,7 +122,7 @@ void GLRenderer2D::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
             {
                 End();
                 Draw();
-                Begin(curShader);
+                Begin(&curShader);
             }
             TextureSlots.push_back(texID);
             ts = (float)(TextureSlots.size());
@@ -143,7 +147,6 @@ void GLRenderer2D::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
             tex_BL = Vec2f((pos.x * tileSize) / sheetWidth, (((pos.y + 1) * tileSize) / sheetHeight));
         }
     }
-    
     
     VDataBuffer->vertex = *curTransformationBack * position;
     VDataBuffer->color = color;
@@ -172,8 +175,9 @@ void GLRenderer2D::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
     indexCount += 6;
 }
 
-void GLRenderer2D::DrawString(std::string text, Vec3f position, FontInfo* font, uint32_t color)
+void GLRenderer2D::DrawString(std::string text, Vec3f position, KevFontInfo* font, uint32_t color)
 {
+#ifdef KEV_RENDERAPI_GL
     using namespace ftgl;
 
     float ts = 0.0f;
@@ -185,7 +189,7 @@ void GLRenderer2D::DrawString(std::string text, Vec3f position, FontInfo* font, 
             
             ts = (float)(i + 1);
             found = true;
-            break;           
+            break;
         }
     }
     if (!found)
@@ -201,7 +205,7 @@ void GLRenderer2D::DrawString(std::string text, Vec3f position, FontInfo* font, 
     }
 
     float scaleX = 960.0f / 32.0f;
-	float scaleY = 540.0f / 18.0f;  
+	float scaleY = 540.0f / 18.0f;
 
     float x = position.x;
 
@@ -215,7 +219,7 @@ void GLRenderer2D::DrawString(std::string text, Vec3f position, FontInfo* font, 
             float x0 = x + glyph->offset_x / scaleX;
             float y0 = position.y + (glyph->height - glyph->offset_y) / scaleY;
             float x1 = x0 + glyph->width / scaleX;
-            float y1 = y0 - glyph->height / scaleY;                
+            float y1 = y0 - glyph->height / scaleY;
 
             float u0 = glyph->s0;
             float v0 = glyph->t1;
@@ -252,6 +256,7 @@ void GLRenderer2D::DrawString(std::string text, Vec3f position, FontInfo* font, 
         }
 
     }
+#endif
 }
 
 void GLRenderer2D::End()
@@ -278,6 +283,9 @@ unsigned int GLRenderer2D::DrawToBuffer()
 
 void GLRenderer2D::Draw()
 {
+    //Begin frame
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
     {
         glActiveTexture(GL_TEXTURE0 + tex);
@@ -294,5 +302,3 @@ void GLRenderer2D::Draw()
 
     indexCount = 0;
 }
-
-

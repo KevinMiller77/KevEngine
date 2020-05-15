@@ -35,7 +35,6 @@ struct VertexData
     uint32_t color;
 };
 
-
 class Renderable2D
 {
 protected:

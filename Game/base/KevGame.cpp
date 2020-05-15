@@ -2,6 +2,7 @@
 #include "GameLayer.h"
 #include "HUD.h"
 #include <core/KevInput.h>
+#include "ImGuiTest.h"
 
 class KevGame : public KevEngine
 {
@@ -21,24 +22,25 @@ public:
         
         keyTimer.Start();
         
-        window->SetVSync(1);
+        m_Window->SetVSync(1);
         PlayerCam = new Kev2DCamera(GAMESPACE_X, GAMESPACE_Y);
         PlayerCam->SetMovable(false);
         EditorCam = new Kev2DCamera(GAMESPACE_X, GAMESPACE_Y);
 
         //Set shader info
-        shaders.NewShader("basic", "/Users/kevinmiller/dev/kevengine/resources/shaders/GLSL/SimpleVertexShader.glsl", "/Users/kevinmiller/dev/kevengine/resources/shaders/GLSL/SimpleFragShader.glsl");
-        shaders.Enable("basic");        
+        shaders.NewShader("basic", "simple_vertex", "simple_fragment");
+//        shaders.Enable("basic");
         
         //Load in the texture coords for the shader
         int slots[MAX_TEXTURE_SLOTS];
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
         
-        shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
-        gameLayerInst = new GameLayer(window.get(), shaders.GetShader("basic").GetShaderID(), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y), PlayerCam);
+//        shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
+        gameLayerInst = new GameLayer(m_Window, 0, Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y), PlayerCam);
     
-        PushLayer(gameLayerInst);
-        PushOverlay(new HUD(window.get(), shaders.GetShader("basic").GetShaderID(), PlayerCam));
+//        PushLayer(gameLayerInst);
+//        PushOverlay(new HUD(m_Window, shaders.GetShader("basic").GetShaderID(), PlayerCam));
+        PushLayer(new IGTL(m_Window));
     }
 
 
@@ -58,13 +60,13 @@ public:
         if (KevInput::IsKeyPressed(KEV_KEY_R) && !ReloadingShaders)
         {
             LOG_INF("Resetting Shaders\n");
-            shaders.Disable("basic");
-            shaders.Refresh("basic", "resources/shaders/SimpleVertexShader.glsl", "resources/shaders/SimpleFragShader.glsl");
-            shaders.Enable("basic");
+//            shaders.Disable("basic");
+//            shaders.Refresh("basic", "resources/shaders/SimpleVertexShader.glsl", "resources/shaders/SimpleFragShader.glsl");
+//            shaders.Enable("basic");
             
             int slots[MAX_TEXTURE_SLOTS];
             for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
-            shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
+//            shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
             
             ReloadingShaders = true;
         }
