@@ -53,7 +53,12 @@ void MetalImGuiLayer::Begin()
 //    layer.drawableSize = CGSizeMake(width, height);
     drawable = [GET_METAL_LAYER() nextDrawable];
     
-    RPD.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 0);
+    if (drawable == nil)
+    {
+        return;
+    }
+    
+    RPD.colorAttachments[0].clearColor = MTLClearColorMake(1, 1, 1, 1);
     RPD.colorAttachments[0].texture = drawable.texture;
     RPD.colorAttachments[0].loadAction = MTLLoadActionClear;
     RPD.colorAttachments[0].storeAction = MTLStoreActionStore;
@@ -72,6 +77,12 @@ void MetalImGuiLayer::Begin()
 
 void MetalImGuiLayer::End()
 {
+    
+    if (drawable == nil)
+    {
+        return;
+    }
+    
     ImGuiIO& io = ImGui::GetIO();
     KevEngine* app = KevEngine::Get();
     io.DisplaySize = ImVec2((float)app->GetWindow()->GetWidth(), (float)app->GetWindow()->GetHeight());

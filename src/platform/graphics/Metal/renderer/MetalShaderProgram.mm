@@ -1,21 +1,23 @@
 #include <platform/graphics/Metal/renderer/MetalShaderProgram.h>
-#include <../resources/shaders/MSL/Simple.metal>
+//#include <../resources/shaders/MSL/Simple.metal>
 
 MetalShaderProgram::MetalShaderProgram(const char* vertex_file_name, const char* fragment_file_name)
 {
     NSString* vert = [NSString stringWithUTF8String:vertex_file_name];
     NSString* frag = [NSString stringWithUTF8String:fragment_file_name];
     
-    id<MTLLibrary> defLib = [GET_METAL_DEVICE() newDefaultLibrary];
-    id<MTLFunction> vertexShader = [defLib newFunctionWithName:@"metal::vertexFunction"];
-    id<MTLFunction> fragmentShader = [defLib newFunctionWithName:@"metal::fragmentFunction"];
+    id<MTLLibrary> defLib = [GET_METAL_DEVICE() newLibraryWithFile:@"resources/shaders/MSL/KevShaderLib.metallib" error:nil];
+    id<MTLFunction> vertexShader = [defLib newFunctionWithName:vert];
+    id<MTLFunction> fragmentShader = [defLib newFunctionWithName:frag];
     
     MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
+    [pipelineStateDescriptor setLabel:@"KevEngine"];
     [pipelineStateDescriptor setVertexFunction:vertexShader];
     [pipelineStateDescriptor setFragmentFunction:fragmentShader];
     pipelineStateDescriptor.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm;
 
     m_Shader = [GET_METAL_DEVICE() newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:nil];
+
 }
 //
 //unsigned int MetalShaderProgram::CreateMetalProgram(const char* vertex_file_path, const char* fragment_file_path) 

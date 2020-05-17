@@ -1,34 +1,41 @@
+//
+//  Simple.metal
+//  MetalShaders
+//
+//  Created by Kevin Miller on 5/16/20.
+//
 #include <metal_stdlib>
-#include <simd/simd.h>
 using namespace metal;
 
-typedef struct
+struct VertexIn
 {
-    vector_float3 vert;
-    vector_float2 texture;
+    float3 pos;
+    float2 texture;
     float texID;
     unsigned int color;
-}  VertexIn;
+};
 
-typedef struct
+struct VertexOut
 {
-    vector_float4 vert [[position]];
-    vector_float2 texture;
+    float4 pos [[position]];
+    float2 texture;
     float texID;
     unsigned int color;
-} VertexOut;
+};
 
-vertex VertexOut vertexFunction(device VertexIn* verticies [[buffer(0)]], uint vid [[vertex_id]])
+vertex VertexOut simple_vertex(device VertexIn* in [[buffer(0)]],
+                               uint vid [[vertex_id]])
 {
     VertexOut out;
-    out.position = vector_float4(verticies[vid].vert.xyz, 0.0f);
-    out.texture = verticies.texture;
-    out.texID = verticies.texID;
-    out.color = verticies.color;
+    out.pos = vector_float4(in[vid].pos.xyz, 0.0f);
+    out.texture = in[vid].texture;
+    out.texID = in[vid].texID;
+    out.color = in[vid].color;
     return out;
 }
 
-fragment float4 fragmentFunction(VertexOut in [[stage_in]])
+fragment half4 simple_fragment(VertexOut in [[stage_in]])
 {
-    return in.color;
+    return half4(1);
+    //return in.color;
 }

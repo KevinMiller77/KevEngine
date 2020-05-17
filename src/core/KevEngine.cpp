@@ -79,7 +79,7 @@ void KevEngine::OnImGuiRender()
     for (Layer* layer : EngLayerStack)
     {
         layer->OnImGuiRender();
-    }  
+    }
     imGuiLayer->End();
 }
 

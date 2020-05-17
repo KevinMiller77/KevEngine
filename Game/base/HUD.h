@@ -20,7 +20,7 @@ class HUD : public Layer
     Group* FrameCounterGroup;
 
 public:
-    HUD(Window* Parent, unsigned int shader, Kev2DCamera* Camera);
+    HUD(Window* Parent, ShaderProgram* shader, Kev2DCamera* Camera);
     ~HUD() override;
 
     void OnAttach() override;

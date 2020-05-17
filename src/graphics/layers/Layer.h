@@ -19,7 +19,7 @@
 class Layer
 {
 protected:
-    Layer(Window* Parent, KevRenderer *Renderer, unsigned int Shader, Kev2DCamera* Camera);
+    Layer(Window* Parent, KevRenderer *Renderer, ShaderProgram* Shader, Kev2DCamera* Camera);
 
     Window* parent;
     
@@ -28,7 +28,7 @@ protected:
     std::vector<Renderable2D *> renderables;
     RenderableManager Manager = RenderableManager(&renderables);
     Kev2DCamera* camera;
-    unsigned int shader;
+    ShaderProgram* shader;
 
     TextureManager textures;
     FontManager fonts;
@@ -45,8 +45,8 @@ public:
     virtual void Add(Renderable2D *renderable);
     virtual void Render();
 
-    virtual inline unsigned int GetShader() { return shader; }
-    virtual inline void SetShader(unsigned int Shader) { shader = Shader; }
+    virtual inline ShaderProgram* GetShader() { return shader; }
+    virtual inline void SetShader(ShaderProgram* Shader) { shader = Shader; }
 
     virtual void OnAttach() {};
     virtual void OnDetach() {};

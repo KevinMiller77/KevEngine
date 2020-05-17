@@ -12,6 +12,7 @@
 
 #include <core/Core.h>
 #include <core/KevEngine.h>
+#include <math/math.h>
 
 #ifdef KEV_RENDERAPI_METAL
     #define GLFW_INCLUDE_NONE
@@ -44,6 +45,7 @@ class MacWindow : public Window
     GLFWwindow* window;
     
     MetalContextLayer* m_Context;
+    Vec2u viewportSize;
     unsigned int GLFWWinCount;
     WindowInfo info;
     id <MTLDevice> device;

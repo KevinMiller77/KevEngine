@@ -80,12 +80,11 @@ project "Engine"
         }
 
     filter "system:macosx"
-        systemversion "latest"
+        systemversion "10.13"
         files
         {
             "src/**.m",
-            "src/**.mm",
-            "resources/**.metal"
+            "src/**.mm"
         }
         removefiles
         {
@@ -102,7 +101,10 @@ project "Engine"
             "Cocoa.framework",
             "CoreVideo.framework"
         }
-
+        prebuildcommands
+        {
+            "./scripts/compile_metal_shaders.sh"
+        }
 
     filter "system:linux"
         systemversion "latest"
@@ -138,6 +140,8 @@ project "Game"
 
         targetname("KevGame")
 	    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+        debugdir "./"
 
         files
         {
@@ -182,7 +186,7 @@ project "Game"
                 "_GLFW_X11"
             }
         filter "system:macosx"
-            systemversion "latest"
+            systemversion "10.13"
             
             buildoptions
             {
@@ -196,4 +200,12 @@ project "Game"
                 "CoreVideo.framework",
                 "Metal.framework",
                 "QuartzCore.framework"
-            }
+            }       
+project "Aux Files"
+    kind "None"
+    files
+    {
+        "scripts/**",
+        "resources/**"
+    }
+        

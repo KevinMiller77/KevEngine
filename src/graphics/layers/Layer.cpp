@@ -1,6 +1,6 @@
 #include "Layer.h"
 
-Layer::Layer(Window* Parent, KevRenderer *Renderer, unsigned int Shader, Kev2DCamera* Camera)
+Layer::Layer(Window* Parent, KevRenderer *Renderer, ShaderProgram* Shader, Kev2DCamera* Camera)
     : parent(Parent), renderer(Renderer), shader(Shader), enabled(true), camera(Camera)
 {
     keyDebounce.Start();
@@ -33,8 +33,7 @@ void Layer::Render()
 {
     if (enabled)
     {
-//        ShaderProgram::Cre(shader);
-        renderer->Begin();
+        renderer->Begin(shader->GetShader());
 
         for (Renderable2D *renderable : renderables)
         {

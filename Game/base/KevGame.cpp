@@ -36,9 +36,9 @@ public:
         for (int i = 0; i < MAX_TEXTURE_SLOTS; i++) { slots[i] = i; }
         
 //        shaders.SetUniform1iv("basic", "textures", slots, MAX_TEXTURE_SLOTS);
-        gameLayerInst = new GameLayer(m_Window, 0, Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y), PlayerCam);
+        gameLayerInst = new GameLayer(m_Window, shaders.GetShaderPtr("basic"), Vec2u(KEV_ENGINE_WINDOW_X, KEV_ENGINE_WINDOW_Y), PlayerCam);
     
-//        PushLayer(gameLayerInst);
+        PushLayer(gameLayerInst);
 //        PushOverlay(new HUD(m_Window, shaders.GetShader("basic").GetShaderID(), PlayerCam));
         PushLayer(new IGTL(m_Window));
     }

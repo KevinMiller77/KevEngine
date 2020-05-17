@@ -95,8 +95,8 @@ class GameLayer : public Layer
 
     
 public:
-    GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes = Vec2f(GAMESPACE_X, GAMESPACE_Y));
-    GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Kev2DCamera* Camera, Vec2f ScreenExtremes = Vec2f(GAMESPACE_X, GAMESPACE_Y));
+    GameLayer(Window* Parent, ShaderProgram* Shader, Vec2u ScreenSize, Vec2f ScreenExtremes = Vec2f(GAMESPACE_X, GAMESPACE_Y));
+    GameLayer(Window* Parent, ShaderProgram* Shader, Vec2u ScreenSize, Kev2DCamera* Camera, Vec2f ScreenExtremes = Vec2f(GAMESPACE_X, GAMESPACE_Y));
     ~GameLayer() override;
 
     virtual void OnAttach() override;

@@ -28,4 +28,6 @@ void MetalContextLayer::SwapBuffers()
 void MetalContextLayer::SetView(int Width, int Height)
 {
     //TODO: Metal viewport set
+    MacWindow::data.width = Width;
+    MacWindow::data.height = Height;
 }

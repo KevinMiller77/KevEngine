@@ -2,7 +2,7 @@
 #include <string>
 
 MetalRawBuffer::MetalRawBuffer(int SizeInBytes)
-    : m_ComponentCount(0)
+    : m_ComponentCount(SizeInBytes)
 {
     id <MTLDevice> device = GET_METAL_DEVICE();
     m_Buffer = [device newBufferWithLength:(SizeInBytes)

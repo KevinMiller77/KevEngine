@@ -5,13 +5,13 @@
 #include <core/KevInput.h>
 
 
-GameLayer::GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Vec2f ScreenExtremes)
+GameLayer::GameLayer(Window* Parent, ShaderProgram* Shader, Vec2u ScreenSize, Vec2f ScreenExtremes)
     : Layer(Parent, Renderer2D::Create((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, new Kev2DCamera(ScreenExtremes.x, ScreenExtremes.y)), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
 {
     keyTimeout.Start();
 }
 
-GameLayer::GameLayer(Window* Parent, unsigned int Shader, Vec2u ScreenSize, Kev2DCamera* Camera, Vec2f ScreenExtremes)
+GameLayer::GameLayer(Window* Parent, ShaderProgram* Shader, Vec2u ScreenSize, Kev2DCamera* Camera, Vec2f ScreenExtremes)
 : Layer(Parent, Renderer2D::Create((int*)Parent->GetWidthPtr(), (int*)Parent->GetHeightPtr()), Shader, Camera), screenSize(ScreenSize), screenExtremes(ScreenExtremes)
 {
     keyTimeout.Start();
@@ -85,9 +85,9 @@ void GameLayer::OnAttach()
         }
     }
     
-    Add(baseGrid);
+//    Add(baseGrid);
     Add(tilemap);
-    Add(guideGrids);
+//    Add(guideGrids);
 
     updateTime.Reset();
 }
@@ -110,11 +110,11 @@ void GameLayer::OnUpdate()
 //    GLShaderProgram::EnableShaderProgram(shader);
 //    GLShaderProgram::SetShaderUniformMat4(shader, "pr_matrix", camera->GetCamera().GetViewProjectionMatrix());
     
-    ImGuiIO io = ImGui::GetIO();
-    if(!io.WantCaptureMouse)
-    {
+//    ImGuiIO io = ImGui::GetIO();
+//    if(!io.WantCaptureMouse)
+//    {
         Manager.MouseCheck(mousePos, camera->GetWorldPos(GAMESPACE_X, GAMESPACE_Y));
-    }
+//    }
     Manager.CollisionCheck();
     Manager.OnUpdate();
 

@@ -16,7 +16,7 @@ public:
     
     void OnAttach() override
     {
-        Add(new Sprite(0, 0, 2, 2, Vec4f(0.5, 0.5, 0.5, 1)));
+//        Add(new Sprite(0, 0, 2, 2, Vec4f(0.5, 0.5, 0.5, 1)));
     }
     void OnDetach() override {}
 

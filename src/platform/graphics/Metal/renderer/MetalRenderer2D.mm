@@ -8,7 +8,6 @@
 MetalRenderer2D::MetalRenderer2D(int* width, int* height)
     : scr_w(width), scr_h(height), m_IndexBuffer(nullptr)
 {
-    m_RenderPassDescriptor = [MTLRenderPassDescriptor renderPassDescriptor];
     Init();
 }
 
@@ -79,8 +78,9 @@ void MetalRenderer2D::Begin(void* Shader)
     
     m_RenderEncoder = [m_CommandBuffer renderCommandEncoderWithDescriptor:m_RenderPassDescriptor];
     id<MTLRenderPipelineState> pipelineState = *((id<MTLRenderPipelineState>*)Shader);
-    
+
     [m_RenderEncoder setRenderPipelineState:pipelineState];
+    
 }
 
 void MetalRenderer2D::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
@@ -88,7 +88,7 @@ void MetalRenderer2D::Submit(Renderable2D *Renderable, const Vec2u TilesheetPos)
     const Vec3f position = Renderable->GetPosition();
     const Vec2f size = Renderable->GetSize();
     const uint32_t color = Renderable->GetColor();
-    const unsigned int texID = 0;
+    const unsigned int texID = Renderable->GetTextureID();
 //
 //    bool texExists = false;
 //
@@ -256,10 +256,17 @@ void MetalRenderer2D::DrawString(std::string text, Vec3f position, KevFontInfo* 
 
 void MetalRenderer2D::End()
 {
+    
+    // //Describe our memory map
+    // MetalVertexAttribPointer(SHADER_VERTEX_INDEX, 3, Metal_FLOAT, Metal_FALSE, RENDERER_VERTEX_SIZE, (const Metalvoid *)(0));
+    // MetalVertexAttribPointer(SHADER_TEXTURE_INDEX, 2, Metal_FLOAT, Metal_TRUE, RENDERER_VERTEX_SIZE, (const Metalvoid *)(12));
+    // MetalVertexAttribPointer(SHADER_TEXTURE_ID_INDEX, 1, Metal_FLOAT, Metal_FALSE, RENDERER_VERTEX_SIZE, (const Metalvoid*)(20));
+    // MetalVertexAttribPointer(SHADER_COLOR_INDEX, 4, Metal_UNSIGNED_BYTE, Metal_TRUE, RENDERER_VERTEX_SIZE, (const Metalvoid *)(24));
+    
     id<MTLBuffer> VBO = m_VertexBuffer->GetMetalBuffer();
     [m_RenderEncoder setVertexBuffer:VBO offset:0 atIndex:0];
     
-    [m_RenderEncoder drawIndexedPrimitives:MTLPrimitiveTypeTriangle indexCount:6 indexType:MTLIndexTypeUInt32 indexBuffer:m_IndexBuffer->GetMetalBuffer() indexBufferOffset:0];
+    [m_RenderEncoder drawIndexedPrimitives:MTLPrimitiveTypeTriangle indexCount:6 indexType:MTLIndexTypeUInt32 indexBuffer:m_IndexBuffer->GetMetalBuffer() indexBufferOffset:0 instanceCount:(6)];
 }
 
 unsigned int MetalRenderer2D::DrawToBuffer()
@@ -277,21 +284,10 @@ unsigned int MetalRenderer2D::DrawToBuffer()
 
 void MetalRenderer2D::Draw()
 {
-    // for (unsigned int tex = 0; tex < TextureSlots.size(); tex++)
-    // {
-    //     MetalActiveTexture(Metal_TEXTURE0 + tex);
-    //     MetalBindTexture(Metal_TEXTURE_2D, TextureSlots[tex]);
-    // }
-
-    // MetalBindVertexArray(VAO);
-    // IBO->Bind();
+    [m_RenderEncoder endEncoding];
     
-    // MetalDrawElements(Metal_TRIANMetalES, indexCount, Metal_UNSIGNED_INT, NULL);
-
-    // IBO->Unbind();
-    // MetalBindVertexArray(0);
-
-    // indexCount = 0;
+    [m_CommandBuffer presentDrawable:m_Drawable];
+    [m_CommandBuffer commit];
 }
 
 
